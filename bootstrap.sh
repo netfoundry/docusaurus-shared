@@ -1,0 +1,36 @@
+set -euo pipefail
+
+rm -rf packages/site
+mkdir -p packages/site
+cd packages/site
+
+yarn create docusaurus mysite classic --typescript --skip-install
+cd mysite
+
+# Add shared components
+yarn add @openclint/docusaurus-shared-components
+
+
+# create the Layout
+mkdir -p src/theme/Layout
+LAYOUT_FILE="src/theme/Layout/index.tsx"
+cat <<EOF > "$LAYOUT_FILE"
+import React, {type ReactNode} from 'react';
+import { OpenZitiLayout, OpenZitiLayoutProps } from '@openclint/docusaurus-shared-components';
+import styles from './styles.module.css'
+
+export default function LayoutWrapper(props: OpenZitiLayoutProps): ReactNode {
+    return (
+        <OpenZitiLayout starProps={{ label: "Vote For Us", repoUrl: 'https://github.com/openziti/ziti'}}>
+            {props.children}
+        </OpenZitiLayout>
+    );
+}
+EOF
+
+echo "@import '@openclint/docusaurus-shared-components/dist/index.css';" \
+  | cat - src/css/custom.css > temp && mv temp src/css/custom.css
+  
+# Run dev
+yarn install
+yarn start

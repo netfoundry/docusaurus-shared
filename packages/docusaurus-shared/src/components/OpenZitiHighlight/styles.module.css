@@ -1,0 +1,26 @@
+.ozHighLightRoot {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100%;
+  background-color: var(--ifm-background-color);
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.ozHighLightContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 100%;
+  padding: 20px 20px;
+}
+
+@media (min-width: 1400px) {
+  .ozHighLightContent {
+    min-width: var(--ziti-max-width);
+    max-width: var(--ziti-max-width);
+    padding: 20px 20px;
+  }
+}
