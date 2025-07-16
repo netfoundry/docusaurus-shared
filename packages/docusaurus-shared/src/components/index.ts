@@ -14,3 +14,5 @@ export type {
 } from './OpenZitiLayout';
 
 export { StarUs } from './StarUs';
+export { OsTabs } from './OsTabs';
+

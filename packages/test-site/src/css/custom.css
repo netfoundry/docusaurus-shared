@@ -7,6 +7,7 @@
 
 /* You can override the default Infima variables here. */
 :root {
+  --ifm-navbar-height: 60px;
   --ifm-color-primary: #2e8555;
   --ifm-color-primary-dark: #29784c;
   --ifm-color-primary-darker: #277148;
@@ -35,3 +36,17 @@
 .container {
   max-width: var(--nf-docs-max-width);
 }
+.theme-doc-sidebar-container {
+  display: flex;
+}
+
+.docsWrapper {
+  background: #0a8ca8;
+  width: 100%;
+}
+.main-wrapper > div {
+  max-width: var(--ziti-max-width);
+}
+
+
+

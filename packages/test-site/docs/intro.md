@@ -4,6 +4,8 @@ sidebar_position: 1
 
 # Tutorial Intro
 
+do you want [to go to](@openziti/test)
+
 Let's discover **Docusaurus in less than 5 minutes**.
 
 ## Getting Started

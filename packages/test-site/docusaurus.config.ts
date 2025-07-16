@@ -1,36 +1,24 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
-import type * as Preset from '@docusaurus/preset-classic';
+import remarkScopedPath from './src/plugins/remark/remark-scoped-path';
+const path = require('path');
 
-// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
   title: 'Shared Component Testing',
   tagline: 'Dinosaurs are cool',
   favicon: 'img/favicon.ico',
 
-  // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
-  future: {
-    v4: true, // Improve compatibility with the upcoming Docusaurus v4
-  },
+  future: { v4: true },
 
-  // Set the production url of your site here
   url: 'https://your-docusaurus-site.example.com',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
+  organizationName: 'netfoundry',
+  projectName: 'docusaurus-shared',
 
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'netfoundry', // Usually your GitHub org/user name.
-  projectName: 'docusaurus-shared', // Usually your repo name.
+  onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',
 
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
-
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
@@ -40,22 +28,52 @@ const config: Config = {
     [
       'classic',
       {
-        docs: {
-          sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/netfoundry/docusaurus-shared/tree/main/packages/create-docusaurus/templates/shared/',
-        },
         theme: {
           customCss: './src/css/custom.css',
         },
-      } satisfies Preset.Options,
+      },
     ],
   ],
 
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'openziti',
+        path: '_remotes/ziti-doc/docusaurus/docs',
+        routeBasePath: 'docs/openziti',
+        sidebarPath: require.resolve('./_remotes/ziti-doc/docusaurus/sidebars.ts'),
+        editUrl:
+            'https://github.com/netfoundry/docusaurus-shared/tree/main/packages/create-docusaurus/templates/shared/',
+        // beforeDefaultRemarkPlugins: [],
+        beforeDefaultRemarkPlugins: [
+          [
+            remarkScopedPath,
+            [
+              { from: '@openzitidocs', to: '_remotes/ziti-doc/docusaurus/docs' },
+              { from: '@openzitiimg',    to: '/img/openziti' },
+              { from: '@openzitisite',   to: './_remotes/ziti-doc/docusaurus' },
+            ],
+          ],
+        ],
+      },
+    ],
+    // [
+    //   '@docusaurus/plugin-content-pages',
+    //   {
+    //     id: 'openziti-pages',
+    //     path: '_remotes/ziti-doc/docusaurus/src/pages',
+    //     routeBasePath: '/docs/openziti'
+    //   }
+    // ],
+  ],
+
+  staticDirectories: [
+    'static',
+    '_remotes/ziti-doc/docusaurus/static',
+  ],
+
   themeConfig: {
-    // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
       title: 'My Site',
@@ -66,7 +84,8 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'defaultSidebar',
+          docId: 'intro',
           position: 'left',
           label: 'Tutorial',
         },
@@ -75,13 +94,21 @@ const config: Config = {
           label: 'GitHub',
           position: 'right',
         },
+        {
+          label: 'Docs',
+          position: 'left',
+          items: [
+            { label: 'OpenZiti', to: '/docs/openziti' },
+            { label: 'Other Docs', to: '/docs/intro' },
+          ]
+        }
       ],
     },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
     },
-  } satisfies Preset.ThemeConfig,
+  },
 };
 
 export default config;

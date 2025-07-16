@@ -43,6 +43,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "react-device-detect": "^2.2.3",
     "react-github-btn": "^1.4.0"
   },
   "style": "dist/index.css"
