@@ -33,6 +33,28 @@ const config: Config = {
         },
       },
     ],
+    // Redocusaurus config
+    [
+      'redocusaurus',
+      {
+        // Plugin Options for loading OpenAPI files
+        specs: [
+          {
+            id: 'edge-client',
+            spec: 'https://get.openziti.io/spec/client.yml',
+          },
+          {
+            id: 'edge-management',
+            spec: 'https://get.openziti.io/spec/management.yml',
+          },
+        ],
+        // Theme Options for modifying how redoc renders them
+        theme: {
+          // Change with your site colors
+          primaryColor: '#1890ff',
+        },
+      },
+    ],
   ],
 
   plugins: [
@@ -45,17 +67,16 @@ const config: Config = {
         sidebarPath: require.resolve('./_remotes/ziti-doc/docusaurus/sidebars.ts'),
         editUrl:
             'https://github.com/netfoundry/docusaurus-shared/tree/main/packages/create-docusaurus/templates/shared/',
-        // beforeDefaultRemarkPlugins: [],
-        beforeDefaultRemarkPlugins: [
-          [
-            remarkScopedPath,
-            [
-              { from: '@openzitidocs', to: '_remotes/ziti-doc/docusaurus/docs' },
-              { from: '@openzitiimg',    to: '/img/openziti' },
-              { from: '@openzitisite',   to: './_remotes/ziti-doc/docusaurus' },
-            ],
-          ],
-        ],
+        // beforeDefaultRemarkPlugins: [
+        //   [
+        //     remarkScopedPath,
+        //     [
+        //       { from: '@openzitidocs', to: '_remotes/ziti-doc/docusaurus/docs' },
+        //       { from: '@openzitiimg',    to: '/img/openziti' },
+        //       { from: '@openzitisite',   to: './_remotes/ziti-doc/docusaurus' },
+        //     ],
+        //   ],
+        // ],
       },
     ],
     // [
