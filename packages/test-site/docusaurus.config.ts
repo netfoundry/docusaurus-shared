@@ -92,34 +92,28 @@ const config: Config = {
   staticDirectories: [
     'static',
     '_remotes/ziti-doc/docusaurus/static',
+    '_remotes/ziti-doc/docusaurus/public',
   ],
 
   themeConfig: {
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'My Site',
+      title: 'NetFoundry Docs',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'defaultSidebar',
-          docId: 'intro',
-          position: 'left',
-          label: 'Tutorial',
-        },
-        {
           href: 'https://github.com/netfoundry/docusaurus-shared',
           label: 'GitHub',
           position: 'right',
         },
         {
-          label: 'Docs',
+          label: 'Products',
           position: 'left',
           items: [
-            { label: 'OpenZiti', to: '/docs/openziti' },
+            { label: 'OpenZiti', to: 'docs/openziti/learn/introduction/' },
             { label: 'Other Docs', to: '/docs/intro' },
           ]
         }
