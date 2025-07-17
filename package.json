@@ -4,6 +4,6 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "yarn workspace @netfoundry/docusaurus-shared build && yarn workspace test-site start"
+    "dev": "yarn workspace @openclint/docusaurus-shared build && yarn workspace test-site start"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@netfoundry/docusaurus-shared",
+  "name": "@openclint/docusaurus-shared",
   "version": "0.0.1",
   "description": "Shared components for Docusaurus projects",
   "type": "module",
@@ -46,5 +46,8 @@
     "react-device-detect": "^2.2.3",
     "react-github-btn": "^1.4.0"
   },
-  "style": "dist/index.css"
+  "style": "dist/index.css",
+  "publishConfig": {
+    "access": "public"
+  }
 }

@@ -3,7 +3,7 @@
  * bundles Infima by default. Infima is a CSS framework designed to
  * work well for content-centric websites.
  */
-@import '@netfoundry/docusaurus-shared/dist/index.css';
+@import '@openclint/docusaurus-shared/dist/index.css';
 @import '@site/_remotes/ziti-doc/docusaurus/src/css/custom.css';
 
 /* You can override the default Infima variables here. */
