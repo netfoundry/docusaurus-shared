@@ -23,11 +23,23 @@ const config: Config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-
   presets: [
     [
       'classic',
       {
+        docs: {
+          beforeDefaultRemarkPlugins: [
+            [
+              remarkScopedPath,
+              {
+                debug: true,
+                mappings: [
+                  { from: '@openzitidocs', to: 'openziti' },
+                ],
+              },
+            ],
+          ],
+        },
         theme: {
           customCss: './src/css/custom.css',
         },

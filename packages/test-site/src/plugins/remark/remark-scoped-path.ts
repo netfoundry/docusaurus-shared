@@ -1,13 +1,17 @@
 import { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
-import { Image, Html } from 'mdast'
+import { Image, Link } from 'mdast'
 import { MdxJsxFlowElement, MdxjsEsm } from 'mdast-util-mdx'
 import { writeFileSync, appendFileSync } from 'fs'
 import { join } from 'path'
 
-interface Options {
+interface ScopedPathOptions {
     from: string
     to: string
+}
+interface Options {
+    debug?: boolean
+    mappings: ScopedPathOptions[]
 }
 
 const LOG = join(process.cwd(), 'remarkScopedPath.log')
@@ -17,20 +21,31 @@ const log = (msg:string) => {
     appendFileSync(LOG, `[${new Date().toISOString()}] ${msg}\n`)
 }
 
-const remarkScopedPath: Plugin<[Options[]]> = (options) => {
+const remarkScopedPath: Plugin<[Options]> = ({ mappings, debug }) => {
     return (tree, file) => {
         const filePath = file?.path || file?.history?.slice(-1)[0] || 'unknown'
         log(`processing file ${filePath}`)
         visit(tree, 'image', (node: Image) => {
             if (typeof node.url === 'string') {
-                for (const { from, to } of options) {
+                if (debug) { log("url before: " + node.url) }
+                for (const { from, to } of mappings) {
+                    if (node.url.startsWith(from)) {
+                        node.url = node.url.replace(from, to)
+                    }
+                }
+                if (debug) { log("url after: " + node.url) }
+            }
+        })
+
+        visit(tree, 'link', (node: Link) => {
+            if (typeof node.url === 'string') {
+                for (const { from, to } of mappings) {
                     if (node.url.startsWith(from)) {
                         node.url = node.url.replace(from, to)
                     }
                 }
             }
         })
-
 
         visit(tree, 'mdxJsxFlowElement', (node: MdxJsxFlowElement) => {
             if (node.name === 'img' && Array.isArray(node.attributes)) {
@@ -40,7 +55,7 @@ const remarkScopedPath: Plugin<[Options[]]> = (options) => {
                         attr.name === 'src' &&
                         typeof attr.value === 'string'
                     ) {
-                        for (const { from, to } of options) {
+                        for (const { from, to } of mappings) {
                             if (attr.value.startsWith(from)) {
                                 attr.value = attr.value.replace(from, to)
                             }
@@ -51,16 +66,13 @@ const remarkScopedPath: Plugin<[Options[]]> = (options) => {
         })
 
         visit(tree, 'mdxjsEsm', (node: MdxjsEsm) => {
-            log(`    value at start: ${node.value}'`)
-            for (const { from, to } of options) {
+            for (const { from, to } of mappings) {
                 log(`    from='${from}'`)
                 log(`    to='${to}`)
                 const re = new RegExp(`(['"])${from}/`, 'g')
                 node.value = node.value.replace(re, `$1${to}/`)
             }
-            log(`    value at end  : ${node.value}'`)
         })
-        log(`cwd: ${file.cwd}`)
         log(` `)
     }
 }
