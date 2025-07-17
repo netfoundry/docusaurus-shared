@@ -1,6 +1,5 @@
 import React, {type ReactNode} from 'react';
 import { OpenZitiLayout, OpenZitiLayoutProps } from '@openclint/docusaurus-shared';
-import styles from './styles.module.css'
 
 export default function LayoutWrapper(props: OpenZitiLayoutProps): ReactNode {
     return (
