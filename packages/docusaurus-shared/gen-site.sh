@@ -1,4 +1,4 @@
-WHERE=/home/clint/git/github/netfoundry/docusaurus-shared/packages/new-site
+WHERE=/home/clint/git/github/netfoundry/docusaurus-shared/new-site
 
 # 1. Create new Docusaurus site in TypeScript
 rm -rf $WHERE

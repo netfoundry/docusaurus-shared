@@ -6,10 +6,7 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 
 export default {
-  input: {
-    index: 'src/index.ts',
-    'plugins/remarkScopedPath/remarkScopedPath': 'src/plugins/remarkScopedPath/remarkScopedPath.ts',
-  },
+  input: 'src/index.ts',
   external: [
     'react',
     'react-dom',
@@ -41,11 +38,18 @@ export default {
       minimize: true,
     }),
   ],
-  output: {
-    dir: 'dist',
-    format: 'esm',
-    sourcemap: true,
-    entryFileNames: '[name].js',
-  }
-
+  output: [
+    {
+      file: 'dist/index.cjs.js',
+      format: 'cjs',
+      sourcemap: true,
+      inlineDynamicImports: true,
+    },
+    {
+      file: 'dist/index.esm.js',
+      format: 'esm',
+      sourcemap: true,
+      inlineDynamicImports: true,
+    },
+  ],
 };
