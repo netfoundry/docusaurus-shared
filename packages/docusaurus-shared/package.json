@@ -1,6 +1,6 @@
 {
   "name": "@openclint/docusaurus-shared",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "Shared components for Docusaurus projects",
   "type": "module",
   "main": "dist/index.cjs.js",
@@ -11,10 +11,11 @@
     "src"
   ],
   "scripts": {
+    "test": "jest",
     "clear": "rimraf dist tsconfig.tsbuildinfo",
     "build": "rollup -c",
     "build:watch": "rollup -c -w",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "yarn build && yarn test"
   },
   "peerDependencies": {
     "@docusaurus/core": "^3",
@@ -33,6 +34,7 @@
     "@types/react-dom": "*",
     "autoprefixer": "^10.4.16",
     "clsx": "^2.0.0",
+    "jest": "^30.0.4",
     "postcss": "^8.4.32",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

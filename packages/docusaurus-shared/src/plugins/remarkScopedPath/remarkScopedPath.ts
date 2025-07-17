@@ -21,28 +21,24 @@ const log = (msg:string) => {
     appendFileSync(LOG, `[${new Date().toISOString()}] ${msg}\n`)
 }
 
-const remarkScopedPath: Plugin<[Options]> = ({ mappings, debug }) => {
+export const remarkScopedPath: Plugin<[Options]> = ({ mappings, debug }) => {
     return (tree, file) => {
         const filePath = file?.path || file?.history?.slice(-1)[0] || 'unknown'
         log(`processing file ${filePath}`)
         visit(tree, 'image', (node: Image) => {
-            if (typeof node.url === 'string') {
-                if (debug) { log("url before: " + node.url) }
-                for (const { from, to } of mappings) {
-                    if (node.url.startsWith(from)) {
-                        node.url = node.url.replace(from, to)
-                    }
+            if (debug) { log("url before: " + node.url) }
+            for (const { from, to } of mappings) {
+                if (node.url.startsWith(from)) {
+                    node.url = node.url.replace(from, to)
                 }
-                if (debug) { log("url after: " + node.url) }
             }
+            if (debug) { log("url after: " + node.url) }
         })
 
         visit(tree, 'link', (node: Link) => {
-            if (typeof node.url === 'string') {
-                for (const { from, to } of mappings) {
-                    if (node.url.startsWith(from)) {
-                        node.url = node.url.replace(from, to)
-                    }
+            for (const { from, to } of mappings) {
+                if (node.url.startsWith(from)) {
+                    node.url = node.url.replace(from, to)
                 }
             }
         })
@@ -76,5 +72,3 @@ const remarkScopedPath: Plugin<[Options]> = ({ mappings, debug }) => {
         log(` `)
     }
 }
-
-export default remarkScopedPath
