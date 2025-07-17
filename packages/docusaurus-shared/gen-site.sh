@@ -1,11 +1,12 @@
-WHERE=/home/clint/git/github/netfoundry/docusaurus-shared/packages/docusaurus-shared/new-site
+WHERE=/home/clint/git/github/netfoundry/docusaurus-shared/packages/new-site
 
 # 1. Create new Docusaurus site in TypeScript
 rm -rf $WHERE
+cd /tmp
 npx create-docusaurus@latest $WHERE classic --skip-install --typescript
-cd $WHERE
 # rm -rf blog docs src/pages src/components static
 # sed -i '/blog/d;/docs/d;/pages/d' docusaurus.config.ts
+cd $WHERE
 yarn install
 
 # 2. Add your published theme
