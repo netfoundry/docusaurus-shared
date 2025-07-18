@@ -2,7 +2,7 @@
 set -euo pipefail
 
 if [ $# -lt 1 ]; then
-  echo "Usage: $0 <site-directory>"
+  echo "Usage: $0 <site-directory> [starLabel] [starRepoUrl]"
   exit 1
 fi
 
@@ -19,7 +19,7 @@ if ! command -v npm >/dev/null 2>&1; then
   exit 1
 fi
 if ! command -v yarn >/dev/null 2>&1; then
-  echo "Error: yarn is not installed. Please install Yarn before proceeding by running `sudo npm add -g yarn`."
+  echo "Error: yarn is not installed. Please install Yarn before proceeding by running \`sudo npm add -g yarn\`."
   exit 1
 fi
 
@@ -34,15 +34,20 @@ yarn install
 # 4. add your published theme
 yarn add @openclint/docusaurus-shared@latest
 
-# 5. emit layout
+# 5. emit layout (conditionally include starProps if label and repoUrl provided)
+star_attr=""
+if [ $# -ge 3 ]; then
+  star_attr=" starProps={{ label: \"$2\", repoUrl: '$3' }}"
+fi
+
 mkdir -p src/theme/Layout && \
-cat <<'EOF' > src/theme/Layout/index.tsx
+cat <<EOF > src/theme/Layout/index.tsx
 import React, {type ReactNode} from 'react';
 import { OpenZitiLayout, OpenZitiLayoutProps } from '@openclint/docusaurus-shared';
 
 export default function LayoutWrapper(props: OpenZitiLayoutProps): ReactNode {
   return (
-    <OpenZitiLayout starProps={{ label: "Like what you see? Give us a star on GitHub", repoUrl: 'https://github.com/openziti/ziti' }}>
+    <OpenZitiLayout${star_attr}>
       {props.children}
     </OpenZitiLayout>
   );
