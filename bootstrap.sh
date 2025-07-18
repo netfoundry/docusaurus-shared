@@ -19,12 +19,12 @@ if ! command -v npm >/dev/null 2>&1; then
   exit 1
 fi
 if ! command -v yarn >/dev/null 2>&1; then
-  echo "Error: yarn is not installed. Please install Yarn before proceeding."
+  echo "Error: yarn is not installed. Please install Yarn before proceeding by running `sudo npm add -g yarn`."
   exit 1
 fi
 
 # 2. create new Docusaurus site
-npx create-docusaurus@latest "$WHERE" classic --skip-install --typescript
+npx --yes create-docusaurus@latest "$WHERE" classic --skip-install --typescript
 
 cd "$WHERE"
 
