@@ -32,7 +32,7 @@ cd "$WHERE"
 yarn install
 
 # 4. add your published theme
-yarn add @openclint/docusaurus-shared@latest
+yarn add @openclint/docusaurus-shared@*
 
 # 5. emit layout (conditionally include starProps if label and repoUrl provided)
 star_attr=""
