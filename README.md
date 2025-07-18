@@ -16,6 +16,14 @@ a location to put the resultant files into.
 
 ## Best Practices
 
+### CSS
+
+There's a shared stylesheet that needs to be linked and used. As of July 2025 it needs to be clarified as it's grown
+crufty over the years. Styling should be done with caution since it should be universal and will affect all docs sites.
+The bootstrapper updates the generated `src/css/custom.css` and appends the shared css at the top using 'import'.
+
+The source of the css will come from the [css folder in the shared project](./packages/docusaurus-shared/src/css).
+
 ### Relative Linking
 At this time, it's considered the best practice to use fully qualified links everywhere. Many IDEs will be able to
 resolve these paths and help when documentation needs to be rearranged. Docusaurus definitely works best when using a
