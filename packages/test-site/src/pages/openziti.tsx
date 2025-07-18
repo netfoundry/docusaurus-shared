@@ -1,16 +1,16 @@
 import React, {JSX, ReactNode, useEffect, useState} from "react";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
-import NetFoundryHorizontalSection from "@site/_remotes/ziti-doc/docusaurus/src/components/OpenZitiHorizontalSection";
+import NetFoundryHorizontalSection from "../../../docusaurus-shared/src/components/NetFoundryHorizontalSection";
 import clsx from "clsx";
-import styles from "@site/_remotes/ziti-doc/docusaurus/src/pages/new-landing/styles.module.css";
+import styles from "../../_remotes/ziti-doc/docusaurus/src/pages/new-landing/styles.module.css";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import ThemedImage from "@theme/ThemedImage";
-import SuperpowersSection from "@site/_remotes/ziti-doc/docusaurus/src/components/SuperpowersSection";
-import zt from "@site/_remotes/ziti-doc/docusaurus/src/pages/new-landing/zt-models.module.css";
-import {ArrowRight, Lock} from "lucide-react";
-import NetFoundryLayout from "@site/_remotes/ziti-doc/docusaurus/src/components/NetFoundryLayout";
+import SuperpowersSection from "../../_remotes/ziti-doc/docusaurus/src/components/SuperpowersSection";
+import zt from "../../_remotes/ziti-doc/docusaurus/src/pages/new-landing/zt-models.module.css";
 
+import {ArrowRight, Lock} from "lucide-react";
+import {NetFoundryLayout} from "../../../docusaurus-shared/src/components/NetFoundryLayout";
 
 function HeroSection({ className }) {
     return (

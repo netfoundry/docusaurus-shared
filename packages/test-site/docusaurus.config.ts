@@ -4,6 +4,11 @@ import remarkScopedPath from './src/plugins/remark/remark-scoped-path';
 const path = require('path');
 
 
+const docsBase = process.env.DEPLOY_ENV === 'kinsta' ? '' : '/docs'
+function docUrl(path:string): string {
+  return docsBase + path;
+}
+
 const config: Config = {
   title: 'Shared Component Testing',
   tagline: 'Dinosaurs are cool',
@@ -28,13 +33,14 @@ const config: Config = {
       'classic',
       {
         docs: {
+          routeBasePath: docsBase,
           beforeDefaultRemarkPlugins: [
             [
               remarkScopedPath,
               {
                 debug: true,
                 mappings: [
-                  { from: '@openzitidocs', to: 'openziti' },
+                  { from: '@openzitidocs', to: docsBase },
                 ],
               },
             ],
@@ -79,16 +85,17 @@ const config: Config = {
         sidebarPath: require.resolve('./_remotes/ziti-doc/docusaurus/sidebars.ts'),
         editUrl:
             'https://github.com/netfoundry/docusaurus-shared/tree/main/packages/create-docusaurus/templates/shared/',
-        // beforeDefaultRemarkPlugins: [
-        //   [
-        //     remarkScopedPath,
-        //     [
-        //       { from: '@openzitidocs', to: '_remotes/ziti-doc/docusaurus/docs' },
-        //       { from: '@openzitiimg',    to: '/img/openziti' },
-        //       { from: '@openzitisite',   to: './_remotes/ziti-doc/docusaurus' },
-        //     ],
-        //   ],
-        // ],
+        beforeDefaultRemarkPlugins: [
+          [
+            remarkScopedPath,
+            {
+              debug: true,
+              mappings: [
+                { from: '@openzitidocs', to: docsBase },
+              ],
+            },
+          ],
+        ],
       },
     ],
     // [
