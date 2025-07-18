@@ -10,9 +10,9 @@ import Navbar from '@theme/Navbar';
 import Footer from "@theme/Footer";
 import LayoutProvider from '@theme/Layout/Provider';
 import ErrorPageContent from '@theme/ErrorPageContent';
-import styles from './OpenZitiLayout.module.css';
+import styles from './NetFoundryLayout.module.css';
 
-import OpenZitiFooter from "../OpenZitiFooter";
+import NetFoundryFooter from "../NetFoundryFooter";
 
 import {StarUs, StarUsProps} from '../StarUs';
 import type LayoutType from '@theme/Layout';
@@ -40,7 +40,7 @@ export interface HighlightProps {
     className?: string;
 }
 
-export interface OpenZitiLayoutProps {
+export interface NetFoundryLayoutProps {
     children?: React.ReactNode;
     noFooter?: boolean;
     className?: string;
@@ -78,7 +78,7 @@ export function Highlight(props: HighlightProps): JSX.Element {
     );
 }
 
-export function OpenZitiLayout(props: OpenZitiLayoutProps): JSX.Element {
+export function NetFoundryLayout(props: NetFoundryLayoutProps): JSX.Element {
     const {
         children,
         noFooter,
@@ -104,7 +104,7 @@ export function OpenZitiLayout(props: OpenZitiLayoutProps): JSX.Element {
                 <ErrorBoundary fallback={(params: any) => <ErrorPageContent {...params} />}>
                     {children}
                 </ErrorBoundary>
-                {!noFooter && <OpenZitiFooter className={footerClassName} />}
+                {!noFooter && <NetFoundryFooter className={footerClassName} />}
             </div>
         </LayoutProvider>
     );
