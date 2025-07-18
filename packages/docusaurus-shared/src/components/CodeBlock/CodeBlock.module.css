@@ -1,0 +1,27 @@
+.codeBlock {
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.title {
+  background-color: var(--ifm-code-background);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: bold;
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.codeBlock pre {
+  margin: 0;
+  padding: 1rem;
+  background-color: var(--ifm-code-background);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.codeBlock code {
+  background-color: transparent;
+  padding: 0;
+  font-family: var(--ifm-font-family-monospace);
+}

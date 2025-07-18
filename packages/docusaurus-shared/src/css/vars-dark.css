@@ -1,0 +1,7 @@
+html[data-theme="dark"] {
+    /*--nf-docs-max-width: 100px;*/
+    /*--nf-docs-main-color: pink;*/
+    .container {
+        /*background: orange;*/
+    }
+}
