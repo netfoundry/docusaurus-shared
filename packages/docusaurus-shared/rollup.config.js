@@ -14,7 +14,9 @@ export default {
     'tslib',
     'react-github-btn',
     /^@docusaurus\//,
-    /^@theme\//
+    /^@theme\//,
+    'fs',
+    'path',
   ],
   plugins: [
     peerDepsExternal(),

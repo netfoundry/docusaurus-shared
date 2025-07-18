@@ -2,9 +2,9 @@ const fs = require('fs');
 const path = require('path');
 
 const requiredFiles = [
-  'dist/index.js',
-  'dist/index.js.map',
-  'dist/plugins/remarkScopedPath/remarkScopedPath.js',
+  // 'dist/index.js',
+  // 'dist/index.js.map',
+  // 'dist/plugins/remarkScopedPath/remarkScopedPath.js',
   'dist/plugins/remarkScopedPath/remarkScopedPath.d.ts',
 ];
 

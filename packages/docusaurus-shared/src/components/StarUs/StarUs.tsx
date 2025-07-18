@@ -7,10 +7,7 @@ export type StarUsProps = {
     label?: string;
 };
 
-export default function StarUs({
-                                   repoUrl = 'https://github.com/openziti/ziti',
-                                   label = 'Star us on GitHub',
-                               }: StarUsProps): ReactNode {
+export default function StarUs({repoUrl = '', label = ''}: StarUsProps): ReactNode {
     return (
         <div className={styles.starUsRoot}>
             <span style={{color: "whitesmoke"}}>{label}&nbsp;</span>
