@@ -1,8 +1,8 @@
-export { OpenZitiLayout, H1, H2, H3, Highlight } from './OpenZitiLayout';
+export { NetFoundryLayout, H1, H2, H3, Highlight } from './NetFoundryLayout';
 export type { 
-  OpenZitiLayoutProps, 
+  NetFoundryLayoutProps, 
   H1Props, 
   H2Props, 
   H3Props, 
   HighlightProps 
-} from './OpenZitiLayout';
+} from './NetFoundryLayout';

@@ -68,7 +68,7 @@ it's there. If it's an opensource project and you want to ask for GitHub stars u
 example:
 
 ```
-<OpenZitiLayout
+<NetFoundryLayout
     starProps={{ label: "Like what you see? Give us a star on GitHub",
                repoUrl: 'https://github.com/openziti/ziti' }}>
 ```

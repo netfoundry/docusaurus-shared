@@ -1,7 +1,7 @@
 import React, {JSX, ReactNode, useEffect, useState} from "react";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
-import OpenZitiHorizontalSection from "@site/_remotes/ziti-doc/docusaurus/src/components/OpenZitiHorizontalSection";
+import NetFoundryHorizontalSection from "@site/_remotes/ziti-doc/docusaurus/src/components/OpenZitiHorizontalSection";
 import clsx from "clsx";
 import styles from "@site/_remotes/ziti-doc/docusaurus/src/pages/new-landing/styles.module.css";
 import useBaseUrl from "@docusaurus/useBaseUrl";
@@ -9,12 +9,12 @@ import ThemedImage from "@theme/ThemedImage";
 import SuperpowersSection from "@site/_remotes/ziti-doc/docusaurus/src/components/SuperpowersSection";
 import zt from "@site/_remotes/ziti-doc/docusaurus/src/pages/new-landing/zt-models.module.css";
 import {ArrowRight, Lock} from "lucide-react";
-import OpenZitiLayout from "@site/_remotes/ziti-doc/docusaurus/src/components/OpenZitiLayout";
+import NetFoundryLayout from "@site/_remotes/ziti-doc/docusaurus/src/components/NetFoundryLayout";
 
 
 function HeroSection({ className }) {
     return (
-        <OpenZitiHorizontalSection className={clsx(styles.ozHorizontalSectionRoot, className)}>
+        <NetFoundryHorizontalSection className={clsx(styles.ozHorizontalSectionRoot, className)}>
             <section className={clsx(styles.aaHeroSection, styles.aaSection)} >
                 <div className={clsx(styles.aaHero, styles.aaHeroLeft)}>
                     <div className={styles.aaHeroTitle}>
@@ -45,13 +45,13 @@ function HeroSection({ className }) {
                     />
                 </div>
             </section>
-        </OpenZitiHorizontalSection>
+        </NetFoundryHorizontalSection>
     );
 }
 
 function GetStartedSection ({className}) {
     const btns = clsx(styles.btn, styles.btnSecondary);
-    return <OpenZitiHorizontalSection className={clsx(styles.aaGetStarted2, styles.ozHorizontalSectionRoot, className)} id="deploy_an_overlay">
+    return <NetFoundryHorizontalSection className={clsx(styles.aaGetStarted2, styles.ozHorizontalSectionRoot, className)} id="deploy_an_overlay">
         <section className={clsx(styles.aaSection, styles.aaGetStarted)}>
             <div className={styles.aaContainer}>
                 <div className={styles.aaStartContent}>
@@ -89,11 +89,11 @@ function GetStartedSection ({className}) {
                 </div>
             </div>
         </section>
-    </OpenZitiHorizontalSection>
+    </NetFoundryHorizontalSection>
 }
 
 function SuperPowerSection ({className}) {
-    return <OpenZitiHorizontalSection className={clsx(styles.ozHorizontalSectionRoot, className)}>
+    return <NetFoundryHorizontalSection className={clsx(styles.ozHorizontalSectionRoot, className)}>
         <SuperpowersSection
             className={clsx(styles.aaSection, styles.aaSuperpowersSection)}
             title="Why OpenZiti"
@@ -109,13 +109,13 @@ function SuperPowerSection ({className}) {
                 { icon: '🕵️‍♂️', title: 'No Port Inference', description: <p>Single-port transport prevents service fingerprinting and port scanning vulnerabilities.</p> },
             ]}
         />
-    </OpenZitiHorizontalSection>
+    </NetFoundryHorizontalSection>
 }
 
 function ZeroTrustModel({ className, model, side, windowSize }) {
     const isClient = windowSize && windowSize.width !== undefined;
     return (
-        <OpenZitiHorizontalSection
+        <NetFoundryHorizontalSection
             className={clsx(
                 styles.transitionSection,
                 styles.ozHorizontalSectionRoot,
@@ -166,7 +166,7 @@ function ZeroTrustModel({ className, model, side, windowSize }) {
                     </div>
                 </div>
             </section>
-        </OpenZitiHorizontalSection>
+        </NetFoundryHorizontalSection>
     )
 }
 
@@ -240,9 +240,9 @@ class TransitionSection extends React.Component<{ children?: any, className: any
     render() {
         let {children, className} = this.props;
         return (
-            <OpenZitiHorizontalSection className={className}>
+            <NetFoundryHorizontalSection className={className}>
                 {children}
-            </OpenZitiHorizontalSection>
+            </NetFoundryHorizontalSection>
         );
     }
 }
@@ -268,12 +268,12 @@ function App() {
     }, []);
 
     return (
-        <OpenZitiLayout className={styles.landing}>
+        <NetFoundryLayout className={styles.landing}>
             <HeroSection className={styles.aaabbb}/>
             <ZeroTrustModels windowSize={windowSize} />
             <SuperPowerSection />
             <GetStartedSection />
-        </OpenZitiLayout>
+        </NetFoundryLayout>
     );
 }
 

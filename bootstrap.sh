@@ -43,13 +43,13 @@ fi
 mkdir -p src/theme/Layout && \
 cat <<EOF > src/theme/Layout/index.tsx
 import React, {type ReactNode} from 'react';
-import { OpenZitiLayout, OpenZitiLayoutProps } from '@openclint/docusaurus-shared';
+import { NetFoundryLayout, NetFoundryLayoutProps } from '@openclint/docusaurus-shared';
 
-export default function LayoutWrapper(props: OpenZitiLayoutProps): ReactNode {
+export default function LayoutWrapper(props: NetFoundryLayoutProps): ReactNode {
   return (
-    <OpenZitiLayout${star_attr}>
+    <NetFoundryLayout${star_attr}>
       {props.children}
-    </OpenZitiLayout>
+    </NetFoundryLayout>
   );
 }
 EOF

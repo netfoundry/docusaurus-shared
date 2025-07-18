@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import OpenZitiHorizontalSection from "../OpenZitiHorizontalSection";
+import NetFoundryHorizontalSection from "../NetFoundryHorizontalSection";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import styles from './styles.module.css';
 
@@ -12,7 +12,7 @@ export default function NetFoundryFooter(props: { className?: any; style?: any; 
     
     return (
         <footer className={clsx(className, styles.ozFooter)} style={style}>
-            <OpenZitiHorizontalSection className={styles.footer}>
+            <NetFoundryHorizontalSection className={styles.footer}>
                 <div className={styles.footerContainer}>
                     <div className={styles.footerGrid}>
                         <div className={styles.footerColumn}>
@@ -71,7 +71,7 @@ export default function NetFoundryFooter(props: { className?: any; style?: any; 
                 <div className={styles.footerCopyright}>
                     <p>© 2025 NetFoundry Inc. OpenZiti is an open source project sponsored by NetFoundry. All rights reserved.</p>
                 </div>
-            </OpenZitiHorizontalSection>
+            </NetFoundryHorizontalSection>
         </footer>
     );
 }
