@@ -1,0 +1,14 @@
+html,
+body,
+#__docusaurus {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-wrapper > div {
+    /* work around issue from docusaurus doc grow/shrinking based on content */
+    width: 100%;
+    max-width: var(--ziti-max-width);
+}

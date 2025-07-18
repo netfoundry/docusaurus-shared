@@ -1,0 +1,2 @@
+export { remarkScopedPath } from './remarkScopedPath'
+

@@ -1,0 +1,55 @@
+{
+  "name": "@openclint/docusaurus-shared",
+  "version": "0.0.44",
+  "description": "Shared components for Docusaurus projects",
+  "type": "module",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "test": "jest",
+    "clear": "rimraf dist tsconfig.tsbuildinfo",
+    "build": "rollup -c",
+    "build:watch": "rollup -c -w",
+    "prepublishOnly": "yarn build && yarn test"
+  },
+  "peerDependencies": {
+    "@docusaurus/core": "^3",
+    "@docusaurus/theme-common": "^3",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "devDependencies": {
+    "@docusaurus/core": "^3",
+    "@docusaurus/theme-common": "^3",
+    "@docusaurus/types": "^3",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "autoprefixer": "^10.4.16",
+    "clsx": "^2.0.0",
+    "jest": "^30.0.4",
+    "postcss": "^8.4.32",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "rollup": "^4.9.6",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "react-device-detect": "^2.2.3",
+    "react-github-btn": "^1.4.0"
+  },
+  "style": "dist/index.css",
+  "publishConfig": {
+    "access": "public"
+  }
+}
