@@ -55,7 +55,13 @@ export default function LayoutWrapper(props: NetFoundryLayoutProps): ReactNode {
 EOF
 
 # 6. add css import
-sed -i.'' '1i@import "@openclint/docusaurus-shared/dist/index.css";' src/css/custom.css
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  sed -i '' '1i\
+@import "@openclint/docusaurus-shared/dist/index.css";
+' src/css/custom.css
+else
+  sed -i '1i@import "@openclint/docusaurus-shared/dist/index.css";' src/css/custom.css
+fi
 
 # 7. backup and emit a basic .gitignore
 cp .gitignore .gitignore.back
