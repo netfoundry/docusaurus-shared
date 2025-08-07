@@ -4,6 +4,15 @@ export type { AlertProps } from './Alert';
 export { CodeBlock } from './CodeBlock';
 export type { CodeBlockProps } from './CodeBlock';
 
+export { NetFoundryHorizontalSection } from './NetFoundryHorizontalSection';
+export type { NetFoundryHorizontalSectionProps } from './NetFoundryHorizontalSection';
+
+export { NetFoundryHighlight } from './NetFoundryHighlight';
+export type { NetFoundryHighlightProps } from './NetFoundryHighlight';
+
+export { NetFoundryFooter } from './NetFoundryFooter';
+export type { NetFoundryFooterProps } from './NetFoundryFooter';
+
 export { NetFoundryLayout, H1, H2, H3, Highlight } from './NetFoundryLayout';
 export type { 
   NetFoundryLayoutProps, 

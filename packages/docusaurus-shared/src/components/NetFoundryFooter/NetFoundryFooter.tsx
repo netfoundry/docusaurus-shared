@@ -1,14 +1,16 @@
-import React from 'react';
+import React, {CSSProperties, ReactNode} from 'react';
 import clsx from 'clsx';
-import NetFoundryHorizontalSection from "../NetFoundryHorizontalSection";
+import {NetFoundryHorizontalSection} from "../NetFoundryHorizontalSection";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import styles from './styles.module.css';
 
-export default function NetFoundryFooter(props: { className?: any; style?: any; }) {
-    const {
-        className,
-        style,
-    } = props;
+export type NetFoundryFooterProps = {
+    className?: string;
+    style?: CSSProperties;
+};
+
+export function NetFoundryFooter(props: NetFoundryFooterProps) {
+    const { className, style } = props;
     
     return (
         <footer className={clsx(className, styles.ozFooter)} style={style}>
