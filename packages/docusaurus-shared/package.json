@@ -1,6 +1,6 @@
 {
   "name": "@openclint/docusaurus-shared",
-  "version": "0.0.49",
+  "version": "0.0.50",
   "description": "Shared components for Docusaurus projects",
   "type": "module",
   "main": "dist/index.cjs.js",
