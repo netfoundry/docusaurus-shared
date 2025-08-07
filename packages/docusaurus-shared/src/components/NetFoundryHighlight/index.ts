@@ -1,2 +1,2 @@
-export { NetFoundryHorizontalSection } from './NetFoundryHorizontalSection';
-export type { NetFoundryLayoutProps } from './NetFoundryHorizontalSection';
+export { NetFoundryHighlight } from './NetFoundryHighlight';
+export type { NetFoundryHighlightProps } from './NetFoundryHighlight';

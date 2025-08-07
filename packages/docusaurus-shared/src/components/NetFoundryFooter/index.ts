@@ -1,2 +1,2 @@
-export { NetFoundryHighlight } from './NetFoundryHighlight';
-export type { NetFoundryHighlightProps } from './NetFoundryHighlight';
+export { NetFoundryFooter } from './NetFoundryFooter';
+export type { NetFoundryFooterProps } from './NetFoundryFooter';

@@ -1,4 +1,4 @@
-import React, {ReactNode, CSSProperties} from 'react';
+import React, { ReactNode, CSSProperties } from 'react';
 import clsx from 'clsx';
 import styles from './styles.module.css';
 
@@ -9,7 +9,7 @@ export type NetFoundryHorizontalSectionProps = {
     id?: string;
 };
 
-export default function NetFoundryHorizontalSection(props: NetFoundryHorizontalSectionProps) {
+export function NetFoundryHorizontalSection(props: NetFoundryHorizontalSectionProps) {
     const { children, className, style, id } = props;
     return (
         <section

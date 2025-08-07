@@ -18,7 +18,7 @@ export function NetFoundryFooter(props: NetFoundryFooterProps) {
                 <div className={styles.footerContainer}>
                     <div className={styles.footerGrid}>
                         <div className={styles.footerColumn}>
-                            <h3>OpenZiti</h3>
+                            <h3>NetFoundry</h3>
                             <p>An open source project enabling developers to embed zero trust networking directly into applications.</p>
                             <div className={styles.footerSocialLinks}>
                                 <a href="https://github.com/openziti/ziti" target="_blank" className={styles.footerSocialLink}>
@@ -64,7 +64,7 @@ export function NetFoundryFooter(props: NetFoundryFooterProps) {
                         <div className={styles.footerColumn}>
                             <h3>Resources</h3>
                             <ul className={styles.footerLinks}>
-                                <li><a href="https://blog.openziti.io">Blog</a></li>
+                                <li><a href="https://blog.openziti.io">OpenZiti Tech Blog</a></li>
                                 <li><a href="https://netfoundry.io/">NetFoundry</a></li>
                             </ul>
                         </div>

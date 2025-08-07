@@ -12,7 +12,7 @@ import LayoutProvider from '@theme/Layout/Provider';
 import ErrorPageContent from '@theme/ErrorPageContent';
 import styles from './NetFoundryLayout.module.css';
 
-import NetFoundryFooter from "../NetFoundryFooter";
+import { NetFoundryFooter } from "../NetFoundryFooter";
 
 import {StarUs, StarUsProps} from '../StarUs';
 import type LayoutType from '@theme/Layout';

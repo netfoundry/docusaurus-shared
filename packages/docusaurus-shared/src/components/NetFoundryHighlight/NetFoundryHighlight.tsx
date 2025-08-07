@@ -5,7 +5,7 @@ export type NetFoundryHighlightProps = {
     style?: CSSProperties;
 };
 
-export default function NetFoundryHighlight(props: NetFoundryHighlightProps) {
+export function NetFoundryHighlight(props: NetFoundryHighlightProps) {
     const { children, style } = props;
     return (
         <span style={style}>
