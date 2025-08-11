@@ -1,2 +1,2 @@
-export type {NavbarItem} from './NavBar';
-export { NavbarItems } from './NavBar';
+export type {NavbarItem} from './NetFoundryNavbarItems';
+export { NavbarItems } from './NetFoundryNavbarItems';
