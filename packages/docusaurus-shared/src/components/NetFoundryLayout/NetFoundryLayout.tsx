@@ -7,16 +7,13 @@ import {useKeyboardNavigation} from '@docusaurus/theme-common/internal';
 import SkipToContent from '@theme/SkipToContent';
 import AnnouncementBar from '@theme/AnnouncementBar';
 import Navbar from '@theme/Navbar';
-import Footer from "@theme/Footer";
 import LayoutProvider from '@theme/Layout/Provider';
 import ErrorPageContent from '@theme/ErrorPageContent';
 import styles from './NetFoundryLayout.module.css';
 
-import { NetFoundryFooter } from "../NetFoundryFooter";
+import {NetFoundryFooter, NetFoundryFooterProps} from "../NetFoundryFooter";
 
 import {StarUs, StarUsProps} from '../StarUs';
-import type LayoutType from '@theme/Layout';
-import type { Props, WrapperProps } from '@docusaurus/types';
 
 export interface H1Props {
     children: React.ReactNode;
@@ -41,13 +38,14 @@ export interface HighlightProps {
 }
 
 export interface NetFoundryLayoutProps {
-    children?: React.ReactNode;
+    children: React.ReactNode;
     noFooter?: boolean;
     className?: string;
     footerClassName?: string;
     title?: string;
     description?: string;
     starProps?: StarUsProps;
+    footerProps?: NetFoundryFooterProps;
 }
 
 export function H1(props: H1Props): JSX.Element {
@@ -83,12 +81,11 @@ export function NetFoundryLayout(props: NetFoundryLayoutProps): JSX.Element {
         children,
         noFooter,
         className,
-        footerClassName,
         title,
         description,
-        starProps = {repoUrl: '', label: 'Star us on GitHub'}
+        starProps = {repoUrl: '', label: 'Star us on GitHub'},
     } = props;
-    
+
     useKeyboardNavigation();
     
     return (
@@ -104,7 +101,7 @@ export function NetFoundryLayout(props: NetFoundryLayoutProps): JSX.Element {
                 <ErrorBoundary fallback={(params: any) => <ErrorPageContent {...params} />}>
                     {children}
                 </ErrorBoundary>
-                {!noFooter && <NetFoundryFooter className={footerClassName} />}
+                {!noFooter && props.footerProps && NetFoundryFooter(props.footerProps)}
             </div>
         </LayoutProvider>
     );
