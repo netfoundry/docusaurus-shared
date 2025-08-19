@@ -24,7 +24,7 @@
 
   .footerContainer {
     gap: 2rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
     max-width: var(--ziti-landing-max-width);
     width: 100%;
     align-content: center;

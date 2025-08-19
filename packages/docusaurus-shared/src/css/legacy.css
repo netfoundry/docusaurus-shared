@@ -85,6 +85,7 @@
     --ziti-code-block-background-color: rgb(243, 243, 243);
     --ziti-code-block-border-color: rgb(197, 199, 201);
     --ziti-code-block-font-color: rgb(57, 58, 52);
+    --ifm-code-padding-horizontal: 7px;
 }
 @media (max-height: 1024px) {
     /*for smaller screens, reduce space definitions*/

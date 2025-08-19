@@ -1,6 +1,5 @@
 export * from './Alert'
 export * from './CodeBlock';
-export * from './Docusaurus';
 export * from './NetFoundry'
 export * from './NetFoundryFooter';
 export * from './NetFoundryHighlight';

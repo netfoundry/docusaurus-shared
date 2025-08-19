@@ -52,7 +52,7 @@ export function defaultNetFoundryFooterProps(overrides?: Partial<NetFoundryFoote
             <a href="/policies/CONTRIBUTING">Contributing</a>,
         ],
         resourceLinks: [
-            <a href="https://blog.openziti.io/tomato">OpenZiti Tech Blog</a>,
+            <a href="https://blog.openziti.io">OpenZiti Tech Blog</a>,
             <a href="https://netfoundry.io/">NetFoundry</a>,
         ],
         ...overrides
