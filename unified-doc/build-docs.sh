@@ -32,7 +32,7 @@ cp -f "${script_dir}/_remotes/frontdoor/docusaurus/src/pages/OnPrem.module.css" 
 cp -f "${script_dir}/_remotes/frontdoor/docusaurus/src/pages/index.tsx" "${script_dir}/src/pages/docs/frontdoor/"
 
 
-cp -r "${script_dir}/_remotes/openziti/docusaurus/static/img/"* "${script_dir}/static/img/"
+#cp -r "${script_dir}/_remotes/openziti/docusaurus/static/img/"* "${script_dir}/static/img/"
 
 
 

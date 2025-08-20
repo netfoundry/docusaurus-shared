@@ -45,6 +45,10 @@ const config: Config = {
             customCss: require.resolve('./src/css/custom.css'),
         }],
     ],
+    staticDirectories: [
+        'static',
+        '_remotes/openziti/docusaurus/static/'
+    ],
     plugins: [
         function webpackAliases() {
             return {

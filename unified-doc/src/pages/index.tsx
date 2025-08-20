@@ -31,7 +31,7 @@ export default function Home(): ReactNode {
                             <span style={{margin: '0 8px'}} />
                             <Link className="button button--secondary button--lg" to="/docs/frontdoor/intro">Frontdoor Docs</Link>
                             <span style={{margin: '0 8px'}} />
-                            <Link className="button button--secondary button--lg" to="/docs/ziti/intro">OpenZiti Docs</Link>
+                            <Link className="button button--secondary button--lg" to="/docs/openziti/learn/introduction">OpenZiti Docs</Link>
                         </div>
                     </div>
                 </NetFoundryHorizontalSection>
@@ -68,7 +68,7 @@ export default function Home(): ReactNode {
                                         Open-source zero-trust networking project and SDKs.
                                     </div>
                                     <div className="card__footer">
-                                        <Link className="button button--primary button--block" to="/docs/ziti/intro">Go to OpenZiti</Link>
+                                        <Link className="button button--primary button--block" to="/docs/openziti/learn/introduction">Go to OpenZiti</Link>
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +82,7 @@ export default function Home(): ReactNode {
                                         <ul>
                                             <li><Link to="/docs/onprem/deploy">On-Prem Deployment</Link></li>
                                             <li><Link to="/docs/frontdoor/getting-started">Frontdoor Getting Started</Link></li>
-                                            <li><Link to="/docs/ziti/reference/cli">OpenZiti CLI Reference</Link></li>
+                                            <li><Link to="/docs/openziti/learn/reference/cli">OpenZiti CLI Reference</Link></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -94,7 +94,7 @@ export default function Home(): ReactNode {
                                         <ul>
                                             <li><Link to="/docs/onprem/troubleshooting">On-Prem Troubleshooting</Link></li>
                                             <li><Link to="/docs/frontdoor/troubleshooting">Frontdoor Troubleshooting</Link></li>
-                                            <li><Link to="/docs/ziti/faq">OpenZiti FAQ</Link></li>
+                                            <li><Link to="/docs/openziti/learn/faq">OpenZiti FAQ</Link></li>
                                         </ul>
                                     </div>
                                 </div>
