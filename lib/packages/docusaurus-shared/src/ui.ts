@@ -4,3 +4,4 @@ import './css/layout.css'
 import './css/legacy.css'
 
 export * from './components';
+export * from './docusaurus-envhelper'
