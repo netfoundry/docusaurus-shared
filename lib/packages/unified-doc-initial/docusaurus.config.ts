@@ -68,7 +68,10 @@ const config: Config = {
             } satisfies Preset.Options,
         ],
     ],
-
+    customFields: {
+        DOCUSAURUS_BASE_PATH: DOCUSAURUS_BASE_PATH,
+        DOCUSAURUS_DOCS_PATH: DOCUSAURUS_DOCS_PATH,
+    },
     themeConfig: {
         // Replace with your project's social card
         image: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
