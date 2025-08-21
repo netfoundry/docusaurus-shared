@@ -2,6 +2,9 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import * as path from "node:path";
+import remarkReplaceMetaUrl from "./_remotes/openziti/docusaurus/src/plugins/remark/remark-replace-meta-url";
+import {DOCUSAURUS_BASE_PATH, DOCUSAURUS_DEBUG, DOCUSAURUS_DOCS_PATH} from "@openclint/docusaurus-shared/node";
+import {remarkScopedPath} from "./_remotes/openziti/docusaurus/src/plugins/remark/remarkScopedPath";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
@@ -96,6 +99,20 @@ const config: Config = {
                 routeBasePath: 'openziti',
                 sidebarPath: `${openziti}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
+
+                remarkPlugins: [
+                    // require('./src/plugins/remark/remark-yaml-table'),
+                    // require('./src/plugins/remark/remark-code-block'),
+                    [remarkReplaceMetaUrl, {from: '_baseurl_', to: DOCUSAURUS_BASE_PATH}],
+                    [remarkScopedPath,
+                        {
+                            debug: DOCUSAURUS_DEBUG,
+                            mappings: [
+                                {from: '@openzitidocs', to: '/docs/openziti'},
+                            ],
+                        },
+                    ]
+                ],
             },
         ],
     ],

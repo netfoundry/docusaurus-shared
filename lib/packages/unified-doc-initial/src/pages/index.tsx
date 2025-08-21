@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import type LayoutType from "@theme/Layout";
 import type {WrapperProps} from '@docusaurus/types';
-import {defaultNetFoundryFooterProps, NetFoundryLayout} from "@openclint/docusaurus-shared";
+import {defaultNetFoundryFooterProps, NetFoundryLayout} from "@openclint/docusaurus-shared/ui";
 
 import styles from './index.module.css';
 

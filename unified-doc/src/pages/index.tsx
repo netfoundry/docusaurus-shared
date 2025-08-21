@@ -6,7 +6,7 @@ import {
     defaultNetFoundryFooterProps,
     NetFoundryHorizontalSection,
     NetFoundryLayout,
-} from '@openclint/docusaurus-shared';
+} from '@openclint/docusaurus-shared/ui';
 
 export default function Home(): ReactNode {
     const {siteConfig} = useDocusaurusContext();
@@ -80,9 +80,9 @@ export default function Home(): ReactNode {
                                     <div className="card__header"><h3>Quick Links</h3></div>
                                     <div className="card__body">
                                         <ul>
-                                            <li><Link to="/docs/onprem/deploy">On-Prem Deployment</Link></li>
-                                            <li><Link to="/docs/frontdoor/getting-started">Frontdoor Getting Started</Link></li>
-                                            <li><Link to="/docs/openziti/learn/reference/cli">OpenZiti CLI Reference</Link></li>
+                                            <li><Link to="/docs/onprem/intro">On-Prem Deployment</Link></li>
+                                            <li><Link to="/docs/frontdoor/intro">Frontdoor Getting Started</Link></li>
+                                            <li><Link to="/docs/openziti/reference/command-line/login">OpenZiti CLI Reference</Link></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -93,8 +93,8 @@ export default function Home(): ReactNode {
                                     <div className="card__body">
                                         <ul>
                                             <li><Link to="/docs/onprem/troubleshooting">On-Prem Troubleshooting</Link></li>
-                                            <li><Link to="/docs/frontdoor/troubleshooting">Frontdoor Troubleshooting</Link></li>
-                                            <li><Link to="/docs/openziti/learn/faq">OpenZiti FAQ</Link></li>
+                                            <li><Link to="/docs/frontdoor/learn/health-checks">Frontdoor Troubleshooting</Link></li>
+                                            <li><Link to="/docs/openziti/learn/identity-providers">OpenZiti FAQ</Link></li>
                                         </ul>
                                     </div>
                                 </div>
