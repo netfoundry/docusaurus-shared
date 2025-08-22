@@ -47,9 +47,13 @@ const config: Config = {
         ['@docusaurus/theme-classic', {
             customCss: require.resolve('./src/css/custom.css'),
         }],
+        '@docusaurus/theme-mermaid',
+        '@docusaurus/theme-search-algolia',
     ],
     staticDirectories: [
         'static',
+        '_remotes/frontdoor/docusaurus/static/',
+        '_remotes/onprem/docs-site/static/',
         '_remotes/openziti/docusaurus/static/'
     ],
     plugins: [
@@ -140,6 +144,14 @@ const config: Config = {
         prism: {
             theme: prismThemes.github,
             darkTheme: prismThemes.dracula,
+        },
+        algolia: {
+            appId: 'EXWPKK5PV4',
+            apiKey: '47858a78ccf0246d9b9cf4efaf6a1b8b',
+            indexName: 'openziti',
+            contextualSearch: true,
+            searchParameters: {},
+            searchPagePath: 'search'
         },
     } satisfies Preset.ThemeConfig,
     presets: [
