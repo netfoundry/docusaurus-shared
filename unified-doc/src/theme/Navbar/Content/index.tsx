@@ -82,7 +82,7 @@ export default function NavbarContent(props: Props): JSX.Element {
             <div className="navbar__items navbar__items--right">
                 {!cmCfg?.disableSwitch && (
                     <ColorModeToggle
-                        // className={styles.bob}
+                        // className={styles.colorModeToggle}
                         value={colorMode}
                         onChange={setColorMode}
                     />
