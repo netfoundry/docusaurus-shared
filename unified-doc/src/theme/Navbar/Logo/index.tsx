@@ -11,7 +11,9 @@ const mapTitle = (p: string, defTitle: string) => {
     if (p.startsWith('/docs/frontdoor')) return {alt:'Frontdoor', logoLight: `/docs/img/frontdoor-logo-light.svg`, logoDark: `/docs/img/frontdoor-logo-dark.svg`};
     if (p.startsWith('/docs/onprem')) return {alt:'On-Prem', logoLight: `/docs/img/onprem-logo-light.svg`, logoDark: `/docs/img/onprem-logo-dark.svg`};
     if (p.startsWith('/docs/openziti')) return {alt:'OpenZiti', logoLight: `/docs/img/ziti-logo-dark.svg`, logoDark: `/docs/img/ziti-logo-light.svg`};
-    return defTitle;
+    return {alt:'NetFoundry',
+        logoLight: `https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/logo%20horizontal%20no%20margin/tagline/netfoundry-logo-tag-color-horizontal.svg`,
+        logoDark: `https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/logo%20horizontal%20no%20margin/tagline/netfoundry-logo-tag-white-horizontal.svg`};
 };
 
 function navbarpoke(cfg:DocusaurusConfig) {

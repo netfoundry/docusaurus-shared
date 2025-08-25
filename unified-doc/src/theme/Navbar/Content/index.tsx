@@ -15,9 +15,9 @@ type Item = any;
 const DOCS_PREFIX = '/docs';
 
 const unifiedNav: Item[] = [
-    {label: 'NetFoundry', to: '/', position: 'left'},
-    {label: 'Downloads', to: '/downloads', position: 'left'},
-    {label: 'Blog', to: '/blog', position: 'left'},
+    // {label: 'NetFoundry', to: '/', position: 'left'},
+    // {label: 'Downloads', to: '/downloads', position: 'left'},
+    // {label: 'Blog', to: '/blog', position: 'left'},
 ];
 
 const openZitiNav: Item[] = [

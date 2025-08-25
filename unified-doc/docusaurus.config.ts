@@ -75,6 +75,9 @@ const config: Config = {
             };
         },
         ['@docusaurus/plugin-content-pages',{path: 'src/pages',routeBasePath: '/'}],
+        ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
+        ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docs-site/src/pages`, routeBasePath: '/onprem'}],
+        ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
         [
             '@docusaurus/plugin-content-docs',
             {

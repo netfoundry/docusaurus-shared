@@ -1,4 +1,5 @@
 import {defaultNetFoundryFooterProps, defaultSocialProps} from "@openclint/docusaurus-shared/ui";
+import React from "react";
 
 export const unifiedFooter = {
     ...defaultNetFoundryFooterProps(),
@@ -18,6 +19,7 @@ export const unifiedFooter = {
         <a key="new" href="/installation">Getting Startedb 5</a>
     ],
     resourceLinks: [
-        <a key="new" href="/installation">Getting Startedc 6</a>
+        <a href="https://blog.openziti.io">OpenZiti Tech Blog</a>,
+        <a href="https://netfoundry.io/">NetFoundry</a>,
     ],
 }
