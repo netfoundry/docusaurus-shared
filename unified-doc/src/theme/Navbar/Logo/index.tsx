@@ -8,9 +8,9 @@ import ThemedImage from "@theme/ThemedImage";
 
 const mapTitle = (p: string, defTitle: string) => {
     const generic = `https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg`;
-    if (p.startsWith('/docs/frontdoor')) return {alt:'Frontdoor', logoLight: `/docs/img/frontdoor-logo-light.svg`, logoDark: `/docs/img/frontdoor-logo-dark.svg`};
-    if (p.startsWith('/docs/onprem')) return {alt:'On-Prem', logoLight: `/docs/img/onprem-logo-light.svg`, logoDark: `/docs/img/onprem-logo-dark.svg`};
-    if (p.startsWith('/docs/openziti')) return {alt:'OpenZiti', logoLight: `/docs/img/ziti-logo-dark.svg`, logoDark: `/docs/img/ziti-logo-light.svg`};
+    if (p.startsWith('/docs/frontdoor')) return {to: '/frontdoor', alt:'Frontdoor', logoLight: `/docs/img/frontdoor-logo-light.svg`, logoDark: `/docs/img/frontdoor-logo-dark.svg`};
+    if (p.startsWith('/docs/onprem')) return {to: '/onprem',alt:'On-Prem', logoLight: `/docs/img/onprem-logo-light.svg`, logoDark: `/docs/img/onprem-logo-dark.svg`};
+    if (p.startsWith('/docs/openziti')) return {to: '/openziti',alt:'OpenZiti', logoLight: `/docs/img/openziti-logo-light.svg`, logoDark: `/docs/img/openziti-logo-dark.svg`};
     return {alt:'NetFoundry',
         logoLight: `https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/logo%20horizontal%20no%20margin/tagline/netfoundry-logo-tag-color-horizontal.svg`,
         logoDark: `https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/logo%20horizontal%20no%20margin/tagline/netfoundry-logo-tag-white-horizontal.svg`};
@@ -26,10 +26,7 @@ export default function NavbarLogo(): JSX.Element {
     const title = mapTitle(pathname, siteConfig.title);
     navbarpoke(siteConfig);
     return (
-        // <Link className="navbar__brand" to="/">
-        //     <img className="navbar__logo" src={title.logo} alt={title.alt} />
-        // </Link>
-        <Link className="navbar__brand" to="/">
+        <Link className="navbar__brand" to={title.to}>
             <ThemedImage
                 className="navbar__logo"
                 alt={title.alt}

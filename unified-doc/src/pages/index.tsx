@@ -20,7 +20,7 @@ export default function Home(): ReactNode {
             description="Find product and open-source docs fast"
         >
             <main>
-                <NetFoundryHorizontalSection className="hero hero--primary" style={{padding: '4rem 0'}}>
+                <NetFoundryHorizontalSection >
                     <div className="container">
                         <h1 className="hero__title" style={{marginBottom: 8}}>NetFoundry Docs</h1>
                         <p className="hero__subtitle" style={{marginBottom: 24}}>
@@ -36,7 +36,7 @@ export default function Home(): ReactNode {
                     </div>
                 </NetFoundryHorizontalSection>
 
-                <NetFoundryHorizontalSection>
+                <NetFoundryHorizontalSection style={{paddingBottom: "5em" }}>
                     <div className="container">
                         <div className="row">
                             <div className="col col--4">
