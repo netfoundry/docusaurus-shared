@@ -1,11 +1,12 @@
 {
   "name": "@openclint/docusaurus-shared",
-  "version": "0.0.69",
+  "version": "0.0.87",
   "description": "Shared components for Docusaurus projects",
   "type": "module",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/ui.cjs.js",
+  "module": "dist/ui.esm.js",
+  "types": "dist/ui.d.ts",
+  "styles": "dist/modules.css",
   "files": [
     "dist",
     "src"
@@ -16,6 +17,27 @@
     "build": "rollup -c",
     "build:watch": "rollup -c -w",
     "prepublishOnly": "yarn build && yarn test"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.esm.js",
+      "require": "./dist/node.cjs.js"
+    },
+    "./ui": {
+      "types": "./dist/ui.d.ts",
+      "import": "./dist/ui.esm.js",
+      "require": "./dist/ui.cjs.js"
+    },
+    "./css/*": "./src/css/*",
+    "./index.css": "./dist/index.css"
+  },
+  "dependencies": {
+    "react-device-detect": "^2.2.3",
+    "react-github-btn": "^1.4.0"
   },
   "peerDependencies": {
     "@docusaurus/core": "^3",
@@ -43,27 +65,5 @@
     "rollup-plugin-postcss": "^4.0.2",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
-  },
-  "dependencies": {
-    "react-device-detect": "^2.2.3",
-    "react-github-btn": "^1.4.0"
-  },
-  "style": "dist/index.css",
-  "publishConfig": {
-    "access": "public"
-  },
-  "exports": {
-    "./node": {
-      "types": "./dist/node.d.ts",
-      "import": "./dist/node.esm.js",
-      "require": "./dist/node.cjs.js"
-    },
-    "./ui": {
-      "types": "./dist/ui.d.ts",
-      "import": "./dist/ui.esm.js",
-      "require": "./dist/ui.cjs.js"
-    },
-    "./styles": "./dist/index.css",
-    "./dist/index.css": "./dist/index.css"
   }
 }

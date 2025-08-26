@@ -21,7 +21,7 @@ export default function LayoutWrapper(props: NetFoundryLayoutProps): ReactNode {
     const starProps: StarUsProps = {}
     if (pathname.startsWith('/docs/openziti')) {
         starProps.repoUrl = 'https://github.com/openziti/ziti';
-        starProps.label = 'Vote For Us';
+        starProps.label = 'Support OpenZiti, give us a GitHub Star';
     }
     const footerToShow = mapFooter(pathname, siteConfig.title);
     return (

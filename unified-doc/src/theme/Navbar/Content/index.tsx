@@ -82,13 +82,13 @@ export default function NavbarContent(props: Props): JSX.Element {
             <div className="navbar__items navbar__items--right">
                 {!cmCfg?.disableSwitch && (
                     <ColorModeToggle
-                        // className={styles.colorModeToggle}
                         value={colorMode}
                         onChange={setColorMode}
                     />
                 )}
                 {right.map((item, i) => <NavbarItem {...item} key={`r-${i}`} />)}
-                <SearchBar/>
+                <span>&nbsp;&nbsp;</span>
+                <SearchBar style={{"leftMargin": "100px"}} />
             </div>
         </div>
     );
