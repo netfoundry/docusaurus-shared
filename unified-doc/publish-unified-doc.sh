@@ -29,17 +29,17 @@ publish_docs() {
   echo "doc publication begins"
   echo "=== scp begins ==="
   scp -o StrictHostKeyChecking=accept-new \
-    -P "$PORT" -i ./github_deploy_key \
-    docs-openziti.zip \
+    -P "$PORT" -i "${pub_script_root}/github_deploy_key" \
+    /tmp/unified-docs.zip \
     "$USER@$HOST:/tmp" \
     2>&1
   echo "=== ssh commands ==="
   for CMD in \
-    "rm -rf ${TARGET_DIR}/docs/openziti" \
-    "mkdir -p ${TARGET_DIR}/docs/openziti" \
-    "unzip -oq /tmp/docs-openziti.zip -d ${TARGET_DIR}/docs/openziti"
+    "rm -rf ${TARGET_DIR}/docs" \
+    "mkdir -p ${TARGET_DIR}/docs" \
+    "unzip -oq /tmp/unified-docs.zip -d ${TARGET_DIR}/docs"
   do
-    ssh -p "$PORT" -i ./github_deploy_key \
+    ssh -p "$PORT" -i "${pub_script_root}/github_deploy_key" \
       "$USER@$HOST" "$CMD" 2>&1
   done
   echo "=== done ==="
@@ -122,3 +122,11 @@ fi
 rm ./github_deploy_key
 
 }
+
+pushd "${pub_script_root}/build/"
+echo $DOCUSAURUS_PUBLISH_ENV
+
+cp ~/.encrypted/.ssh/nf/dovholuknf "${pub_script_root}/github_deploy_key"
+publish_docs "$STG_DOC_SSH_HOST" "$STG_DOC_SSH_PORT" \
+             "$STG_DOC_SSH_USER" "$STG_DOC_SSH_TARGET_DIR"
+rm "${pub_script_root}/github_deploy_key"
