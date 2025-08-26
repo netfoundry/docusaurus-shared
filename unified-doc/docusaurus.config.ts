@@ -162,7 +162,7 @@ const config: Config = {
                 ],
             },
         ],
-        ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
+        ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8, trailingSlash: false }],
         ['@docusaurus/plugin-client-redirects', {
             createRedirects: (path) => path.endsWith('/') ? [path.slice(0, -1)] : [`${path}/`],
         }],
