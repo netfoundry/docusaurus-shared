@@ -20,6 +20,7 @@ export const DOCUSAURUS_DEBUG = getEnv("DOCUSAURUS_DEBUG") === "true";
 export const DOCUSAURUS_URL = ORIGIN;
 export const DOCUSAURUS_BASE_PATH = getEnv("DOCUSAURUS_BASE_PATH", "/base-url");
 export const DOCUSAURUS_DOCS_PATH = getEnv("DOCUSAURUS_DOCS_PATH", "/docs-path");
+export const DOCUSAURUS_CANONICAL_DOMAIN = getEnv("DOCUSAURUS_CANONICAL_DOMAIN", "canonical.domain.missing.local");
 export const hotjarId = getEnv("ZITI_HOTJAR_APPID", "6443327")!;
 
 export function cleanUrl(path: string) {

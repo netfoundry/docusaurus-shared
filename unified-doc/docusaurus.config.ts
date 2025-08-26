@@ -3,7 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import * as path from "node:path";
 import remarkReplaceMetaUrl from "./_remotes/openziti/docusaurus/src/plugins/remark/remark-replace-meta-url";
-import {DOCUSAURUS_BASE_PATH, DOCUSAURUS_DEBUG, DOCUSAURUS_DOCS_PATH} from "@openclint/docusaurus-shared/node";
+import {DOCUSAURUS_BASE_PATH, DOCUSAURUS_DEBUG, DOCUSAURUS_DOCS_PATH, DOCUSAURUS_CANONICAL_DOMAIN} from "@openclint/docusaurus-shared/node";
 import {remarkScopedPath} from "./_remotes/openziti/docusaurus/src/plugins/remark/remarkScopedPath";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
@@ -11,6 +11,45 @@ const frontdoor = `./_remotes/frontdoor`;
 const onprem = `./_remotes/onprem`;
 const openziti = `./_remotes/openziti`;
 const zrok = `./_remotes/zrok`;
+
+interface DocusaurusConfig {
+    url: string;
+}
+
+interface AlgoliaConfig {
+    appId: string;
+    apiKey: string;
+    indexName: string;
+}
+
+interface PublishConfig {
+    docusaurus: DocusaurusConfig;
+    algolia: AlgoliaConfig;
+}
+
+const staging: PublishConfig = {
+    docusaurus: {
+        url: 'https://stg-netfoundry-stg.kinsta.cloud/docs'
+    },
+    algolia: {
+        appId: 'QRGW6TJXHP',
+        apiKey: '267457291182a398c5ee19fcb0bcae77',
+        indexName: 'stg-netfoundry-stg.kinsta.cloud_QRGW6TJXHP',
+    }
+}
+
+const prod: PublishConfig = {
+    docusaurus: {
+        url: 'https://netfoundry.io/docs'
+    },
+    algolia: {
+        appId: 'UWUTF7ESUI',
+        apiKey: '3a4a0691d0e8e3bb7c27c702c6a86ea9',
+        indexName: 'netfoundry.io_UWUTF7ESUI',
+    }
+}
+
+const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV == 'prod' ? prod : staging;
 
 const config: Config = {
     title: 'NetFoundry Documentation',
@@ -23,7 +62,7 @@ const config: Config = {
     },
 
     // Set the production url of your site here
-    url: 'https://your-docusaurus-site.example.com',
+    url: cfg.docusaurus.url,
     // Set the /<baseUrl>/ pathname under which your site is served
     // For GitHub pages deployment, it is often '/<projectName>/'
     baseUrl: '/docs',
@@ -122,6 +161,7 @@ const config: Config = {
                 ],
             },
         ],
+        ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
     ],
     themeConfig: {
         // Replace with your project's social card
@@ -149,9 +189,9 @@ const config: Config = {
             darkTheme: prismThemes.dracula,
         },
         algolia: {
-            appId: 'EXWPKK5PV4',
-            apiKey: '47858a78ccf0246d9b9cf4efaf6a1b8b',
-            indexName: 'openziti',
+            appId: cfg.algolia.appId,
+            apiKey: cfg.algolia.apiKey,
+            indexName: cfg.algolia.indexName,
             contextualSearch: true,
             searchParameters: {},
             searchPagePath: 'search'
