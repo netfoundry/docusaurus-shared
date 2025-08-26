@@ -29,7 +29,7 @@ interface PublishConfig {
 
 const staging: PublishConfig = {
     docusaurus: {
-        url: 'https://stg-netfoundry-stg.kinsta.cloud/docs'
+        url: 'https://stg-netfoundry-stg.kinsta.cloud'
     },
     algolia: {
         appId: 'QRGW6TJXHP',
@@ -40,7 +40,7 @@ const staging: PublishConfig = {
 
 const prod: PublishConfig = {
     docusaurus: {
-        url: 'https://netfoundry.io/docs'
+        url: 'https://netfoundry.io'
     },
     algolia: {
         appId: 'UWUTF7ESUI',
