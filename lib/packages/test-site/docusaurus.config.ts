@@ -1,148 +1,184 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
-import remarkScopedPath from './src/plugins/remark/remark-scoped-path';
-const path = require('path');
+import type * as Preset from '@docusaurus/preset-classic';
+import * as path from "node:path";
+import remarkReplaceMetaUrl from "./_remotes/openziti/docusaurus/src/plugins/remark/remark-replace-meta-url";
+import {DOCUSAURUS_BASE_PATH, DOCUSAURUS_DEBUG, DOCUSAURUS_DOCS_PATH} from "@openclint/docusaurus-shared/node";
+import {remarkScopedPath} from "./_remotes/openziti/docusaurus/src/plugins/remark/remarkScopedPath";
 
-
-const docsBase = process.env.DEPLOY_ENV === 'kinsta' ? '' : '/docs'
-function docUrl(path:string): string {
-  return docsBase + path;
-}
+// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
+const frontdoor = `./_remotes/frontdoor`;
+const onprem = `./_remotes/onprem`;
+const openziti = `./_remotes/openziti`;
+const zrok = `./_remotes/zrok`;
 
 const config: Config = {
-  title: 'Shared Component Testing',
-  tagline: 'Dinosaurs are cool',
-  favicon: 'img/favicon.ico',
+    title: 'NetFoundry Documentation',
+    tagline: 'Documentation for NetFoundry products and projects',
+    favicon: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/png/icon/netfoundry-icon-color.png',
 
-  future: { v4: true },
+    // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
+    future: {
+        v4: true, // Improve compatibility with the upcoming Docusaurus v4
+    },
 
-  url: 'https://your-docusaurus-site.example.com',
-  baseUrl: '/',
-  organizationName: 'netfoundry',
-  projectName: 'docusaurus-shared',
+    // Set the production url of your site here
+    url: 'https://your-docusaurus-site.example.com',
+    // Set the /<baseUrl>/ pathname under which your site is served
+    // For GitHub pages deployment, it is often '/<projectName>/'
+    baseUrl: '/docs',
 
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+    // GitHub pages deployment config.
+    // If you aren't using GitHub pages, you don't need these.
+    organizationName: 'netfoundry', // Usually your GitHub org/user name.
+    projectName: 'netfoundry', // Usually your repo name.
 
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
-  },
-  presets: [
-    [
-      'classic',
-      {
-        docs: {
-          routeBasePath: docsBase,
-          beforeDefaultRemarkPlugins: [
-            [
-              remarkScopedPath,
-              {
-                debug: true,
-                mappings: [
-                  { from: '@openzitidocs', to: docsBase },
-                ],
-              },
+    onBrokenLinks: 'throw',
+    onBrokenMarkdownLinks: 'throw',
+
+    // Even if you don't use internationalization, you can use this field to set
+    // useful metadata like html lang. For example, if your site is Chinese, you
+    // may want to replace "en" with "zh-Hans".
+    i18n: {
+        defaultLocale: 'en',
+        locales: ['en'],
+    },
+    themes: [
+        ['@docusaurus/theme-classic', {
+            customCss: [
+                require.resolve('./src/css/layout.css'),
+                require.resolve('./src/css/legacy.css'),
+                require.resolve('./src/css/vars.css'),
+                require.resolve('./src/css/vars-dark.css'),
             ],
-          ],
-        },
-        theme: {
-          customCss: './src/css/custom.css',
-        },
-      },
+        }],
+        '@docusaurus/theme-mermaid',
+        '@docusaurus/theme-search-algolia',
     ],
-    // Redocusaurus config
-    [
-      'redocusaurus',
-      {
-        // Plugin Options for loading OpenAPI files
-        specs: [
-          {
-            id: 'edge-client',
-            spec: 'https://get.openziti.io/spec/client.yml',
-          },
-          {
-            id: 'edge-management',
-            spec: 'https://get.openziti.io/spec/management.yml',
-          },
-        ],
-        // Theme Options for modifying how redoc renders them
-        theme: {
-          // Change with your site colors
-          primaryColor: '#1890ff',
-        },
-      },
+    staticDirectories: [
+        'static',
+        '_remotes/frontdoor/docusaurus/static/',
+        '_remotes/onprem/docs-site/static/',
+        '_remotes/openziti/docusaurus/static/'
     ],
-  ],
-
-  plugins: [
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'openziti',
-        path: '_remotes/ziti-doc/docusaurus/docs',
-        routeBasePath: 'docs/openziti',
-        sidebarPath: require.resolve('./_remotes/ziti-doc/docusaurus/sidebars.ts'),
-        editUrl:
-            'https://github.com/netfoundry/docusaurus-shared/tree/main/packages/create-docusaurus/templates/shared/',
-        beforeDefaultRemarkPlugins: [
-          [
-            remarkScopedPath,
+    plugins: [
+        function webpackAliases() {
+            return {
+                name: 'unified-doc-webpack-aliases',
+                configureWebpack(config, isServer) {
+                    return {
+                        resolve: {
+                            alias: {
+                                '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
+                                '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
+                                '@zrok': path.resolve(__dirname, `${zrok}/docusaurus`),
+                                '@onprem': path.resolve(__dirname, `${onprem}/docs-site`),
+                            },
+                        },
+                    };
+                },
+            };
+        },
+        ['@docusaurus/plugin-content-pages',{path: 'src/pages',routeBasePath: '/'}],
+        ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
+        ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docs-site/src/pages`, routeBasePath: '/onprem'}],
+        ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
+        [
+            '@docusaurus/plugin-content-docs',
             {
-              debug: true,
-              mappings: [
-                { from: '@openzitidocs', to: docsBase },
-              ],
+                id: 'nfonprem',
+                path: `${onprem}/docs-site/docs`,
+                routeBasePath: 'onprem',
+                sidebarPath: `${onprem}/docs-site/sidebars.ts`,
+                includeCurrentVersion: true,
             },
-          ],
         ],
-      },
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'frontdoor',
+                path: `${frontdoor}/docusaurus/docs`,
+                routeBasePath: 'frontdoor',
+                sidebarPath: `${frontdoor}/docusaurus/sidebars.ts`,
+                includeCurrentVersion: true,
+            },
+        ],
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'openziti',
+                path: `${openziti}/docusaurus/docs`,
+                routeBasePath: 'openziti',
+                sidebarPath: `${openziti}/docusaurus/sidebars.ts`,
+                includeCurrentVersion: true,
+
+                remarkPlugins: [
+                    // require('./src/plugins/remark/remark-yaml-table'),
+                    // require('./src/plugins/remark/remark-code-block'),
+                    [remarkReplaceMetaUrl, {from: '_baseurl_', to: DOCUSAURUS_BASE_PATH}],
+                    [remarkScopedPath,
+                        {
+                            debug: DOCUSAURUS_DEBUG,
+                            mappings: [
+                                {from: '@openzitidocs', to: '/docs/openziti'},
+                            ],
+                        },
+                    ]
+                ],
+            },
+        ],
     ],
-    // [
-    //   '@docusaurus/plugin-content-pages',
-    //   {
-    //     id: 'openziti-pages',
-    //     path: '_remotes/ziti-doc/docusaurus/src/pages',
-    //     routeBasePath: '/docs/openziti'
-    //   }
-    // ],
-  ],
-
-  staticDirectories: [
-    'static',
-    '_remotes/ziti-doc/docusaurus/static',
-    '_remotes/ziti-doc/docusaurus/public',
-  ],
-
-  themeConfig: {
-    image: 'img/docusaurus-social-card.jpg',
-    navbar: {
-      title: 'NetFoundry Docs',
-      logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
-      },
-      items: [
-        {
-          href: 'https://github.com/netfoundry/docusaurus-shared',
-          label: 'GitHub',
-          position: 'right',
+    themeConfig: {
+        // Replace with your project's social card
+        image: 'img/docusaurus-social-card.jpg',
+        navbar: {
+            title: 'NetFoundry Documentation',
+            logo: {
+                alt: 'NetFoundry Logo',
+                src: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
+            },
+            items: [
+                {
+                    label: 'Docs',
+                    position: 'left',
+                    items: [
+                        { to: '/onprem/intro', label: 'On-Prem' },
+                        { to: '/frontdoor/intro', label: 'Frontdoor' },
+                        { to: '/openziti/learn/introduction', label: 'OpenZiti' },
+                    ],
+                },
+            ],
         },
-        {
-          label: 'Products',
-          position: 'left',
-          items: [
-            { label: 'OpenZiti', to: 'docs/openziti/learn/introduction/' },
-            { label: 'Other Docs', to: '/docs/intro' },
-          ]
-        }
-      ],
-    },
-    prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
-    },
-  },
+        prism: {
+            theme: prismThemes.github,
+            darkTheme: prismThemes.dracula,
+        },
+        algolia: {
+            appId: 'EXWPKK5PV4',
+            apiKey: '47858a78ccf0246d9b9cf4efaf6a1b8b',
+            indexName: 'openziti',
+            contextualSearch: true,
+            searchParameters: {},
+            searchPagePath: 'search'
+        },
+    } satisfies Preset.ThemeConfig,
+    presets: [
+        [  'redocusaurus',
+            {
+                specs: [
+                    {
+                        id: 'openapi',
+                        spec: `${frontdoor}/docusaurus/docs/api-docs.yaml`,
+                    },
+                ],
+                // Theme Options for modifying how redoc renders them
+                theme: {
+                    // Change with your site colors
+                    primaryColor: '#1890ff',
+                }
+            },
+        ],
+    ],
 };
 
 export default config;

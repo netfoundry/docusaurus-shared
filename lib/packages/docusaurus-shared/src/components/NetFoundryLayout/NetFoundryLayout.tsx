@@ -93,10 +93,10 @@ export function NetFoundryLayout(props: NetFoundryLayoutProps): JSX.Element {
             <PageMetadata title={title} description={description} />
             <SkipToContent />
             <AnnouncementBar />
+            <Navbar />
             {starProps?.repoUrl && starProps?.label && (
                 <StarUs repoUrl={starProps.repoUrl} label={starProps.label} />
             )}
-            <Navbar />
             <div className={clsx(ThemeClassNames.wrapper.main, styles.ozLayoutMainWrapper, className)}>
                 <ErrorBoundary fallback={(params: any) => <ErrorPageContent {...params} />}>
                     {children}
