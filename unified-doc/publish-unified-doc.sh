@@ -89,9 +89,8 @@ target_branch="$1"
 echo "incoming branch named: $target_branch"
 
 setup_ssh "."
-./build-docs.sh
+"${pub_script_root}/build-docs.sh"
 
-cp ~/.encrypted/.ssh/nf/dovholuknf "${pub_script_root}/github_deploy_key"
 if [ "${GIT_BRANCH:-}" == "${target_branch}" ]; then
   echo "========= on ${target_branch} branch - publishing to both main and staging"
   publish_docs "$STG_DOC_SSH_HOST" "$STG_DOC_SSH_PORT" \
