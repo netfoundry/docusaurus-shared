@@ -211,6 +211,14 @@ const config: Config = {
                         id: 'openapi',
                         spec: `${frontdoor}/docusaurus/docs/api-docs.yaml`,
                     },
+                    {
+                        id: 'edge-client',
+                        spec: 'https://get.openziti.io/spec/client.yml',
+                    },
+                    {
+                        id: 'edge-management',
+                        spec: 'https://get.openziti.io/spec/management.yml',
+                    },
                 ],
                 // Theme Options for modifying how redoc renders them
                 theme: {

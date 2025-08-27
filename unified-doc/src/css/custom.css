@@ -9,7 +9,7 @@
 
 /* You can override the default Infima variables here. */
 :root {
-    --ifm-container-width-xl: 4000px;
+    --ifm-container-width-xl: 1400px;
     --ifm-navbar-height: 50px;
   --ifm-color-primary: #2e8555;
   --ifm-color-primary-dark: #29784c;
