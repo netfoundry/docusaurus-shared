@@ -22,9 +22,14 @@ interface AlgoliaConfig {
     indexName: string;
 }
 
+interface HotjarConfig {
+    id: string;
+}
+
 interface PublishConfig {
     docusaurus: DocusaurusConfig;
     algolia: AlgoliaConfig;
+    hotjar: HotjarConfig;
 }
 
 const staging: PublishConfig = {
@@ -35,6 +40,9 @@ const staging: PublishConfig = {
         appId: 'QRGW6TJXHP',
         apiKey: '267457291182a398c5ee19fcb0bcae77',
         indexName: 'stg_netfoundry_stg_kinsta_cloud_qrgw6tjxhp',
+    },
+    hotjar: {
+        id: ""
     }
 }
 
@@ -46,6 +54,9 @@ const prod: PublishConfig = {
         appId: 'UWUTF7ESUI',
         apiKey: '3a4a0691d0e8e3bb7c27c702c6a86ea9',
         indexName: 'netfoundry.io_UWUTF7ESUI',
+    },
+    hotjar: {
+        id: ""
     }
 }
 
