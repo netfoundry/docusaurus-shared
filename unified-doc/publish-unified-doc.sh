@@ -92,7 +92,9 @@ setup_ssh "."
 "${pub_script_root}/build-docs.sh"
 
 echo "creating zip from built site"
-zip -r "/tmp/unified-docs.zip" "${pub_script_root}/build"
+pushd "${pub_script_root}/build"
+zip -r "/tmp/unified-docs.zip" .
+popd
 
 if [ "${GIT_BRANCH:-}" == "${target_branch}" ]; then
   echo "========= on ${target_branch} branch - publishing to both main and staging"
