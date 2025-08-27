@@ -89,7 +89,6 @@ target_branch="$1"
 echo "incoming branch named: $target_branch"
 
 setup_ssh "."
-echo "$(date)" > docusaurus/static/build-time.txt
 ./build-docs.sh
 
 cp ~/.encrypted/.ssh/nf/dovholuknf "${pub_script_root}/github_deploy_key"
