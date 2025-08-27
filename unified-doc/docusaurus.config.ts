@@ -209,7 +209,7 @@ const config: Config = {
             appId: cfg.algolia.appId,
             apiKey: cfg.algolia.apiKey,
             indexName: cfg.algolia.indexName,
-            contextualSearch: false,
+            contextualSearch: true,
             searchParameters: {},
             searchPagePath: 'search'
         },
