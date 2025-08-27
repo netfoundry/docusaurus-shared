@@ -35,7 +35,7 @@ SKIP_DOCUSAURUS_GEN=yes "${script_dir}/_remotes/openziti/gendoc.sh"
 #SKIP_DOCUSAURUS_GEN=no "${script_dir}/_remotes/openziti/gendoc.sh"
 pushd "${script_dir}"
 yarn install
-echo "$(date)" > docusaurus/static/build-time.txt
+echo "$(date)" > static/build-time.txt
 yarn build
 popd
 
