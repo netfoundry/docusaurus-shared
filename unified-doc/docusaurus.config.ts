@@ -34,7 +34,7 @@ const staging: PublishConfig = {
     algolia: {
         appId: 'QRGW6TJXHP',
         apiKey: '267457291182a398c5ee19fcb0bcae77',
-        indexName: 'stg-netfoundry-stg.kinsta.cloud_QRGW6TJXHP',
+        indexName: 'stg_netfoundry_stg_kinsta_cloud_qrgw6tjxhp',
     }
 }
 
