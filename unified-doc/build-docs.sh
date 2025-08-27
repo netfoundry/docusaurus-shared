@@ -31,10 +31,12 @@ mkdir -p "${script_dir}/src/pages/docs/frontdoor/"
 cp -f "${script_dir}/_remotes/frontdoor/docusaurus/src/pages/OnPrem.module.css" "${script_dir}/src/pages/docs/frontdoor/"
 cp -f "${script_dir}/_remotes/frontdoor/docusaurus/src/pages/index.tsx" "${script_dir}/src/pages/docs/frontdoor/"
 
-#SKIP_DOCUSAURUS_GEN=yes "${script_dir}/_remotes/openziti/gendoc.sh"
-SKIP_DOCUSAURUS_GEN=no "${script_dir}/_remotes/openziti/gendoc.sh"
+SKIP_DOCUSAURUS_GEN=yes "${script_dir}/_remotes/openziti/gendoc.sh"
+#SKIP_DOCUSAURUS_GEN=no "${script_dir}/_remotes/openziti/gendoc.sh"
+pushd "${script_dir}"
 yarn install
 yarn build
+popd
 
 #cp -r "${script_dir}/_remotes/openziti/docusaurus/static/img/"* "${script_dir}/static/img/"
 

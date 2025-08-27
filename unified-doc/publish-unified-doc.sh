@@ -90,14 +90,9 @@ echo "incoming branch named: $target_branch"
 
 setup_ssh "."
 echo "$(date)" > docusaurus/static/build-time.txt
-./gendoc.sh -zs
+./build-docs.sh
 
-
-
-
-
-temp_name() {
-
+cp ~/.encrypted/.ssh/nf/dovholuknf "${pub_script_root}/github_deploy_key"
 if [ "${GIT_BRANCH:-}" == "${target_branch}" ]; then
   echo "========= on ${target_branch} branch - publishing to both main and staging"
   publish_docs "$STG_DOC_SSH_HOST" "$STG_DOC_SSH_PORT" \
@@ -109,13 +104,4 @@ else
   publish_docs "$STG_DOC_SSH_HOST" "$STG_DOC_SSH_PORT" \
                "$STG_DOC_SSH_USER" "$STG_DOC_SSH_TARGET_DIR"
 fi
-
-}
-
-pushd "${pub_script_root}/build/"
-echo $DOCUSAURUS_PUBLISH_ENV
-
-cp ~/.encrypted/.ssh/nf/dovholuknf "${pub_script_root}/github_deploy_key"
-publish_docs "$STG_DOC_SSH_HOST" "$STG_DOC_SSH_PORT" \
-             "$STG_DOC_SSH_USER" "$STG_DOC_SSH_TARGET_DIR"
 rm "${pub_script_root}/github_deploy_key"
