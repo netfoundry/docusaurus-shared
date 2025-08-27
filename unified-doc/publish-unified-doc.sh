@@ -15,14 +15,6 @@ setup_ssh() {
   fi
 }
 
-clone_publish_repo() {
-  cd "$pub_script_root"
-  echo "cloning actual github pages now to push docs into"
-  git clone https://github.com/openziti/openziti.github.io.git
-  rm -rf ./openziti.github.io/*
-  cp -rT ./docusaurus/build/ ./openziti.github.io/
-  echo "openziti.io" > ./openziti.github.io/CNAME
-}
 
 publish_docs() {
   local HOST=$1 PORT=$2 USER=$3 TARGET_DIR=$4
@@ -97,15 +89,14 @@ target_branch="$1"
 echo "incoming branch named: $target_branch"
 
 setup_ssh "."
-
+echo "$(date)" > docusaurus/static/build-time.txt
+./gendoc.sh -zs
 
 
 
 
 
 temp_name() {
-echo "$(date)" > docusaurus/static/build-time.txt
-./gendoc.sh -zs
 
 if [ "${GIT_BRANCH:-}" == "${target_branch}" ]; then
   echo "========= on ${target_branch} branch - publishing to both main and staging"
@@ -118,8 +109,6 @@ else
   publish_docs "$STG_DOC_SSH_HOST" "$STG_DOC_SSH_PORT" \
                "$STG_DOC_SSH_USER" "$STG_DOC_SSH_TARGET_DIR"
 fi
-
-rm ./github_deploy_key
 
 }
 

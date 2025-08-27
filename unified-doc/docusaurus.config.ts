@@ -96,6 +96,11 @@ const config: Config = {
         '_remotes/onprem/docs-site/static/',
         '_remotes/openziti/docusaurus/static/'
     ],
+    customFields: {
+        DOCUSAURUS_BASE_PATH: DOCUSAURUS_BASE_PATH,
+        DOCUSAURUS_DOCS_PATH: DOCUSAURUS_DOCS_PATH,
+        OPENZITI_DOCS_BASE: '/'
+    },
     plugins: [
         function webpackAliases() {
             return {
