@@ -92,7 +92,6 @@ setup_ssh "."
 "${pub_script_root}/build-docs.sh"
 
 echo "creating zip from built site"
-rm /tmp/unified-docs.zip
 zip -r "/tmp/unified-docs.zip" "${pub_script_root}/build"
 
 if [ "${GIT_BRANCH:-}" == "${target_branch}" ]; then
