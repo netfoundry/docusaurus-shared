@@ -91,6 +91,10 @@ echo "incoming branch named: $target_branch"
 setup_ssh "."
 "${pub_script_root}/build-docs.sh"
 
+echo "creating zip from built site"
+rm /tmp/unified-docs.zip
+zip -r "/tmp/unified-docs.zip" "${pub_script_root}/build"
+
 if [ "${GIT_BRANCH:-}" == "${target_branch}" ]; then
   echo "========= on ${target_branch} branch - publishing to both main and staging"
   publish_docs "$STG_DOC_SSH_HOST" "$STG_DOC_SSH_PORT" \
