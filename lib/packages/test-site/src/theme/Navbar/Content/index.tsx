@@ -26,8 +26,9 @@ const openZitiNav: Item[] = [
         position: 'left',
         type: 'dropdown',
         items: [
-            {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
             {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'},
+            {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
+            {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'},
         ],
     }
 ];
@@ -39,6 +40,7 @@ const onpremNav: Item[] = [
         type: 'dropdown',
         items: [
             {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'},
+            {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
             {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'},
         ],
     },
@@ -50,6 +52,7 @@ const frontdoorNav: Item[] = [
         position: 'left',
         type: 'dropdown',
         items: [
+            {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'},
             {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
             {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'},
         ],
