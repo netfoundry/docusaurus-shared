@@ -38,53 +38,6 @@ publish_docs() {
   echo "doc published"
 }
 
-
-: ${SKIP_GIT:=no}
-: ${SKIP_LINKED_DOC:=no}
-: ${SKIP_CLEAN:=no}
-ZITI_DOC_GIT_LOC="${pub_script_root}/docusaurus/docs/_remotes"
-SDK_ROOT_TARGET="${pub_script_root}/docusaurus/static/docs/reference/developer/sdk"
-: ${ZITI_DOCUSAURUS:=yes}
-: ${SKIP_DOCUSAURUS_GEN:=no}
-: ${ZITI_GEN_ZIP:=no}
-: ${ADD_OPENZITI_STARGAZER_DATA:=no}
-
-echo "- processing opts"
-
-while getopts ":glcsdz" OPT; do
-  case ${OPT} in
-    g ) # skip git
-      echo "- skipping creating and updating Git working copies"
-      SKIP_GIT="yes"
-      ;;
-    l ) # skip linked doc gen
-      echo "- skipping linked doc generation"
-      SKIP_LINKED_DOC="yes"
-      ;;
-    c ) # skip clean steps
-      echo "- skipping clean step that deletes Git working copies"
-      SKIP_CLEAN="yes"
-      ;;
-    s ) # INCLUDE OpenZiti stargazer stuff
-      echo "- fetching stargazer data as well"
-      ADD_OPENZITI_STARGAZER_DATA="yes"
-      ;;
-    d ) # skip docusaurus gen
-      echo "- skipping docusaurus generation"
-      SKIP_DOCUSAURUS_GEN="yes"
-      ;;
-    z ) # generate a zip file
-      echo "- generating a zip file after build"
-      ZITI_GEN_ZIP="yes"
-      ;;
-    *)
-      echo "WARN: ignoring option ${OPT}" >&2
-      ;;
-  esac
-done
-
-echo "- done processing opts"
-
 target_branch="$1"
 echo "incoming branch named: $target_branch"
 
