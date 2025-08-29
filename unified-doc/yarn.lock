@@ -2211,10 +2211,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@openclint/docusaurus-shared@^0.0.90":
-  version "0.0.90"
-  resolved "https://registry.yarnpkg.com/@openclint/docusaurus-shared/-/docusaurus-shared-0.0.90.tgz#913263c6352a6e2b93f9e197a06220e6b155221f"
-  integrity sha512-ClMz9+49uQfOdlCyYwbKoeRKAP6DRCdjmg0h/+dsL9fU2iQspytGJCZDsdY28gJByyg6eBFX2YLItI6U4BwWhw==
+"@openclint/docusaurus-shared@^0.0.108":
+  version "0.0.108"
+  resolved "https://registry.yarnpkg.com/@openclint/docusaurus-shared/-/docusaurus-shared-0.0.108.tgz#ecb37f183587d758f0ae6a8a5ae90f3c61924fe8"
+  integrity sha512-u2VhfX/OWZeXfVsHmDSSITzQSQxntns2yW5b7/EyEwDW57DxPu1Jd9j3Q+M9eKXP91ieGSg62ZWTRcITFqR8nA==
   dependencies:
     react-device-detect "^2.2.3"
     react-github-btn "^1.4.0"

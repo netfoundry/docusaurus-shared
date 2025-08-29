@@ -2,7 +2,7 @@ import { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
 import { Image, Link } from 'mdast'
 import { MdxJsxFlowElement, MdxjsEsm } from 'mdast-util-mdx'
-import { writeFileSync, appendFileSync } from 'fs'
+import { writeFileSync, appendFileSync, existsSync } from 'fs'
 import { join } from 'path'
 
 interface ScopedPathOptions {
@@ -15,24 +15,29 @@ interface Options {
 }
 
 const LOG = join(process.cwd(), 'remarkScopedPath.log')
-writeFileSync(LOG, '')
 
-const log = (msg:string) => {
-    appendFileSync(LOG, `[${new Date().toISOString()}] ${msg}\n`)
+const log = (msg:string, debug?:boolean) => {
+    if (!debug) return;
+
+    if (!existsSync(LOG)) {
+        writeFileSync(LOG, '');
+    }
+
+    appendFileSync(LOG, `[${new Date().toISOString()}] ${msg}\n`);
 }
 
 export const remarkScopedPath: Plugin<[Options]> = ({ mappings, debug }) => {
     return (tree, file) => {
         const filePath = file?.path || file?.history?.slice(-1)[0] || 'unknown'
-        log(`processing file ${filePath}`)
+        log(`processing file ${filePath}`, debug)
         visit(tree, 'image', (node: Image) => {
-            if (debug) { log("url before: " + node.url) }
+            if (debug) { log("url before: " + node.url, debug) }
             for (const { from, to } of mappings) {
                 if (node.url.startsWith(from)) {
                     node.url = node.url.replace(from, to)
                 }
             }
-            if (debug) { log("url after: " + node.url) }
+            if (debug) { log("url after: " + node.url, debug) }
         })
 
         visit(tree, 'link', (node: Link) => {
@@ -63,12 +68,12 @@ export const remarkScopedPath: Plugin<[Options]> = ({ mappings, debug }) => {
 
         visit(tree, 'mdxjsEsm', (node: MdxjsEsm) => {
             for (const { from, to } of mappings) {
-                log(`    from='${from}'`)
-                log(`    to='${to}`)
+                log(`    from='${from}'`, debug)
+                log(`    to='${to}`, debug)
                 const re = new RegExp(`(['"])${from}/`, 'g')
                 node.value = node.value.replace(re, `$1${to}/`)
             }
         })
-        log(` `)
+        log(` `, debug)
     }
 }
