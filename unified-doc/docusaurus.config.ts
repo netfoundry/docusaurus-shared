@@ -3,7 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import * as path from "node:path";
 import remarkReplaceMetaUrl from "./_remotes/openziti/docusaurus/src/plugins/remark/remark-replace-meta-url";
-import {DOCUSAURUS_BASE_PATH, DOCUSAURUS_DEBUG, DOCUSAURUS_DOCS_PATH, DOCUSAURUS_CANONICAL_DOMAIN} from "@openclint/docusaurus-shared/node";
+import {DOCUSAURUS_BASE_PATH, DOCUSAURUS_DEBUG, DOCUSAURUS_DOCS_PATH, pluginHotjar} from "@openclint/docusaurus-shared/node";
 import {remarkScopedPath} from "./_remotes/openziti/docusaurus/src/plugins/remark/remarkScopedPath";
 import {PublishConfig} from 'src/components/docusaurus'
 
@@ -25,7 +25,7 @@ const staging: PublishConfig = {
         indexName: 'nfdocs_stg',
     },
     hotjar: {
-        id: ""
+        id: "6443487"
     }
 }
 
@@ -39,7 +39,7 @@ const prod: PublishConfig = {
         indexName: 'netfoundry.io_UWUTF7ESUI',
     },
     hotjar: {
-        id: ""
+        id: "6506483"
     }
 }
 
@@ -175,6 +175,7 @@ const config: Config = {
             },
         ],
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
+        [pluginHotjar, {}],
     ],
     themeConfig: {
         // Replace with your project's social card
@@ -208,6 +209,9 @@ const config: Config = {
             contextualSearch: true,
             searchParameters: {},
             searchPagePath: 'search'
+        },
+        hotjar: {
+            applicationId: cfg.hotjar.id
         },
     } satisfies Preset.ThemeConfig,
     presets: [

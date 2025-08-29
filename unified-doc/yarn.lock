@@ -2019,6 +2019,11 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
+"@hotjar/browser@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@hotjar/browser/-/browser-1.0.9.tgz#769b4ded3fa7b9557b785c107f0cd76d3f83789a"
+  integrity sha512-n9akDMod8BLGpYEQCrHwlYWWd63c1HlhUSXNIDfClZtKYXbUjIUOFlNZNNcUxgHTCsi4l2i+SWKsGsO0t93S8w==
+
 "@iconify/types@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@iconify/types/-/types-2.0.0.tgz#ab0e9ea681d6c8a1214f30cd741fe3a20cc57f57"
@@ -2206,10 +2211,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@openclint/docusaurus-shared@^0.0.89":
-  version "0.0.89"
-  resolved "https://registry.yarnpkg.com/@openclint/docusaurus-shared/-/docusaurus-shared-0.0.89.tgz#01a0746b84b1e3a24596ec400397b317864ceb06"
-  integrity sha512-wBX7tGk7MMnxju80gbJjAMd/DqiUCdNjLJkXK2t9TK9knyPux/8oFZ2tgv3z1j60g6V1cRtNUKlw0ekcH1/QVw==
+"@openclint/docusaurus-shared@^0.0.90":
+  version "0.0.90"
+  resolved "https://registry.yarnpkg.com/@openclint/docusaurus-shared/-/docusaurus-shared-0.0.90.tgz#913263c6352a6e2b93f9e197a06220e6b155221f"
+  integrity sha512-ClMz9+49uQfOdlCyYwbKoeRKAP6DRCdjmg0h/+dsL9fU2iQspytGJCZDsdY28gJByyg6eBFX2YLItI6U4BwWhw==
   dependencies:
     react-device-detect "^2.2.3"
     react-github-btn "^1.4.0"
