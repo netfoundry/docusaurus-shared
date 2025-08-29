@@ -45,6 +45,11 @@ const prod: PublishConfig = {
 
 const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV == 'prod' ? prod : staging;
 
+const REMARK_MAPPINGS = [
+    { from: '@onpremdocs',   to: '/onprem' },
+    { from: '@openzitidocs', to: '/docs/openziti'},
+];
+
 const config: Config = {
     title: 'NetFoundry Documentation',
     tagline: 'Documentation for NetFoundry products and projects',
@@ -128,6 +133,9 @@ const config: Config = {
                 routeBasePath: 'onprem',
                 sidebarPath: `${onprem}/docs-site/sidebars.ts`,
                 includeCurrentVersion: true,
+                remarkPlugins: [
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
+                ],
             },
         ],
         [
@@ -138,6 +146,9 @@ const config: Config = {
                 routeBasePath: 'frontdoor',
                 sidebarPath: `${frontdoor}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
+                remarkPlugins: [
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
+                ],
             },
         ],
         [
@@ -148,6 +159,9 @@ const config: Config = {
                 routeBasePath: 'zlan',
                 sidebarPath: `${zlan}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
+                remarkPlugins: [
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
+                ],
             },
         ],
         [
@@ -158,19 +172,8 @@ const config: Config = {
                 routeBasePath: 'openziti',
                 sidebarPath: `${openziti}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
-
                 remarkPlugins: [
-                    // require('./src/plugins/remark/remark-yaml-table'),
-                    // require('./src/plugins/remark/remark-code-block'),
-                    [remarkReplaceMetaUrl, {from: '_baseurl_', to: DOCUSAURUS_BASE_PATH}],
-                    [remarkScopedPath,
-                        {
-                            debug: DOCUSAURUS_DEBUG,
-                            mappings: [
-                                {from: '@openzitidocs', to: '/docs/openziti'},
-                            ],
-                        },
-                    ]
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
                 ],
             },
         ],
