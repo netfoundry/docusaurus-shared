@@ -112,6 +112,7 @@ export default function NavbarContent(props: Props): JSX.Element {
                     />
                 )}
                 {right.map((item, i) => <NavbarItem {...item} key={`r-${i}`} />)}
+                <p>&nbsp;</p>
                 <SearchBar/>
             </div>
         </div>
