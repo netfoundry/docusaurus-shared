@@ -5,32 +5,15 @@ import * as path from "node:path";
 import remarkReplaceMetaUrl from "./_remotes/openziti/docusaurus/src/plugins/remark/remark-replace-meta-url";
 import {DOCUSAURUS_BASE_PATH, DOCUSAURUS_DEBUG, DOCUSAURUS_DOCS_PATH, DOCUSAURUS_CANONICAL_DOMAIN} from "@openclint/docusaurus-shared/node";
 import {remarkScopedPath} from "./_remotes/openziti/docusaurus/src/plugins/remark/remarkScopedPath";
+import {PublishConfig} from 'src/components/docusaurus'
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
 const onprem = `./_remotes/onprem`;
 const openziti = `./_remotes/openziti`;
 const zrok = `./_remotes/zrok`;
+const zlan = `./_remotes/zlan`;
 
-interface DocusaurusConfig {
-    url: string;
-}
-
-interface AlgoliaConfig {
-    appId: string;
-    apiKey: string;
-    indexName: string;
-}
-
-interface HotjarConfig {
-    id: string;
-}
-
-interface PublishConfig {
-    docusaurus: DocusaurusConfig;
-    algolia: AlgoliaConfig;
-    hotjar: HotjarConfig;
-}
 
 const staging: PublishConfig = {
     docusaurus: {
@@ -105,7 +88,8 @@ const config: Config = {
         'static',
         '_remotes/frontdoor/docusaurus/static/',
         '_remotes/onprem/docs-site/static/',
-        '_remotes/openziti/docusaurus/static/'
+        '_remotes/openziti/docusaurus/static/',
+        '_remotes/zlan/docusaurus/static/'
     ],
     customFields: {
         DOCUSAURUS_BASE_PATH: DOCUSAURUS_BASE_PATH,
@@ -124,6 +108,7 @@ const config: Config = {
                                 '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
                                 '@zrok': path.resolve(__dirname, `${zrok}/docusaurus`),
                                 '@onprem': path.resolve(__dirname, `${onprem}/docs-site`),
+                                '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
                             },
                         },
                     };
@@ -134,6 +119,7 @@ const config: Config = {
         ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
         ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docs-site/src/pages`, routeBasePath: '/onprem'}],
         ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
+        ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
         [
             '@docusaurus/plugin-content-docs',
             {
@@ -151,6 +137,16 @@ const config: Config = {
                 path: `${frontdoor}/docusaurus/docs`,
                 routeBasePath: 'frontdoor',
                 sidebarPath: `${frontdoor}/docusaurus/sidebars.ts`,
+                includeCurrentVersion: true,
+            },
+        ],
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'zlan',
+                path: `${zlan}/docusaurus/docs`,
+                routeBasePath: 'zlan',
+                sidebarPath: `${zlan}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
             },
         ],

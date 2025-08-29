@@ -27,11 +27,15 @@ export default function Home(): ReactNode {
                             Guides, references, and how-tos for NetFoundry products and OpenZiti.
                         </p>
                         <div className="buttons">
+                            <Link className="button button--secondary button--lg" to="https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides">NetFoundry SaaS Docs</Link>
+                            <span style={{margin: '0 8px'}} />
                             <Link className="button button--secondary button--lg" to="/docs/onprem/intro">On-Prem Docs</Link>
                             <span style={{margin: '0 8px'}} />
                             <Link className="button button--secondary button--lg" to="/docs/frontdoor/intro">Frontdoor Docs</Link>
                             <span style={{margin: '0 8px'}} />
                             <Link className="button button--secondary button--lg" to="/docs/openziti/learn/introduction">OpenZiti Docs</Link>
+                            <span style={{margin: '0 8px'}} />
+                            <Link className="button button--secondary button--lg" to="/docs/zlan">zLan Docs</Link>
                         </div>
                     </div>
                 </NetFoundryHorizontalSection>
@@ -41,23 +45,34 @@ export default function Home(): ReactNode {
                         <div className="row">
                             <div className="col col--4">
                                 <div className="card">
-                                    <div className="card__header"><h3>On-Prem</h3></div>
+                                    <div className="card__header"><h3>NetFoundry SaaS</h3></div>
                                     <div className="card__body">
-                                        Enterprise self-hosted platform for OpenZiti overlays.
+                                        Enterprise cloud-hosted platform for OpenZiti overlays.
                                     </div>
                                     <div className="card__footer">
-                                        <Link className="button button--primary button--block" to="/docs/onprem/intro">Go to On-Prem</Link>
+                                        <Link className="button button--primary button--block" to="https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides">Go to NetFoundry SaaS</Link>
                                     </div>
                                 </div>
                             </div>
                             <div className="col col--4">
                                 <div className="card">
-                                    <div className="card__header"><h3>Frontdoor</h3></div>
+                                    <div className="card__header"><h3>NetFoundry On-Prem</h3></div>
+                                    <div className="card__body">
+                                        Enterprise self-hosted platform for OpenZiti overlays.
+                                    </div>
+                                    <div className="card__footer">
+                                        <Link className="button button--primary button--block" to="/docs/onprem/intro">Go to NetFoundry On-Prem</Link>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col col--4">
+                                <div className="card">
+                                    <div className="card__header"><h3>NetFoundry Frontdoor</h3></div>
                                     <div className="card__body">
                                         Zero-trust inbound access to private apps and services.
                                     </div>
                                     <div className="card__footer">
-                                        <Link className="button button--primary button--block" to="/docs/frontdoor/intro">Go to Frontdoor</Link>
+                                        <Link className="button button--primary button--block" to="/docs/frontdoor/intro">Go to NetFoundry Frontdoor</Link>
                                     </div>
                                 </div>
                             </div>
@@ -72,6 +87,17 @@ export default function Home(): ReactNode {
                                     </div>
                                 </div>
                             </div>
+                            <div className="col col--4">
+                                <div className="card">
+                                    <div className="card__header"><h3>zLan</h3></div>
+                                    <div className="card__body">
+                                        zLan blurb here.
+                                    </div>
+                                    <div className="card__footer">
+                                        <Link className="button button--primary button--block" to="/docs/zlan">Go to zLan</Link>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="margin-top--lg row">
@@ -80,9 +106,11 @@ export default function Home(): ReactNode {
                                     <div className="card__header"><h3>Quick Links</h3></div>
                                     <div className="card__body">
                                         <ul>
+                                            <li><Link to="/docs/onprem/troubleshooting">NetFoundry Troubleshooting</Link></li>
                                             <li><Link to="/docs/onprem/intro">On-Prem Deployment</Link></li>
                                             <li><Link to="/docs/frontdoor/intro">Frontdoor Getting Started</Link></li>
                                             <li><Link to="/docs/openziti/reference/command-line/login">OpenZiti CLI Reference</Link></li>
+                                            <li><Link to="/docs/zlan">zLan FAQ</Link></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -92,9 +120,11 @@ export default function Home(): ReactNode {
                                     <div className="card__header"><h3>Support</h3></div>
                                     <div className="card__body">
                                         <ul>
+                                            <li><Link to="/docs/onprem/troubleshooting">NetFoundry Troubleshooting</Link></li>
                                             <li><Link to="/docs/onprem/troubleshooting">On-Prem Troubleshooting</Link></li>
                                             <li><Link to="/docs/frontdoor/learn/health-checks">Frontdoor Troubleshooting</Link></li>
                                             <li><Link to="/docs/openziti/learn/identity-providers">OpenZiti FAQ</Link></li>
+                                            <li><Link to="/docs/zlan">zLan FAQ</Link></li>
                                         </ul>
                                     </div>
                                 </div>

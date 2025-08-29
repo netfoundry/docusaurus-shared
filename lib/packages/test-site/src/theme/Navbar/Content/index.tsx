@@ -26,9 +26,11 @@ const openZitiNav: Item[] = [
         position: 'left',
         type: 'dropdown',
         items: [
+            {to: `https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides`, label: 'NetFoundry SaaS'},
             {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'},
             {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
             {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'},
+            {to: `${DOCS_PREFIX}/zlan/`, label: 'zLan'},
         ],
     }
 ];
@@ -39,9 +41,11 @@ const onpremNav: Item[] = [
         position: 'left',
         type: 'dropdown',
         items: [
+            {to: `https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides`, label: 'NetFoundry SaaS'},
             {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'},
             {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
             {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'},
+            {to: `${DOCS_PREFIX}/zlan/`, label: 'zLan'},
         ],
     },
 ];
@@ -52,9 +56,26 @@ const frontdoorNav: Item[] = [
         position: 'left',
         type: 'dropdown',
         items: [
+            {to: `https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides`, label: 'NetFoundry SaaS'},
             {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'},
             {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
             {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'},
+            {to: `${DOCS_PREFIX}/zlan/`, label: 'zLan'},
+        ],
+    },
+];
+
+const zlanNav: Item[] = [
+    {
+        label: 'Frontdoor Docs',
+        position: 'left',
+        type: 'dropdown',
+        items: [
+            {to: `https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides`, label: 'NetFoundry SaaS'},
+            {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'},
+            {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
+            {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'},
+            {to: `${DOCS_PREFIX}/zlan/`, label: 'zLan'},
         ],
     },
 ];
@@ -63,6 +84,7 @@ const mapNavbar = (p: string): Item[] => {
     if (p.startsWith(`${DOCS_PREFIX}/frontdoor`)) return frontdoorNav;
     if (p.startsWith(`${DOCS_PREFIX}/onprem`))    return onpremNav;
     if (p.startsWith(`${DOCS_PREFIX}/openziti`))  return openZitiNav;
+    if (p.startsWith(`${DOCS_PREFIX}/zlan`))  return zlanNav;
     return unifiedNav;
 };
 

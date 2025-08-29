@@ -7,29 +7,28 @@ set -eu
 pub_script_root="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 echo "publish script located in: $pub_script_root"
 
-setup_ssh() {
-  mkdir -p ~/.ssh
-  if ! ssh-keygen -F github.com > /dev/null; then
-    echo "using ssh-keyscan to add github.com to known hosts"
-    ssh-keyscan github.com >> ~/.ssh/known_hosts
-  fi
-}
-
-
 publish_docs() {
-  local HOST=$1 PORT=$2 USER=$3 TARGET_DIR=$4
+  local HOST=$1 PORT=$2 USER=$3 TARGET_DIR=$4 BUILD_DIR=$5
+
+  "${pub_script_root}/build-docs.sh" ${BUILD_DIR}
+  local zip_target="unified-docs-${BUILD_DIR}.zip"
+  echo "creating zip from built site"
+  pushd "${pub_script_root}/${BUILD_DIR}"
+  zip -r "/tmp/${zip_target}" .
+  popd
+
   echo "doc publication begins"
   echo "=== scp begins ==="
   scp -o StrictHostKeyChecking=accept-new \
     -P "$PORT" -i "${pub_script_root}/github_deploy_key" \
-    /tmp/unified-docs.zip \
+    "/tmp/${zip_target}" \
     "$USER@$HOST:/tmp" \
     2>&1
   echo "=== ssh commands ==="
   for CMD in \
     "rm -rf ${TARGET_DIR}/docs" \
     "mkdir -p ${TARGET_DIR}/docs" \
-    "unzip -oq /tmp/unified-docs.zip -d ${TARGET_DIR}/docs"
+    "unzip -oq /tmp/${zip_target} -d ${TARGET_DIR}/docs"
   do
     ssh -p "$PORT" -i "${pub_script_root}/github_deploy_key" \
       "$USER@$HOST" "$CMD" 2>&1
@@ -41,13 +40,6 @@ publish_docs() {
 target_branch="$1"
 echo "incoming branch named: $target_branch"
 
-setup_ssh "."
-"${pub_script_root}/build-docs.sh"
-
-echo "creating zip from built site"
-pushd "${pub_script_root}/build"
-zip -r "/tmp/unified-docs.zip" .
-popd
 
 if [ "${GIT_BRANCH:-}" == "${target_branch}" ]; then
   echo "========= on ${target_branch} branch - publishing to both main and staging"
