@@ -29,8 +29,8 @@ SKIP_DOCUSAURUS_GEN=yes "${script_dir}/_remotes/openziti/gendoc.sh"
 pushd "${script_dir}"
 yarn install
 echo "$(date)" > static/build-time.txt
-echo "BUILDING docs into: build$BUILD_DIR"
-yarn build --out-dir "build$BUILD_DIR" 2>&1
+echo "BUILDING docs into: build${BUILD_QUALIFIER}"
+yarn build --out-dir "build${BUILD_QUALIFIER}" 2>&1
 popd
 
 
