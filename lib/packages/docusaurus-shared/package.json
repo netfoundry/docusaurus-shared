@@ -1,6 +1,6 @@
 {
   "name": "@openclint/docusaurus-shared",
-  "version": "0.0.90",
+  "version": "0.0.105",
   "description": "Shared components for Docusaurus projects",
   "type": "module",
   "main": "dist/ui.cjs.js",
@@ -25,12 +25,17 @@
     "./node": {
       "types": "./dist/node.d.ts",
       "import": "./dist/node.esm.js",
-      "require": "./dist/node.cjs.js"
+      "require": "./dist/node.cjs"
     },
     "./ui": {
       "types": "./dist/ui.d.ts",
       "import": "./dist/ui.esm.js",
-      "require": "./dist/ui.cjs.js"
+      "require": "./dist/ui.cjs"
+    },
+    "./plugins": {
+      "types": "./dist/plugins.d.ts",
+      "import": "./dist/plugins.esm.js",
+      "require": "./dist/plugins.cjs"
     },
     "./css/*": "./src/css/*",
     "./index.css": "./dist/index.css"
