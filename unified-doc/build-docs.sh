@@ -3,7 +3,7 @@
 set -euo pipefail
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-BUILD_DIR="${1:-build}"
+BUILD_QUALIFIER="${1:-}"
 
 clone_or_update() {
   local url="$1"
@@ -29,8 +29,8 @@ SKIP_DOCUSAURUS_GEN=yes "${script_dir}/_remotes/openziti/gendoc.sh"
 pushd "${script_dir}"
 yarn install
 echo "$(date)" > static/build-time.txt
-echo "BUILDING docs into: $BUILD_DIR"
-yarn build --out-dir "$BUILD_DIR" 2>&1
+echo "BUILDING docs into: build$BUILD_DIR"
+yarn build --out-dir "build$BUILD_DIR" 2>&1
 popd
 
 
