@@ -10,7 +10,7 @@ echo "publish script located in: $pub_script_root"
 publish_docs() {
   local HOST=$1 PORT=$2 USER=$3 TARGET_DIR=$4 BUILD_DIR=$5
 
-  "${pub_script_root}/build-docs.sh" ${BUILD_DIR}
+  "${pub_script_root}/build-docs.sh" "${BUILD_DIR}"
   local zip_target="unified-docs-${BUILD_DIR}.zip"
   echo "creating zip from built site"
   pushd "${pub_script_root}/${BUILD_DIR}"
@@ -44,12 +44,12 @@ echo "incoming branch named: $target_branch"
 if [ "${GIT_BRANCH:-}" == "${target_branch}" ]; then
   echo "========= on ${target_branch} branch - publishing to both main and staging"
   publish_docs "$STG_DOC_SSH_HOST" "$STG_DOC_SSH_PORT" \
-               "$STG_DOC_SSH_USER" "$STG_DOC_SSH_TARGET_DIR"
+               "$STG_DOC_SSH_USER" "$STG_DOC_SSH_TARGET_DIR" "${pub_script_root}/build-stg"
   publish_docs "$PROD_DOC_SSH_HOST" "$PROD_DOC_SSH_PORT" \
-               "$PROD_DOC_SSH_USER" "$PROD_DOC_SSH_TARGET_DIR"
+               "$PROD_DOC_SSH_USER" "$PROD_DOC_SSH_TARGET_DIR" "${pub_script_root}/build-prod"
 else
   echo "========= on ${target_branch} branch - publishing to staging only"
   publish_docs "$STG_DOC_SSH_HOST" "$STG_DOC_SSH_PORT" \
-               "$STG_DOC_SSH_USER" "$STG_DOC_SSH_TARGET_DIR"
+               "$STG_DOC_SSH_USER" "$STG_DOC_SSH_TARGET_DIR" "${pub_script_root}/build-stg"
 fi
 rm "${pub_script_root}/github_deploy_key"
