@@ -38,7 +38,7 @@ type Props = {
 };
 
 function getUrl(h: HitRec): string {
-    return (
+    return toRelative(
         ((typeof h.url === "string" && h.url) ||
             (Array.isArray(h.url) && h.url[0]) ||
             h.url_without_anchor ||
@@ -46,17 +46,16 @@ function getUrl(h: HitRec): string {
             "#") + (h.anchor ? `#${h.anchor}` : "")
     );
 }
-function shortUrl(h: HitRec): string {
-    const href = getUrl(h);
+function toRelative(href: string): string {
     try {
-        const u = new URL(
-            href,
-            typeof window !== "undefined" ? window.location.origin : "http://localhost"
-        );
+        const u = new URL(href, typeof window !== "undefined" ? window.location.origin : "http://localhost");
         return u.pathname + u.search + u.hash;
     } catch {
-        return href;
+        return href.startsWith("/") ? href : `/${href}`;
     }
+}
+function shortUrl(h: HitRec): string {
+    return toRelative(getUrl(h));
 }
 function titleFrom(h: HitRec): string {
     return (
@@ -114,7 +113,7 @@ function GroupedHits() {
                     {[...byPage.values()].map((g) => (
                         <div key={g.url} className={styles.group}>
                             <div className={styles.groupHeaderRow}>
-                                <a href={g.url} className={styles.groupHeader}>
+                                <a href={toRelative(g.url)} className={styles.groupHeader}>
                                     {g.header}
                                 </a>
                                 <ProductBadge p={g.items[0].product} />
