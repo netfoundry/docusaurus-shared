@@ -7,6 +7,7 @@ import {
     NetFoundryHorizontalSection,
     NetFoundryLayout,
 } from '@openclint/docusaurus-shared/ui';
+import styles from "./index.module.css";
 
 export default function Home(): ReactNode {
     const {siteConfig} = useDocusaurusContext();
@@ -44,7 +45,7 @@ export default function Home(): ReactNode {
                     <div className="container">
                         <div className="row">
                             <div className="col col--4">
-                                <div className="card">
+                                <div className={styles.idxcard}>
                                     <div className="card__header"><h3>NetFoundry SaaS</h3></div>
                                     <div className="card__body">
                                         Enterprise cloud-hosted platform for OpenZiti overlays.
@@ -55,7 +56,7 @@ export default function Home(): ReactNode {
                                 </div>
                             </div>
                             <div className="col col--4">
-                                <div className="card">
+                                <div className={styles.idxcard}>
                                     <div className="card__header"><h3>NetFoundry On-Prem</h3></div>
                                     <div className="card__body">
                                         Enterprise self-hosted platform for OpenZiti overlays.
@@ -66,7 +67,7 @@ export default function Home(): ReactNode {
                                 </div>
                             </div>
                             <div className="col col--4">
-                                <div className="card">
+                                <div className={styles.idxcard}>
                                     <div className="card__header"><h3>NetFoundry Frontdoor</h3></div>
                                     <div className="card__body">
                                         Zero-trust inbound access to private apps and services.
@@ -77,7 +78,7 @@ export default function Home(): ReactNode {
                                 </div>
                             </div>
                             <div className="col col--4">
-                                <div className="card">
+                                <div className={styles.idxcard}>
                                     <div className="card__header"><h3>OpenZiti</h3></div>
                                     <div className="card__body">
                                         Open-source zero-trust networking project and SDKs.
@@ -88,7 +89,7 @@ export default function Home(): ReactNode {
                                 </div>
                             </div>
                             <div className="col col--4">
-                                <div className="card">
+                                <div className={styles.idxcard}>
                                     <div className="card__header"><h3>zLan</h3></div>
                                     <div className="card__body">
                                         zLan blurb here.
@@ -102,7 +103,7 @@ export default function Home(): ReactNode {
 
                         <div className="margin-top--lg row">
                             <div className="col col--6">
-                                <div className="card">
+                                <div className={styles.idxcard}>
                                     <div className="card__header"><h3>Quick Links</h3></div>
                                     <div className="card__body">
                                         <ul>
@@ -116,7 +117,7 @@ export default function Home(): ReactNode {
                                 </div>
                             </div>
                             <div className="col col--6">
-                                <div className="card">
+                                <div className={styles.idxcard}>
                                     <div className="card__header"><h3>Support</h3></div>
                                     <div className="card__body">
                                         <ul>
