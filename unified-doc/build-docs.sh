@@ -22,7 +22,7 @@ clone_or_update() {
 clone_or_update "git@bitbucket.org:netfoundry/zrok-connector.git" frontdoor updates-for-unified-doc
 clone_or_update "git@bitbucket.org:netfoundry/k8s-on-prem-installations.git" onprem unified-doc-changes
 clone_or_update "git@github.com:openziti/ziti-doc.git" openziti updates-for-unified-doc
-clone_or_update "git@github.com:netfoundry/zlan" zlan main
+clone_or_update "git@github.com:netfoundry/zlan" zlan update-logos
 
 SKIP_DOCUSAURUS_GEN=yes "${script_dir}/_remotes/openziti/gendoc.sh"
 
