@@ -9,6 +9,8 @@
 .pills{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}
 .pill{all:unset;cursor:pointer;padding:.3rem .65rem;border:1px solid var(--ifm-color-emphasis-300);
     border-radius:999px;background:var(--ifm-background-color);font-size:.8rem;line-height:1}
+.pill[disabled] { opacity:.5; pointer-events:none; }
+
 .active{background:var(--ifm-color-primary);color:#fff;border-color:var(--ifm-color-primary)}
 .activeChip{padding:.3rem .55rem;border:1px solid var(--ifm-color-emphasis-300);
     border-radius:999px;background:var(--ifm-background-color);font-size:.75rem}

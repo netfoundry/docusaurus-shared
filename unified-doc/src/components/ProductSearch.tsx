@@ -8,7 +8,6 @@ import {
     Configure,
     Stats,
     PoweredBy,
-    ClearRefinements,
     useHits,
     useConfigure,
 } from "react-instantsearch";
@@ -144,6 +143,8 @@ export default function ProductSearch({
                                       }: Props) {
     // read initial pill from ?product= for back/forward + shareable URLs
     const [product, setProduct] = useState<string>("");
+    const [searchLongEnough, setSearchLongEnough] = useState<boolean>(false);
+
     useEffect(() => {
         if (typeof window === "undefined") return;
         const p = new URLSearchParams(window.location.search).get("product") || "";
@@ -167,7 +168,7 @@ export default function ProductSearch({
                 const allShort = requests.every(
                     (r: any) => (r.params?.query ?? "").length < 2
                 );
-                if (allShort && !product) {
+                if (allShort) { // block ALL searches until query >= 2
                     return Promise.resolve({
                         results: requests.map(() => ({
                             hits: [],
@@ -199,6 +200,9 @@ export default function ProductSearch({
             >
                 <div className={styles.topbar}>
                     <SearchBox
+                        onKeyUp={(e) => {
+                            setSearchLongEnough((e.target as HTMLInputElement).value.length > 1);
+                        }}
                         autoFocus
                         classNames={{ input: styles.searchInput }}
                         placeholder="Type here to search for relevant documentation"
@@ -206,8 +210,8 @@ export default function ProductSearch({
                     <div className={styles.pills}>
                         <button
                             className={`${styles.pill} ${!product ? styles.active : ""}`}
-                            onClick={() => setProduct("")}
-                            aria-pressed={!product}
+                            onClick={() => searchLongEnough && setProduct("")}
+                            disabled={!searchLongEnough}
                         >
                             All
                         </button>
@@ -215,8 +219,8 @@ export default function ProductSearch({
                             <button
                                 key={p}
                                 className={`${styles.pill} ${product === p ? styles.active : ""}`}
-                                onClick={() => setProduct(p)}
-                                aria-pressed={product === p}
+                                onClick={() => searchLongEnough && setProduct(p)}
+                                disabled={!searchLongEnough}
                             >
                                 {p}
                             </button>
@@ -248,8 +252,7 @@ export default function ProductSearch({
                     distinct
                 />
 
-                {/* pill-driven filter (reliable, no remount) */}
-                <ProductFilter product={product} />
+                {searchLongEnough && <ProductFilter product={product} />}
 
                 <div className={clsx(styles.container, extraContainerClasses)}>
                     <div className={styles.results}>
