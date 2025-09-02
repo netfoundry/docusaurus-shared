@@ -30,7 +30,7 @@ const openZitiNav: Item[] = [
             {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'},
             {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
             {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'},
-            {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLan'},
+            {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLAN'},
         ],
     }
 ];
@@ -45,7 +45,7 @@ const onpremNav: Item[] = [
             {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'},
             {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
             {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'},
-            {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLan'},
+            {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLAN'},
         ],
     },
 ];
@@ -60,14 +60,14 @@ const frontdoorNav: Item[] = [
             {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'},
             {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
             {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'},
-            {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLan'},
+            {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLAN'},
         ],
     },
 ];
 
 const zlanNav: Item[] = [
     {
-        label: 'zLan Docs',
+        label: 'zLAN Docs',
         position: 'left',
         type: 'dropdown',
         items: [
@@ -75,7 +75,7 @@ const zlanNav: Item[] = [
             {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'},
             {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
             {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'},
-            {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLan'},
+            {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLAN'},
         ],
     },
 ];

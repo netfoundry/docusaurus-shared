@@ -36,7 +36,7 @@ export default function Home(): ReactNode {
                             <span style={{margin: '0 8px'}} />
                             <Link className="button button--secondary button--lg" to="/docs/openziti/learn/introduction">OpenZiti Docs</Link>
                             <span style={{margin: '0 8px'}} />
-                            <Link className="button button--secondary button--lg" to="/docs/zlan">zLan Docs</Link>
+                            <Link className="button button--secondary button--lg" to="/docs/zlan">zLAN Docs</Link>
                         </div>
                     </div>
                 </NetFoundryHorizontalSection>
