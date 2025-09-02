@@ -184,6 +184,7 @@ const config: Config = {
         // Replace with your project's social card
         image: 'img/docusaurus-social-card.jpg',
         navbar: {
+            hideOnScroll: false,
             title: 'NetFoundry Documentation',
             logo: {
                 alt: 'NetFoundry Logo',

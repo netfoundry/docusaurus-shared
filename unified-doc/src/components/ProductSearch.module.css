@@ -1,0 +1,49 @@
+/* src/components/ProductSearch.module.css */
+
+/* Layout */
+.wrap{max-width:500px;margin:0 auto;padding:1rem .75rem}
+.topbar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.5rem}
+.search{flex:1}
+.pills{display:flex;gap:.4rem;align-items:center}
+
+/* Pills */
+.pill{padding:.3rem .6rem;border:1px solid var(--ifm-color-emphasis-300);
+    border-radius:999px;background:transparent;cursor:pointer;font-size:.8rem}
+.active{background:var(--ifm-color-primary);color:#fff;border-color:var(--ifm-color-primary)}
+
+/* Meta */
+.meta{display:flex;justify-content:space-between;align-items:center;
+    margin:.25rem 0 .5rem;font-size:.85rem}
+
+/* Hits grid */
+.grid{display:grid;grid-template-columns:1fr;gap:.4rem}
+.card{display:block;padding:.6rem .75rem;border:1px solid var(--ifm-color-emphasis-200);
+    border-radius:.5rem;text-decoration:none;background:var(--ifm-background-surface-color);
+    transition:transform .06s ease, box-shadow .06s ease}
+.card:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.cardHeader{display:flex;align-items:center;justify-content:space-between;gap:.4rem}
+.title{margin:0;font-size:1rem;line-height:1.25}
+.url{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:.72rem;opacity:.75;margin:.15rem 0}
+.snippet{font-size:.82rem;color:var(--ifm-font-color-base);opacity:.95}
+
+/* Badges */
+.badge{padding:.1rem .45rem;border-radius:.5rem;font-size:.7rem;border:1px solid transparent}
+.p_frontdoor{background:#eef7ff;border-color:#c9e3ff;color:#145ea8}
+.p_openziti{background:#eefdf6;border-color:#c8f2df;color:#0d7a4e}
+.p_onprem{background:#fff6ee;border-color:#ffe0c2;color:#9a4d00}
+.p_zlan{background:#f3f0ff;border-color:#ddd5ff;color:#5335b7}
+
+/* Pagination */
+.pagination{display:flex;justify-content:center;margin:.5rem 0}
+.pageList{display:flex;gap:.3rem;list-style:none;padding:0;margin:0}
+.pageItem{display:inline-flex}
+.pageItemDisabled{opacity:.4;pointer-events:none}
+.pageItemSelected .pageLink{background:var(--ifm-color-primary);color:#fff;border-color:var(--ifm-color-primary)}
+.pageLink{display:inline-flex;align-items:center;justify-content:center;
+    min-width:1.8rem;height:1.8rem;padding:0 .5rem;
+    border:1px solid var(--ifm-color-emphasis-300);border-radius:.5rem;text-decoration:none;font-size:.8rem}
+
+/* Dark mode tweaks */
+:global(html[data-theme='dark']) .card{border-color:rgba(255,255,255,.08)}
+:global(html[data-theme='dark']) .url{opacity:.85}

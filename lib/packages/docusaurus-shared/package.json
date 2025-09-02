@@ -1,6 +1,6 @@
 {
   "name": "@openclint/docusaurus-shared",
-  "version": "0.0.108",
+  "version": "0.0.112",
   "description": "Shared components for Docusaurus projects",
   "type": "module",
   "main": "dist/ui.cjs.js",
@@ -22,6 +22,11 @@
     "access": "public"
   },
   "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs"
+    },
     "./node": {
       "types": "./dist/node.d.ts",
       "import": "./dist/node.esm.js",
