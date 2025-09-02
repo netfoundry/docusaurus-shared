@@ -1,5 +1,5 @@
 import React, {type ReactNode} from 'react';
-import { NetFoundryLayout, NetFoundryLayoutProps } from '@openclint/docusaurus-shared/ui';
+import {NetFoundryLayout, NetFoundryLayoutProps, StarUsProps} from '@openclint/docusaurus-shared/ui';
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import {useLocation} from "@docusaurus/router";
 import {unifiedFooter} from "@site/src/components/footer";
@@ -7,7 +7,6 @@ import {frontdoorFooter} from "@frontdoor/src/components/footer";
 import {onpremFooter} from "@onprem/src/components/footer";
 import {zlanFooter} from "@zlan/src/components/footer";
 import {openZitiFooter} from "@openziti/src/components/footer";
-import {StarUsProps} from "@openclint/docusaurus-shared/src/components/StarUs";
 
 const mapFooter = (p: string) => {
     if (p.startsWith('/docs/frontdoor')) return frontdoorFooter;
@@ -25,7 +24,7 @@ export default function LayoutWrapper(props: NetFoundryLayoutProps): ReactNode {
         starProps.repoUrl = 'https://github.com/openziti/ziti';
         starProps.label = 'Vote For Us';
     }
-    const footerToShow = mapFooter(pathname, siteConfig.title);
+    const footerToShow = mapFooter(pathname);
     return (
         <NetFoundryLayout footerProps={footerToShow} starProps={starProps} >
             {props.children}
