@@ -10,6 +10,7 @@ import {
     PoweredBy,
     useHits,
     useConfigure,
+    useSearchBox,
 } from "react-instantsearch";
 import { history } from "instantsearch.js/es/lib/routers";
 import { singleIndex } from "instantsearch.js/es/lib/stateMappings";
@@ -125,13 +126,21 @@ function GroupedHits() {
                                     </div>
                                 ))}
                             </div>
-                            <div className={styles.groupUrl}>{shortUrl(g.items[0])}</div>
+                            <div className={styles.groupUrl}>
+                                <a href={getUrl(g.items[0])}>{shortUrl(g.items[0])}</a>
+                            </div>
                         </div>
                     ))}
                 </div>
             ))}
         </div>
     );
+}
+
+function QueryWatcher({ onChange }: { onChange: (ok: boolean) => void }) {
+    const { query } = useSearchBox();
+    useEffect(() => onChange(query.trim().length >= 2), [query, onChange]);
+    return null;
 }
 
 export default function ProductSearch({
@@ -198,6 +207,7 @@ export default function ProductSearch({
                     stateMapping: singleIndex(indexName),
                 }}
             >
+                <QueryWatcher onChange={setSearchLongEnough} />
                 <div className={styles.topbar}>
                     <SearchBox
                         onKeyUp={(e) => {
@@ -205,7 +215,7 @@ export default function ProductSearch({
                         }}
                         autoFocus
                         classNames={{ input: styles.searchInput }}
-                        placeholder="Type here to search for relevant documentation"
+                        placeholder="Enter your search criteria here"
                     />
                     <div className={styles.pills}>
                         <button
@@ -247,7 +257,7 @@ export default function ProductSearch({
                         "hierarchy.lvl2",
                         "content",
                     ]}
-                    attributesToSnippet={["content:30"]}
+                    attributesToSnippet={["content:15"]}
                     snippetEllipsisText="…"
                     distinct
                 />
