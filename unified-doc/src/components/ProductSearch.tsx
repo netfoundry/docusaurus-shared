@@ -1,5 +1,5 @@
 // src/components/ProductSearch.tsx
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
     InstantSearch,
     SearchBox,
@@ -12,8 +12,11 @@ import {
     useHits,
     useConfigure,
 } from "react-instantsearch";
+import { history } from "instantsearch.js/es/lib/routers";
+import { singleIndex } from "instantsearch.js/es/lib/stateMappings";
 import { liteClient as algoliasearch } from "algoliasearch/lite";
 import styles from "./ProductSearch.module.css";
+import clsx from "clsx";
 
 type HitRec = {
     url?: string | string[];
@@ -31,6 +34,7 @@ type Props = {
     apiKey: string;
     indexName: string;
     products?: string[];
+    extraContainerClasses?: string[];
 };
 
 function getUrl(h: HitRec): string {
@@ -45,20 +49,31 @@ function getUrl(h: HitRec): string {
 function shortUrl(h: HitRec): string {
     const href = getUrl(h);
     try {
-        const u = new URL(href, typeof window !== "undefined" ? window.location.origin : "http://localhost");
+        const u = new URL(
+            href,
+            typeof window !== "undefined" ? window.location.origin : "http://localhost"
+        );
         return u.pathname + u.search + u.hash;
     } catch {
         return href;
     }
 }
 function titleFrom(h: HitRec): string {
-    return h.title || h.hierarchy?.lvl2 || h.hierarchy?.lvl1 || h.hierarchy?.lvl0 || shortUrl(h);
+    return (
+        h.title ||
+        h.hierarchy?.lvl2 ||
+        h.hierarchy?.lvl1 ||
+        h.hierarchy?.lvl0 ||
+        shortUrl(h)
+    );
 }
 function ProductBadge({ p }: { p?: string }) {
-    return p ? <span className={`${styles.badge} ${styles[`p_${p}`]}`}>{p}</span> : null;
+    return p ? (
+        <span className={`${styles.badge} ${styles[`p_${p}`]}`}>{p}</span>
+    ) : null;
 }
 
-// facet filter applied via hook (won’t reset query UI state)
+/** Configure-based filter (no remount, reliable) */
 function ProductFilter({ product }: { product: string }) {
     useConfigure({
         facetFilters: product ? [[`product:${product}`]] : [],
@@ -66,119 +81,93 @@ function ProductFilter({ product }: { product: string }) {
     return null;
 }
 
-// v7 hits -> grouped per anchor
-function GroupedHits1147() {
-    const { hits } = useHits<HitRec>();
-    const groupsMap = new Map<string, { header: string; url: string; items: HitRec[] }>();
-    for (const h of hits) {
-        const page = h.url_without_anchor || (typeof h.url === "string" && h.url.split("#")[0]) || "";
-        const key = `${page}#${h.anchor || ""}`;
-        const url = getUrl(h);
-        const g = groupsMap.get(key) || { header: titleFrom(h), url, items: [] };
-        g.items.push(h);
-        groupsMap.set(key, g);
-    }
-    const groups = [...groupsMap.values()];
-    return (
-        <div className={styles.groupList}>
-            {groups.map((g) => (
-                <div key={g.url} className={styles.group}>
-                    <div className={styles.groupHeaderRow}>
-                        <a href={g.url} className={styles.groupHeader}>{g.header}</a>
-                        <ProductBadge p={g.items[0].product} />
-                    </div>
-                    {g.items[0].hierarchy?.lvl0 && <div className={styles.breadcrumb}>{g.items[0].hierarchy!.lvl0}</div>}
-                    <div className={styles.groupSnips}>
-                        {g.items.slice(0, 3).map((h, i) => (
-                            <div key={i} className={styles.snippet}>
-                                <Snippet attribute="content" hit={h as any} />
-                            </div>
-                        ))}
-                    </div>
-                    <div className={styles.groupUrl}>{shortUrl(g.items[0])}</div>
-                </div>
-            ))}
-        </div>
-    );
-}
-
+/** Group by section (lvl0), then by page (no duplicate “Learn”) */
 function GroupedHits() {
     const { hits } = useHits<HitRec>();
-
-    // group by page (url_without_anchor)
-    const groupsMap = new Map<
+    const sections = new Map<
         string,
-        { header: string; url: string; lvl0?: string; items: HitRec[] }
+        Map<string, { header: string; url: string; lvl0?: string; items: HitRec[] }>
     >();
 
     for (const h of hits) {
+        const lvl0 = h.hierarchy?.lvl0 || "Other";
         const page =
             h.url_without_anchor ||
             (typeof h.url === "string" ? h.url.split("#")[0] : "") ||
             "";
 
+        const byPage = sections.get(lvl0) || new Map();
         const g =
-            groupsMap.get(page) ||
-            {
-                header: titleFrom(h),
-                url: page || getUrl(h),         // link to page (no #anchor)
-                lvl0: h.hierarchy?.lvl0,
-                items: [],
-            };
+            byPage.get(page) ||
+            { header: titleFrom(h), url: page || getUrl(h), lvl0, items: [] };
 
         g.items.push(h);
-        groupsMap.set(page, g);
+        byPage.set(page, g);
+        sections.set(lvl0, byPage);
     }
-
-    const groups = [...groupsMap.values()];
 
     return (
         <div className={styles.groupList}>
-            {groups.map((g) => (
-                <div key={g.url} className={styles.group}>
-                    <div className={styles.groupHeaderRow}>
-                        <a href={g.url} className={styles.groupHeader}>{g.header}</a>
-                        <ProductBadge p={g.items[0].product} />
-                    </div>
-                    {g.lvl0 && <div className={styles.breadcrumb}>{g.lvl0}</div>}
-                    <div className={styles.groupSnips}>
-                        {g.items.slice(0, 3).map((h, i) => (
-                            <div key={i} className={styles.snippet}>
-                                <Snippet attribute="content" hit={h as any} />
+            {[...sections.entries()].map(([lvl0, byPage]) => (
+                <div key={lvl0} className={styles.section}>
+                    <div className={styles.sectionHeader}>{lvl0}</div>
+                    {[...byPage.values()].map((g) => (
+                        <div key={g.url} className={styles.group}>
+                            <div className={styles.groupHeaderRow}>
+                                <a href={g.url} className={styles.groupHeader}>
+                                    {g.header}
+                                </a>
+                                <ProductBadge p={g.items[0].product} />
                             </div>
-                        ))}
-                    </div>
-                    <div className={styles.groupUrl}>{shortUrl(g.items[0])}</div>
+                            <div className={styles.groupSnips}>
+                                {g.items.slice(0, 3).map((h, i) => (
+                                    <div key={i} className={styles.snippet}>
+                                        <Snippet attribute="content" hit={h as any} />
+                                    </div>
+                                ))}
+                            </div>
+                            <div className={styles.groupUrl}>{shortUrl(g.items[0])}</div>
+                        </div>
+                    ))}
                 </div>
             ))}
         </div>
     );
 }
-
 
 export default function ProductSearch({
                                           appId,
                                           apiKey,
                                           indexName,
                                           products = ["frontdoor", "openziti", "onprem", "zlan"],
+                                          extraContainerClasses = [],
                                       }: Props) {
+    // read initial pill from ?product= for back/forward + shareable URLs
     const [product, setProduct] = useState<string>("");
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        const p = new URLSearchParams(window.location.search).get("product") || "";
+        setProduct(p);
+    }, []);
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        const u = new URL(window.location.href);
+        if (product) u.searchParams.set("product", product);
+        else u.searchParams.delete("product");
+        window.history.replaceState({}, "", u);
+    }, [product]);
+
     const base = useMemo(() => algoliasearch(appId, apiKey), [appId, apiKey]);
 
-    // 2-char gate, BUT allow if any facet filter is active
+    // Gate only when no query AND no pill active (prevents “freeze” on pill-only)
     const searchClient = useMemo(
         () => ({
             ...base,
             search(requests: any[]) {
-                const tooShortForAll = requests.every((r: any) => {
-                    const q = r.params?.query ?? "";
-                    const ff = r.params?.facetFilters ?? [];
-                    const hasFilters =
-                        (Array.isArray(ff) && ff.length > 0) ||
-                        (typeof ff === "string" && ff.trim().length > 0);
-                    return !hasFilters && (!q || q.length < 2);
-                });
-                if (tooShortForAll) {
+                const allShort = requests.every(
+                    (r: any) => (r.params?.query ?? "").length < 2
+                );
+                if (allShort && !product) {
                     return Promise.resolve({
                         results: requests.map(() => ({
                             hits: [],
@@ -195,14 +184,22 @@ export default function ProductSearch({
                 return (base as any).search(requests);
             },
         }),
-        [base]
+        [base, product]
     );
 
     return (
         <div className={styles.wrap}>
-            <InstantSearch searchClient={searchClient} indexName={indexName}>
+            <InstantSearch
+                searchClient={searchClient}
+                indexName={indexName}
+                routing={{
+                    router: history({ writeDelay: 300 }),
+                    stateMapping: singleIndex(indexName),
+                }}
+            >
                 <div className={styles.topbar}>
                     <SearchBox
+                        autoFocus
                         classNames={{ input: styles.searchInput }}
                         placeholder="Type here to search for relevant documentation"
                     />
@@ -227,7 +224,7 @@ export default function ProductSearch({
                     </div>
                 </div>
 
-                {/* Static Configure (no facetFilters here to avoid remount/reset) */}
+                {/* static config */}
                 <Configure
                     hitsPerPage={20}
                     attributesToRetrieve={[
@@ -240,36 +237,57 @@ export default function ProductSearch({
                         "content",
                         "title",
                     ]}
-                    attributesToHighlight={["title", "hierarchy.lvl1", "hierarchy.lvl2", "content"]}
+                    attributesToHighlight={[
+                        "title",
+                        "hierarchy.lvl1",
+                        "hierarchy.lvl2",
+                        "content",
+                    ]}
                     attributesToSnippet={["content:30"]}
                     snippetEllipsisText="…"
-                    distinct={true}
+                    distinct
                 />
 
-                {/* Dynamic facet filter without resetting query */}
+                {/* pill-driven filter (reliable, no remount) */}
                 <ProductFilter product={product} />
 
-                <div className={styles.meta}>
-                    <Stats />
-                    <PoweredBy />
+                <div className={clsx(styles.container, extraContainerClasses)}>
+                    <div className={styles.results}>
+                        <div className={styles.meta}>
+                            <Stats />
+                        </div>
+                        <div className={styles.grid}>
+                            <GroupedHits />
+                        </div>
+                        <Pagination
+                            showFirst={false}
+                            showLast={false}
+                            classNames={{
+                                root: styles.pagination,
+                                list: styles.pageList,
+                                item: styles.pageItem,
+                                selectedItem: styles.pageItemSelected,
+                                disabledItem: styles.pageItemDisabled,
+                                link: styles.pageLink,
+                            }}
+                        />
+                    </div>
+                    <div className={styles.footer}>
+                        <div className={styles.kbdRow}>
+                          <span>
+                            <kbd>↵</kbd> open
+                          </span>
+                                        <span>
+                            <kbd>↑</kbd>
+                            <kbd>↓</kbd> navigate
+                          </span>
+                                        <span>
+                            <kbd>esc</kbd> close
+                          </span>
+                        </div>
+                        <PoweredBy />
+                    </div>
                 </div>
-
-                <div className={styles.grid}>
-                    <GroupedHits />
-                </div>
-
-                <Pagination
-                    showFirst={false}
-                    showLast={false}
-                    classNames={{
-                        root: styles.pagination,
-                        list: styles.pageList,
-                        item: styles.pageItem,
-                        selectedItem: styles.pageItemSelected,
-                        disabledItem: styles.pageItemDisabled,
-                        link: styles.pageLink,
-                    }}
-                />
             </InstantSearch>
         </div>
     );

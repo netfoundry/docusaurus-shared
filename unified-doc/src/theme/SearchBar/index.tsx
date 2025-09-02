@@ -6,6 +6,7 @@ import {DocSearchButton, DocSearchModal} from "@docsearch/react";
 import ProductSearch from "@site/src/components/ProductSearch";
 import {appId,apiKey,indexName} from "../../consts"
 import styles from "./SearchBar.module.css";
+import clsx from "clsx";
 
 export default function SearchBar() {
     const [open, setOpen] = useState(false);
@@ -27,11 +28,12 @@ export default function SearchBar() {
             {mounted && open && ReactDOM.createPortal(
                 <div className={styles.backdrop} onClick={() => setOpen(false)}>
                     <div style={{background: "var(--ifm-background-color)", "padding": "10px", borderRadius: "10px"}}>
-                    <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+                    <div className={clsx(styles.modal)} onClick={(e) => e.stopPropagation()}>
                         <ProductSearch
                             appId={appId}
                             apiKey={apiKey}
                             indexName={indexName}
+                            extraContainerClasses={[styles.modalSearchContainer]}
                         />
                     </div>
                     </div>
