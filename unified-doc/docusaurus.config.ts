@@ -17,7 +17,7 @@ const docsBase = `/docs`
 
 const staging: PublishConfig = {
     docusaurus: {
-        url: 'https://stg-netfoundry-stg.kinsta.cloud'
+        url: 'https://netfoundry.io'
     },
     algolia: {
         appId: 'QRGW6TJXHP',
