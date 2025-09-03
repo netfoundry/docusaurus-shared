@@ -13,7 +13,7 @@ const onprem = `./_remotes/onprem`;
 const openziti = `./_remotes/openziti`;
 const zrok = `./_remotes/zrok`;
 const zlan = `./_remotes/zlan`;
-
+const docsBase = `/docs`
 
 const staging: PublishConfig = {
     docusaurus: {
@@ -50,6 +50,9 @@ const REMARK_MAPPINGS = [
     { from: '@openzitidocs', to: '/docs/openziti'},
 ];
 
+console.log("CANONICAL URL SHOULD BE: " + cfg.docusaurus.url);
+console.log("    docsBased SHOULD BE: " + docsBase);
+
 const config: Config = {
     title: 'NetFoundry Documentation',
     tagline: 'Documentation for NetFoundry products and projects',
@@ -64,7 +67,7 @@ const config: Config = {
     url: cfg.docusaurus.url,
     // Set the /<baseUrl>/ pathname under which your site is served
     // For GitHub pages deployment, it is often '/<projectName>/'
-    baseUrl: '/docs',
+    baseUrl: docsBase,
     trailingSlash: true,
 
     // GitHub pages deployment config.
