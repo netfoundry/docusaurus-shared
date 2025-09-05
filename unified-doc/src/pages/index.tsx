@@ -92,7 +92,7 @@ export default function Home(): ReactNode {
                                 <div className={styles.idxcard}>
                                     <div className="card__header"><h3>zLan</h3></div>
                                     <div className="card__body">
-                                        zLan blurb here.
+                                        Built on the robust foundation of NetFoundy OpenZiti, NetFoundry zLAN combines advanced firewall capabilities with the power of zero trust and secure network overlay
                                     </div>
                                     <div className="card__footer">
                                         <Link className="button button--primary button--block" to="/docs/zlan">Go to zLan</Link>
