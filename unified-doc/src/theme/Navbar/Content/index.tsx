@@ -8,6 +8,9 @@ import ColorModeToggle from '@theme/ColorModeToggle';
 import {useColorMode, useThemeConfig} from '@docusaurus/theme-common';
 import styles from './index.module.css'
 
+import NavbarMobileSidebarToggle from "@theme/Navbar/MobileSidebar/Toggle";
+import {useNavbarMobileSidebar} from "@docusaurus/theme-common/internal";
+
 type Props = React.ComponentProps<typeof OriginalNavbarContent>;
 type Item = any;
 
@@ -98,22 +101,28 @@ export default function NavbarContent(props: Props): JSX.Element {
     const items = mapNavbar(pathname);
     const left = items.filter((i) => i.position !== 'right');
     const right = items.filter((i) => i.position === 'right');
+
+
+    const mobileSidebar = useNavbarMobileSidebar();
+
+
     return (
         <div className="navbar__inner">
-            <NavbarLogo />
-            <div className="navbar__items navbar__items--left">
-                {left.map((item, i) => <NavbarItem {...item} key={`l-${i}`} />)}
+            <div className="navbar__items">
+                {!mobileSidebar.disabled && <NavbarMobileSidebarToggle />}
+                <NavbarLogo />
+                {left.map((item, i) => (
+                    <NavbarItem {...item} key={`l-${i}`} />
+                ))}
             </div>
             <div className="navbar__items navbar__items--right">
                 {!cmCfg?.disableSwitch && (
-                    <ColorModeToggle
-                        value={colorMode}
-                        onChange={setColorMode}
-                    />
+                    <ColorModeToggle value={colorMode} onChange={setColorMode} />
                 )}
-                {right.map((item, i) => <NavbarItem {...item} key={`r-${i}`} />)}
-                <p>&nbsp;</p>
-                <SearchBar/>
+                {right.map((item, i) => (
+                    <NavbarItem {...item} key={`r-${i}`} />
+                ))}
+                <SearchBar />
             </div>
         </div>
     );
