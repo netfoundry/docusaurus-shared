@@ -9,30 +9,39 @@ echo "publish script located in: $pub_script_root"
 
 publish_docs() {
   local HOST=$1 PORT=$2 USER=$3 TARGET_DIR=$4 BUILD_QUALIFIER=$5
+  local zip_target="unified-docs${BUILD_QUALIFIER}.zip"
 
   "${pub_script_root}/build-docs.sh" "${BUILD_QUALIFIER}"
 
-  local zip_target="unified-docs${BUILD_QUALIFIER}.zip"
   echo "creating zip from built site at /build${BUILD_QUALIFIER}"
-  pushd "${pub_script_root}/build${BUILD_QUALIFIER}"
-  zip -r "/tmp/${zip_target}" .
-  popd
+  pushd "${pub_script_root}/build${BUILD_QUALIFIER}" >/dev/null
+  zip -r "/tmp/${zip_target}" . 2>&1
+  popd >/dev/null
+
+  # isolated known_hosts
+  local addr="[$HOST]:$PORT"
+  local kh; kh="$(mktemp)"
+  trap 'rm -f "$kh"' RETURN
+  ssh-keyscan -p "$PORT" "$HOST" 2>&1 | \
+    awk -v a="$addr" '{ $1=a; print }' > "$kh"
+  chmod 600 "$kh" 2>&1
 
   echo "doc publication begins"
   echo "=== scp begins ==="
-  scp -o StrictHostKeyChecking=accept-new \
-    -P "$PORT" -i "${pub_script_root}/github_deploy_key" \
-    "/tmp/${zip_target}" \
-    "$USER@$HOST:/tmp" \
-    2>&1
+  scp -o UserKnownHostsFile="$kh" -o StrictHostKeyChecking=yes \
+      -P "$PORT" -i "${pub_script_root}/github_deploy_key" \
+      "/tmp/${zip_target}" \
+      "$USER@$HOST:/tmp" 2>&1
+
   echo "=== ssh commands ==="
   for CMD in \
     "rm -rf ${TARGET_DIR}/docs" \
     "mkdir -p ${TARGET_DIR}/docs" \
     "unzip -oq /tmp/${zip_target} -d ${TARGET_DIR}/docs"
   do
-    ssh -p "$PORT" -i "${pub_script_root}/github_deploy_key" \
-      "$USER@$HOST" "$CMD" 2>&1
+    ssh -o UserKnownHostsFile="$kh" -o StrictHostKeyChecking=yes \
+        -p "$PORT" -i "${pub_script_root}/github_deploy_key" \
+        "$USER@$HOST" "$CMD" 2>&1
   done
   echo "=== done ==="
   echo "doc published"
