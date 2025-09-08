@@ -95,7 +95,7 @@ export default function Home(): ReactNode {
                                         Built on the robust foundation of NetFoundy OpenZiti, NetFoundry zLAN combines advanced firewall capabilities with the power of zero trust and secure network overlay
                                     </div>
                                     <div className="card__footer">
-                                        <Link className="button button--primary button--block" to="/docs/zlan">Go to zLan</Link>
+                                        <Link className="button button--primary button--block" to="/docs/zlan">Go to zLAN</Link>
                                     </div>
                                 </div>
                             </div>
