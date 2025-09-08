@@ -143,3 +143,5 @@ vite.config.ts.timestamp-*
 
 **/_remotes/**
 **/package-lock.json
+
+**/github_deploy_key

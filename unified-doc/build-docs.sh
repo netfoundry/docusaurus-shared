@@ -12,15 +12,25 @@ clone_or_update() {
   local target="$script_dir/_remotes/$dest"
 
   if [ -d "$target/.git" ]; then
-    git -C "$target" fetch origin "$branch" --depth 1
-    git -C "$target" reset --hard "origin/$branch"
+    if ! git -C "$target" fetch origin "$branch" --depth 1 \
+         || ! git -C "$target" reset --hard "origin/$branch"; then
+      echo "❌ Branch '$branch' not found in $url"
+      echo "👉 Available branches:"
+      git -C "$target" ls-remote --heads origin | awk '{print $2}' | sed 's|refs/heads/||'
+      exit 1
+    fi
   else
-    git clone --single-branch --branch "$branch" --depth 1 "$url" "$target"
+    git clone --single-branch --branch "$branch" --depth 1 "$url" "$target" || {
+      echo "❌ Branch '$branch' not found in $url"
+      echo "👉 Available branches:"
+      git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||'
+      exit 1
+    }
   fi
 }
 
 clone_or_update "git@bitbucket.org:netfoundry/zrok-connector.git" frontdoor develop
-clone_or_update "git@bitbucket.org:netfoundry/k8s-on-prem-installations.git" onprem unified-doc-changes
+clone_or_update "git@bitbucket.org:netfoundry/k8s-on-prem-installations.git" onprem main
 clone_or_update "git@github.com:openziti/ziti-doc.git" openziti updates-for-unified-doc
 clone_or_update "git@github.com:netfoundry/zlan" zlan main
 

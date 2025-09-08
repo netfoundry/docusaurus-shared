@@ -20,3 +20,5 @@ yarn-debug.log*
 yarn-error.log*
 
 static/build-time.txt
+build
+build-*

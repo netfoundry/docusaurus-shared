@@ -57,9 +57,10 @@ const config: Config = {
     ],
     staticDirectories: [
         'static',
-        '_remotes/frontdoor/docusaurus/static/',
-        '_remotes/onprem/docs-site/static/',
-        '_remotes/openziti/docusaurus/static/'
+        `${frontdoor}/static/`,
+        `${onprem}/static/`,
+        `${openziti}/docusaurus/static/`,
+        `${zrok}/docusaurus/static/`
     ],
     plugins: [
         function webpackAliases() {
@@ -69,10 +70,10 @@ const config: Config = {
                     return {
                         resolve: {
                             alias: {
-                                '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
                                 '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
-                                '@zrok': path.resolve(__dirname, `${zrok}/docusaurus`),
                                 '@onprem': path.resolve(__dirname, `${onprem}/docs-site`),
+                                '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
+                                '@zrok': path.resolve(__dirname, `${zrok}/docusaurus`),
                             },
                         },
                     };
