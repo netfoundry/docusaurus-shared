@@ -185,7 +185,7 @@ const config: Config = {
     ],
     themeConfig: {
         // Replace with your project's social card
-        image: 'img/docusaurus-social-card.jpg',
+        image: 'https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg',
         navbar: {
             hideOnScroll: false,
             title: 'NetFoundry Documentation',
