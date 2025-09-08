@@ -90,7 +90,7 @@ export default function Home(): ReactNode {
                             </div>
                             <div className="col col--4">
                                 <div className={styles.idxcard}>
-                                    <div className="card__header"><h3>zLan</h3></div>
+                                    <div className="card__header"><h3>zLAN</h3></div>
                                     <div className="card__body">
                                         Built on the robust foundation of NetFoundy OpenZiti, NetFoundry zLAN combines advanced firewall capabilities with the power of zero trust and secure network overlay
                                     </div>
@@ -111,7 +111,7 @@ export default function Home(): ReactNode {
                                             <li><Link to="/docs/onprem/intro">On-Prem Deployment</Link></li>
                                             <li><Link to="/docs/frontdoor/intro">Frontdoor Getting Started</Link></li>
                                             <li><Link to="/docs/openziti/reference/command-line/login">OpenZiti CLI Reference</Link></li>
-                                            <li><Link to="/docs/zlan">zLan FAQ</Link></li>
+                                            <li><Link to="/docs/zlan">zLAN FAQ</Link></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -125,7 +125,7 @@ export default function Home(): ReactNode {
                                             <li><Link to="/docs/onprem/troubleshooting">On-Prem Troubleshooting</Link></li>
                                             <li><Link to="/docs/frontdoor/learn/health-checks">Frontdoor Troubleshooting</Link></li>
                                             <li><Link to="/docs/openziti/learn/identity-providers">OpenZiti FAQ</Link></li>
-                                            <li><Link to="/docs/zlan">zLan FAQ</Link></li>
+                                            <li><Link to="/docs/zlan">zLAN FAQ</Link></li>
                                         </ul>
                                     </div>
                                 </div>
