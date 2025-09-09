@@ -4,5 +4,11 @@
   "compilerOptions": {
     "baseUrl": "."
   },
-  "exclude": [".docusaurus", "build"]
+  "exclude": [".docusaurus", "build"],
+  "baseUrl": ".",
+  "paths": {
+    "@openclint/docusaurus-shared/ui": [
+      "../docusaurus-shared/src/ui.ts"
+    ]
+  },
 }

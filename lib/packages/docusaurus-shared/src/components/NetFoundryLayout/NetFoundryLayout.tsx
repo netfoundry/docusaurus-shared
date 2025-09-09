@@ -19,25 +19,6 @@ import styles from './NetFoundryLayout.module.css';
 import { NetFoundryFooter, NetFoundryFooterProps } from '../NetFoundryFooter';
 import { StarUs, StarUsProps } from '../StarUs';
 
-export interface H1Props {
-    children: React.ReactNode;
-    id?: string;
-    className?: string;
-}
-export interface H2Props {
-    children: React.ReactNode;
-    className?: string;
-}
-export interface H3Props {
-    children: React.ReactNode;
-    style?: React.CSSProperties;
-    className?: string;
-}
-export interface HighlightProps {
-    children: React.ReactNode;
-    className?: string;
-}
-
 export interface MetaProps {
     image: string;       // path or absolute
     siteName: string;    // og:site_name
@@ -81,23 +62,6 @@ function useAbs() {
     };
 }
 
-export function H1(props: H1Props): JSX.Element {
-    const { children, id, className } = props;
-    return <p id={id} className={clsx(styles.h1, className)}>{children}</p>;
-}
-export function H2(props: H2Props): JSX.Element {
-    const { children, className } = props;
-    return <p className={clsx(styles.h2, className)}>{children}</p>;
-}
-export function H3(props: H3Props): JSX.Element {
-    const { children, style, className } = props;
-    return <h3 className={clsx(styles.h3, className)} style={style}>{children}</h3>;
-}
-export function Highlight(props: HighlightProps): JSX.Element {
-    const { children, className } = props;
-    return <span className={clsx(styles.highlight, className)}>{children}</span>;
-}
-
 export function NetFoundryLayout(props: NetFoundryLayoutProps): JSX.Element {
     const {
         children,
@@ -115,7 +79,20 @@ export function NetFoundryLayout(props: NetFoundryLayoutProps): JSX.Element {
 
     return (
         <LayoutProvider>
-            <PageMetadata title={title} description={description} />
+            <Head>
+                <title>{meta.title ?? title}</title>
+                {/*<meta name="aaa_description" content={meta.description ?? description} />*/}
+                {/*{meta.noindex && <meta name="robots" content="noindex,nofollow" />}*/}
+                {/*{meta.siteName && <meta property="og:site_name" content={meta.siteName} />}*/}
+                {/*{meta.title && <meta property="og:title" content={meta.title} />}*/}
+                {/*{meta.description && <meta property="og:description" content={meta.description} />}*/}
+                {/*{meta.image && <meta property="og:image" content={abs(meta.image)} />}*/}
+                <meta name="twitter:card" content="aaa_summary_large_image" />
+                <meta property="og:title" content="aaa_title" />
+                {/*{meta.twitter && <meta name="twitter:site" content={meta.twitter} />}*/}
+                {/*{meta.image && <meta name="twitter:image" content={abs(meta.image)} />}*/}
+            </Head>
+            <PageMetadata description={meta.description ?? description} />
             <SkipToContent />
             <AnnouncementBar />
             <Navbar />

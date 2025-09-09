@@ -1,67 +1,50 @@
+import type { Config } from '@docusaurus/types';
+import path from "node:path";
 import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
-import type * as Preset from '@docusaurus/preset-classic';
-import * as path from "node:path";
-import remarkReplaceMetaUrl from "./_remotes/openziti/docusaurus/src/plugins/remark/remark-replace-meta-url";
-import {DOCUSAURUS_BASE_PATH, DOCUSAURUS_DEBUG, DOCUSAURUS_DOCS_PATH} from "@openclint/docusaurus-shared/node";
-import {remarkScopedPath} from "./_remotes/openziti/docusaurus/src/plugins/remark/remarkScopedPath";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
 const onprem = `./_remotes/onprem`;
 const openziti = `./_remotes/openziti`;
 const zrok = `./_remotes/zrok`;
+const zlan = `./_remotes/zlan`;
+const docsBase = `/docs`
 
-const config: Config = {
-    title: 'NetFoundry Documentation',
-    tagline: 'Documentation for NetFoundry products and projects',
-    favicon: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/png/icon/netfoundry-icon-color.png',
-
-    // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
-    future: {
-        v4: true, // Improve compatibility with the upcoming Docusaurus v4
+const staging: PublishConfig = {
+    docusaurus: {
+        url: 'https://netfoundry.io'
     },
-
-    // Set the production url of your site here
-    url: 'https://your-docusaurus-site.example.com',
-    // Set the /<baseUrl>/ pathname under which your site is served
-    // For GitHub pages deployment, it is often '/<projectName>/'
-    baseUrl: '/docs',
-
-    // GitHub pages deployment config.
-    // If you aren't using GitHub pages, you don't need these.
-    organizationName: 'netfoundry', // Usually your GitHub org/user name.
-    projectName: 'netfoundry', // Usually your repo name.
-
-    onBrokenLinks: 'throw',
-    onBrokenMarkdownLinks: 'throw',
-
-    // Even if you don't use internationalization, you can use this field to set
-    // useful metadata like html lang. For example, if your site is Chinese, you
-    // may want to replace "en" with "zh-Hans".
-    i18n: {
-        defaultLocale: 'en',
-        locales: ['en'],
+    algolia: {
+        appId: 'QRGW6TJXHP',
+        apiKey: '267457291182a398c5ee19fcb0bcae77',
+        indexName: 'nfdocs_stg',
     },
-    themes: [
-        ['@docusaurus/theme-classic', {
-            customCss: [
-                require.resolve('./src/css/layout.css'),
-                require.resolve('./src/css/legacy.css'),
-                require.resolve('./src/css/vars.css'),
-                require.resolve('./src/css/vars-dark.css'),
-            ],
-        }],
-        '@docusaurus/theme-mermaid',
-        '@docusaurus/theme-search-algolia',
-    ],
-    staticDirectories: [
-        'static',
-        `${frontdoor}/static/`,
-        `${onprem}/static/`,
-        `${openziti}/docusaurus/static/`,
-        `${zrok}/docusaurus/static/`
-    ],
+    hotjar: {
+        id: "6443487"
+    }
+}
+
+const prod: PublishConfig = {
+    docusaurus: {
+        url: 'https://netfoundry.io'
+    },
+    algolia: {
+        appId: 'UWUTF7ESUI',
+        apiKey: '3a4a0691d0e8e3bb7c27c702c6a86ea9',
+        indexName: 'netfoundry.io_UWUTF7ESUI',
+    },
+    hotjar: {
+        id: "6506483"
+    }
+}
+
+const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV == 'prod' ? prod : staging;
+
+export default {
+    title: 'Site',
+    url: 'https://example.com',
+    baseUrl: '/',
+
     plugins: [
         function webpackAliases() {
             return {
@@ -70,69 +53,35 @@ const config: Config = {
                     return {
                         resolve: {
                             alias: {
-                                '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
-                                '@onprem': path.resolve(__dirname, `${onprem}/docs-site`),
+                                "@openclint/docusaurus-shared/ui": path.resolve(__dirname, "../docusaurus-shared/src/ui.ts"),
                                 '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
+                                '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
                                 '@zrok': path.resolve(__dirname, `${zrok}/docusaurus`),
+                                '@onprem': path.resolve(__dirname, `${onprem}/docs-site`),
+                                '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
                             },
                         },
                     };
                 },
             };
         },
-        ['@docusaurus/plugin-content-pages',{path: 'src/pages',routeBasePath: '/'}],
-        ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
-        ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docs-site/src/pages`, routeBasePath: '/onprem'}],
-        ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
-        [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'nfonprem',
-                path: `${onprem}/docs-site/docs`,
-                routeBasePath: 'onprem',
-                sidebarPath: `${onprem}/docs-site/sidebars.ts`,
-                includeCurrentVersion: true,
-            },
-        ],
-        [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'frontdoor',
-                path: `${frontdoor}/docusaurus/docs`,
-                routeBasePath: 'frontdoor',
-                sidebarPath: `${frontdoor}/docusaurus/sidebars.ts`,
-                includeCurrentVersion: true,
-            },
-        ],
-        [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'openziti',
-                path: `${openziti}/docusaurus/docs`,
-                routeBasePath: 'openziti',
-                sidebarPath: `${openziti}/docusaurus/sidebars.ts`,
-                includeCurrentVersion: true,
-
-                remarkPlugins: [
-                    // require('./src/plugins/remark/remark-yaml-table'),
-                    // require('./src/plugins/remark/remark-code-block'),
-                    [remarkReplaceMetaUrl, {from: '_baseurl_', to: DOCUSAURUS_BASE_PATH}],
-                    [remarkScopedPath,
-                        {
-                            debug: DOCUSAURUS_DEBUG,
-                            mappings: [
-                                {from: '@openzitidocs', to: '/docs/openziti'},
-                            ],
-                        },
-                    ]
-                ],
-            },
-        ],
     ],
+    presets: [
+        ['classic', {
+            docs: false,
+            blog: false,
+            theme: {
+                customCss: require.resolve('./src/custom/custom.css'),
+            }
+        }
+    ]
+    ],
+
     themeConfig: {
         // Replace with your project's social card
-        image: 'img/docusaurus-social-card.jpg',
+        image: 'https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg',
         navbar: {
+            hideOnScroll: false,
             title: 'NetFoundry Documentation',
             logo: {
                 alt: 'NetFoundry Logo',
@@ -155,31 +104,15 @@ const config: Config = {
             darkTheme: prismThemes.dracula,
         },
         algolia: {
-            appId: 'EXWPKK5PV4',
-            apiKey: '47858a78ccf0246d9b9cf4efaf6a1b8b',
-            indexName: 'openziti',
+            appId: cfg.algolia.appId,
+            apiKey: cfg.algolia.apiKey,
+            indexName: cfg.algolia.indexName,
             contextualSearch: true,
             searchParameters: {},
             searchPagePath: 'search'
         },
+        hotjar: {
+            applicationId: cfg.hotjar.id
+        },
     } satisfies Preset.ThemeConfig,
-    presets: [
-        [  'redocusaurus',
-            {
-                specs: [
-                    {
-                        id: 'openapi',
-                        spec: `${frontdoor}/docusaurus/docs/api-docs.yaml`,
-                    },
-                ],
-                // Theme Options for modifying how redoc renders them
-                theme: {
-                    // Change with your site colors
-                    primaryColor: '#1890ff',
-                }
-            },
-        ],
-    ],
-};
-
-export default config;
+} satisfies Config;

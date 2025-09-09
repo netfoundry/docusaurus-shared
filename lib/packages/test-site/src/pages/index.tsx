@@ -1,109 +1,26 @@
-// src/pages/index.tsx
-import type {ReactNode} from 'react';
-import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import {
-    defaultNetFoundryFooterProps,
-    NetFoundryHorizontalSection,
-    NetFoundryLayout,
-} from '@openclint/docusaurus-shared/ui';
+import React, {JSX} from 'react';
+import Layout from '@theme/Layout';
+import {Alert, NetFoundryHorizontalSection} from '@openclint/docusaurus-shared/ui';
 
-export default function Home(): ReactNode {
-    const {siteConfig} = useDocusaurusContext();
-    const fp = defaultNetFoundryFooterProps();
-    fp.description = 'NetFoundry documentation for open source projects and products';
-
+export default function Home(): JSX.Element {
+    const title = 'Home AA';
+    const desc = "TheDescriptiond";
     return (
-        <NetFoundryLayout
-            footerProps={fp}
-            title={`NetFoundry Docs Portal`}
-            description="Find product and open-source docs fast"
-        >
-            <main>
+        <Layout title={title} description={desc}>
+            <main className="container margin-vert--lg">
                 <NetFoundryHorizontalSection >
-                    <div className="container">
-                        <h1 className="hero__title" style={{marginBottom: 8}}>NetFoundry Docs</h1>
-                        <p className="hero__subtitle" style={{marginBottom: 24}}>
-                            Guides, references, and how-tos for NetFoundry products and OpenZiti.
-                        </p>
-                        <div className="buttons">
-                            <Link className="button button--secondary button--lg" to="/docs/onprem/intro">On-Prem Docs</Link>
-                            <span style={{margin: '0 8px'}} />
-                            <Link className="button button--secondary button--lg" to="/docs/frontdoor/intro">Frontdoor Docs</Link>
-                            <span style={{margin: '0 8px'}} />
-                            <Link className="button button--secondary button--lg" to="/docs/openziti/learn/introduction">OpenZiti Docs</Link>
-                        </div>
-                    </div>
-                </NetFoundryHorizontalSection>
-
-                <NetFoundryHorizontalSection style={{paddingBottom: "5em" }}>
-                    <div className="container">
-                        <div className="row">
-                            <div className="col col--4">
-                                <div className="card">
-                                    <div className="card__header"><h3>On-Prem</h3></div>
-                                    <div className="card__body">
-                                        Enterprise self-hosted platform for OpenZiti overlays.
-                                    </div>
-                                    <div className="card__footer">
-                                        <Link className="button button--primary button--block" to="/docs/onprem/intro">Go to On-Prem</Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col col--4">
-                                <div className="card">
-                                    <div className="card__header"><h3>Frontdoor</h3></div>
-                                    <div className="card__body">
-                                        Zero-trust inbound access to private apps and services.
-                                    </div>
-                                    <div className="card__footer">
-                                        <Link className="button button--primary button--block" to="/docs/frontdoor/intro">Go to Frontdoor</Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col col--4">
-                                <div className="card">
-                                    <div className="card__header"><h3>OpenZiti</h3></div>
-                                    <div className="card__body">
-                                        Open-source zero-trust networking project and SDKs.
-                                    </div>
-                                    <div className="card__footer">
-                                        <Link className="button button--primary button--block" to="/docs/openziti/learn/introduction">Go to OpenZiti</Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="margin-top--lg row">
-                            <div className="col col--6">
-                                <div className="card">
-                                    <div className="card__header"><h3>Quick Links</h3></div>
-                                    <div className="card__body">
-                                        <ul>
-                                            <li><Link to="/docs/onprem/intro">On-Prem Deployment</Link></li>
-                                            <li><Link to="/docs/frontdoor/intro">Frontdoor Getting Started</Link></li>
-                                            <li><Link to="/docs/openziti/reference/command-line/login">OpenZiti CLI Reference</Link></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col col--6">
-                                <div className="card">
-                                    <div className="card__header"><h3>Support</h3></div>
-                                    <div className="card__body">
-                                        <ul>
-                                            <li><Link to="/docs/onprem/troubleshooting">On-Prem Troubleshooting</Link></li>
-                                            <li><Link to="/docs/frontdoor/learn/health-checks">Frontdoor Troubleshooting</Link></li>
-                                            <li><Link to="/docs/openziti/learn/identity-providers">OpenZiti FAQ</Link></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+                    <NetFoundryHorizontalSection>
+                        <h1>Hello</h1>
+                        <p>This is a basic Docusaurus page in TSX.</p>
+                        <p>This is a basic Docusaurus page in TSX.</p>
+                        <p>This is a basic Docusaurus page in TSX.</p>
+                        <Alert title="this is my title" type="info" />
+                        <Alert title="this is my title" type="error" />
+                        <Alert title="this is my title" type="success" />
+                        <Alert title="this is my title" type="warning" />
+                    </NetFoundryHorizontalSection>
                 </NetFoundryHorizontalSection>
             </main>
-        </NetFoundryLayout>
+        </Layout>
     );
 }
