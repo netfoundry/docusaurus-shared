@@ -27,15 +27,15 @@ export default function SearchBar() {
             <DocSearchButton onClick={() => setOpen(true)} />
             {mounted && open && ReactDOM.createPortal(
                 <div className={styles.backdrop} onClick={() => setOpen(false)}>
-                    <div style={{background: "var(--ifm-background-color)", "padding": "10px", borderRadius: "10px"}}>
-                    <div className={clsx(styles.modal)} onClick={(e) => e.stopPropagation()}>
-                        <ProductSearch
-                            appId={appId}
-                            apiKey={apiKey}
-                            indexName={indexName}
-                            extraContainerClasses={[styles.modalSearchContainer]}
-                        />
-                    </div>
+                    <div className={styles.searchModal}>
+                        <div className={clsx(styles.modal)} onClick={(e) => e.stopPropagation()}>
+                            <ProductSearch
+                                appId={appId}
+                                apiKey={apiKey}
+                                indexName={indexName}
+                                extraContainerClasses={[styles.modalSearchContainer]}
+                            />
+                        </div>
                     </div>
                 </div>,
                 document.body

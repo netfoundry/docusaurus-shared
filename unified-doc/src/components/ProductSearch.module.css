@@ -4,7 +4,9 @@
 .wrap{max-width:980px;margin:0 auto;padding:1rem}
 .topbar{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:space-between;align-items:center;margin-bottom:.6rem}
 .searchInput{
-    height:44px;min-width:420px;padding:0 .9rem;border-radius:12px;
+    display:flex;
+    flex-grow:1;
+    height:44px;padding:0 .9rem;border-radius:12px;
     border:1px solid var(--ifm-color-emphasis-300);background:var(--ifm-background-color);
     transition:border-color .15s,box-shadow .15s,background .15s
 }
@@ -16,6 +18,8 @@
 /* ===== Pills ===== */
 .pills{display:flex;gap:.45rem;align-items:center;flex-wrap:wrap}
 .pill{
+    display:flex;
+    background: teal;
     all:unset;cursor:pointer;user-select:none;
     padding:.38rem .7rem;border:1px solid var(--ifm-color-emphasis-300);
     border-radius:999px;background:linear-gradient(180deg,var(--ifm-background-color),color-mix(in oklab,var(--ifm-background-color) 85%, black));
@@ -107,7 +111,34 @@
 :global(.DocSearch-Hit-source){color:var(--ifm-color-primary)}
 :global(.DocSearch-Footer){border-top:1px solid var(--ifm-color-emphasis-200)}
 
-:global(.ais-SearchBox-form){display:flex;align-items:center;gap:.55rem}
+:global(.ais-SearchBox) { width: 100%; }
+
+:global(.ais-SearchBox-form) {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap:.55rem;
+}
+
+:global(.ais-SearchBox-input),
+:global(.searchInput_ps_s) {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+:global(.ais-SearchBox-submit),
+:global(.ais-SearchBox-reset),
+:global(.ais-SearchBox-loadingIndicator) {
+    flex: 0 0 auto;
+}
+:global(.ais-SearchBox-submitIcon) {
+    height: .75rem;
+    width: .75rem;
+}
+:global(.ais-SearchBox-reset) {
+    display: none;
+}
+
 
 .container{display:flex;flex-direction:column;flex-grow:1}
 .results{flex:1 1 auto;overflow:auto}
