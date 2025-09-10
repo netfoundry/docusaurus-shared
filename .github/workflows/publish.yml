@@ -62,7 +62,7 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: unified-docs/package-lock.json
+          cache-dependency-path: unified-doc/package-lock.json
 
       - name: Install csvtojson
         run: npm install -g csvtojson
