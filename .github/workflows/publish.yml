@@ -15,13 +15,11 @@ on:
     branches:
       - main
       - '*-stg'
-    paths:
-      - 'unified-doc/**'
-  schedule:
-    - cron: '0 2 * * *' # run at 2 AM UTC to keep companion microsites updated e.g. swift SDK docs
+#  schedule:
+#    - cron: '0 2 * * *' # run at 2 AM UTC to keep companion microsites updated e.g. swift SDK docs
 
 jobs:
-  publish-docs:
+  publish-docs-from-container:
     name: Publish NF Docs
     if: github.repository_owner == 'netfoundry' && contains(github.event.head_commit.message, 'ci skip') == false
     runs-on: ubuntu-latest
@@ -31,6 +29,7 @@ jobs:
       ziti_ci_gpg_key: ${{ secrets.ZITI_CI_GPG_KEY }}
       ziti_ci_gpg_key_id: ${{ secrets.ZITI_CI_GPG_KEY_ID }}
 
+      # these are defined in github secrets: repo/settings/secrets/actions
       STG_DOC_SSH_HOST: ${{ secrets.STG_DOC_SSH_HOST }}
       STG_DOC_SSH_PORT: ${{ secrets.STG_DOC_SSH_PORT }}
       STG_DOC_SSH_TARGET_DIR: ${{ secrets.STG_DOC_SSH_TARGET_DIR }}
@@ -42,27 +41,17 @@ jobs:
       PROD_DOC_SSH_USER: ${{ secrets.PROD_DOC_SSH_USER }}
       PROD_KEY_FILE: ${{ secrets.PROD_KEY_FILE }}
 
+      # these are defined in a github environment: repo/settings/environments
       ZITI_HOTJAR_APPID: ${{ secrets.ZITI_HOTJAR_APPID }}
     environment: ${{ github.event.inputs.environment || (github.ref_name == 'main' && 'main' || 'stg') }}
     steps:
       - name: Checkout Workspace
         uses: actions/checkout@v4
 
-      - name: Cache apt archives
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/apt/archives
-          key: ${{ runner.os }}-apt-${{ hashFiles('.github/workflows/**') }}
-          restore-keys: |
-            ${{ runner.os }}-apt-
-
       - name: Install dependencies
         run: |
-          mkdir -p ~/.cache/apt/archives/partial
-          sudo cp -r ~/.cache/apt/archives /var/cache/apt || true
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends doxygen wget curl jq
-          rsync -a /var/cache/apt/ ~/.cache/apt/
+          sudo apt-get install -y doxygen wget curl jq
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -77,14 +66,12 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p $HOME/.ssh
-          chmod 700 $HOME/.ssh
           echo "${ZITI_CI_GH_KEY}"    | base64 -d > $HOME/.ssh/id_ed25519_gh
           echo "${JENKINS_CI_BB_KEY}" | base64 -d > $HOME/.ssh/id_ed25519_bb
           chmod 600 $HOME/.ssh/id_ed25519_*
 
-          ssh-keyscan -t rsa,ecdsa,ed25519 github.com >> $HOME/.ssh/known_hosts
-          ssh-keyscan -t rsa,ecdsa,ed25519 bitbucket.org >> $HOME/.ssh/known_hosts
-          chmod 644 $HOME/.ssh/known_hosts
+          ssh-keyscan github.com >> $HOME/.ssh/known_hosts
+          ssh-keyscan bitbucket.org >> $HOME/.ssh/known_hosts
 
           cat >> $HOME/.ssh/config <<'EOF'
           Host github.com
@@ -108,3 +95,10 @@ jobs:
           DEPLOY_ENV: 'kinsta'
           DOCUSAURUS_URL: 'https://netfoundry.io'
         run: unified-doc/publish-unified-doc.sh ${{ env.GIT_BRANCH }}
+
+#  check-links:
+#    if: github.ref_name == 'main'
+#    needs: publish-docs-from-container
+#    name: Check for Broken Links
+#    uses: ./.github/workflows/check-links.yml
+#    secrets: inherit
