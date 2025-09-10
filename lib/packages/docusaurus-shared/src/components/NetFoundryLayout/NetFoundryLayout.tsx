@@ -1,11 +1,10 @@
 import React, { JSX } from 'react';
 import clsx from 'clsx';
 import ErrorBoundary from '@docusaurus/ErrorBoundary';
-import { PageMetadata, ThemeClassNames } from '@docusaurus/theme-common';
+import { ThemeClassNames } from '@docusaurus/theme-common';
 // @ts-ignore
 import { useKeyboardNavigation } from '@docusaurus/theme-common/internal';
 import Head from '@docusaurus/Head';
-import { useLocation } from '@docusaurus/router';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
@@ -20,12 +19,18 @@ import { NetFoundryFooter, NetFoundryFooterProps } from '../NetFoundryFooter';
 import { StarUs, StarUsProps } from '../StarUs';
 
 export interface MetaProps {
-    image: string;       // path or absolute
-    siteName: string;    // og:site_name
-    twitter: string;     // @handle
-    title: string;       // og:title override
-    description: string; // og:description override
-    noindex: boolean;    // robots noindex
+    title?: string;
+    description?: string;
+    url?: string;
+    image?: string;
+    siteName?: string;
+    locale?: string;
+    twitterX?: {
+        card?: 'summary' | 'summary_large_image' | 'player' | 'app';
+        site?: string;
+        creator?: string;
+        imageAlt?: string;
+    };
 }
 
 export interface NetFoundryLayoutProps {
@@ -50,7 +55,7 @@ function useAbs() {
 }
 
 function safeMeta(meta?: MetaProps): MetaProps {
-    return meta ?? {} as MetaProps;
+    return meta ?? {};
 }
 
 export function NetFoundryLayout({
@@ -72,22 +77,29 @@ export function NetFoundryLayout({
         <LayoutProvider>
             <Head>
                 <title>{(meta.title ?? title) + (meta.siteName ? ` | ${meta.siteName}` : '')}</title>
-                {meta.description && <meta name="description" content={meta.description ?? description} />}
-                {meta.noindex && <meta name="robots" content="noindex,nofollow" />}
+                {(meta.description ?? description) && (<meta name="description" content={meta.description ?? description} />)}
                 {meta.siteName && <meta property="og:site_name" content={meta.siteName} />}
                 {meta.title && <meta property="og:title" content={meta.title} />}
                 {meta.description && <meta property="og:description" content={meta.description} />}
                 {meta.image && <meta property="og:image" content={abs(meta.image)} />}
-                <meta name="twitter:card" content="summary_large_image" />
-                {meta.twitter && <meta name="twitter:site" content={meta.twitter} />}
+                <meta name="twitter:card" content={meta.twitterX?.card ?? 'summary_large_image'} />
+                {meta.twitterX?.site && <meta name="twitter:site" content={meta.twitterX.site} />}
+                {meta.twitterX?.creator && <meta name="twitter:creator" content={meta.twitterX.creator} />}
                 {meta.image && <meta name="twitter:image" content={abs(meta.image)} />}
+                {meta.twitterX?.imageAlt && <meta name="twitter:image:alt" content={meta.twitterX.imageAlt} />}
             </Head>
             <SkipToContent />
             <AnnouncementBar />
             <Navbar />
             {starProps.repoUrl && starProps.label && <StarUs {...starProps} />}
-            <div className={clsx(ThemeClassNames.wrapper.main, styles.ozLayoutMainWrapper, className)}>
-                <ErrorBoundary fallback={(params: any) => <ErrorPageContent {...params} />}>
+            <div
+                className={clsx(
+                    ThemeClassNames.wrapper.main,
+                    styles.ozLayoutMainWrapper,
+                    className,
+                )}
+            >
+                <ErrorBoundary fallback={<ErrorPageContent />}>
                     {children}
                 </ErrorBoundary>
                 {!noFooter && footerProps && <NetFoundryFooter {...footerProps} />}

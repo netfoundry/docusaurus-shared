@@ -1,24 +1,30 @@
 name: build and deploy docs
 
 on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to build"
+        required: true
+        default: "main"
   push:
     branches:
       - main
-      - '*-stg'     # any branch that ends with -stg
-  schedule:
-    - cron: '0 2 * * *' # run at 2 AM UTC to keep companion microsites updated e.g. swift SDK docs
+      - '*-stg'
+#  schedule:
+#    - cron: '0 2 * * *' # run at 2 AM UTC to keep companion microsites updated e.g. swift SDK docs
 
 jobs:
   publish-docs-from-container:
     if: github.repository_owner == 'openziti' && contains(github.event.head_commit.message, 'ci skip') == false
     runs-on: ubuntu-latest
     env:
-      GIT_BRANCH: ${{ github.ref_name }}
+      GIT_BRANCH: ${{ github.event.inputs.branch || github.ref_name }}
       gh_ci_key: ${{ secrets.GH_CI_KEY }}
       ziti_ci_gpg_key: ${{ secrets.ZITI_CI_GPG_KEY }}
       ziti_ci_gpg_key_id: ${{ secrets.ZITI_CI_GPG_KEY_ID }}
-      
-      # these are defined in github secrets: ziti-doc/settings/secrets/actions
+
+      # these are defined in github secrets: repo/settings/secrets/actions
       STG_DOC_SSH_HOST: ${{ secrets.STG_DOC_SSH_HOST }}
       STG_DOC_SSH_PORT: ${{ secrets.STG_DOC_SSH_PORT }}
       STG_DOC_SSH_TARGET_DIR: ${{ secrets.STG_DOC_SSH_TARGET_DIR }}
@@ -27,19 +33,37 @@ jobs:
       PROD_DOC_SSH_PORT: ${{ secrets.PROD_DOC_SSH_PORT }}
       PROD_DOC_SSH_TARGET_DIR: ${{ secrets.PROD_DOC_SSH_TARGET_DIR }}
       PROD_DOC_SSH_USER: ${{ secrets.PROD_DOC_SSH_USER }}
-      
-      # these are defined in a github environment: ziti-doc/settings/environments
+
+      # these are defined in a github environment: repo/settings/environments
       ZITI_HOTJAR_APPID: ${{ secrets.ZITI_HOTJAR_APPID }}
-    environment: ${{ github.ref_name == 'main' && 'main' || 'stg' }}
+    environment: ${{ github.event.inputs.environment || (github.ref_name == 'main' && 'main' || 'stg') }}
     steps:
       - name: Checkout Workspace
         uses: actions/checkout@v4
 
-      - name: Install Doxygen
+      - name: Cache apt lists
+        uses: actions/cache@v4
+        with:
+          path: |
+            /var/cache/apt
+            /var/lib/apt/lists
+          key: ${{ runner.os }}-apt-${{ hashFiles('.github/workflows/**') }}
+          restore-keys: |
+            ${{ runner.os }}-apt-
+
+      - name: Install dependencies
         run: |
-          sudo apt-get update \
-          && sudo apt-get install -y doxygen wget curl jq \
-          && npm install -g csvtojson
+          sudo apt-get update
+          sudo apt-get install -y doxygen wget curl jq
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install csvtojson
+        run: npm install -g csvtojson
 
       - name: Build & Publish Docusaurus Site
         env:
@@ -47,13 +71,11 @@ jobs:
           ZITI_HOTJAR_APPID: ${{ secrets.STG_DOC_HOTJAR_APPID }}
           DEPLOY_ENV: 'kinsta'
           DOCUSAURUS_URL: 'https://netfoundry.io'
-          DOCUSAURUS_BASE_PATH: '/docs/openziti'
-          DOCUSAURUS_DOCS_PATH: '/'
-        run: ./publish-2025.sh ${{github.ref_name}}
+        run: unified-doc/publish-unified-doc.sh ${{ env.GIT_BRANCH }}
 
-  check-links:
-    if: github.ref_name == 'main'
-    needs: publish-docs-from-container
-    name: Check for Broken Links
-    uses: ./.github/workflows/check-links.yml
-    secrets: inherit
+#  check-links:
+#    if: github.ref_name == 'main'
+#    needs: publish-docs-from-container
+#    name: Check for Broken Links
+#    uses: ./.github/workflows/check-links.yml
+#    secrets: inherit
