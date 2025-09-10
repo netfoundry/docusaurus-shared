@@ -62,4 +62,8 @@ else
   publish_docs "$STG_DOC_SSH_HOST" "$STG_DOC_SSH_PORT" \
                "$STG_DOC_SSH_USER" "$STG_DOC_SSH_TARGET_DIR" "${STG_KEY_FILE/\$HOME/$HOME}" "-stg"
 fi
-rm "${pub_script_root}/github_deploy_key"
+
+
+
+
+
