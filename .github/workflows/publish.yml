@@ -67,6 +67,28 @@ jobs:
       - name: Install csvtojson
         run: npm install -g csvtojson
 
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${ZITI_CI_GH_KEY}" | base64 -d > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
+          echo -e "Host *\n  StrictHostKeyChecking accept-new\n" >> ~/.ssh/config
+          eval $(ssh-agent -s)
+          ssh-add ~/.ssh/id_ed25519
+          for host in github.com bitbucket.org; do
+            if ssh -T git@$host 2>&1 | grep -q "successfully authenticated"; then
+              echo "✅ $host SSH: success"
+            else
+              echo "❌ $host SSH: failed"
+            fi
+          done
+        env:
+          ZITI_CI_GH_KEY: ${{ secrets.ZITI_CI_GH_KEY }}
+
+
+
       - name: Build & Publish Docusaurus Site
         env:
           GITHUB_TOKEN: ${{ github.token }}
