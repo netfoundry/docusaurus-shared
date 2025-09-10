@@ -1,3 +1,4 @@
+# run https://github.com/netfoundry/docusaurus-shared/actions/workflows/build-docs-container.yaml to republish
 FROM node:20-bullseye
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
