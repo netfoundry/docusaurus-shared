@@ -15,21 +15,23 @@ on:
     branches:
       - main
       - '*-stg'
-#  schedule:
-#    - cron: '0 2 * * *' # run at 2 AM UTC to keep companion microsites updated e.g. swift SDK docs
+    paths:
+      - 'unified-doc/**'
+  schedule:
+    - cron: '0 2 * * *' # run at 2 AM UTC to keep companion microsites updated e.g. swift SDK docs
 
 jobs:
   publish-docs-from-container:
     name: Publish NF Docs
     if: github.repository_owner == 'netfoundry' && contains(github.event.head_commit.message, 'ci skip') == false
     runs-on: ubuntu-latest
+    container: ghcr.io/netfoundry/docs-ci:latest
     env:
       GIT_BRANCH: ${{ github.event.inputs.branch || github.ref_name }}
       gh_ci_key: ${{ secrets.GH_CI_KEY }}
       ziti_ci_gpg_key: ${{ secrets.ZITI_CI_GPG_KEY }}
       ziti_ci_gpg_key_id: ${{ secrets.ZITI_CI_GPG_KEY_ID }}
 
-      # these are defined in github secrets: repo/settings/secrets/actions
       STG_DOC_SSH_HOST: ${{ secrets.STG_DOC_SSH_HOST }}
       STG_DOC_SSH_PORT: ${{ secrets.STG_DOC_SSH_PORT }}
       STG_DOC_SSH_TARGET_DIR: ${{ secrets.STG_DOC_SSH_TARGET_DIR }}
@@ -41,27 +43,11 @@ jobs:
       PROD_DOC_SSH_USER: ${{ secrets.PROD_DOC_SSH_USER }}
       PROD_KEY_FILE: ${{ secrets.PROD_KEY_FILE }}
 
-      # these are defined in a github environment: repo/settings/environments
       ZITI_HOTJAR_APPID: ${{ secrets.ZITI_HOTJAR_APPID }}
     environment: ${{ github.event.inputs.environment || (github.ref_name == 'main' && 'main' || 'stg') }}
     steps:
       - name: Checkout Workspace
         uses: actions/checkout@v4
-
-      - name: Cache apt lists
-        uses: actions/cache@v4
-        with:
-          path: |
-            /var/cache/apt
-            /var/lib/apt/lists
-          key: ${{ runner.os }}-apt-${{ hashFiles('.github/workflows/**') }}
-          restore-keys: |
-            ${{ runner.os }}-apt-
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y doxygen wget curl jq
 
       - name: Setup Node
         uses: actions/setup-node@v4
