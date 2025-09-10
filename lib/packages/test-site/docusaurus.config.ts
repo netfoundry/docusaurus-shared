@@ -42,7 +42,7 @@ const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV == 'prod' ? prod :
 
 export default {
     title: 'This is the title of the site',
-    url: 'https://example.com',
+    url: 'https://netfoundry.io',
     baseUrl: '/',
 
     plugins: [
@@ -68,7 +68,10 @@ export default {
     ],
     presets: [
         ['classic', {
-            docs: false,
+            docs: {
+                routeBasePath: '/docs',
+                sidebarPath: './sidebars.ts'
+            },
             blog: false,
             theme: {
                 customCss: require.resolve('./src/custom/custom.css'),
@@ -92,9 +95,9 @@ export default {
                     label: 'Docs',
                     position: 'left',
                     items: [
-                        { to: '/onprem/intro', label: 'On-Prem' },
-                        { to: '/frontdoor/intro', label: 'Frontdoor' },
-                        { to: '/openziti/learn/introduction', label: 'OpenZiti' },
+                        { to: 'https://localhost/onprem/intro', label: 'On-Prem' },
+                        { to: 'https://localhost/frontdoor/intro', label: 'Frontdoor' },
+                        { to: 'https://localhost/openziti/learn/introduction', label: 'OpenZiti' },
                     ],
                 },
             ],
