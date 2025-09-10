@@ -41,7 +41,7 @@ const prod: PublishConfig = {
 const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV == 'prod' ? prod : staging;
 
 export default {
-    title: 'Site',
+    title: 'This is the title of the site',
     url: 'https://example.com',
     baseUrl: '/',
 

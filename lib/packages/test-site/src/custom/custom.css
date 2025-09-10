@@ -3,4 +3,71 @@
 
 :root {
     --ifm-navbar-height: 60px;
+    --ziti-landing-max-width: 1800px;
+    --ifm-container-width-xl: 1400px;
+    --ziti-star-us-height: 1px;
+}
+
+html,
+body,
+#__docusaurus {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Docusaurus-specific utility class */
+:global(.docusaurus-mt-lg) {
+    margin-top: 3rem;
+}
+
+:global(#__docusaurus) {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar__brand { /* squeeze whitespace */
+    margin-right: 0;
+    display:flex;
+    align-items:center;
+    justify-content: end;
+    min-width: 185px;
+}
+.navbar__logo { /* squeeze whitespace */
+    margin-right: 0;
+}
+.clean-btn svg {
+    /*
+    used to change the size of the light/dark toggle
+    needs to be this specific for docusaurus
+    */
+    height: 30px;
+    width: 30px;
+}
+
+.DocSearch-Button {
+    background: #ebedf0;
+    color: var(--ifm-color-primary);
+}
+
+
+.main-wrapper {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+
+    article {
+        padding-bottom: 2em;
+    }
+    > div {
+        max-width: var(--ziti-landing-max-width);
+        width: 100%;
+    }
+}
+
+.navbar .navbar__inner {
+    margin: 0 auto;
+    max-width: var(--ziti-landing-max-width);
 }

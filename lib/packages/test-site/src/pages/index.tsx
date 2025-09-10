@@ -6,7 +6,7 @@ export default function Home(): JSX.Element {
     const title = 'Home AA';
     const desc = "TheDescriptiond";
     return (
-        <Layout title={title} description={desc}>
+        <Layout title="My Page Title" >
             <main className="container margin-vert--lg">
                 <NetFoundryHorizontalSection >
                     <NetFoundryHorizontalSection>

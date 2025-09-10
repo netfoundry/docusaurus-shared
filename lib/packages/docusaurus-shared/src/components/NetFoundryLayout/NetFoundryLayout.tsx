@@ -40,19 +40,6 @@ export interface NetFoundryLayoutProps {
     meta?: MetaProps;
 }
 
-const SECTION_BY_PREFIX: Array<{ prefix: string; meta: SectionMeta }> = [
-    { prefix: '/openziti',  meta: { image: '/img/og/openziti.png',  siteName: 'OpenZiti Docs',  twitter: '@yourhandle' } },
-    { prefix: '/frontdoor', meta: { image: '/img/og/frontdoor.png', siteName: 'Frontdoor Docs', twitter: '@yourhandle' } },
-];
-
-const DEFAULT_SECTION: SectionMeta = { image: '/img/og/default.png', siteName: 'Docs' };
-
-function useResolvedMeta(override?: MetaInput): SectionMeta {
-    const { pathname } = useLocation();
-    const fromPrefix = SECTION_BY_PREFIX.find(s => pathname.startsWith(s.prefix))?.meta ?? DEFAULT_SECTION;
-    return { ...fromPrefix, ...override };
-}
-
 function useAbs() {
     const { siteConfig } = useDocusaurusContext();
     return (p?: string) => {
@@ -62,50 +49,49 @@ function useAbs() {
     };
 }
 
-export function NetFoundryLayout(props: NetFoundryLayoutProps): JSX.Element {
-    const {
-        children,
-        noFooter,
-        className,
-        title,
-        description,
-        starProps = { repoUrl: '', label: 'Star us on GitHub' },
-    } = props;
+function safeMeta(meta?: MetaProps): MetaProps {
+    return meta ?? {} as MetaProps;
+}
 
+export function NetFoundryLayout({
+                                     children,
+                                     noFooter,
+                                     className,
+                                     title,
+                                     description,
+                                     starProps = { repoUrl: '', label: 'Star us on GitHub' },
+                                     footerProps,
+                                     meta: metaInput,
+                                 }: NetFoundryLayoutProps): JSX.Element {
     useKeyboardNavigation();
 
-    const meta = useResolvedMeta(props.meta);
     const abs = useAbs();
+    const meta = safeMeta(metaInput);
 
     return (
         <LayoutProvider>
             <Head>
-                <title>{meta.title ?? title}</title>
-                {/*<meta name="aaa_description" content={meta.description ?? description} />*/}
-                {/*{meta.noindex && <meta name="robots" content="noindex,nofollow" />}*/}
-                {/*{meta.siteName && <meta property="og:site_name" content={meta.siteName} />}*/}
-                {/*{meta.title && <meta property="og:title" content={meta.title} />}*/}
-                {/*{meta.description && <meta property="og:description" content={meta.description} />}*/}
-                {/*{meta.image && <meta property="og:image" content={abs(meta.image)} />}*/}
-                <meta name="twitter:card" content="aaa_summary_large_image" />
-                <meta property="og:title" content="aaa_title" />
-                {/*{meta.twitter && <meta name="twitter:site" content={meta.twitter} />}*/}
-                {/*{meta.image && <meta name="twitter:image" content={abs(meta.image)} />}*/}
+                <title>{(meta.title ?? title) + (meta.siteName ? ` | ${meta.siteName}` : '')}</title>
+                {meta.description && <meta name="description" content={meta.description ?? description} />}
+                {meta.noindex && <meta name="robots" content="noindex,nofollow" />}
+                {meta.siteName && <meta property="og:site_name" content={meta.siteName} />}
+                {meta.title && <meta property="og:title" content={meta.title} />}
+                {meta.description && <meta property="og:description" content={meta.description} />}
+                {meta.image && <meta property="og:image" content={abs(meta.image)} />}
+                <meta name="twitter:card" content="summary_large_image" />
+                {meta.twitter && <meta name="twitter:site" content={meta.twitter} />}
+                {meta.image && <meta name="twitter:image" content={abs(meta.image)} />}
             </Head>
-            <PageMetadata description={meta.description ?? description} />
             <SkipToContent />
             <AnnouncementBar />
             <Navbar />
-            {starProps?.repoUrl && starProps?.label && (
-                <StarUs repoUrl={starProps.repoUrl} label={starProps.label} />
-            )}
+            {starProps.repoUrl && starProps.label && <StarUs {...starProps} />}
             <div className={clsx(ThemeClassNames.wrapper.main, styles.ozLayoutMainWrapper, className)}>
                 <ErrorBoundary fallback={(params: any) => <ErrorPageContent {...params} />}>
                     {children}
                 </ErrorBoundary>
-                {!noFooter && props.footerProps && NetFoundryFooter(props.footerProps)}
+                {!noFooter && footerProps && <NetFoundryFooter {...footerProps} />}
             </div>
-
         </LayoutProvider>
     );
 }
