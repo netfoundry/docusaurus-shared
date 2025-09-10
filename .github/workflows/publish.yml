@@ -83,12 +83,12 @@ jobs:
 
           cat >> $HOME/.ssh/config <<'EOF'
           Host github.com
-            IdentityFile $HOME/.ssh/id_ed25519_gh
+            IdentityFile ~/.ssh/id_ed25519_gh
             IdentitiesOnly yes
             StrictHostKeyChecking accept-new
 
           Host bitbucket.org
-            IdentityFile $HOME/.ssh/id_ed25519_bb
+            IdentityFile ~/.ssh/id_ed25519_bb
             IdentitiesOnly yes
             StrictHostKeyChecking accept-new
           EOF
