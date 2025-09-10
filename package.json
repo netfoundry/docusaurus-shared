@@ -1,9 +1,0 @@
-{
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "scripts": {
-    "dev": "yarn workspace @openclint/docusaurus-shared build && yarn workspace test-site start"
-  }
-}

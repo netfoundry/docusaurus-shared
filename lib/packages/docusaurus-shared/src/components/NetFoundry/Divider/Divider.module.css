@@ -1,0 +1,23 @@
+.onpremConnector {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.onpremDot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.onpremDot svg {
+    width: 24px;
+    height: 24px;
+    color: #9aa4b2;
+}
+
+.onpremLine {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, #c8d0d9, #9aa4b2, #c8d0d9);
+}

@@ -1,0 +1,79 @@
+{
+  "name": "@openclint/docusaurus-shared",
+  "version": "0.0.112",
+  "description": "Shared components for Docusaurus projects",
+  "type": "module",
+  "main": "dist/ui.cjs.js",
+  "module": "dist/ui.esm.js",
+  "types": "dist/ui.d.ts",
+  "styles": "dist/modules.css",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "test": "jest",
+    "clear": "rimraf dist tsconfig.tsbuildinfo",
+    "build": "rollup -c",
+    "build:watch": "rollup -c -w",
+    "prepublishOnly": "yarn build && yarn test"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs"
+    },
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.esm.js",
+      "require": "./dist/node.cjs"
+    },
+    "./ui": {
+      "types": "./dist/ui.d.ts",
+      "import": "./dist/ui.esm.js",
+      "require": "./dist/ui.cjs"
+    },
+    "./plugins": {
+      "types": "./dist/plugins.d.ts",
+      "import": "./dist/plugins.esm.js",
+      "require": "./dist/plugins.cjs"
+    },
+    "./css/*": "./src/css/*",
+    "./index.css": "./dist/index.css"
+  },
+  "dependencies": {
+    "react-device-detect": "^2.2.3",
+    "react-github-btn": "^1.4.0"
+  },
+  "peerDependencies": {
+    "@docusaurus/core": "^3",
+    "@docusaurus/theme-common": "^3",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "devDependencies": {
+    "@docusaurus/core": "^3",
+    "@docusaurus/theme-common": "^3",
+    "@docusaurus/types": "^3",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "autoprefixer": "^10.4.16",
+    "clsx": "^2.0.0",
+    "jest": "^30.0.4",
+    "postcss": "^8.4.32",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "rollup": "^4.9.6",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
+  }
+}

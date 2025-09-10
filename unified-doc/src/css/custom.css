@@ -1,0 +1,66 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+@import "@openclint/docusaurus-shared/index.css";
+@import "@openclint/docusaurus-shared/css/legacy.css";
+@import '@docsearch/css';
+
+/* You can override the default Infima variables here. */
+:root {
+    --ziti-landing-max-width: 1800px;
+    --ifm-container-width-xl: 1400px;
+    --ziti-star-us-height: 1px;
+}
+
+.navbar__brand { /* squeeze whitespace */
+    margin-right: 0;
+    display:flex;
+    align-items:center;
+    justify-content: end;
+    min-width: 185px;
+}
+.navbar__logo { /* squeeze whitespace */
+    margin-right: 0;
+}
+.clean-btn svg {
+    /*
+    used to change the size of the light/dark toggle
+    needs to be this specific for docusaurus
+    */
+    height: 30px;
+    width: 30px;
+}
+
+.DocSearch-Button {
+    background: #ebedf0;
+    color: var(--ifm-color-primary);
+}
+
+
+.main-wrapper {
+    article {
+        padding-bottom: 2em;
+    }
+    > div {
+        max-width: var(--ziti-landing-max-width);
+        width: 100%;
+    }
+}
+
+.navbar .navbar__inner {
+    margin: 0 auto;
+    max-width: var(--ziti-landing-max-width);
+}
+
+html,
+body,
+#__docusaurus {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+

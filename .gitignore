@@ -140,3 +140,8 @@ vite.config.ts.timestamp-*
 
 .idea
 **/new-site/**
+
+**/_remotes/**
+**/package-lock.json
+
+**/github_deploy_key
