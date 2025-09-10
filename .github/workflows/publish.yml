@@ -60,14 +60,16 @@ jobs:
         run: npm install -g csvtojson
 
       - name: Setup SSH
-        run: |
+        run: | 
           mkdir -p $HOME/.ssh
+          chmod 600 $HOME/.ssh
           echo "${ZITI_CI_GH_KEY}"    | base64 -d > $HOME/.ssh/id_ed25519_gh
           echo "${JENKINS_CI_BB_KEY}" | base64 -d > $HOME/.ssh/id_ed25519_bb
           chmod 600 $HOME/.ssh/id_ed25519_*
 
           ssh-keyscan github.com >> $HOME/.ssh/known_hosts
           ssh-keyscan bitbucket.org >> $HOME/.ssh/known_hosts
+          chmod 644 $HOME/.ssh/known_hosts
 
           cat >> $HOME/.ssh/config <<'EOF'
           Host github.com
