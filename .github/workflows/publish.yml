@@ -70,31 +70,27 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-
-          echo "${ZITI_CI_GH_KEY}"   | base64 -d > ~/.ssh/id_ed25519_gh
+          echo "${ZITI_CI_GH_KEY}"    | base64 -d > ~/.ssh/id_ed25519_gh
           echo "${JENKINS_CI_BB_KEY}" | base64 -d > ~/.ssh/id_ed25519_bb
           chmod 600 ~/.ssh/id_ed25519_*
 
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
-          echo -e "Host *\n  StrictHostKeyChecking accept-new\n" >> ~/.ssh/config
 
-          eval $(ssh-agent -s)
-          ssh-add ~/.ssh/id_ed25519_gh
-          ssh-add ~/.ssh/id_ed25519_bb
-          for host in github.com bitbucket.org; do
-            if ssh -T git@$host 2>&1 | grep -q "successfully authenticated"; then
-              echo "✅ $host SSH: success"
-            else
-              echo "❌ $host SSH: failed"
-            fi
-          done
+          cat >> ~/.ssh/config <<'EOF'
+          Host github.com
+            IdentityFile ~/.ssh/id_ed25519_gh
+            IdentitiesOnly yes
+            StrictHostKeyChecking accept-new
+
+          Host bitbucket.org
+            IdentityFile ~/.ssh/id_ed25519_bb
+            IdentitiesOnly yes
+            StrictHostKeyChecking accept-new
+          EOF
         env:
           ZITI_CI_GH_KEY: ${{ secrets.ZITI_CI_GH_KEY }}
           JENKINS_CI_BB_KEY: ${{ secrets.JENKINS_CI_BB_KEY }}
-
-
-
 
       - name: Build & Publish Docusaurus Site
         env:
