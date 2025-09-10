@@ -34,10 +34,12 @@ jobs:
       STG_DOC_SSH_PORT: ${{ secrets.STG_DOC_SSH_PORT }}
       STG_DOC_SSH_TARGET_DIR: ${{ secrets.STG_DOC_SSH_TARGET_DIR }}
       STG_DOC_SSH_USER: ${{ secrets.STG_DOC_SSH_USER }}
+      STG_KEY_FILE: ${{ secrets.STG_KEY_FILE }}
       PROD_DOC_SSH_HOST: ${{ secrets.PROD_DOC_SSH_HOST }}
       PROD_DOC_SSH_PORT: ${{ secrets.PROD_DOC_SSH_PORT }}
       PROD_DOC_SSH_TARGET_DIR: ${{ secrets.PROD_DOC_SSH_TARGET_DIR }}
       PROD_DOC_SSH_USER: ${{ secrets.PROD_DOC_SSH_USER }}
+      PROD_KEY_FILE: ${{ secrets.PROD_KEY_FILE }}
 
       # these are defined in a github environment: repo/settings/environments
       ZITI_HOTJAR_APPID: ${{ secrets.ZITI_HOTJAR_APPID }}
