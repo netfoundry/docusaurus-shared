@@ -54,12 +54,12 @@ echo "incoming branch named: $target_branch"
 if [ "${GIT_BRANCH:-}" == "${target_branch}" ]; then
   echo "========= on ${target_branch} branch - publishing to both main and staging"
   publish_docs "$STG_DOC_SSH_HOST" "$STG_DOC_SSH_PORT" \
-               "$STG_DOC_SSH_USER" "$STG_DOC_SSH_TARGET_DIR" "$STG_KEY_FILE" "-stg"
+               "$STG_DOC_SSH_USER" "$STG_DOC_SSH_TARGET_DIR" "${STG_KEY_FILE/\$HOME/$HOME}" "-stg"
   publish_docs "$PROD_DOC_SSH_HOST" "$PROD_DOC_SSH_PORT" \
-               "$PROD_DOC_SSH_USER" "$PROD_DOC_SSH_TARGET_DIR" "$PROD_KEY_FILE" "-prod"
+               "$PROD_DOC_SSH_USER" "$PROD_DOC_SSH_TARGET_DIR" "${PROD_KEY_FILE/\$HOME/$HOME}" "-prod"
 else
   echo "========= on ${target_branch} branch - publishing to staging only"
   publish_docs "$STG_DOC_SSH_HOST" "$STG_DOC_SSH_PORT" \
-               "$STG_DOC_SSH_USER" "$STG_DOC_SSH_TARGET_DIR" "$STG_KEY_FILE" "-stg"
+               "$STG_DOC_SSH_USER" "$STG_DOC_SSH_TARGET_DIR" "${STG_KEY_FILE/\$HOME/$HOME}" "-stg"
 fi
 rm "${pub_script_root}/github_deploy_key"

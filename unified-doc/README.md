@@ -38,4 +38,15 @@ Not using SSH:
 GIT_USER=<Your GitHub username> yarn deploy
 ```
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+
+### Kinsta Hosting
+
+As of Sep 2025 - the technical docs have been published to the public folder on kinsta. 
+A **CUSTOM** rule was added by tech support:
+```
+location /docs {
+  try_files $uri /docs/index.html;
+}
+```
+
+This rule is **mandatory** for SPA deep linking. The tech support people had to add it.
