@@ -22,12 +22,11 @@ jobs:
       - name: Checkout trigger-docs.sh
         uses: actions/checkout@v4
         with:
-          sparse-checkout: unified-doc/trigger-docs.sh
-          sparse-checkout-cone-mode: false
+          sparse-checkout: unified-doc/scripts
           path: docusaurus-shared
 
       - name: Run trigger-docs.sh
-        run: ./docusaurus-shared/unified-doc/trigger-docs.sh
+        run: ./docusaurus-shared/unified-doc/scripts/trigger-docs.sh
         env:
           GH_APP_ID: ${{ secrets.GH_APP_ID }}
           GH_APP_KEY: ${{ secrets.GH_APP_KEY }}
