@@ -33,5 +33,5 @@ jobs:
           GH_WORKFLOW: ${{ inputs.workflow }}
           GH_REF: ${{ inputs.ref }}
           GH_INPUTS: ${{ inputs.inputs }}
-          GH_REPO_OWNER: ${{ github.repository_owner }}
-          GH_REPO_NAME: ${{ github.event.repository.name }}
+          GH_REPO_OWNER: "netfoundry"
+          GH_REPO_NAME: "docusaurus-shared"
