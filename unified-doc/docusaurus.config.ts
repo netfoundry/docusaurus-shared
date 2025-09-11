@@ -85,6 +85,9 @@ const config: Config = {
         defaultLocale: 'en',
         locales: ['en'],
     },
+    markdown: {
+        mermaid: true,
+    },
     themes: [
         ['@docusaurus/theme-classic', {
             customCss: require.resolve('./src/css/custom.css'),
@@ -184,6 +187,9 @@ const config: Config = {
         [pluginHotjar, {}],
     ],
     themeConfig: {
+        mermaid: {
+            theme: {light: 'neutral', dark: 'forest'},
+        },
         // Replace with your project's social card
         image: 'https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg',
         navbar: {
