@@ -19,18 +19,17 @@ jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout script
+      - name: Checkout trigger-docs.sh
         uses: actions/checkout@v4
         with:
-          sparse-checkout: |
-            scripts/trigger-docs.sh
-          path: docusaurus-shared
+          sparse-checkout: unified-doc/trigger-docs.sh
+          path: /tmp/docusaurus-shared
 
       - name: Show caller
         run: echo "- Triggered from ${{ github.repository }} by ${{ github.triggering_actor }}"
 
       - name: Run trigger-docs.sh
-        working-directory: docusaurus-shared/scripts
+        run: /tmp/docusaurus-shared/unified-doc/trigger-docs.sh
         env:
           GH_APP_ID: ${{ secrets.GH_APP_ID }}
           GH_APP_KEY: ${{ secrets.GH_APP_KEY }}
@@ -39,4 +38,3 @@ jobs:
           GH_INPUTS: ${{ inputs.inputs }}
           GH_REPO_OWNER: ${{ github.repository_owner }}
           GH_REPO_NAME: ${{ github.event.repository.name }}
-        run: ./trigger-docs.sh
