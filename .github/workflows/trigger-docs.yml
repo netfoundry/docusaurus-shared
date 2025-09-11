@@ -22,7 +22,9 @@ jobs:
       - name: Checkout trigger-docs.sh
         uses: actions/checkout@v4
         with:
-          sparse-checkout: unified-doc/scripts
+          repository: netfoundry/docusaurus-shared
+          sparse-checkout: unified-doc/scripts/trigger-docs.sh
+          sparse-checkout-cone-mode: false
           path: docusaurus-shared
 
       - name: List repo contents
