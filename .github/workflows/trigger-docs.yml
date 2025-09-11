@@ -27,11 +27,6 @@ jobs:
           sparse-checkout-cone-mode: false
           path: docusaurus-shared
 
-      - name: List repo contents
-        run: |
-          sudo apt-get update && sudo apt-get install -y tree
-          tree .
-
       - name: Run trigger-docs.sh
         run: ./docusaurus-shared/unified-doc/scripts/trigger-docs.sh
         env:
