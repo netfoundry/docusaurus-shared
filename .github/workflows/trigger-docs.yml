@@ -26,6 +26,9 @@ jobs:
             scripts/trigger-docs.sh
           path: docusaurus-shared
 
+      - name: Show caller
+        run: echo "- Triggered from ${{ github.repository }} by ${{ github.triggering_actor }}"
+
       - name: Run trigger-docs.sh
         working-directory: docusaurus-shared/scripts
         env:
