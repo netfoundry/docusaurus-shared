@@ -23,13 +23,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: unified-doc/trigger-docs.sh
-          path: /tmp/docusaurus-shared
+          path: docusaurus-shared
 
       - name: Show caller
         run: echo "- Triggered from ${{ github.repository }} by ${{ github.triggering_actor }}"
 
       - name: Run trigger-docs.sh
-        run: /tmp/docusaurus-shared/unified-doc/trigger-docs.sh
+        run: ./docusaurus-shared/unified-doc/trigger-docs.sh
         env:
           GH_APP_ID: ${{ secrets.GH_APP_ID }}
           GH_APP_KEY: ${{ secrets.GH_APP_KEY }}
