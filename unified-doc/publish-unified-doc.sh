@@ -3,15 +3,27 @@
 # This script is intended to be called from some form of CI which is able to publish
 # the actual docs.
 
-set -eu
+set -euo pipefail
+
 pub_script_root="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-echo "publish script located in: $pub_script_root"
+flags=""
+while getopts "glcsdz" OPT; do
+  flags="$flags -$OPT"
+done
+shift $((OPTIND-1))
+
+if [ $# -lt 1 ]; then
+  echo "missing branch arg" >&2
+  exit 1
+fi
+
+echo "publish script located in: $pub_script_root with $flags and args: $@"
 
 publish_docs() {
   local HOST=$1 PORT=$2 USER=$3 TARGET_DIR=$4 KEY_FILE=$5 BUILD_QUALIFIER=$6
   local zip_target="unified-docs${BUILD_QUALIFIER}.zip"
 
-  "${pub_script_root}/build-docs.sh" "${BUILD_QUALIFIER}"
+  "${pub_script_root}/build-docs.sh" $flags -- "${BUILD_QUALIFIER}"
 
   echo "creating zip from built site at /build${BUILD_QUALIFIER}"
   pushd "${pub_script_root}/build${BUILD_QUALIFIER}" >/dev/null
