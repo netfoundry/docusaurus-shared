@@ -105,7 +105,8 @@ const config: Config = {
     customFields: {
         DOCUSAURUS_BASE_PATH: DOCUSAURUS_BASE_PATH,
         DOCUSAURUS_DOCS_PATH: DOCUSAURUS_DOCS_PATH,
-        OPENZITI_DOCS_BASE: '/'
+        OPENZITI_DOCS_BASE: '/',
+        UNIFIED_DOC_PATH: true,
     },
     plugins: [
         function webpackAliases() {
