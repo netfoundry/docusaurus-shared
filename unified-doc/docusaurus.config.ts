@@ -3,7 +3,8 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import * as path from "node:path";
 import remarkReplaceMetaUrl from "./_remotes/openziti/docusaurus/src/plugins/remark/remark-replace-meta-url";
-import {DOCUSAURUS_BASE_PATH, DOCUSAURUS_DEBUG, DOCUSAURUS_DOCS_PATH, pluginHotjar} from "@openclint/docusaurus-shared/node";
+// import {DOCUSAURUS_BASE_PATH, DOCUSAURUS_DEBUG, DOCUSAURUS_DOCS_PATH, pluginHotjar} from "@openclint/docusaurus-shared/node";
+import {pluginHotjar} from "@openclint/docusaurus-shared/node";
 import {remarkScopedPath} from "./_remotes/openziti/docusaurus/src/plugins/remark/remarkScopedPath";
 import {PublishConfig} from 'src/components/docusaurus'
 
@@ -68,7 +69,7 @@ const config: Config = {
     // Set the /<baseUrl>/ pathname under which your site is served
     // For GitHub pages deployment, it is often '/<projectName>/'
     baseUrl: docsBase,
-    trailingSlash: false,
+    // trailingSlash: false, leave as is
 
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.
@@ -103,10 +104,10 @@ const config: Config = {
         '_remotes/zlan/docusaurus/static/'
     ],
     customFields: {
-        DOCUSAURUS_BASE_PATH: DOCUSAURUS_BASE_PATH,
-        DOCUSAURUS_DOCS_PATH: DOCUSAURUS_DOCS_PATH,
-        OPENZITI_DOCS_BASE: '/',
-        UNIFIED_DOC_PATH: true,
+        DOCUSAURUS_BASE_PATH: '/',
+        DOCUSAURUS_DOCS_PATH: '/docs/',
+        OPENZITI_DOCS_BASE: '/docs/openziti',
+        UNIFIED_DOC_PATH: true
     },
     plugins: [
         function webpackAliases() {
@@ -121,6 +122,7 @@ const config: Config = {
                                 '@zrok': path.resolve(__dirname, `${zrok}/docusaurus`),
                                 '@onprem': path.resolve(__dirname, `${onprem}/docs-site`),
                                 '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
+                                '@staticdir': path.resolve(__dirname, `docusaurus/static`),
                             },
                         },
                     };
@@ -180,6 +182,7 @@ const config: Config = {
                 sidebarPath: `${openziti}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
                 remarkPlugins: [
+                    [remarkReplaceMetaUrl, {from: '@staticoz', to: '/docs/openziti'}],
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
                 ],
             },

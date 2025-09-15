@@ -38,26 +38,21 @@ clone_or_update() {
   fi
 }
 
-clone_or_update "git@bitbucket.org:netfoundry/zrok-connector.git"          frontdoor develop
+clone_or_update "git@bitbucket.org:netfoundry/zrok-connector.git"            frontdoor develop
 clone_or_update "git@bitbucket.org:netfoundry/k8s-on-prem-installations.git" onprem    main
-clone_or_update "git@github.com:openziti/ziti-doc.git"                      openziti  updates-for-unified-doc
-clone_or_update "git@github.com:netfoundry/zlan"                            zlan      main
+clone_or_update "git@github.com:openziti/ziti-doc.git"                       openziti  updates-for-unified-doc
+clone_or_update "git@github.com:netfoundry/zlan"                             zlan      main
+
+export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
+echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"
+mkdir -p "${SDK_ROOT_TARGET}"
 
 "${script_dir}/_remotes/openziti/gendoc.sh" -ds
 
-# move the sdk doc to the 'proper' static location
-OZ_SDK_DOC_SRC="${script_dir}/_remotes/openziti/docusaurus/static/docs"
-OZ_SDK_DOC_DEST="${script_dir}/static/docs"
-rm -rf "${script_dir}/static/docs"
-
-echo "moving openziti sdk docs"
-echo "  - from: $OZ_SDK_DOC_SRC"
-echo "  -   to: $OZ_SDK_DOC_DEST"
-mv "$OZ_SDK_DOC_SRC" "$OZ_SDK_DOC_DEST"
-
 pushd "${script_dir}" >/dev/null
 yarn install
-date > static/build-time.txt
-echo "BUILDING docs into: build${BUILD_QUALIFIER}"
+now=$(date)
+echo "$now" > "${script_dir}/static/build-time.txt"
+echo "BUILDING docs into: build${BUILD_QUALIFIER} at $now"
 yarn build --out-dir "build${BUILD_QUALIFIER}" 2>&1
 popd >/dev/null

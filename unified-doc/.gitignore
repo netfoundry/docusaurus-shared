@@ -22,3 +22,5 @@ yarn-error.log*
 static/build-time.txt
 build
 build-*
+
+static/openziti
