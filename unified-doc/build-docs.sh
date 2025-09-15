@@ -43,7 +43,7 @@ clone_or_update "git@bitbucket.org:netfoundry/k8s-on-prem-installations.git" onp
 clone_or_update "git@github.com:openziti/ziti-doc.git"                      openziti  updates-for-unified-doc
 clone_or_update "git@github.com:netfoundry/zlan"                            zlan      main
 
-SKIP_DOCUSAURUS_GEN=yes "${script_dir}/_remotes/openziti/gendoc.sh -s"
+"${script_dir}/_remotes/openziti/gendoc.sh" -ds
 
 # move the sdk doc to the 'proper' static location
 OZ_SDK_DOC_SRC="${script_dir}/_remotes/openziti/docusaurus/static/docs"
