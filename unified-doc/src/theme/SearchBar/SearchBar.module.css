@@ -31,5 +31,5 @@
     background: var(--ifm-background-color);
     padding: 10px;
     border-radius: 10px;
-    width: 100%;
+    max-width: 1000px;
 }
