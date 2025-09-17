@@ -3,6 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import * as path from "node:path";
 import remarkReplaceMetaUrl from "./_remotes/openziti/docusaurus/src/plugins/remark/remark-replace-meta-url";
+import remarkYouTube from './src/plugins/remarkYouTube';
 // import {DOCUSAURUS_BASE_PATH, DOCUSAURUS_DEBUG, DOCUSAURUS_DOCS_PATH, pluginHotjar} from "@openclint/docusaurus-shared/node";
 import {pluginHotjar} from "@openclint/docusaurus-shared/node";
 import {remarkScopedPath} from "./_remotes/openziti/docusaurus/src/plugins/remark/remarkScopedPath";
@@ -48,7 +49,7 @@ const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV == 'prod' ? prod :
 
 const REMARK_MAPPINGS = [
     { from: '@onpremdocs',   to: '/onprem' },
-    { from: '@openzitidocs', to: '/docs/openziti'},
+    { from: '@openzitidocs', to: `${docsBase}/openziti`},
 ];
 
 console.log("CANONICAL URL SHOULD BE: " + cfg.docusaurus.url);
@@ -130,61 +131,79 @@ const config: Config = {
             };
         },
         ['@docusaurus/plugin-content-pages',{path: 'src/pages',routeBasePath: '/'}],
-        ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
-        ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docs-site/src/pages`, routeBasePath: '/onprem'}],
-        ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
-        ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
+        ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/docs/frontdoor'}],
+        ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docs-site/src/pages`, routeBasePath: '/docs/onprem'}],
+        ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/docs/openziti'}],
+        ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/docs/zlan'}],
+        // [
+        //     '@docusaurus/plugin-content-docs',
+        //     {
+        //         id: 'nfonprem',
+        //         path: 'docs',
+        //         // path: `${onprem}/docs-site/docs`,
+        //         routeBasePath: 'docs/onprem',
+        //         sidebarPath: `${onprem}/docs-site/sidebars.ts`,
+        //         includeCurrentVersion: true,
+        //         remarkPlugins: [
+        //             [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
+        //         ],
+        //     },
+        // ],
+        // [
+        //     '@docusaurus/plugin-content-docs',
+        //     {
+        //         id: 'frontdoor',
+        //         path: 'docs',
+        //         // path: `${frontdoor}/docusaurus/docs`,
+        //         routeBasePath: 'docs/frontdoor',
+        //         sidebarPath: `${frontdoor}/docusaurus/sidebars.ts`,
+        //         includeCurrentVersion: true,
+        //         remarkPlugins: [
+        //             [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
+        //         ],
+        //     },
+        // ],
+        // [
+        //     '@docusaurus/plugin-content-docs',
+        //     {
+        //         id: 'zlan',
+        //         path: 'docs',
+        //         // path: `${zlan}/docusaurus/docs`,
+        //         routeBasePath: 'docs/zlan',
+        //         sidebarPath: `${zlan}/docusaurus/sidebars.ts`,
+        //         includeCurrentVersion: true,
+        //         remarkPlugins: [
+        //             [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
+        //         ],
+        //     },
+        // ],
+        // [
+        //     '@docusaurus/plugin-content-docs',
+        //     {
+        //         id: 'openziti',
+        //         path: 'docs',
+        //         // path: `${openziti}/docusaurus/docs`,
+        //         routeBasePath: 'docs/openziti',
+        //         sidebarPath: `${openziti}/docusaurus/sidebars.ts`,
+        //         includeCurrentVersion: true,
+        //         remarkPlugins: [
+        //             [remarkReplaceMetaUrl, {from: '@staticoz', to: '/docs/openziti'}],
+        //             [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
+        //         ],
+        //     },
+        // ],
         [
-            '@docusaurus/plugin-content-docs',
+            '@docusaurus/plugin-content-blog',
             {
-                id: 'nfonprem',
-                path: `${onprem}/docs-site/docs`,
-                routeBasePath: 'onprem',
-                sidebarPath: `${onprem}/docs-site/sidebars.ts`,
-                includeCurrentVersion: true,
+                showReadingTime: true,
+                routeBasePath: 'openziti/blog',
+                include: ['**/*.{md,mdx}'],
+                path: '_remotes/openziti/docusaurus/blog',
                 remarkPlugins: [
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
+                    remarkYouTube
                 ],
-            },
-        ],
-        [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'frontdoor',
-                path: `${frontdoor}/docusaurus/docs`,
-                routeBasePath: 'frontdoor',
-                sidebarPath: `${frontdoor}/docusaurus/sidebars.ts`,
-                includeCurrentVersion: true,
-                remarkPlugins: [
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
-                ],
-            },
-        ],
-        [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'zlan',
-                path: `${zlan}/docusaurus/docs`,
-                routeBasePath: 'zlan',
-                sidebarPath: `${zlan}/docusaurus/sidebars.ts`,
-                includeCurrentVersion: true,
-                remarkPlugins: [
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
-                ],
-            },
-        ],
-        [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'openziti',
-                path: `${openziti}/docusaurus/docs`,
-                routeBasePath: 'openziti',
-                sidebarPath: `${openziti}/docusaurus/sidebars.ts`,
-                includeCurrentVersion: true,
-                remarkPlugins: [
-                    [remarkReplaceMetaUrl, {from: '@staticoz', to: '/docs/openziti'}],
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
-                ],
+                blogSidebarCount: 'ALL',
+                blogSidebarTitle: 'All posts',
             },
         ],
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],

@@ -36,7 +36,7 @@ export default function Home(): ReactNode {
                             <span style={{margin: '0 8px'}} />
                             <Link className="button button--secondary button--lg" to="/docs/openziti/learn/introduction">OpenZiti Docs</Link>
                             <span style={{margin: '0 8px'}} />
-                            <Link className="button button--secondary button--lg" to="/docs/zlan/intro">zLAN Docs</Link>
+                            <Link className="button button--secondary button--lg" to="/docs/zlan">zLAN Docs</Link>
                         </div>
                     </div>
                 </NetFoundryHorizontalSection>
@@ -95,7 +95,7 @@ export default function Home(): ReactNode {
                                         Built on the robust foundation of NetFoundy OpenZiti, NetFoundry zLAN combines advanced firewall capabilities with the power of zero trust and secure network overlay
                                     </div>
                                     <div className="card__footer">
-                                        <Link className="button button--primary button--block" to="/docs/zlan/intro">Go to zLAN</Link>
+                                        <Link className="button button--primary button--block" to="/docs/zlan">Go to zLAN</Link>
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +111,7 @@ export default function Home(): ReactNode {
                                             <li><Link to="/docs/onprem/intro">On-Prem Deployment</Link></li>
                                             <li><Link to="/docs/frontdoor/intro">Frontdoor Getting Started</Link></li>
                                             <li><Link to="/docs/openziti/reference/command-line/login">OpenZiti CLI Reference</Link></li>
-                                            <li><Link to="/docs/zlan/intro">zLAN FAQ</Link></li>
+                                            <li><Link to="/docs/zlan">zLAN FAQ</Link></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -125,7 +125,7 @@ export default function Home(): ReactNode {
                                             <li><Link to="/docs/onprem/troubleshooting">On-Prem Troubleshooting</Link></li>
                                             <li><Link to="/docs/frontdoor/learn/health-checks">Frontdoor Troubleshooting</Link></li>
                                             <li><Link to="/docs/openziti/learn/identity-providers">OpenZiti FAQ</Link></li>
-                                            <li><Link to="/docs/zlan/intro">zLAN FAQ</Link></li>
+                                            <li><Link to="/docs/zlan">zLAN FAQ</Link></li>
                                         </ul>
                                     </div>
                                 </div>

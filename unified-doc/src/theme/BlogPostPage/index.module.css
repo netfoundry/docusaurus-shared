@@ -1,0 +1,53 @@
+/* scope to your wrapper div className={styles.topPaginator} */
+.topPaginator {
+  margin: 0 0 .5rem 0;
+}
+
+/* reset Docusaurus paginator layout */
+.topPaginator :global(.pagination-nav) {
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 2rem !important;
+}
+
+/* kill the card look */
+.topPaginator :global(.pagination-nav__link) {
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  min-height: auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  color: var(--ifm-link-color) !important;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.topPaginator :global(.pagination-nav__link:hover) {
+  text-decoration: underline;
+}
+
+/* hide “Newer post / Older post” sublabels */
+.topPaginator :global(.pagination-nav__sublabel) {
+  display: none !important;
+}
+
+/* keep only the titles inline */
+.topPaginator :global(.pagination-nav__label) {
+  display: inline !important;
+  padding: 0 !important;
+}
+
+/* add chevrons automatically */
+.topPaginator :global(.pagination-nav__link--prev .pagination-nav__label)::before {
+  content: "« ";
+}
+.topPaginator :global(.pagination-nav__link--next .pagination-nav__label)::after {
+  content: " »";
+}
