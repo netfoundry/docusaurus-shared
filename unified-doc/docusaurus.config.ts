@@ -272,7 +272,7 @@ const config: Config = {
                 specs: [
                     {
                         id: 'openapi',
-                        spec: `${frontdoor}/docusaurus/docs/api-docs.yaml`,
+                        spec: `${frontdoor}/docusaurus/static/frontdoor-api-spec.yaml`,
                     },
                     {
                         id: 'edge-client',
