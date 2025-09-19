@@ -1,6 +1,6 @@
 {
   "name": "@openclint/docusaurus-shared",
-  "version": "0.0.127",
+  "version": "0.0.128",
   "description": "Shared components for Docusaurus projects",
   "type": "module",
   "main": "dist/ui.cjs.js",
@@ -14,9 +14,9 @@
   "scripts": {
     "test": "jest",
     "clear": "rimraf dist tsconfig.tsbuildinfo",
-    "gen:patch": "node -p \"require('./package.json').version.split('.')[2]\" > src/version.txt",
-    "build": "yarn gen:patch && rollup -c",
-    "build:watch": "yarn gen:patch && rollup -c -w",
+    "gen:version": "node scripts/gen-version.js",
+    "build": "yarn gen:version && rollup -c",
+    "build:watch": "yarn gen:version && rollup -c -w",
     "prepublishOnly": "yarn build && yarn test"
   },
   "publishConfig": {
