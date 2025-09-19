@@ -14,8 +14,9 @@
   "scripts": {
     "test": "jest",
     "clear": "rimraf dist tsconfig.tsbuildinfo",
-    "build": "rollup -c",
-    "build:watch": "rollup -c -w",
+    "gen:patch": "node -p \"require('./package.json').version.split('.')[2]\" > src/version.txt",
+    "build": "yarn gen:patch && rollup -c",
+    "build:watch": "yarn gen:patch && rollup -c -w",
     "prepublishOnly": "yarn build && yarn test"
   },
   "publishConfig": {
