@@ -2337,10 +2337,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@openclint/docusaurus-shared@^0.0.112":
-  version "0.0.112"
-  resolved "https://registry.yarnpkg.com/@openclint/docusaurus-shared/-/docusaurus-shared-0.0.112.tgz#0d948269c7f7c8c445b3b7d8620dafc7b37372a7"
-  integrity sha512-tp0n0WTY0RTydka4LEjeRwBO2FNZCIrMJ+cvdZ/QlXaIFxhdrXJKNdpQIbrgB9DVtmENIDKAZYubwQAN7kiG+A==
+"@openclint/docusaurus-shared@^0.0.129":
+  version "0.0.129"
+  resolved "https://registry.yarnpkg.com/@openclint/docusaurus-shared/-/docusaurus-shared-0.0.129.tgz#27165b48fc10dc5acdb9dd004dbaaaee37a0c9b5"
+  integrity sha512-obO2FuuPn3+3yVYSWqh+azg+edwHtCTJ57KdjSsrarrHYIGcojp+1CL2aihOxkGEdXFUKx+VYFwyUrtjXCIjOA==
   dependencies:
     react-device-detect "^2.2.3"
     react-github-btn "^1.4.0"
@@ -10356,12 +10356,7 @@ typescript@~5.6.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.6.3.tgz#5f3449e31c9d94febb17de03cc081dd56d81db5b"
   integrity sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==
 
-ua-parser-js@^1.0.33:
-  version "1.0.40"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-1.0.40.tgz#ac6aff4fd8ea3e794a6aa743ec9c2fc29e75b675"
-  integrity sha512-z6PJ8Lml+v3ichVojCiB8toQJBuwR42ySM4ezjXIqXK3M0HczmKQ3LF4rhU55PfD99KEEXQG6yb7iOMyvYuHew==
-
-ua-parser-js@^1.0.37:
+ua-parser-js@^1.0.33, ua-parser-js@^1.0.37:
   version "1.0.41"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-1.0.41.tgz#bd04dc9ec830fcf9e4fad35cf22dcedd2e3b4e9c"
   integrity sha512-LbBDqdIC5s8iROCUjMbW1f5dJQTEFB1+KO9ogbvlb3nm9n4YHa5p4KTvFPWvh2Hs8gZMBuiB1/8+pdfe/tDPug==

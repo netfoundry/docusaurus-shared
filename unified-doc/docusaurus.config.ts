@@ -2,8 +2,8 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import * as path from "node:path";
-import remarkReplaceMetaUrl from "./_remotes/openziti/docusaurus/src/plugins/remark/remark-replace-meta-url";
-// import {DOCUSAURUS_BASE_PATH, DOCUSAURUS_DEBUG, DOCUSAURUS_DOCS_PATH, pluginHotjar} from "@openclint/docusaurus-shared/node";
+import {remarkReplaceMetaUrl} from "@openclint/docusaurus-shared/plugins";
+import remarkYouTube from './src/plugins/remarkYouTube';
 import {pluginHotjar} from "@openclint/docusaurus-shared/node";
 import {remarkScopedPath} from "./_remotes/openziti/docusaurus/src/plugins/remark/remarkScopedPath";
 import {PublishConfig} from 'src/components/docusaurus'
@@ -15,6 +15,21 @@ const openziti = `./_remotes/openziti`;
 const zrok = `./_remotes/zrok`;
 const zlan = `./_remotes/zlan`;
 const docsBase = `/docs`
+
+const buildMask = parseInt(process.env.DOCUSAURUS_BUILD_MASK ?? "0xFF", 16);
+
+const BUILD_FLAGS = {
+    NONE:      0x0,
+    OPENZITI:  0x1,
+    FRONTDOOR: 0x2,
+    ONPREM:    0x4,
+    ZROK:      0x8,
+    ZLAN:      0x10,
+};
+
+function build(flag: number) {
+    return (buildMask & flag) !== 0;
+}
 
 const staging: PublishConfig = {
     docusaurus: {
@@ -37,7 +52,7 @@ const prod: PublishConfig = {
     algolia: {
         appId: 'UWUTF7ESUI',
         apiKey: '3a4a0691d0e8e3bb7c27c702c6a86ea9',
-        indexName: 'netfoundry.io_UWUTF7ESUI',
+        indexName: 'nfdocs',
     },
     hotjar: {
         id: "6506483"
@@ -48,11 +63,13 @@ const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV == 'prod' ? prod :
 
 const REMARK_MAPPINGS = [
     { from: '@onpremdocs',   to: '/onprem' },
-    { from: '@openzitidocs', to: '/docs/openziti'},
+    { from: '@openzitidocs', to: `${docsBase}/openziti`},
 ];
 
-console.log("CANONICAL URL SHOULD BE: " + cfg.docusaurus.url);
-console.log("    docsBased SHOULD BE: " + docsBase);
+console.log("CANONICAL URL      : " + cfg.docusaurus.url);
+console.log("    docsBase       : " + docsBase);
+console.log("    algolia index  : " + cfg.algolia.indexName);
+console.log("    build mask     : " + buildMask);
 
 const config: Config = {
     title: 'NetFoundry Documentation',
@@ -113,7 +130,7 @@ const config: Config = {
         function webpackAliases() {
             return {
                 name: 'unified-doc-webpack-aliases',
-                configureWebpack(config, isServer) {
+                configureWebpack(config:any, isServer:any) {
                     return {
                         resolve: {
                             alias: {
@@ -129,12 +146,13 @@ const config: Config = {
                 },
             };
         },
+
         ['@docusaurus/plugin-content-pages',{path: 'src/pages',routeBasePath: '/'}],
-        ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
-        ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docs-site/src/pages`, routeBasePath: '/onprem'}],
-        ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
-        ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
-        [
+        build(BUILD_FLAGS.FRONTDOOR) && ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
+        build(BUILD_FLAGS.ONPREM) && ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docs-site/src/pages`, routeBasePath: '/onprem'}],
+        build(BUILD_FLAGS.OPENZITI) && ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
+        build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
+        build(BUILD_FLAGS.ONPREM) && [
             '@docusaurus/plugin-content-docs',
             {
                 id: 'nfonprem',
@@ -147,7 +165,7 @@ const config: Config = {
                 ],
             },
         ],
-        [
+        build(BUILD_FLAGS.FRONTDOOR) && [
             '@docusaurus/plugin-content-docs',
             {
                 id: 'frontdoor',
@@ -160,7 +178,21 @@ const config: Config = {
                 ],
             },
         ],
-        [
+        build(BUILD_FLAGS.OPENZITI) && [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'openziti',
+                path: `${openziti}/docusaurus/docs`,
+                routeBasePath: 'openziti',
+                sidebarPath: `${openziti}/docusaurus/sidebars.ts`,
+                includeCurrentVersion: true,
+                remarkPlugins: [
+                    [remarkReplaceMetaUrl, {from: '@staticoz', to: 'openziti'}],
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
+                ],
+            },
+        ],
+        build(BUILD_FLAGS.ZLAN) && [
             '@docusaurus/plugin-content-docs',
             {
                 id: 'zlan',
@@ -173,23 +205,26 @@ const config: Config = {
                 ],
             },
         ],
-        [
-            '@docusaurus/plugin-content-docs',
+        build(BUILD_FLAGS.OPENZITI) && [
+            '@docusaurus/plugin-content-blog',
             {
-                id: 'openziti',
-                path: `${openziti}/docusaurus/docs`,
-                routeBasePath: 'openziti',
-                sidebarPath: `${openziti}/docusaurus/sidebars.ts`,
-                includeCurrentVersion: true,
+                showReadingTime: true,
+                routeBasePath: 'openziti/blog',
+                tagsBasePath: 'tags',
+                include: ['**/*.{md,mdx}'],
+                path: '_remotes/openziti/docusaurus/blog',
                 remarkPlugins: [
-                    [remarkReplaceMetaUrl, {from: '@staticoz', to: '/docs/openziti'}],
+                    remarkYouTube,
+                    [remarkReplaceMetaUrl, {from: '@staticoz', to: 'openziti'}],
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
                 ],
+                blogSidebarCount: 'ALL',
+                blogSidebarTitle: 'All posts',
             },
         ],
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
         [pluginHotjar, {}],
-    ],
+    ].filter(Boolean),
     themeConfig: {
         mermaid: {
             theme: {light: 'neutral', dark: 'forest'},

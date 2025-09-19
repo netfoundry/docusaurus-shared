@@ -1,1 +1,1 @@
-export * from './docusaurus-plugins/remarkScopedPath'
+export * from './docusaurus-plugins'

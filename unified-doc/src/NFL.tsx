@@ -54,7 +54,7 @@ export function H1(props: H1Props): JSX.Element {
     );
 }
 
-export function H2(props: H2Props): JSX.Element {
+export functCion H2(props: H2Props): JSX.Element {
     const {children, className} = props;
     return (
         <p className={clsx(styles.h2, className)}>{children}</p>
