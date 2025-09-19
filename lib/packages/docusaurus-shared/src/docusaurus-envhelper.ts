@@ -29,27 +29,19 @@ export function cleanUrl(path: string) {
     return path.replace(/([^:]\/)\/+/g, "$1");
 }
 
-export function docUrl(path: string): string {
-    return cleanUrl(`${DOCUSAURUS_DOCS_PATH}/${path}`);
+export function docUrl(base: string, path: string): string {
+    return cleanUrl(`${base}/${path}`);
 }
 
-export function baseUrl(path: string): string {
-    return cleanUrl(`${DOCUSAURUS_BASE_PATH}/${path}`);
+export function absoluteUrl(base: string, path: string): string {
+    return cleanUrl(`${base}/${DOCUSAURUS_DOCS_PATH}/${path}`);
 }
 
-export function absoluteUrl(path: string): string {
-    return cleanUrl(`${DOCUSAURUS_BASE_PATH}/${DOCUSAURUS_DOCS_PATH}/${path}`);
-}
-
-export function absoluteOriginUrl(path: string): string {
-    return cleanUrl(`${DOCUSAURUS_URL}${absoluteUrl(path)}`);
-}
-
-export function addDocsRedir(redirectsArr: { to: string; from: string[] }[]) {
+export function addDocsRedir(base: string, redirectsArr: { to: string; from: string[] }[]) {
     if (getEnv("DEPLOY_ENV") === "kinsta") {
         redirectsArr.push({
-            to: docUrl("/learn/introduction/"),
-            from: [docUrl("/docs")],
+            to: docUrl(base, "/learn/introduction/"),
+            from: [docUrl(base, "/docs")],
         });
     }
 }

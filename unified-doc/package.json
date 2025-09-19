@@ -20,7 +20,7 @@
     "@docusaurus/theme-mermaid": "^3.8.1",
     "@hotjar/browser": "^1.0.9",
     "@mdx-js/react": "^3.0.0",
-    "@openclint/docusaurus-shared": "^0.0.112",
+    "@openclint/docusaurus-shared": "^0.0.126",
     "algoliasearch": "^5.36.0",
     "asciinema-player": "^3.10.0",
     "clsx": "^2.0.0",

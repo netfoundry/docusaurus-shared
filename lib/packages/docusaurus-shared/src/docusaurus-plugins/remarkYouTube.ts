@@ -2,7 +2,10 @@ import type { Plugin } from "unified"
 import { visit } from "unist-util-visit"
 import type { Node } from "unist"
 
-const remarkYouTube: Plugin = () => {
+interface YouTubeOptions {
+}
+
+export const remarkYouTube: Plugin<[YouTubeOptions]> = ({}) => {
     return (tree: Node) => {
         visit(tree, ["link", "text"], (node: any, index: number | undefined, parent: any) => {
             if (!parent || typeof index !== "number") return
@@ -40,4 +43,3 @@ const remarkYouTube: Plugin = () => {
     }
 }
 
-export default remarkYouTube

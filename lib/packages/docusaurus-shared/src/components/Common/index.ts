@@ -1,1 +1,1 @@
-export * from './NetFoundryLayout';
+export * from './Common';

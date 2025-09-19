@@ -145,3 +145,4 @@ vite.config.ts.timestamp-*
 **/package-lock.json
 
 **/github_deploy_key
+.claude
