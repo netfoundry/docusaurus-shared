@@ -16,6 +16,21 @@ const zrok = `./_remotes/zrok`;
 const zlan = `./_remotes/zlan`;
 const docsBase = `/docs`
 
+const buildMask = parseInt(process.env.DOCUSAURUS_BUILD_MASK ?? "0xFF", 16);
+
+const BUILD_FLAGS = {
+    NONE:      0x0,
+    OPENZITI:  0x1,
+    FRONTDOOR: 0x2,
+    ONPREM:    0x4,
+    ZROK:      0x8,
+    ZLAN:      0x10,
+};
+
+function build(flag: number) {
+    return (buildMask & flag) !== 0;
+}
+
 const staging: PublishConfig = {
     docusaurus: {
         url: 'https://netfoundry.io'
@@ -54,6 +69,7 @@ const REMARK_MAPPINGS = [
 console.log("CANONICAL URL      : " + cfg.docusaurus.url);
 console.log("    docsBase       : " + docsBase);
 console.log("    algolia index  : " + cfg.algolia.indexName);
+console.log("    build mask     : " + buildMask);
 
 const config: Config = {
     title: 'NetFoundry Documentation',
@@ -114,7 +130,7 @@ const config: Config = {
         function webpackAliases() {
             return {
                 name: 'unified-doc-webpack-aliases',
-                configureWebpack(config, isServer) {
+                configureWebpack(config:any, isServer:any) {
                     return {
                         resolve: {
                             alias: {
@@ -130,12 +146,13 @@ const config: Config = {
                 },
             };
         },
+
         ['@docusaurus/plugin-content-pages',{path: 'src/pages',routeBasePath: '/'}],
-        ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
-        ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docs-site/src/pages`, routeBasePath: '/onprem'}],
-        ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
-        ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
-        [
+        build(BUILD_FLAGS.FRONTDOOR) && ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
+        build(BUILD_FLAGS.ONPREM) && ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docs-site/src/pages`, routeBasePath: '/onprem'}],
+        build(BUILD_FLAGS.OPENZITI) && ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
+        build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
+        build(BUILD_FLAGS.ONPREM) && [
             '@docusaurus/plugin-content-docs',
             {
                 id: 'nfonprem',
@@ -148,7 +165,7 @@ const config: Config = {
                 ],
             },
         ],
-        [
+        build(BUILD_FLAGS.FRONTDOOR) && [
             '@docusaurus/plugin-content-docs',
             {
                 id: 'frontdoor',
@@ -161,20 +178,7 @@ const config: Config = {
                 ],
             },
         ],
-        [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'zlan',
-                path: `${zlan}/docusaurus/docs`,
-                routeBasePath: 'zlan',
-                sidebarPath: `${zlan}/docusaurus/sidebars.ts`,
-                includeCurrentVersion: true,
-                remarkPlugins: [
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
-                ],
-            },
-        ],
-        [
+        build(BUILD_FLAGS.OPENZITI) && [
             '@docusaurus/plugin-content-docs',
             {
                 id: 'openziti',
@@ -188,7 +192,20 @@ const config: Config = {
                 ],
             },
         ],
-        [
+        build(BUILD_FLAGS.ZLAN) && [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'zlan',
+                path: `${zlan}/docusaurus/docs`,
+                routeBasePath: 'zlan',
+                sidebarPath: `${zlan}/docusaurus/sidebars.ts`,
+                includeCurrentVersion: true,
+                remarkPlugins: [
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
+                ],
+            },
+        ],
+        build(BUILD_FLAGS.OPENZITI) && [
             '@docusaurus/plugin-content-blog',
             {
                 showReadingTime: true,
@@ -207,7 +224,7 @@ const config: Config = {
         ],
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
         [pluginHotjar, {}],
-    ],
+    ].filter(Boolean),
     themeConfig: {
         mermaid: {
             theme: {light: 'neutral', dark: 'forest'},

@@ -16,7 +16,7 @@ import styles from "./NetFoundryLayout.module.css";
 
 import { NetFoundryFooter, NetFoundryFooterProps } from "../NetFoundryFooter";
 import { StarUs, StarUsProps } from "../StarUs";
-import v from '../version.json';
+import { version } from '../../version';
 
 export interface MetaProps {
     title?: string;
@@ -75,7 +75,7 @@ export function NetFoundryLayout({
         <LayoutProvider>
             <Head>
                 <title>{pageTitle}</title>
-                <meta name="netfoundry-layout-version" content={v.version} />
+                <meta data-rh="true" name="nf-layout-version" content={version} />
                 {(meta.description ?? description) && (<meta name="description" content={meta.description ?? description} />)}
                 {meta.url && <meta property="og:url" content={meta.url} />}
                 {meta.siteName && <meta property="og:site_name" content={meta.siteName} />}
