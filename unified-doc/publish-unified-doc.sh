@@ -7,11 +7,15 @@ set -eu
 pub_script_root="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 echo "publish script located in: $pub_script_root"
 
+target_branch="$1"
+echo "incoming branch named: $target_branch"
+
 publish_docs() {
+  local qualifier=$1; shift
   local HOST=$1 PORT=$2 USER=$3 TARGET_DIR=$4 KEY_FILE=$5 BUILD_QUALIFIER=$6
   local zip_target="unified-docs${BUILD_QUALIFIER}.zip"
 
-  "${pub_script_root}/build-docs.sh" "${BUILD_QUALIFIER}"
+  "${pub_script_root}/build-docs.sh" --qualifier="$qualifier"
 
   echo "creating zip from built site at /build${BUILD_QUALIFIER}"
   pushd "${pub_script_root}/build${BUILD_QUALIFIER}" >/dev/null
@@ -46,10 +50,6 @@ publish_docs() {
   echo "=== done ==="
   echo "doc published"
 }
-
-target_branch="$1"
-echo "incoming branch named: $target_branch"
-
 
 if [ "${GIT_BRANCH:-}" == "${target_branch}" ]; then
   echo "========= on ${target_branch} branch - publishing to both main and staging"

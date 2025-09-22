@@ -2,11 +2,14 @@
 set -euo pipefail
 
 # args: optional --clean flag + optional build qualifier like "-prod"
-CLEAN=0; BUILD_QUALIFIER=""
-for a in "${@:-}"; do
-  case "${a}" in
+CLEAN=0
+QUALIFIER=""
+EXTRA_ARGS=()
+for arg in "$@"; do
+  case $arg in
     --clean) CLEAN=1 ;;
-    *) BUILD_QUALIFIER="${a}" ;;
+    --qualifier=*) QUALIFIER="${arg#*=}" ;;
+    *) EXTRA_ARGS+=("$arg") ;;
   esac
 done
 
@@ -85,7 +88,7 @@ export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
 echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"
 mkdir -p "${SDK_ROOT_TARGET}"
 
-"${script_dir}/_remotes/openziti/gendoc.sh" -ds
+"${script_dir}/_remotes/openziti/gendoc.sh" "${EXTRA_ARGS[@]}"
 
 pushd "${script_dir}" >/dev/null
 yarn install
