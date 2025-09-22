@@ -12,31 +12,26 @@ done
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
-setup_bitbucket_creds() {
-  local url="$1"
-
-  if [[ "$url" == *k8s-on-prem-installations* ]] && [ -n "${BB_REPO_TOKEN_ONPREM:-}" ]; then
-    echo "🔑 Using ONPREM token for $url"
-    git config --global credential.helper \
-      "!echo username=x-token-auth; echo password=$BB_REPO_TOKEN_ONPREM"
-  elif [[ "$url" == *zrok-connector* ]] && [ -n "${BB_REPO_TOKEN_FRONTDOOR:-}" ]; then
-    echo "🔑 Using FRONTDOOR token for $url"
-    git config --global credential.helper \
-      "!echo username=x-token-auth; echo password=$BB_REPO_TOKEN_FRONTDOOR"
-  else
-    echo "🚫 No token configured for $url (credentials unset)"
-    git config --global --unset credential.helper || true
-  fi
-}
-
 clone_or_update() {
   local url="$1" dest="$2" branch="${3:-main}"
   local target="$script_dir/_remotes/$dest"
 
-  setup_bitbucket_creds "$url"
+  # Rewrite URL for Bitbucket repos with tokens
+  case "$url" in
+    *k8s-on-prem-installations*)
+      [ -n "${BB_REPO_TOKEN_ONPREM:-}" ] &&
+        url="https://x-token-auth:${BB_REPO_TOKEN_ONPREM}@bitbucket.org/netfoundry/k8s-on-prem-installations.git" &&
+        echo "🔑 Using BB_REPO_TOKEN_ONPREM token" >&2
+      ;;
+    *zrok-connector*)
+      [ -n "${BB_REPO_TOKEN_FRONTDOOR:-}" ] &&
+        url="https://x-token-auth:${BB_REPO_TOKEN_FRONTDOOR}@bitbucket.org/netfoundry/zrok-connector.git" &&
+        echo "🔑 Using BB_REPO_TOKEN_FRONTDOOR token" >&2
+      ;;
+  esac
 
   if [ -d "$target/.git" ]; then
-    if [ "$CLEAN" -eq 1 ]; then
+    if [ "${CLEAN:-0}" -eq 1 ]; then
       if ! git -C "$target" fetch origin "$branch" --depth 1 \
            || ! git -C "$target" reset --hard "origin/$branch"; then
         echo "❌ Branch '$branch' not found in $url"
