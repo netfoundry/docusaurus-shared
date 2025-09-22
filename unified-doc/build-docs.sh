@@ -4,20 +4,23 @@ set -euo pipefail
 # args: optional --clean flag + optional build qualifier like "-prod"
 CLEAN=0
 BUILD_QUALIFIER=""
-FLAGS=()
+QUALIFIER_FLAG=()
+OTHER_FLAGS=()
 EXTRA_ARGS=()
+
 for arg in "$@"; do
   case $arg in
-    --clean) CLEAN=1; FLAGS+=("$arg") ;;
-    --qualifier=*) BUILD_QUALIFIER="${arg#*=}"; FLAGS+=("$arg") ;;
-    -*) FLAGS+=("$arg") ;;   # catch any other flags like -ds, -z, etc
+    --clean) CLEAN=1; OTHER_FLAGS+=("$arg") ;;
+    --qualifier=*) BUILD_QUALIFIER="${arg#*=}"; QUALIFIER_FLAG=("$arg") ;;
+    -*) OTHER_FLAGS+=("$arg") ;;   # only real flags go here, like -ds, -z
     *) EXTRA_ARGS+=("$arg") ;;
   esac
 done
 
 echo "bd CLEAN=$CLEAN"
 echo "bd BUILD_QUALIFIER='$BUILD_QUALIFIER'"
-echo "bd FLAGS: ${FLAGS[*]}"
+echo "bd QUALIFIER_FLAG: ${QUALIFIER_FLAG[*]}"
+echo "bd OTHER_FLAGS: ${OTHER_FLAGS[*]}"
 echo "bd EXTRA_ARGS: ${EXTRA_ARGS[*]}"
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
@@ -95,7 +98,7 @@ export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
 echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"
 mkdir -p "${SDK_ROOT_TARGET}"
 
-"${script_dir}/_remotes/openziti/gendoc.sh" "${FLAGS[@]}" "${EXTRA_ARGS[@]}"
+"${script_dir}/_remotes/openziti/gendoc.sh" "${OTHER_FLAGS[@]}"
 
 pushd "${script_dir}" >/dev/null
 yarn install
