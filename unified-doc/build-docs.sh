@@ -12,9 +12,28 @@ done
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
+setup_bitbucket_creds() {
+  local url="$1"
+
+  if [[ "$url" == *k8s-on-prem-installations* ]] && [ -n "${BB_REPO_TOKEN_ONPREM:-}" ]; then
+    echo "🔑 Using ONPREM token for $url"
+    git config --global credential.helper \
+      "!echo username=x-token-auth; echo password=$BB_REPO_TOKEN_ONPREM"
+  elif [[ "$url" == *zrok-connector* ]] && [ -n "${BB_REPO_TOKEN_FRONTDOOR:-}" ]; then
+    echo "🔑 Using FRONTDOOR token for $url"
+    git config --global credential.helper \
+      "!echo username=x-token-auth; echo password=$BB_REPO_TOKEN_FRONTDOOR"
+  else
+    echo "🚫 No token configured for $url (credentials unset)"
+    git config --global --unset credential.helper || true
+  fi
+}
+
 clone_or_update() {
   local url="$1" dest="$2" branch="${3:-main}"
   local target="$script_dir/_remotes/$dest"
+
+  setup_bitbucket_creds "$url"
 
   if [ -d "$target/.git" ]; then
     if [ "$CLEAN" -eq 1 ]; then
@@ -37,6 +56,7 @@ clone_or_update() {
     }
   fi
 }
+
 
 clone_or_update "git@bitbucket.org:netfoundry/zrok-connector.git"            frontdoor develop
 clone_or_update "git@bitbucket.org:netfoundry/k8s-on-prem-installations.git" onprem    main
