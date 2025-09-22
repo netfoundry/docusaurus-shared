@@ -11,27 +11,46 @@ for a in "${@:-}"; do
 done
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-
 clone_or_update() {
   local url="$1" dest="$2" branch="${3:-main}"
   local target="$script_dir/_remotes/$dest"
 
-  # Rewrite URL for repos with tokens needed
   case "$url" in
     *zlan*)
-      [ -n "${GH_ZITI_CI_REPO_ACCESS_PAT:-}" ] &&
-        url="https://x-access-token:${GH_ZITI_CI_REPO_ACCESS_PAT}@github.com/netfoundry/zlan.git" &&
-        echo "🔑 Using GH_ZITI_CI_REPO_ACCESS_PAT token" >&2
+      if [ -n "${GH_ZITI_CI_REPO_ACCESS_PAT:-}" ]; then
+        url="https://x-access-token:${GH_ZITI_CI_REPO_ACCESS_PAT}@github.com/netfoundry/zlan.git"
+        echo "🔑 Using GH_ZITI_CI_REPO_ACCESS_PAT token for zlan" >&2
+      else
+        url="git@github.com:netfoundry/zlan.git"
+        echo "🔑 Using SSH for zlan" >&2
+      fi
       ;;
     *k8s-on-prem-installations*)
-      [ -n "${BB_REPO_TOKEN_ONPREM:-}" ] &&
-        url="https://x-token-auth:${BB_REPO_TOKEN_ONPREM}@bitbucket.org/netfoundry/k8s-on-prem-installations.git" &&
+      if [ -n "${BB_REPO_TOKEN_ONPREM:-}" ]; then
+        url="https://x-token-auth:${BB_REPO_TOKEN_ONPREM}@bitbucket.org/netfoundry/k8s-on-prem-installations.git"
         echo "🔑 Using BB_REPO_TOKEN_ONPREM token" >&2
+      else
+        url="git@bitbucket.org:netfoundry/k8s-on-prem-installations.git"
+        echo "🔑 Using SSH for onprem" >&2
+      fi
       ;;
     *zrok-connector*)
-      [ -n "${BB_REPO_TOKEN_FRONTDOOR:-}" ] &&
-        url="https://x-token-auth:${BB_REPO_TOKEN_FRONTDOOR}@bitbucket.org/netfoundry/zrok-connector.git" &&
+      if [ -n "${BB_REPO_TOKEN_FRONTDOOR:-}" ]; then
+        url="https://x-token-auth:${BB_REPO_TOKEN_FRONTDOOR}@bitbucket.org/netfoundry/zrok-connector.git"
         echo "🔑 Using BB_REPO_TOKEN_FRONTDOOR token" >&2
+      else
+        url="git@bitbucket.org:netfoundry/zrok-connector.git"
+        echo "🔑 Using SSH for frontdoor" >&2
+      fi
+      ;;
+    *ziti-doc*)
+      if [ -n "${GH_ZITI_CI_REPO_ACCESS_PAT:-}" ]; then
+        url="https://x-access-token:${GH_ZITI_CI_REPO_ACCESS_PAT}@github.com/openziti/ziti-doc.git"
+        echo "🔑 Using GH_ZITI_CI_REPO_ACCESS_PAT token for ziti-doc" >&2
+      else
+        url="git@github.com:openziti/ziti-doc.git"
+        echo "🔑 Using SSH for ziti-doc" >&2
+      fi
       ;;
   esac
 
