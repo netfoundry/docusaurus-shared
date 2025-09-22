@@ -3,12 +3,12 @@ set -euo pipefail
 
 # args: optional --clean flag + optional build qualifier like "-prod"
 CLEAN=0
-QUALIFIER=""
+BUILD_QUALIFIER=""
 EXTRA_ARGS=()
 for arg in "$@"; do
   case $arg in
     --clean) CLEAN=1 ;;
-    --qualifier=*) QUALIFIER="${arg#*=}" ;;
+    --qualifier=*) BUILD_QUALIFIER="${arg#*=}" ;;
     *) EXTRA_ARGS+=("$arg") ;;
   esac
 done
