@@ -97,7 +97,7 @@ jobs:
           ZITI_HOTJAR_APPID: ${{ secrets.STG_DOC_HOTJAR_APPID }}
           DEPLOY_ENV: 'kinsta'
           DOCUSAURUS_URL: 'https://netfoundry.io'
-        run: unified-doc/publish-unified-doc.sh ${{ env.GIT_BRANCH }}
+        run: unified-doc/publish-unified-doc.sh ${{ env.GIT_BRANCH }} -ds
 
 #  check-links:
 #    if: github.ref_name == 'main'

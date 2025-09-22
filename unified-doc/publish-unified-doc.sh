@@ -16,7 +16,7 @@ publish_docs() {
   local zip_target="unified-docs${qualifier}.zip"
 
   echo "build qualifier set: $qualifier"
-  "${pub_script_root}/build-docs.sh" --qualifier="$qualifier"
+  "${pub_script_root}/build-docs.sh" --qualifier="$qualifier" "$@"
 
   echo "creating zip from built site at /build${qualifier}"
   pushd "${pub_script_root}/build${qualifier}" >/dev/null
