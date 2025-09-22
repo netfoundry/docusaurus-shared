@@ -4,6 +4,24 @@
 # the actual docs.
 
 set -eu
+
+flags=()
+args=()
+
+for arg in "$@"; do
+  case "$arg" in
+    -*)
+      flags+=("$arg")
+      ;;
+    *)
+      args+=("$arg")
+      ;;
+  esac
+done
+
+echo "Pub Flags: ${flags[*]}"
+echo "Pub Args : ${args[*]}"
+
 pub_script_root="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 echo "publish script located in: $pub_script_root"
 
@@ -16,7 +34,7 @@ publish_docs() {
   local zip_target="unified-docs${qualifier}.zip"
 
   echo "build qualifier set: $qualifier"
-  "${pub_script_root}/build-docs.sh" --qualifier="$qualifier" "$@"
+  "${pub_script_root}/build-docs.sh" "$qualifier" "${flags[@]}"
 
   echo "creating zip from built site at /build${qualifier}"
   pushd "${pub_script_root}/build${qualifier}" >/dev/null

@@ -4,14 +4,21 @@ set -euo pipefail
 # args: optional --clean flag + optional build qualifier like "-prod"
 CLEAN=0
 BUILD_QUALIFIER=""
+FLAGS=()
 EXTRA_ARGS=()
 for arg in "$@"; do
   case $arg in
-    --clean) CLEAN=1 ;;
-    --qualifier=*) BUILD_QUALIFIER="${arg#*=}" ;;
+    --clean) CLEAN=1; FLAGS+=("$arg") ;;
+    --qualifier=*) BUILD_QUALIFIER="${arg#*=}"; FLAGS+=("$arg") ;;
+    -*) FLAGS+=("$arg") ;;   # catch any other flags like -ds, -z, etc
     *) EXTRA_ARGS+=("$arg") ;;
   esac
 done
+
+echo "bd CLEAN=$CLEAN"
+echo "bd BUILD_QUALIFIER='$BUILD_QUALIFIER'"
+echo "bd FLAGS: ${FLAGS[*]}"
+echo "bd EXTRA_ARGS: ${EXTRA_ARGS[*]}"
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 clone_or_update() {
