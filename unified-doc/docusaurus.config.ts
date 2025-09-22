@@ -2,10 +2,9 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import * as path from "node:path";
-import {remarkReplaceMetaUrl} from "@openclint/docusaurus-shared/plugins";
+import {remarkReplaceMetaUrl, remarkScopedPath} from "@openclint/docusaurus-shared/plugins";
 import remarkYouTube from './src/plugins/remarkYouTube';
 import {pluginHotjar} from "@openclint/docusaurus-shared/node";
-import {remarkScopedPath} from "./_remotes/openziti/docusaurus/src/plugins/remark/remarkScopedPath";
 import {PublishConfig} from 'src/components/docusaurus'
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
