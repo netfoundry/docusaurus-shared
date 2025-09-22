@@ -16,8 +16,13 @@ clone_or_update() {
   local url="$1" dest="$2" branch="${3:-main}"
   local target="$script_dir/_remotes/$dest"
 
-  # Rewrite URL for Bitbucket repos with tokens
+  # Rewrite URL for repos with tokens needed
   case "$url" in
+    *zlan*)
+      [ -n "${GH_ZITI_CI_REPO_ACCESS_PAT:-}" ] &&
+        url="https://x-access-token:${GH_ZITI_CI_REPO_ACCESS_PAT}@github.com/netfoundry/zlan.git" &&
+        echo "🔑 Using GH_ZITI_CI_REPO_ACCESS_PAT token" >&2
+      ;;
     *k8s-on-prem-installations*)
       [ -n "${BB_REPO_TOKEN_ONPREM:-}" ] &&
         url="https://x-token-auth:${BB_REPO_TOKEN_ONPREM}@bitbucket.org/netfoundry/k8s-on-prem-installations.git" &&
@@ -54,8 +59,8 @@ clone_or_update() {
 
 clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor develop
 clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    main
-clone_or_update "git@github.com:openziti/ziti-doc.git"                           openziti  updates-for-unified-doc-add-blogs
-clone_or_update "git@github.com:netfoundry/zlan"                                 zlan      main
+clone_or_update "https://github.com/openziti/ziti-doc.git" updates-for-unified-doc-add-blogs
+clone_or_update "https://github.com/netfoundry/zlan.git"   zlan main
 
 export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
 echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"
