@@ -69,6 +69,7 @@ console.log("CANONICAL URL      : " + cfg.docusaurus.url);
 console.log("    docsBase       : " + docsBase);
 console.log("    algolia index  : " + cfg.algolia.indexName);
 console.log("    build mask     : " + buildMask);
+console.log("    hotjar app     : " + cfg.hotjar.id);
 
 const config: Config = {
     title: 'NetFoundry Documentation',
