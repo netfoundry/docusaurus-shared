@@ -95,7 +95,7 @@ export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
 echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"
 mkdir -p "${SDK_ROOT_TARGET}"
 
-"${script_dir}/_remotes/openziti/gendoc.sh" "${EXTRA_ARGS[@]}"
+"${script_dir}/_remotes/openziti/gendoc.sh" "${FLAGS[@]}" "${EXTRA_ARGS[@]}"
 
 pushd "${script_dir}" >/dev/null
 yarn install
