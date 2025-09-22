@@ -12,13 +12,13 @@ echo "incoming branch named: $target_branch"
 
 publish_docs() {
   local qualifier=$1; shift
-  local HOST=$1 PORT=$2 USER=$3 TARGET_DIR=$4 KEY_FILE=$5 BUILD_QUALIFIER=$6
-  local zip_target="unified-docs${BUILD_QUALIFIER}.zip"
+  local HOST=$1 PORT=$2 USER=$3 TARGET_DIR=$4 KEY_FILE=$5
+  local zip_target="unified-docs${qualifier}.zip"
 
   "${pub_script_root}/build-docs.sh" --qualifier="$qualifier"
 
-  echo "creating zip from built site at /build${BUILD_QUALIFIER}"
-  pushd "${pub_script_root}/build${BUILD_QUALIFIER}" >/dev/null
+  echo "creating zip from built site at /build${qualifier}"
+  pushd "${pub_script_root}/build${qualifier}" >/dev/null
   zip -r "/tmp/${zip_target}" . 2>&1
   popd >/dev/null
 
