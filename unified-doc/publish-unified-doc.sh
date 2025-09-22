@@ -15,7 +15,7 @@ publish_docs() {
   local HOST=$1 PORT=$2 USER=$3 TARGET_DIR=$4 KEY_FILE=$5
   local zip_target="unified-docs${qualifier}.zip"
 
-  echo "build qualifier set: $qualifier"
+  echo "build qualifier set: $qualifier. remaining args: $@"
   "${pub_script_root}/build-docs.sh" --qualifier="$qualifier" "$@"
 
   echo "creating zip from built site at /build${qualifier}"
