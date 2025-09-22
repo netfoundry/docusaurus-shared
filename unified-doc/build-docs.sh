@@ -57,11 +57,10 @@ clone_or_update() {
   fi
 }
 
-
-clone_or_update "git@bitbucket.org:netfoundry/zrok-connector.git"            frontdoor develop
-clone_or_update "git@bitbucket.org:netfoundry/k8s-on-prem-installations.git" onprem    main
-clone_or_update "git@github.com:openziti/ziti-doc.git"                       openziti  updates-for-unified-doc-add-blogs
-clone_or_update "git@github.com:netfoundry/zlan"                             zlan      main
+clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor develop
+clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    main
+clone_or_update "git@github.com:openziti/ziti-doc.git"                           openziti  updates-for-unified-doc-add-blogs
+clone_or_update "git@github.com:netfoundry/zlan"                                 zlan      main
 
 export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
 echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"
