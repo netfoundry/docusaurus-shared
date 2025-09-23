@@ -2,8 +2,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import * as path from "node:path";
-import {remarkReplaceMetaUrl, remarkScopedPath} from "@openclint/docusaurus-shared/plugins";
-import remarkYouTube from './src/plugins/remarkYouTube';
+import {remarkYouTube, remarkReplaceMetaUrl, remarkScopedPath, remarkCodeSections, remarkYamlTable} from "@openclint/docusaurus-shared/plugins";
 import {pluginHotjar} from "@openclint/docusaurus-shared/node";
 import {PublishConfig} from 'src/components/docusaurus'
 
@@ -162,7 +161,7 @@ const config: Config = {
                 sidebarPath: `${onprem}/docs-site/sidebars.ts`,
                 includeCurrentVersion: true,
                 remarkPlugins: [
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
                 ],
             },
         ],
@@ -175,7 +174,7 @@ const config: Config = {
                 sidebarPath: `${frontdoor}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
                 remarkPlugins: [
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
                 ],
             },
         ],
@@ -189,7 +188,7 @@ const config: Config = {
                 includeCurrentVersion: true,
                 remarkPlugins: [
                     [remarkReplaceMetaUrl, {from: '@staticoz', to: 'openziti'}],
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
                 ],
             },
         ],
@@ -202,7 +201,7 @@ const config: Config = {
                 sidebarPath: `${zlan}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
                 remarkPlugins: [
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
                 ],
             },
         ],
@@ -217,7 +216,7 @@ const config: Config = {
                 remarkPlugins: [
                     remarkYouTube,
                     [remarkReplaceMetaUrl, {from: '@staticoz', to: 'openziti'}],
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS }],
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
                 ],
                 blogSidebarCount: 'ALL',
                 blogSidebarTitle: 'All posts',

@@ -12,6 +12,7 @@ const results_text = '@results:'
 export const remarkCodeSections: Plugin = () => {
     return (tree) => {
         visit(tree, 'code', (node: Code, index, parent: Parent | undefined) => {
+            console.log(`🦖 code block detected lang="${node.lang}" firstLine="${node.value.split('\n')[0]}"`)
             if (!parent || !node.lang || !node.lang.startsWith('example-')) return
 
             const lang = node.lang.replace('example-', '').trim()
@@ -125,6 +126,7 @@ export const remarkCodeSections: Plugin = () => {
             }
 
             parent.children.splice(index, 1, divWrapper as any)
+            console.log(`🦖 transformed example block lang="${lang}"`)
         })
     }
 }
