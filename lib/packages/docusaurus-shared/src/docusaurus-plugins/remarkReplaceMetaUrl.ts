@@ -1,38 +1,35 @@
-import { Plugin } from 'unified';
-import { visit } from 'unist-util-visit';
-import { Root } from 'mdast';
+import { Plugin } from 'unified'
+import { visit } from 'unist-util-visit'
+import { Root } from 'mdast'
+import { Logger, LogLevel } from '../utils/logger'
 
-console.log("🦖 remarkReplaceMetaUrl plugin loaded");
+console.log("🦖 remarkReplaceMetaUrl plugin loaded")
 
 interface Options {
-    from: string;
-    to: string;
-    debug?: boolean;
+    from: string
+    to: string
+    logLevel?: LogLevel
 }
 
 export const remarkReplaceMetaUrl: Plugin<[Options], Root> = (options?: Options) => {
-    const { from = "", to = "", debug = false } = options ?? {}
+    const { from = '', to = '', logLevel = LogLevel.Silent } = options ?? {}
+    const logger = new Logger(logLevel, 'remarkReplaceMetaUrl')
 
-    if (debug) {
-        console.log(`🦖 remarkReplaceMetaUrl initialized: replacing "${from}" → "${to}"`);
-    }
+    logger.log(`initialized: replacing "${from}" → "${to}"`)
 
     return (tree: Root) => {
         visit(tree, 'mdxJsxFlowElement', (node: any) => {
             if (node.name === 'meta' && Array.isArray(node.attributes)) {
                 for (const attr of node.attributes) {
-                    if (attr.name === 'content' && typeof attr.value === 'string') {
-                        if (attr.value.includes(from)) {
-                            if (debug) {
-                                console.log(`🦖 [remarkReplaceMetaUrl] rewriting: "${attr.value}" → "${attr.value.replace(from, to)}"`);
-                            }
-                            attr.value = attr.value.replace(from, to);
-                        }
+                    if (attr.name === 'content' && typeof attr.value === 'string' && attr.value.includes(from)) {
+                        const newVal = attr.value.replace(from, to)
+                        logger.log(`rewriting: "${attr.value}" → "${newVal}"`, LogLevel.Info)
+                        attr.value = newVal
                     }
                 }
             }
-        });
-    };
-};
+        })
+    }
+}
 
-export default remarkReplaceMetaUrl;
+export default remarkReplaceMetaUrl

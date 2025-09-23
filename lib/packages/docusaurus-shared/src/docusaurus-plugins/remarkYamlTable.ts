@@ -3,6 +3,7 @@ import { visit } from 'unist-util-visit'
 import yaml from 'js-yaml'
 import { Parent } from 'unist'
 import { Literal } from 'unist'
+import { Logger, LogLevel } from '../utils/logger'
 
 console.log("🦖 remarkYamlTable plugin module loaded")
 
@@ -28,7 +29,16 @@ interface Table {
     children: TableRow[]
 }
 
-export const remarkYamlTable: Plugin = () => {
+interface Options {
+    logLevel?: LogLevel
+}
+
+export const remarkYamlTable: Plugin<[Options]> = (options?: Options) => {
+    const { logLevel = LogLevel.Silent } = options ?? {}
+    const logger = new Logger(logLevel, 'remarkYamlTable')
+
+    logger.log('initialized')
+
     return (tree) => {
         visit(tree, 'code', (node: Code, index: number | undefined, parent: Parent | undefined) => {
             if (!parent || index === undefined) return
@@ -62,9 +72,10 @@ export const remarkYamlTable: Plugin = () => {
                         }
 
                         parent.children[index] = tableNode
+                        logger.log(`generated table with ${headers.length} columns and ${data.length} rows`, LogLevel.Info)
                     }
                 } catch (error) {
-                    console.error('YAML parsing error:', error)
+                    logger.log(`YAML parsing error: ${(error as Error).message}`, LogLevel.Info)
                 }
             }
         })
