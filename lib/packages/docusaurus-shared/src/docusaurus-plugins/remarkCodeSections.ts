@@ -1,70 +1,115 @@
-import { Plugin } from 'unified'
-import { visit } from 'unist-util-visit'
-import { Image, Link } from 'mdast'
-import { MdxJsxFlowElement, MdxjsEsm } from 'mdast-util-mdx'
-import { Logger, LogLevel } from '../utils/logger'
+import {visit} from "unist-util-visit"
+import type {Plugin} from "unified"
+import type {Node} from "unist"
+import {Logger, LogLevel, resolveLogLevel} from "./logger"
 
-console.log("🦖 remarkScopedPath plugin module loaded")
-
-interface ScopedPathOptions {
-    from: string
-    to: string
-}
 interface Options {
-    mappings: ScopedPathOptions[]
     logLevel?: LogLevel
 }
 
-export const remarkScopedPath: Plugin<[Options]> = (options?: Options) => {
-    const { mappings = [], logLevel = LogLevel.Silent } = options ?? {}
-    const logger = new Logger(logLevel, 'remarkScopedPath')
+export const remarkCodeSections: Plugin<[Options?]> = (options?: Options) => {
+    const logger = new Logger(resolveLogLevel(options?.logLevel), "remarkCodeSections")
 
-    logger.log(`initialized with ${mappings.length} mappings`)
+    const desc_text = "@desc:"
+    const command_text = "@command:"
+    const code_text = "@code:"
+    const results_text = "@results:"
 
-    return (tree, file) => {
-        const filePath = file?.path || file?.history?.slice(-1)[0] || 'unknown'
-        logger.log(`processing file: ${filePath}`, LogLevel.Debug)
+    return (tree: Node) => {
+        visit(tree, "code", (node: any, index: number, parent: any) => {
+            if (!node?.value) return
 
-        const rewrite = (val: string, from: string, to: string, ctx: string) => {
-            if (val.startsWith(from)) {
-                const newVal = val.replace(from, to)
-                logger.log(`🔄 ${ctx} ${val} → ${newVal}`, LogLevel.Info)
-                return newVal
-            }
-            return val
-        }
+            const hasActivator = /@desc:|@command:|@code:|@results:/.test(node.value)
+            if (!hasActivator) return
 
-        visit(tree, 'image', (node: Image) => {
-            for (const { from, to } of mappings) node.url = rewrite(node.url, from, to, 'img')
-        })
+            logger.log(node, LogLevel.Debug)
+            if (node.lang && node.lang.startsWith("example")) {
+                const lang = node.lang.replace("example-", "").trim()
+                const lines = node.value.split("\n")
+                let description = "", command = "", code = "", results = "", codeTitle = ""
+                let currentSection = ""
 
-        visit(tree, 'link', (node: Link) => {
-            for (const { from, to } of mappings) node.url = rewrite(node.url, from, to, 'link')
-        })
+                lines.forEach((line: string) => {
+                    if (line.startsWith(desc_text)) {
+                        currentSection = "description"
+                        description = line.replace(desc_text, "").trim()
+                    } else if (line.startsWith(command_text)) {
+                        currentSection = "command"
+                        command = line.replace(command_text, "").trim()
+                    } else if (line.startsWith(code_text)) {
+                        currentSection = "code"
+                        codeTitle = line.replace(code_text, "").trim()
+                    } else if (line.startsWith(results_text)) {
+                        currentSection = "results"
+                        results = line.replace(results_text, "").trim()
+                    } else {
+                        if (currentSection === "description") description += `\n${line}`
+                        else if (currentSection === "command") command += `\n${line}`
+                        else if (currentSection === "code") code += `\n${line}`
+                        else if (currentSection === "results") results += `\n${line}`
+                    }
+                })
 
-        visit(tree, 'mdxJsxFlowElement', (node: MdxJsxFlowElement) => {
-            node.attributes?.forEach(attr => {
-                if (attr.type === 'mdxJsxAttribute' && typeof attr.value === 'string') {
-                    for (const { from, to } of mappings)
-                        attr.value = rewrite(attr.value, from, to, `jsx <${node.name}> ${attr.name}:`)
+                const divWrapper = {
+                    type: "div",
+                    data: { hName: "div", hProperties: { className: "code-section" } },
+                    children: [] as any[],
                 }
-            })
-        })
 
-        visit(tree, 'mdxjsEsm', (node: MdxjsEsm) => {
-            for (const { from, to } of mappings) {
-                const re = new RegExp(`(['"])${from}/`, 'g')
-                const newVal = node.value.replace(re, `$1${to}/`)
-                if (newVal !== node.value) {
-                    logger.log(
-                        `esm rewrite (${from} → ${to}):\n--- before ---\n${node.value}\n--- after ---\n${newVal}`,
-                        LogLevel.Info
+                if (description) {
+                    const descDiv = {
+                        type: "div",
+                        data: { hName: "div", hProperties: { className: "code-section-desc" } },
+                        children: [] as any[],
+                    }
+                    descDiv.children.push(
+                        { type: "paragraph", children: [{ type: "strong", children: [{ type: "text", value: "Description:" }] }] },
+                        { type: "paragraph", children: [{ type: "text", value: description.trim() }], data: { hProperties: { style: "padding-bottom: 10px;" } } },
                     )
-                    node.value = newVal
+                    divWrapper.children.push(descDiv)
                 }
+
+                if (command) {
+                    const cmdDiv = {
+                        type: "div",
+                        data: { hName: "div", hProperties: { className: "code-section-command" } },
+                        children: [] as any[],
+                    }
+                    cmdDiv.children.push(
+                        { type: "paragraph", children: [{ type: "strong", children: [{ type: "text", value: "Command:" }] }] },
+                        { type: "code", lang: "sh", value: command.trim() },
+                    )
+                    divWrapper.children.push(cmdDiv)
+                }
+
+                if (code) {
+                    const codeDiv = {
+                        type: "div",
+                        data: { hName: "div", hProperties: { className: "code-section-code" } },
+                        children: [] as any[],
+                    }
+                    codeDiv.children.push(
+                        { type: "paragraph", children: [{ type: "strong", children: [{ type: "text", value: codeTitle }] }] },
+                        { type: "code", lang, value: code.trim() },
+                    )
+                    divWrapper.children.push(codeDiv)
+                }
+
+                if (results) {
+                    const resultsDiv = {
+                        type: "div",
+                        data: { hName: "div", hProperties: { className: "code-section-results" } },
+                        children: [] as any[],
+                    }
+                    resultsDiv.children.push(
+                        { type: "paragraph", children: [{ type: "strong", children: [{ type: "text", value: "Results:" }] }] },
+                        { type: "code", lang: "buttonless", value: results.trim() },
+                    )
+                    divWrapper.children.push(resultsDiv)
+                }
+
+                parent.children.splice(index, 1, divWrapper)
             }
         })
-
-        logger.log(` `, LogLevel.Debug)
     }
 }

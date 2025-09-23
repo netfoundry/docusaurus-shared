@@ -2,7 +2,7 @@ import { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
 import { Image, Link } from 'mdast'
 import { MdxJsxFlowElement, MdxjsEsm } from 'mdast-util-mdx'
-import { Logger, LogLevel } from '../utils/logger'
+import {Logger, LogLevel, resolveLogLevel} from './logger'
 
 console.log("🦖 remarkScopedPath plugin module loaded")
 
@@ -17,7 +17,7 @@ interface Options {
 
 export const remarkScopedPath: Plugin<[Options]> = (options?: Options) => {
     const { mappings = [], logLevel = LogLevel.Silent } = options ?? {}
-    const logger = new Logger(logLevel, 'remarkScopedPath')
+    const logger = new Logger(resolveLogLevel(options?.logLevel), 'remarkScopedPath')
 
     logger.log(`initialized with ${mappings.length} mappings`)
 

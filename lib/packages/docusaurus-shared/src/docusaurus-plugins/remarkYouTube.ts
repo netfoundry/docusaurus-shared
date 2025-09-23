@@ -1,7 +1,7 @@
 import type { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
 import type { Node } from 'unist'
-import { Logger, LogLevel } from '../utils/logger'
+import {Logger, LogLevel, resolveLogLevel} from './logger'
 
 console.log("🦖 remarkYouTube plugin module loaded")
 
@@ -11,7 +11,7 @@ interface YouTubeOptions {
 
 export const remarkYouTube: Plugin<[YouTubeOptions]> = (options?: YouTubeOptions) => {
     const { logLevel = LogLevel.Silent } = options ?? {}
-    const logger = new Logger(logLevel, 'remarkYouTube')
+    const logger = new Logger(resolveLogLevel(options?.logLevel), 'remarkYouTube')
 
     logger.log('initialized')
 
@@ -33,7 +33,7 @@ export const remarkYouTube: Plugin<[YouTubeOptions]> = (options?: YouTubeOptions
                 ytUrl.match(/youtube-nocookie\.com\/watch\?v=([A-Za-z0-9_-]+)/)
 
             if (m) {
-                logger.log(`rewriting YouTube URL: ${ytUrl} → videoId=${m[1]}`, LogLevel.Info)
+                logger.log(`rewriting YouTube URL: ${ytUrl} → videoId=${m[1]}`, LogLevel.Debug)
                 parent.children.splice(index, 1, {
                     type: 'mdxJsxFlowElement',
                     name: 'LiteYouTubeEmbed',

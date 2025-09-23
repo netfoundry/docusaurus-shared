@@ -3,7 +3,7 @@ import { visit } from 'unist-util-visit'
 import yaml from 'js-yaml'
 import { Parent } from 'unist'
 import { Literal } from 'unist'
-import { Logger, LogLevel } from '../utils/logger'
+import {Logger, LogLevel, resolveLogLevel} from './logger'
 
 console.log("🦖 remarkYamlTable plugin module loaded")
 
@@ -35,7 +35,7 @@ interface Options {
 
 export const remarkYamlTable: Plugin<[Options]> = (options?: Options) => {
     const { logLevel = LogLevel.Silent } = options ?? {}
-    const logger = new Logger(logLevel, 'remarkYamlTable')
+    const logger = new Logger(resolveLogLevel(options?.logLevel), 'remarkYamlTable')
 
     logger.log('initialized')
 

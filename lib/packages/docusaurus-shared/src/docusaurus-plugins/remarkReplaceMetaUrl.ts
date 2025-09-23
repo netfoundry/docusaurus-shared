@@ -1,7 +1,7 @@
 import { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
 import { Root } from 'mdast'
-import { Logger, LogLevel } from '../utils/logger'
+import {Logger, LogLevel, resolveLogLevel} from './logger'
 
 console.log("🦖 remarkReplaceMetaUrl plugin loaded")
 
@@ -13,7 +13,7 @@ interface Options {
 
 export const remarkReplaceMetaUrl: Plugin<[Options], Root> = (options?: Options) => {
     const { from = '', to = '', logLevel = LogLevel.Silent } = options ?? {}
-    const logger = new Logger(logLevel, 'remarkReplaceMetaUrl')
+    const logger = new Logger(resolveLogLevel(options?.logLevel), 'remarkReplaceMetaUrl')
 
     logger.log(`initialized: replacing "${from}" → "${to}"`)
 
