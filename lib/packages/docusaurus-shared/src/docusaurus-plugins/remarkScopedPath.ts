@@ -5,60 +5,71 @@ import { MdxJsxFlowElement, MdxjsEsm } from 'mdast-util-mdx'
 import { writeFileSync, appendFileSync, existsSync } from 'fs'
 import { join } from 'path'
 
+console.log("🦖 remarkScopedPath plugin module loaded")
+
 interface ScopedPathOptions {
     from: string
     to: string
 }
 interface Options {
-    debug?: boolean
     mappings: ScopedPathOptions[]
+    debug?: boolean
 }
 
 const LOG = join(process.cwd(), 'remarkScopedPath.log')
 
-const log = (msg:string, debug?:boolean) => {
-    if (!debug) return;
-
+const log = (msg: string, debug?: boolean) => {
+    if (!debug) return
+    console.log(msg) // also echo to console
     if (!existsSync(LOG)) {
-        writeFileSync(LOG, '');
+        writeFileSync(LOG, '')
     }
-
-    appendFileSync(LOG, `[${new Date().toISOString()}] ${msg}\n`);
+    appendFileSync(LOG, `[${new Date().toISOString()}] ${msg}\n`)
 }
 
-export const remarkScopedPath: Plugin<[Options]> = ({ mappings, debug }) => {
+export const remarkScopedPath: Plugin<[Options]> = (options?: Options) => {
+    const { mappings = [], debug = false } = options ?? {}
+
+    if (debug) {
+        log(`🦖 remarkScopedPath initialized with ${mappings.length} mappings`, debug)
+    }
+
     return (tree, file) => {
         const filePath = file?.path || file?.history?.slice(-1)[0] || 'unknown'
-        log(`processing file ${filePath}`, debug)
+        log(`🦖 processing file: ${filePath}`, debug)
+
         visit(tree, 'image', (node: Image) => {
-            if (debug) { log("url before: " + node.url, debug) }
             for (const { from, to } of mappings) {
                 if (node.url.startsWith(from)) {
-                    node.url = node.url.replace(from, to)
+                    const newUrl = node.url.replace(from, to)
+                    log(`  🔄 img ${node.url} → ${newUrl}`, true)
+                    node.url = newUrl
+                } else {
+                    //log(`🦖 image ${node.url} does not start with ${from}`, debug)
                 }
             }
-            if (debug) { log("url after: " + node.url, debug) }
         })
 
         visit(tree, 'link', (node: Link) => {
             for (const { from, to } of mappings) {
                 if (node.url.startsWith(from)) {
-                    node.url = node.url.replace(from, to)
+                    const newUrl = node.url.replace(from, to)
+                    log(`  🔄 link ${node.url} → ${newUrl}`, true)
+                    node.url = newUrl
                 }
             }
         })
 
+        // visit JSX flow elements
         visit(tree, 'mdxJsxFlowElement', (node: MdxJsxFlowElement) => {
-            if (node.name === 'img' && Array.isArray(node.attributes)) {
+            if (Array.isArray(node.attributes)) {
                 for (const attr of node.attributes) {
-                    if (
-                        attr.type === 'mdxJsxAttribute' &&
-                        attr.name === 'src' &&
-                        typeof attr.value === 'string'
-                    ) {
+                    if (attr.type === 'mdxJsxAttribute' && typeof attr.value === 'string') {
                         for (const { from, to } of mappings) {
                             if (attr.value.startsWith(from)) {
-                                attr.value = attr.value.replace(from, to)
+                                const newVal: string = attr.value.replace(from, to)
+                                log(`  🔄 jsx <${node.name}> ${attr.name}: ${attr.value} → ${newVal}`, true)
+                                attr.value = newVal
                             }
                         }
                     }
@@ -66,14 +77,18 @@ export const remarkScopedPath: Plugin<[Options]> = ({ mappings, debug }) => {
             }
         })
 
+        // visit ESM imports
         visit(tree, 'mdxjsEsm', (node: MdxjsEsm) => {
             for (const { from, to } of mappings) {
-                log(`    from='${from}'`, debug)
-                log(`    to='${to}`, debug)
                 const re = new RegExp(`(['"])${from}/`, 'g')
-                node.value = node.value.replace(re, `$1${to}/`)
+                const newVal = node.value.replace(re, `$1${to}/`)
+                if (newVal !== node.value) {
+                    log(`🦖 esm rewrite (${from} → ${to}):\n--- before ---\n${node.value}\n--- after ---\n${newVal}`, true)
+                    node.value = newVal
+                }
             }
         })
+
         log(` `, debug)
     }
 }

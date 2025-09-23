@@ -2,10 +2,19 @@ import type { Plugin } from "unified"
 import { visit } from "unist-util-visit"
 import type { Node } from "unist"
 
+console.log("🦖 remarkYouTube plugin module loaded")
+
 interface YouTubeOptions {
+    debug?: boolean
 }
 
-export const remarkYouTube: Plugin<[YouTubeOptions]> = ({}) => {
+export const remarkYouTube: Plugin<[YouTubeOptions]> = (options?: YouTubeOptions) => {
+    const { debug = false } = options ?? {}
+
+    if (debug) {
+        console.log("🦖 remarkYouTube initialized")
+    }
+
     return (tree: Node) => {
         visit(tree, ["link", "text"], (node: any, index: number | undefined, parent: any) => {
             if (!parent || typeof index !== "number") return
@@ -15,6 +24,7 @@ export const remarkYouTube: Plugin<[YouTubeOptions]> = ({}) => {
             const hashnodeMatch = ytUrl.match(/^%\[(.+)\]$/)
             if (hashnodeMatch) {
                 ytUrl = hashnodeMatch[1]
+                if (debug) console.log(`🦖 hashnode-style embed detected: ${ytUrl}`)
             }
 
             const m =
@@ -23,6 +33,7 @@ export const remarkYouTube: Plugin<[YouTubeOptions]> = ({}) => {
                 ytUrl.match(/youtube-nocookie\.com\/watch\?v=([A-Za-z0-9_-]+)/)
 
             if (m) {
+                if (debug) console.log(`🦖 rewriting YouTube URL: ${ytUrl} → videoId=${m[1]}`)
                 parent.children.splice(index, 1, {
                     type: "mdxJsxFlowElement",
                     name: "LiteYouTubeEmbed",
@@ -37,9 +48,9 @@ export const remarkYouTube: Plugin<[YouTubeOptions]> = ({}) => {
         visit(tree, "text", (node: any, index: number | undefined, parent: any) => {
             if (!parent || typeof index !== "number") return
             if (node.value.trim() === "%[" || node.value.trim() === "]") {
+                if (debug) console.log("🦖 stripping hashnode bracket artifact:", node.value)
                 parent.children.splice(index, 1)
             }
         })
     }
 }
-
