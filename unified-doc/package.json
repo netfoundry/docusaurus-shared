@@ -35,7 +35,8 @@
     "react-lite-youtube-embed": "^2.5.6",
     "react-player": "^3.3.2",
     "redoc": "^2.5.0",
-    "redocusaurus": "^2.5.0"
+    "redocusaurus": "^2.5.0",
+    "remark-github-admonitions-to-directives": "^2.1.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.8.1",
