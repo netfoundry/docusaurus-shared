@@ -2,7 +2,14 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import * as path from "node:path";
-import {remarkYouTube, remarkReplaceMetaUrl, remarkScopedPath, remarkCodeSections, remarkYamlTable} from "@openclint/docusaurus-shared/plugins";
+import {
+    LogLevel,
+    remarkCodeSections,
+    remarkReplaceMetaUrl,
+    remarkScopedPath,
+    remarkYouTube
+} from "@openclint/docusaurus-shared/plugins";
+import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import {pluginHotjar} from "@openclint/docusaurus-shared/node";
 import {PublishConfig} from 'src/components/docusaurus'
 
@@ -160,8 +167,12 @@ const config: Config = {
                 routeBasePath: 'onprem',
                 sidebarPath: `${onprem}/docs-site/sidebars.ts`,
                 includeCurrentVersion: true,
+                beforeDefaultRemarkPlugins: [
+                    remarkGithubAdmonitionsToDirectives,
+                ],
                 remarkPlugins: [
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
+                    [remarkCodeSections, { logLevel: LogLevel.Silent }],
                 ],
             },
         ],
@@ -173,8 +184,12 @@ const config: Config = {
                 routeBasePath: 'frontdoor',
                 sidebarPath: `${frontdoor}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
+                beforeDefaultRemarkPlugins: [
+                    remarkGithubAdmonitionsToDirectives,
+                ],
                 remarkPlugins: [
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent}],
+                    [remarkCodeSections, { logLevel: LogLevel.Silent }],
                 ],
             },
         ],
@@ -186,9 +201,13 @@ const config: Config = {
                 routeBasePath: 'openziti',
                 sidebarPath: `${openziti}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
+                beforeDefaultRemarkPlugins: [
+                    remarkGithubAdmonitionsToDirectives,
+                ],
                 remarkPlugins: [
-                    [remarkReplaceMetaUrl, {from: '@staticoz', to: 'openziti'}],
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
+                    [remarkReplaceMetaUrl, {from: '@staticoz', to: 'openziti', logLevel: LogLevel.Silent}],
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
+                    [remarkCodeSections, { logLevel: LogLevel.Debug }],
                 ],
             },
         ],
@@ -200,8 +219,12 @@ const config: Config = {
                 routeBasePath: 'zlan',
                 sidebarPath: `${zlan}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
+                beforeDefaultRemarkPlugins: [
+                    remarkGithubAdmonitionsToDirectives,
+                ],
                 remarkPlugins: [
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
+                    [remarkCodeSections, { logLevel: LogLevel.Silent }],
                 ],
             },
         ],
@@ -215,8 +238,9 @@ const config: Config = {
                 path: '_remotes/openziti/docusaurus/blog',
                 remarkPlugins: [
                     remarkYouTube,
-                    [remarkReplaceMetaUrl, {from: '@staticoz', to: 'openziti'}],
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
+                    [remarkReplaceMetaUrl, {from: '@staticoz', to: 'openziti', logLevel: LogLevel.Silent}],
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
+                    [remarkCodeSections, { logLevel: LogLevel.Silent }],
                 ],
                 blogSidebarCount: 'ALL',
                 blogSidebarTitle: 'All posts',
