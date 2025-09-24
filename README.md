@@ -81,6 +81,14 @@ example:
                repoUrl: 'https://github.com/openziti/ziti' }}>
 ```
 
+## Kinsta Hosting
 
+The docusaurus site is hosted on Kinsta within the public pages of a WordPress site. To properly deliver the
+docusaurus content an nginx rule is necessary.
+```text
+location /docs/ {
+try_files $uri $uri/ $uri/index.html /docs/index.html;
+}
+```
 
 

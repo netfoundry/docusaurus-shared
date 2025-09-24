@@ -205,7 +205,7 @@ const config: Config = {
                     remarkGithubAdmonitionsToDirectives,
                 ],
                 remarkPlugins: [
-                    [remarkReplaceMetaUrl, {from: '@staticoz', to: 'openziti', logLevel: LogLevel.Silent}],
+                    [remarkReplaceMetaUrl, {from: '@staticoz', to: '/docs/openziti', logLevel: LogLevel.Silent}],
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
                     [remarkCodeSections, { logLevel: LogLevel.Debug }],
                 ],
@@ -238,7 +238,7 @@ const config: Config = {
                 path: '_remotes/openziti/docusaurus/blog',
                 remarkPlugins: [
                     remarkYouTube,
-                    [remarkReplaceMetaUrl, {from: '@staticoz', to: 'openziti', logLevel: LogLevel.Silent}],
+                    [remarkReplaceMetaUrl, {from: '@staticoz', to: '/docs/openziti', logLevel: LogLevel.Silent}],
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
                     [remarkCodeSections, { logLevel: LogLevel.Silent }],
                 ],
