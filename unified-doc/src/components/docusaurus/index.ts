@@ -15,8 +15,13 @@ export interface HotjarConfig {
     id: string;
 }
 
+export interface GoogleConfig {
+    tag: string;
+}
+
 export interface PublishConfig {
     docusaurus: DocusaurusConfig;
     algolia: AlgoliaConfig;
     hotjar: HotjarConfig;
+    google: GoogleConfig;
 }

@@ -47,6 +47,9 @@ const staging: PublishConfig = {
     },
     hotjar: {
         id: "6443487"
+    },
+    google: {
+        tag: 'GTM-5SF399H3'
     }
 }
 
@@ -61,6 +64,9 @@ const prod: PublishConfig = {
     },
     hotjar: {
         id: "6506483"
+    },
+    google: {
+        tag: 'AW-1129630473'
     }
 }
 
@@ -248,6 +254,7 @@ const config: Config = {
         ],
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
         [pluginHotjar, {}],
+        ['@docusaurus/plugin-google-tag-manager', {id: `openziti-gtm`, containerId: cfg.google.tag}],
     ].filter(Boolean),
     themeConfig: {
         mermaid: {
