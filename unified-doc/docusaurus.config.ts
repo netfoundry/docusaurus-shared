@@ -66,7 +66,7 @@ const prod: PublishConfig = {
         id: "6506483"
     },
     google: {
-        tag: 'AW-1129630473'
+        tag: 'GTM-NHX4DX56'
     }
 }
 
