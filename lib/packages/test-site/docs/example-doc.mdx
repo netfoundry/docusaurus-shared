@@ -1,0 +1,63 @@
+---
+title: Example Documentation
+description: This is an example documentation page showcasing DocLayout
+author: NetFoundry Team
+category: Getting Started
+tags:
+  - example
+  - documentation
+  - layout
+image: /img/example-doc.png
+---
+
+# Example Documentation
+
+This is an example documentation page that demonstrates the new `DocLayout` component with automatic frontmatter integration.
+
+## Features
+
+The `DocLayout` automatically extracts metadata from frontmatter:
+
+- **Title**: From frontmatter or metadata
+- **Description**: For social previews
+- **Author**: For article attribution
+- **Category**: For content organization
+- **Tags**: For topic classification
+- **Image**: Custom social preview image
+
+## Social Media Integration
+
+This page will automatically generate appropriate Open Graph and Twitter Card meta tags based on the frontmatter above.
+
+## Usage Example
+
+```tsx
+import { DocLayout } from '@openclint/docusaurus-shared/ui';
+
+// For custom React components in docs
+export default function MyDoc() {
+    return (
+        <DocLayout
+            frontMatter={{
+                title: "My Document",
+                description: "Document description",
+                author: "Author Name",
+                category: "Category",
+                tags: ["tag1", "tag2"],
+                date: "2024-01-01",
+                image: "/path/to/image.png"
+            }}
+            socialMeta={{
+                // Override any frontmatter values if needed
+                twitterX: {
+                    creator: "@myhandle"
+                }
+            }}
+        >
+            {/* Doc content */}
+        </DocLayout>
+    );
+}
+```
+
+For MDX files, the frontmatter metadata should be passed through the layout. The DocLayout provides enhanced social media meta tags specifically optimized for documentation content.

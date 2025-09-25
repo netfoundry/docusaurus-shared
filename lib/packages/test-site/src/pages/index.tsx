@@ -3,10 +3,11 @@ import Layout from '@theme/Layout';
 import {Alert, NetFoundryHorizontalSection} from '@openclint/docusaurus-shared/ui';
 
 export default function Home(): JSX.Element {
-    const title = 'Home AA';
-    const desc = "TheDescriptiond";
     return (
-        <Layout title="My Page Title" >
+        <Layout
+            title="Home Page"
+            description="Welcome to the NetFoundry test site homepage"
+        >
             <main className="container margin-vert--lg">
                 <NetFoundryHorizontalSection >
                     <NetFoundryHorizontalSection>

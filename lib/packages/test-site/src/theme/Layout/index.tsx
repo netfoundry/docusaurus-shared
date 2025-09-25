@@ -21,7 +21,7 @@ export default function Layout({
             siteName: siteConfig.title,
             twitterX: {
                 creator: "@openziti",
-                imageAlt: "/img/bob.jpg"
+                imageAlt: "NetFoundry proud sponsor of OpenZiti - open source zero trust networking"
             },
         },
         noFooter: noFooter,

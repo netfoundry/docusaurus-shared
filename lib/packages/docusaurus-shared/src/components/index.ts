@@ -1,6 +1,9 @@
 export * from './Alert'
+export * from './BaseLayout';
+export * from './BlogLayout';
 export * from './CodeBlock';
 export * from './Common';
+export * from './DocLayout';
 export * from './NetFoundry'
 export * from './NetFoundryFooter';
 export * from './NetFoundryHighlight';
@@ -8,4 +11,6 @@ export * from './NetFoundryHorizontalSection';
 export * from './NetFoundryLayout';
 export * from './NetFoundryNavbarItems';
 export * from './OsTabs';
+export * from './PageLayout';
+export * from './SocialHead';
 export * from './StarUs';
