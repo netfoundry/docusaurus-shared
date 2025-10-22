@@ -17,6 +17,13 @@ for arg in "$@"; do
   esac
 done
 
+function _fix_helm_readme {
+  local HELM_ROUTER_README="_remotes/openziti/docusaurus/docs/_remotes/helm-charts/charts/ziti-router/README.md"
+  local HELM_ROUTER_README_EXAMPLES_URL="https://github.com/openziti/helm-charts/tree/main/charts/ziti-router/examples"
+  [ -f "$HELM_ROUTER_README" ] && \
+    sed -i -E "s@\]\(\.?/examples/?\)@](${HELM_ROUTER_README_EXAMPLES_URL})@g" "$HELM_ROUTER_README"
+}
+
 echo "bd CLEAN=$CLEAN"
 echo "bd BUILD_QUALIFIER='$BUILD_QUALIFIER'"
 echo "bd QUALIFIER_FLAG: ${QUALIFIER_FLAG[*]}"
@@ -98,6 +105,9 @@ export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
 echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"
 mkdir -p "${SDK_ROOT_TARGET}"
 
+
+# before building apply and transmuations necessary...
+_fix_helm_readme
 "${script_dir}/_remotes/openziti/gendoc.sh" "${OTHER_FLAGS[@]}"
 
 pushd "${script_dir}" >/dev/null
