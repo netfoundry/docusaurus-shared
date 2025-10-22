@@ -18,7 +18,7 @@ for arg in "$@"; do
 done
 
 function _fix_helm_readme {
-  local HELM_ROUTER_README="_remotes/openziti/docusaurus/docs/_remotes/helm-charts/charts/ziti-router/README.md"
+  local HELM_ROUTER_README="unified-doc/_remotes/openziti/docusaurus/docs/_remotes/helm-charts/charts/ziti-router/README.md"
   local HELM_ROUTER_README_EXAMPLES_URL="https://github.com/openziti/helm-charts/tree/main/charts/ziti-router/examples"
 
   echo "🔧 _fix_helm_readme: checking file: $HELM_ROUTER_README"
@@ -120,11 +120,9 @@ mkdir -p "${SDK_ROOT_TARGET}"
 "${script_dir}/_remotes/openziti/gendoc.sh" "${OTHER_FLAGS[@]}"
 
 # before building apply and transmutations necessary...
-echo "🔍 verifying helm readme path..."
-ls -ld _remotes/openziti/docusaurus/docs/_remotes/helm-charts/charts/ziti-router 2>&1 || true
-echo "🧩 calling _fix_helm_readme..."
+echo "calling _fix_helm_readme..."
 _fix_helm_readme
-echo "✅ helm readme fix done"
+echo "✅ helm readme compensation complete"
 
 pushd "${script_dir}" >/dev/null
 yarn install
