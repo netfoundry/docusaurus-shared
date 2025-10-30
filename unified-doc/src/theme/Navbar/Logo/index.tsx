@@ -7,16 +7,16 @@ import ThemedImage from "@theme/ThemedImage";
 
 const mapTitle = (p: string, defTitle: string) => {
     const generic = `https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg`;
-    if (p.startsWith('/docs/frontdoor')) return {includeNFLogo: true, to: '/frontdoor', alt:'Frontdoor', logoLight: `/docs/img/frontdoor-logo-light.svg`, logoDark: `/docs/img/frontdoor-logo-dark.svg`};
-    if (p.startsWith('/docs/onprem')) return {includeNFLogo: true, to: '/onprem',alt:'On-Prem', logoLight: `/docs/img/onprem-logo-light.svg`, logoDark: `/docs/img/onprem-logo-dark.svg`};
-    if (p.startsWith('/docs/openziti')) return {includeNFLogo: true, to: '/openziti',alt:'OpenZiti', logoLight: `/docs/img/openziti-logo-light.svg`, logoDark: `/docs/img/openziti-logo-dark.svg`};
-    if (p.startsWith('/docs/zlan')) return {includeNFLogo: true, to: '/zlan', alt:'zlan', logoLight: `/docs/img/zlan-logo-light.svg`, logoDark: `/docs/img/zlan-logo-dark.svg`};
+    if (p.startsWith('/docs/frontdoor')) return {includeNFLogo: true, to: '/frontdoor', alt:'Frontdoor', logoLight: `/docs/img/frontdoor-sm-logo.svg`, logoDark: `/docs/img/frontdoor-sm-logo.svg`};
+    if (p.startsWith('/docs/onprem')) return {includeNFLogo: true, to: '/onprem',alt:'On-Prem', logoLight: `/docs/img/onprem-sm-logo.svg`, logoDark: `/docs/img/onprem-sm-logo.svg`};
+    if (p.startsWith('/docs/openziti')) return {includeNFLogo: true, to: '/openziti',alt:'OpenZiti', logoLight: `/docs/img/openziti-sm-logo.svg`, logoDark: `/docs/img/openziti-sm-logo.svg`};
+    if (p.startsWith('/docs/zlan')) return {includeNFLogo: true, to: '/zlan', alt:'zlan', logoLight: `/docs/img/zlan-logo.svg`, logoDark: `/docs/img/zlan-logo.svg`};
     return {
         includeNFLogo: false,
         to: '/',
         alt:'NetFoundry',
-        logoLight: `https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/logo%20horizontal%20no%20margin/tagline/netfoundry-logo-tag-color-horizontal.svg`,
-        logoDark: `https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/logo%20horizontal%20no%20margin/tagline/netfoundry-logo-tag-white-horizontal.svg`
+        logoLight: `/docs/img/netfoundry-name-and-logo.svg`,
+        logoDark: `/docs/img/netfoundry-name-and-logo-dark.svg`
     };
 };
 
@@ -31,7 +31,14 @@ export default function NavbarLogo(): JSX.Element {
     navbarpoke(siteConfig);
     return (
         <Link className="navbar__brand" to={title.to}>
-
+            <ThemedImage
+                className="navbar__logo_nf"
+                alt={title.alt}
+                sources={{
+                    light: `/docs/img/netfoundry-name-and-logo.svg`,
+                    dark:  `/docs/img/netfoundry-name-and-logo-dark.svg`,
+                }}
+            />
             <ThemedImage
                 className="navbar__logo"
                 alt={title.alt}

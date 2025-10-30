@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="480px" height="912px" preserveAspectRatio="none" viewBox="0 0 407 430">
+  <defs>
+    <style type="text/css" id="style1">
+	
+    /* latin */
+    @font-face {
+      font-family: 'Russo One';
+      font-style: normal;
+      font-weight: 400;
+      src: url(https://fonts.gstatic.com/s/russoone/v17/Z9XUDmZRWg6M1LvRYsHOz8mJ.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+		.st2 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st3 {fill:#3f3f3f;font-family:Russo One;font-size:50em}
+		.st4 {font-size:0.8em}
+		.st5 {fill:#d1d5db;fill-opacity:0.75;stroke:#121a36;stroke-linecap:butt;stroke-width:1.75781}
+		.st6 {fill:none;stroke:#121a36;stroke-linecap:butt;stroke-opacity:0.85;stroke-width:25.1151}
+		.st7 {fill:#6b7280;fill-opacity:0.6;stroke:none;stroke-linecap:butt;stroke-width:0.292969}
+		.st8 {fill:url(#grad0-19);stroke:none;stroke-linecap:butt;stroke-width:0.131836}
+		.st9 {fill:#08dc5a;fill-opacity:0.059;stroke:none;stroke-linecap:butt;stroke-width:0.131836}
+		.st10 {fill:#121a36;stroke:none;stroke-linecap:butt;stroke-width:0.131836}
+		.st11 {fill:#3f3f3f;font-family:Russo One;font-size:16.6667em}
+		.st12 {font-size:0.799999em}
+		.st13 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	
+	</style>
+  </defs>
+  <g id="group5-9" transform="matrix(0.658878, 0, 0, 0.658878, 12.569892, -38.936512)" style="">
+    <title id="title5">Sheet.5</title>
+    <g id="shape6-10">
+      <title id="title6">Sheet.6</title>
+      <path d="m 288,81 c 5.52,0 11.04,1.18 16.07,3.42 l 225.87,94.25 c 26.39,10.97 46.06,36.57 45.94,67.47 -0.6,117.01 -49.54,331.11 -256.21,428.42 -20.03,9.44 -43.31,9.44 -63.34,0 C 49.66,577.25 0.72,363.15 0.12,246.14 0,215.24 19.67,189.64 46.06,178.67 L 272.05,84.42 C 276.96,82.18 282.48,81 288,81 Z" class="st5" id="path6" style="fill-rule: evenodd; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3;"/>
+    </g>
+    <g id="shape7-12">
+      <title id="title7">Sheet.7</title>
+      <path d="m 288,81 c 5.52,0 11.04,1.18 16.07,3.42 l 225.87,94.25 c 26.39,10.97 46.06,36.57 45.94,67.47 -0.6,117.01 -49.54,331.11 -256.21,428.42 -20.03,9.44 -43.31,9.44 -63.34,0 C 49.66,577.25 0.72,363.15 0.12,246.14 0,215.24 19.67,189.64 46.06,178.67 L 272.05,84.42 C 276.96,82.18 282.48,81 288,81 Z" class="st6" id="path7" style="fill-rule: evenodd; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3;"/>
+    </g>
+    <g id="shape8-14" transform="translate(288,-4.71831)">
+      <title id="title8">Sheet.8</title>
+      <path d="m 16.07,89.14 225.87,94.25 c 26.39,10.97 46.06,36.56 45.94,67.47 C 287.28,367.87 238.34,581.97 31.67,679.28 21.59,684 10.08,684 0,679.28 V 85.72 c 5.52,0 11.04,1.18 16.07,3.42 z" class="st7" id="path8" style="fill-rule: evenodd; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3;"/>
+    </g>
+  </g>
+  <g id="group9-16" transform="matrix(0.658878, 0, 0, 0.658878, 107.729012, -130.026031)" style="">
+    <title id="title9">Sheet.9</title>
+    <g id="shape10-17" transform="translate(19.7263,-31.0379)">
+      <title id="title10">Sheet.10</title>
+      <path d="M 0,668.48 A 15.7814,15.5193 -180 0 0 15.78,684 h 205.15 a 15.7814,15.5193 -180 0 0 15.79,-15.52 V 389.14 A 15.7814,15.5193 -180 0 0 220.93,373.62 H 15.78 A 15.7814,15.5193 -180 0 0 0,389.14 Z" class="st8" id="path10" style="fill: rgb(30, 41, 59); fill-rule: evenodd; font-size: 12px; line-height: 19.2px; stroke: rgb(51, 65, 85); stroke-miterlimit: 3; stroke-width: 3.06px;"/>
+    </g>
+    <g id="shape11-19" transform="translate(39.4527,-263.822)">
+      <title id="title11">Sheet.11</title>
+      <path d="M 0,676.24 A 7.89072,7.75966 -180 0 0 7.89,684 h 181.48 a 7.89072,7.75966 -180 0 0 7.89,-7.76 V 645.2 a 7.89072,7.75966 -180 0 0 -7.89,-7.76 H 7.89 A 7.89072,7.75966 -180 0 0 0,645.2 Z" class="st9" id="path11" style="fill: rgb(16, 185, 129); fill-opacity: 1; fill-rule: evenodd; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3; stroke-width: 3.06px;"/>
+    </g>
+    <g id="shape12-21" transform="translate(39.4527,-197.867)">
+      <title id="title12">Sheet.12</title>
+      <path d="M 0,676.24 A 7.89072,7.75966 -180 0 0 7.89,684 h 181.48 a 7.89072,7.75966 -180 0 0 7.89,-7.76 V 645.2 a 7.89072,7.75966 -180 0 0 -7.89,-7.76 H 7.89 A 7.89072,7.75966 -180 0 0 0,645.2 Z" class="st10" id="path12" style="fill: rgb(52, 211, 153); fill-rule: evenodd; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3; stroke-width: 3.06px;"/>
+    </g>
+    <g id="shape13-23" transform="translate(39.4527,-131.911)">
+      <title id="title13">Sheet.13</title>
+      <path d="M 0,676.24 A 7.89072,7.75966 -180 0 0 7.89,684 h 181.48 a 7.89072,7.75966 -180 0 0 7.89,-7.76 V 645.2 a 7.89072,7.75966 -180 0 0 -7.89,-7.76 H 7.89 A 7.89072,7.75966 -180 0 0 0,645.2 Z" class="st9" id="path13" style="fill: rgb(16, 185, 129); fill-opacity: 1; fill-rule: evenodd; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3; stroke-width: 3.06px;"/>
+    </g>
+    <g id="shape14-25" transform="translate(39.4527,-65.9556)">
+      <title id="title14">Sheet.14</title>
+      <path d="M 0,676.24 A 7.89072,7.75966 -180 0 0 7.89,684 h 181.48 a 7.89072,7.75966 -180 0 0 7.89,-7.76 V 645.2 a 7.89072,7.75966 -180 0 0 -7.89,-7.76 H 7.89 A 7.89072,7.75966 -180 0 0 0,645.2 Z" class="st10" id="path14" style="fill: rgb(52, 211, 153); fill-rule: evenodd; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3; stroke-width: 3.06px;"/>
+    </g>
+    <g id="shape15-27" transform="translate(53.2611,-281.281)">
+      <title id="title15">Sheet.15</title>
+      <ellipse cx="5.9179001" cy="678.17999" rx="5.9179001" ry="5.8196101" class="st11" id="ellipse15" style="fill: rgb(34, 197, 94); fill-rule: evenodd; font-family: &quot;Segoe UI&quot;, SegoeUI, system-ui, sans-serif; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3; stroke-width: 3.06px;"/>
+    </g>
+    <g id="shape16-29" transform="translate(72.9875,-281.281)">
+      <title id="title16">Sheet.16</title>
+      <ellipse cx="5.9179001" cy="678.17999" rx="5.9179001" ry="5.8196101" class="st11" id="ellipse16" style="fill: rgb(34, 197, 94); fill-rule: evenodd; font-family: &quot;Segoe UI&quot;, SegoeUI, system-ui, sans-serif; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3; stroke-width: 3.06px;"/>
+    </g>
+    <g id="shape17-31" transform="translate(53.2611,-215.326)">
+      <title id="title17">Sheet.17</title>
+      <ellipse cx="5.9179001" cy="678.17999" rx="5.9179001" ry="5.8196101" class="st11" id="ellipse17" style="fill: rgb(34, 197, 94); fill-rule: evenodd; font-family: &quot;Segoe UI&quot;, SegoeUI, system-ui, sans-serif; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3; stroke-width: 3.06px;"/>
+    </g>
+    <g id="shape18-33" transform="translate(72.9875,-215.326)">
+      <title id="title18">Sheet.18</title>
+      <ellipse cx="5.9179001" cy="678.17999" rx="5.9179001" ry="5.8196101" class="st12" id="ellipse18" style="fill: rgb(245, 158, 11); fill-rule: evenodd; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3; stroke-width: 3.06px;"/>
+    </g>
+    <g id="shape19-35" transform="translate(53.2611,-149.37)">
+      <title id="title19">Sheet.19</title>
+      <ellipse cx="5.9179001" cy="678.17999" rx="5.9179001" ry="5.8196101" class="st11" id="ellipse19" style="fill: rgb(34, 197, 94); fill-rule: evenodd; font-family: &quot;Segoe UI&quot;, SegoeUI, system-ui, sans-serif; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3; stroke-width: 3.06px;"/>
+    </g>
+    <g id="shape20-37" transform="translate(72.9875,-149.37)">
+      <title id="title20">Sheet.20</title>
+      <ellipse cx="5.9179001" cy="678.17999" rx="5.9179001" ry="5.8196101" class="st11" id="ellipse20" style="fill: rgb(34, 197, 94); fill-rule: evenodd; font-family: &quot;Segoe UI&quot;, SegoeUI, system-ui, sans-serif; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3; stroke-width: 3.06px;"/>
+    </g>
+    <g id="shape21-39" transform="translate(53.2611,-83.4144)">
+      <title id="title21">Sheet.21</title>
+      <ellipse cx="5.9179001" cy="678.17999" rx="5.9179001" ry="5.8196101" class="st11" id="ellipse21" style="fill: rgb(34, 197, 94); fill-rule: evenodd; font-family: &quot;Segoe UI&quot;, SegoeUI, system-ui, sans-serif; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3; stroke-width: 3.06px;"/>
+    </g>
+    <g id="shape22-41" transform="translate(72.9875,-83.4144)">
+      <title id="title22">Sheet.22</title>
+      <ellipse cx="5.9179001" cy="678.17999" rx="5.9179001" ry="5.8196101" class="st11" id="ellipse22" style="fill: rgb(34, 197, 94); fill-rule: evenodd; font-family: &quot;Segoe UI&quot;, SegoeUI, system-ui, sans-serif; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3; stroke-width: 3.06px;"/>
+    </g>
+    <g id="group23-43" transform="translate(177.537,-81.4745)">
+      <title id="title23">Sheet.23</title>
+      <g id="shape24-44" transform="translate(0,-221.145)">
+        <title id="title24">Sheet.24</title>
+        <path d="M 0,684 H 39.45" class="st13" id="path24" style="stroke: rgb(100, 116, 139); stroke-linecap: butt; stroke-opacity: 0.6; stroke-width: 1.53px;"/>
+      </g>
+      <g id="shape25-47" transform="translate(0,-209.506)">
+        <title id="title25">Sheet.25</title>
+        <path d="M 0,684 H 39.45" class="st13" id="path25" style="stroke: rgb(100, 116, 139); stroke-linecap: butt; stroke-opacity: 0.6; stroke-width: 1.53px;"/>
+      </g>
+      <g id="shape26-50" transform="translate(0,-197.867)">
+        <title id="title26">Sheet.26</title>
+        <path d="M 0,684 H 39.45" class="st13" id="path26" style="stroke: rgb(100, 116, 139); stroke-linecap: butt; stroke-opacity: 0.6; stroke-width: 1.53px;"/>
+      </g>
+      <g id="shape27-53" transform="translate(0,-155.19)">
+        <title id="title27">Sheet.27</title>
+        <path d="M 0,684 H 39.45" class="st13" id="path27" style="stroke: rgb(100, 116, 139); stroke-linecap: butt; stroke-opacity: 0.6; stroke-width: 1.53px;"/>
+      </g>
+      <g id="shape28-56" transform="translate(0,-143.55)">
+        <title id="title28">Sheet.28</title>
+        <path d="M 0,684 H 39.45" class="st13" id="path28" style="stroke: rgb(100, 116, 139); stroke-linecap: butt; stroke-opacity: 0.6; stroke-width: 1.53px;"/>
+      </g>
+      <g id="shape29-59" transform="translate(0,-131.911)">
+        <title id="title29">Sheet.29</title>
+        <path d="M 0,684 H 39.45" class="st13" id="path29" style="stroke: rgb(100, 116, 139); stroke-linecap: butt; stroke-opacity: 0.6; stroke-width: 1.53px;"/>
+      </g>
+      <g id="shape30-62" transform="translate(0,-89.234)">
+        <title id="title30">Sheet.30</title>
+        <path d="M 0,684 H 39.45" class="st13" id="path30" style="stroke: rgb(100, 116, 139); stroke-linecap: butt; stroke-opacity: 0.6; stroke-width: 1.53px;"/>
+      </g>
+      <g id="shape31-65" transform="translate(0,-77.5948)">
+        <title id="title31">Sheet.31</title>
+        <path d="M 0,684 H 39.45" class="st13" id="path31" style="stroke: rgb(100, 116, 139); stroke-linecap: butt; stroke-opacity: 0.6; stroke-width: 1.53px;"/>
+      </g>
+      <g id="shape32-68" transform="translate(0,-65.9556)">
+        <title id="title32">Sheet.32</title>
+        <path d="M 0,684 H 39.45" class="st13" id="path32" style="stroke: rgb(100, 116, 139); stroke-linecap: butt; stroke-opacity: 0.6; stroke-width: 1.53px;"/>
+      </g>
+      <g id="shape33-71" transform="translate(0,-23.2784)">
+        <title id="title33">Sheet.33</title>
+        <path d="M 0,684 H 39.45" class="st13" id="path33" style="stroke: rgb(100, 116, 139); stroke-linecap: butt; stroke-opacity: 0.6; stroke-width: 1.53px;"/>
+      </g>
+      <g id="shape34-74" transform="translate(0,-11.6392)">
+        <title id="title34">Sheet.34</title>
+        <path d="M 0,684 H 39.45" class="st13" id="path34" style="stroke: rgb(100, 116, 139); stroke-linecap: butt; stroke-opacity: 0.6; stroke-width: 1.53px;"/>
+      </g>
+      <g id="shape35-77">
+        <title id="title35">Sheet.35</title>
+        <path d="M 0,684 H 39.45" class="st13" id="path35" style="stroke: rgb(100, 116, 139); stroke-linecap: butt; stroke-opacity: 0.6; stroke-width: 1.53px;"/>
+      </g>
+    </g>
+    <g id="shape36-80">
+      <title id="title36">Sheet.36</title>
+      <path d="M 0,676.24 A 7.89072,7.75966 -180 0 0 7.89,684 h 260.39 a 7.89072,7.75966 -180 0 0 7.89,-7.76 v -15.52 a 7.89072,7.75966 -180 0 0 -7.89,-7.76 H 7.89 A 7.89072,7.75966 -180 0 0 0,660.72 Z" class="st14" id="path36" style="fill: rgb(71, 85, 105); fill-rule: evenodd; font-size: 12px; line-height: 19.2px; stroke: rgb(51, 65, 85); stroke-miterlimit: 3; stroke-width: 12.529px;"/>
+    </g>
+  </g>
+</svg>

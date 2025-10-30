@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="480px" height="912px" preserveAspectRatio="none" viewBox="0 0 418 420">
+  <defs>
+    <style type="text/css" id="style1">
+	
+    /* latin */
+    @font-face {
+      font-family: 'Russo One';
+      font-style: normal;
+      font-weight: 400;
+      src: url(https://fonts.gstatic.com/s/russoone/v17/Z9XUDmZRWg6M1LvRYsHOz8mJ.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+		.st2 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st3 {fill:#3f3f3f;font-family:Russo One;font-size:50em}
+		.st4 {font-size:0.8em}
+		.st5 {fill:#d1d5db;fill-opacity:0.75;stroke:#121a36;stroke-linecap:butt;stroke-width:1.75781}
+		.st6 {fill:none;stroke:#121a36;stroke-linecap:butt;stroke-opacity:0.85;stroke-width:25.1151}
+		.st7 {fill:#6b7280;fill-opacity:0.6;stroke:none;stroke-linecap:butt;stroke-width:0.292969}
+		.st8 {fill:url(#grad0-19);stroke:none;stroke-linecap:butt;stroke-width:0.131836}
+		.st9 {fill:#08dc5a;fill-opacity:0.059;stroke:none;stroke-linecap:butt;stroke-width:0.131836}
+		.st10 {fill:#121a36;stroke:none;stroke-linecap:butt;stroke-width:0.131836}
+		.st11 {fill:#3f3f3f;font-family:Russo One;font-size:16.6667em}
+		.st12 {font-size:0.799999em}
+		.st13 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	
+	</style>
+    <linearGradient id="grad0-27" x1="0" y1="148.51139" x2="535.495" y2="148.51139" gradientTransform="scale(1.0000093,0.99999066)" gradientUnits="userSpaceOnUse">
+      <stop offset="0.005" stop-color="#fc0147" stop-opacity="1" id="stop1"/>
+      <stop offset="0.04" stop-color="#f4044d" stop-opacity="1" id="stop2"/>
+      <stop offset="0.9" stop-color="#0068f9" stop-opacity="1" id="stop3"/>
+    </linearGradient>
+  </defs>
+  <g id="group181-14" transform="matrix(0.746979, 0, 0, 0.746979, 9.175464, -100.947189)" style="">
+    <title id="bx:title-1">Sheet.181</title>
+    <g id="group182-15">
+      <title id="bx:title-2">Page-1</title>
+      <g id="group183-16" transform="translate(7.49526,-7.16863)">
+        <title id="bx:title-3">Sheet.183</title>
+        <g id="shape184-17">
+          <title id="bx:title-4">Sheet.184</title>
+          <circle cx="260.54099" cy="423.45901" class="st7" id="ellipse12" r="260.54099" style="fill: rgb(255, 255, 255); fill-opacity: 0.75; fill-rule: evenodd; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3; stroke-width: 0.14398px;"/>
+        </g>
+      </g>
+      <g id="group185-19" transform="translate(137.99,-53.4919)">
+        <title id="bx:title-5">Lightning_Crashes</title>
+        <g id="shape186-20">
+          <title id="bx:title-6">Sheet.186</title>
+          <path d="M 130.43,263.89 0,467.41 l 75.98,48.5 12.24,-19.22 41.5,187.31 128.39,-204.67 -73.8,-47.15 -12.3,19.4 z m 61.89,201.99 32.41,21.39 -84.37,132.74 -41.58,-187.71 -31.52,49.34 -31.9,-20.31 84.88,-133.07 41.19,186.11 z" class="st8" id="path-5" style="fill: rgb(1, 1, 1); fill-rule: evenodd; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3; stroke-width: 0.14398px;"/>
+        </g>
+      </g>
+      <g id="group187-22">
+        <title id="bx:title-7">Sheet.187</title>
+        <g id="group188-23">
+          <title id="bx:title-8">Sheet.188</title>
+          <g id="shape189-24">
+            <title id="bx:title-9">Sheet.189</title>
+            <path d="m 267.78,684 c -36.14,0 -71.24,-7.04 -104.23,-21.01 -31.9,-13.45 -60.47,-32.8 -85.14,-57.34 C 53.88,581.13 34.52,552.42 21.08,520.52 7.04,487.53 0,452.42 0,416.29 0,380.16 7.04,345.05 21.02,312.06 c 13.44,-31.9 32.79,-60.47 57.33,-85.14 24.54,-24.54 53.23,-43.88 85.13,-57.34 33.06,-14.02 68.1,-21.07 104.3,-21.07 36.19,0 71.23,7.05 104.22,21.01 31.91,13.45 60.49,32.8 85.14,57.34 24.54,24.54 43.89,53.23 57.34,85.14 13.96,32.99 21.02,68.09 21.02,104.22 0,36.14 -7.06,71.24 -21.02,104.23 -13.45,31.9 -32.8,60.47 -57.34,85.14 C 432.61,630.13 403.91,649.48 372,662.93 339.01,676.96 303.91,684 267.78,684 Z m 0,-514.67 c -65.99,0 -128,25.69 -174.57,72.33 -46.76,46.63 -72.39,108.65 -72.39,174.63 0,65.98 25.69,127.99 72.32,174.57 46.64,46.69 108.65,72.32 174.57,72.32 65.92,0 128,-25.69 174.57,-72.32 46.71,-46.64 72.33,-108.65 72.33,-174.57 0,-65.92 -25.68,-128 -72.33,-174.57 -46.57,-46.76 -108.57,-72.39 -174.5,-72.39 z" class="st9" id="path17" style="fill: url(&quot;#grad0-27&quot;); fill-opacity: 1; fill-rule: evenodd; font-size: 12px; line-height: 19.2px; stroke-miterlimit: 3; stroke-width: 0.14398px;"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
