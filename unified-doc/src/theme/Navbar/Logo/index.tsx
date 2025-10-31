@@ -40,7 +40,7 @@ export default function NavbarLogo(): JSX.Element {
                 }}
             />
         </Link>
-        <Link to={title.to}>
+        <Link className="navbar__brand" to={title.to}>
             <ThemedImage
                 className="navbar__logo"
                 alt={title.alt}
