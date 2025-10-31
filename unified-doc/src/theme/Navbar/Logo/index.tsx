@@ -6,7 +6,6 @@ import type {DocusaurusConfig} from "@docusaurus/types/src/config";
 import ThemedImage from "@theme/ThemedImage";
 
 const mapTitle = (p: string, defTitle: string) => {
-    const generic = `https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg`;
     if (p.startsWith('/docs/frontdoor')) return {includeNFLogo: true, to: '/frontdoor', alt:'Frontdoor', logoLight: `/docs/img/frontdoor-sm-logo.svg`, logoDark: `/docs/img/frontdoor-sm-logo.svg`};
     if (p.startsWith('/docs/onprem')) return {includeNFLogo: true, to: '/onprem',alt:'On-Prem', logoLight: `/docs/img/onprem-sm-logo.svg`, logoDark: `/docs/img/onprem-sm-logo.svg`};
     if (p.startsWith('/docs/openziti')) return {includeNFLogo: true, to: '/openziti',alt:'OpenZiti', logoLight: `/docs/img/openziti-sm-logo.svg`, logoDark: `/docs/img/openziti-sm-logo.svg`};
@@ -30,7 +29,8 @@ export default function NavbarLogo(): JSX.Element {
     const title = mapTitle(pathname, siteConfig.title);
     navbarpoke(siteConfig);
     return (
-        <Link className="navbar__brand" to={title.to}>
+        <>
+        <Link className="navbar__brand" to="https://netfoundry.io">
             <ThemedImage
                 className="navbar__logo_nf"
                 alt={title.alt}
@@ -39,6 +39,8 @@ export default function NavbarLogo(): JSX.Element {
                     dark:  `/docs/img/netfoundry-name-and-logo-dark.svg`,
                 }}
             />
+        </Link>
+        <Link className="navbar__brand" to={title.to}>
             <ThemedImage
                 className="navbar__logo"
                 alt={title.alt}
@@ -49,5 +51,6 @@ export default function NavbarLogo(): JSX.Element {
             />
             <span className="navbar__title">{title.text}</span>
         </Link>
+        </>
     );
 }
