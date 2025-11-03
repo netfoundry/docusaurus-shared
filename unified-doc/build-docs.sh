@@ -17,25 +17,6 @@ for arg in "$@"; do
   esac
 done
 
-function _fix_helm_readme {
-  local HELM_ROUTER_README="unified-doc/_remotes/openziti/docusaurus/docs/_remotes/helm-charts/charts/ziti-router/README.md"
-  local HELM_ROUTER_README_EXAMPLES_URL="https://github.com/openziti/helm-charts/tree/main/charts/ziti-router/examples"
-
-  echo "🔧 _fix_helm_readme: checking file: $HELM_ROUTER_README"
-  if [ -f "$HELM_ROUTER_README" ]; then
-    echo "✅ found file, running sed..."
-    set -x
-    sed -i -E "s@\]\(\.?/examples/?\)@](${HELM_ROUTER_README_EXAMPLES_URL})@g" "$HELM_ROUTER_README"
-    set +x
-    echo "✅ sed completed successfully."
-  else
-    echo "❌ file not found: $HELM_ROUTER_README"
-    echo "📂 available dirs under _remotes/openziti/docusaurus/docs/:"
-    ls -R _remotes/openziti/docusaurus/docs || true
-    exit 1
-  fi
-}
-
 echo "bd CLEAN=$CLEAN"
 echo "bd BUILD_QUALIFIER='$BUILD_QUALIFIER'"
 echo "bd QUALIFIER_FLAG: ${QUALIFIER_FLAG[*]}"
@@ -110,7 +91,7 @@ clone_or_update() {
 
 clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor develop
 clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    main
-clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  main
+clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  update-doc-pathing
 clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan      main
 
 export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
@@ -120,9 +101,6 @@ mkdir -p "${SDK_ROOT_TARGET}"
 "${script_dir}/_remotes/openziti/gendoc.sh" "${OTHER_FLAGS[@]}"
 
 # before building apply and transmutations necessary...
-echo "calling _fix_helm_readme..."
-_fix_helm_readme
-echo "✅ helm readme compensation complete"
 
 pushd "${script_dir}" >/dev/null
 yarn install
