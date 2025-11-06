@@ -30,7 +30,7 @@ We use a Diátaxis framework. When creating content, think in terms of these fou
 
 ### End of page
 
-You can use a "Next steps" section at the end of tutorials or how-tos, but use a "More info" section at the end of any other topics.
+You can use a "Next steps" section at the end of tutorials or how-tos, but use a "More info" section at the end of any other topics, if needed.
 
 ## Headings
 
@@ -47,7 +47,7 @@ Use 2-space indents for bulleted lists, and 4-space indents for numbered lists.
 ## Lists
 
 - Periods for bulleted lists: consistency is key. All items should have a period if they're complete sentences. Try not to mix sentences
-- with 1 or 2-word bullets.
+  with 1 or 2-word bullets.
 
 ## Code blocks
 
@@ -65,4 +65,13 @@ Don't use "the button". Say "Click **Next**." You *click* UI items but you *sele
 
 ## Word choices
 
-Don't say please.
+Don't say please. Don't use ampsersands.
+
+## Admonitions
+
+Use them. Only use "Note:" if you have to include it somewhere it admonition can't go.
+
+## Spacing
+
+- Use *one* space after periods before the next word.
+- Use line spaces between headers and paras, and when introducing elements like tables or lists.
