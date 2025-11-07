@@ -65,7 +65,9 @@ Don't use "the button". Say "Click **Next**." You *click* UI items but you *sele
 
 ## Word choices
 
-Don't say please. Don't use ampsersands.
+- Don't say please. Don't use ampsersands.
+- Use sign in, not log in.
+  - One word for adjective (the signin page) and two words for verb (sign in to your account)
 
 ## Admonitions
 
