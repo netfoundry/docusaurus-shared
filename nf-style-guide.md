@@ -1,5 +1,12 @@
 # NetFoundry style guide
 
+## Tone and voice
+
+- Use everyday language. Use contractions freely. Use technical terms accurately but avod unnecessary industry jargon or slang that can confuse non-experts.
+- Avoid pronouns but use 'you' and 'your' when needed, not "the user".
+- Write steps as if you were describing them aloud to a colleague.
+- Use active langauge whenever possible.
+
 ## Structure and organization
 
 We use a Diátaxis framework. When creating content, think in terms of these four categories:
@@ -44,10 +51,6 @@ Afterwards, you can start adding:
 
 The exact top-level buckets we use for the ToC can vary depending on the product and the context.
 
-### End of page
-
-You can use a "Next steps" section at the end of tutorials or how-tos, but use a "More info" section at the end of any other topics, if needed.
-
 ## Headings
 
 - Use [ATX headings](https://github.github.com/gfm/#atx-headings), and include a line space after each heading.
@@ -62,32 +65,41 @@ You can use a "Next steps" section at the end of tutorials or how-tos, but use a
 
 ## Indentation
 
-Use 2-space indents for bulleted lists, and 4-space indents for numbered lists. Use 2-space indents for YAML files.
+| Element        | Indentation rule                            | Rationale                                                                    |
+| -------------- | ------------------------------------------- | ---------------------------------------------------------------------------- |
+| Bulleted lists | Use 2-space indents for all nested items    | Adheres to the original Markdown philosophy for minimal nesting width.       |
+| YAML files     | Use 2-space indents.                        | Industry standard for YAML; aligns with the bulleted list standard.          |
+| Numbered lists | Use 4-space indents for all nested items.   | Recommended spacing for proper rendition by most Markdown parsers.           |
 
 ## Lists
 
-- Periods for bulleted lists: consistency is key. All items should have a period if they're complete sentences. Try not to mix sentences
-  with 1 or 2-word bullets.
+- Periods for bulleted lists: consistency is key. All items should have a period if they're complete sentences.
+- Try not to mix full sentences with 1 or 2-word bullets.
 
-## Code blocks
+## Code, text, and UI elements
 
-Use fenced code blocks. Make sure to include a language flag.
+- Use **bold** for UI elements. Use *italic* for emphasis. Use back ticks for code phrases, file paths, variables, CLI input, and other non-English terms.
+- Use fenced code blocks. Make sure to include a language flag.
+- Don't use "the button". Say "Click **Next**." You *click* UI items but you *select* from drop-downs.
 
-## Active language
+## Images and file names
 
-Use active language whenever possible.
-
-## UI elements
-
-Use **bold** for UI elements. Use *italic* for emphasis. Use back ticks for code phrases and other non-English terms.
-
-Don't use "the button". Say "Click **Next**." You *click* UI items but you *select* from drop-downs.
+- A signifcant amount of readers are on mobile. Don't use images wider than 600-700 px.
+- Give your images and Markdown filenames that are descriptive and in kebab-case (alphanumeric, lowercase, and with hyphens to seperate words).
+- Give images a descriptive alt text.
 
 ## Word choices
 
 - Don't say please. Don't use ampsersands.
 - Use sign in, not log in.
   - One word for adjective (the signin page) and two words for verb (sign in to your account)
+- For words with an acronym, write it out on first mention, then use the acronym.
+
+## Punctuation
+
+- Use hyphens for compound adjectives, and em dashes for a break in thought.
+- Use colons to introduce or define items.
+- Use oxford commas.
 
 ## Admonitions
 
@@ -97,3 +109,7 @@ Use them. Only use "Note:" if you have to include it somewhere it admonition can
 
 - Use *one* space after periods before the next word.
 - Use line spaces between headers and paras, and when introducing elements like tables or lists.
+
+## End of page
+
+You can use a "Next steps" section at the end of tutorials or how-tos, but use a "More info" section at the end of any other topics, if needed.
