@@ -20,7 +20,7 @@ We use a Diátaxis framework. When creating content, think in terms of these fou
 * **How-to guides** (Practical problem-solving)
   * **Goal:** To help the user *achieve a specific goal* by performing a series of steps.
   * **Description:** Prescriptive instructions that show the exact steps to solve a real-world problem. Unlike tutorials, they assume some
-    existing knowledge and do not explain concepts; they just command actions.
+    existing knowledge and don't explain concepts; they just command actions.
   * **Question answered:** *How do I do X?*
 
 * **Reference** (Information-oriented)
