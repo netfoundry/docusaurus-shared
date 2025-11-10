@@ -90,7 +90,7 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 
 ## Word choices
 
-- Don't say please. Don't use ampsersands.
+- Don't say please. Don't use ampsersands (unless they're in the UI or a proper noun).
 - Use sign in, not log in.
   - One word for adjective (the signin page) and two words for verb (sign in to your account)
 - For words with an acronym, write it out on first mention, then use the acronym.
