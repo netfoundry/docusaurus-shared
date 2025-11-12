@@ -1,6 +1,6 @@
 # NetFoundry style guide
 
-This guide is the single source of truth for how we communicate at NetFoundry. Whether you're writing a quick how-to guide, an in-depth reference, UI content, or a blog post, our documentation is a direct reflection of our brand's intelligence and reliability. Consistency in tone, voice, and style is not just a matter of good grammar; it's a vital part of the user experience. When our docs are consistent, they're easier to read, faster to scan, and, most importantly, they build user trust.
+This guide is the single source of truth for how we communicate at NetFoundry. Whether you're writing a quick how-to guide, an in-depth reference, UI content, or a blog post, our documentation is a direct reflection of our brand's intelligence and reliability. Consistency in tone, voice, and style is not just a matter of good grammar; it's a vital part of the user experience. When our docs are consistent, they're easier to read, faster to scan, and they build user trust.
 
 ## Tone and voice
 
