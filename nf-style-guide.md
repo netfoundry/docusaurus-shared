@@ -4,7 +4,7 @@ This guide is the single source of truth for how we communicate at NetFoundry. W
 
 ## Tone and voice
 
-- Use everyday language. Use contractions freely. Use technical terms accurately but avod unnecessary industry jargon or slang that can confuse non-experts.
+- Use everyday language. Use contractions freely. Use technical terms accurately but avoid unnecessary industry jargon or slang that can confuse non-experts.
 - Avoid pronouns but use 'you' and 'your' when needed, not "the user".
 - Write steps as if you were describing them aloud to a colleague.
 - Use active langauge whenever possible.
