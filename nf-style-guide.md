@@ -58,10 +58,10 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 
 - Use [ATX headings](https://github.github.com/gfm/#atx-headings), and include a line space after each heading.
 - Use sentence-style casing: Only capitalize the first word of titles and any proper nouns. When in doubt, use lowercase. This ensures:
-  - Improved readability and scanning (yes, backed by evidence)
+  - Improved readability and scanning (yes, backed by typographic and cognitive science research)
   - Improved accessibility
   - More conversational and casual tone
-  - Consistencty and ease of implementation]
+  - Consistencty and ease of implementation
 - When linking to a page, try have the link text match the H1, unless you're using a shortened form as part of a sentence.
 - For table of contents (ToC) headers, try to make them match the H1 unless you need to shorten for space, or shorten to reduce redundancy
   of terms.
@@ -76,27 +76,29 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 
 ## Lists
 
-- Periods for bulleted lists: consistency is key. All items should have a period if they're complete sentences.
+- Periods for bulleted lists: consistency is key.
+- Lean towards no periods, but complete sentences (especially multiple sentences) should all have periods.
 - Try not to mix full sentences with 1 or 2-word bullets.
 
 ## Code, text, and UI elements
 
-- Use **bold** for UI elements. Use *italic* for emphasis. Use back ticks for code phrases, file paths, variables, CLI input, and other non-English terms.
+- Use **bold** for UI elements (or for terms being defined in a list). Use *italic* for emphasis. Use back ticks for code phrases, file paths, variables, CLI input, and other non-English terms.
 - Use fenced code blocks. Make sure to include a language flag.
-- Don't use "the button". Say "Click **Next**." You *click* UI items but you *select* from drop-downs.
+- Don't use "the button". Say "Click **Next**."
+- You *click* UI items but you *select* from drop-downs.
 
 ## Images and file names
 
-- A signifcant amount of readers are on mobile. Don't use images wider than 600-700 px.
-- Give your images and Markdown filenames that are descriptive and in kebab-case (alphanumeric, lowercase, and with hyphens to seperate words).
+- A signifcant amount of readers are on mobile. Don't use images wider than 600-700 px. Shrink browsers for screenshots.
+- Give your images and Markdown files descriptive filenames in kebab-case (alphanumeric, lowercase, and with hyphens to seperate words).
 - Give images a descriptive alt text.
 
 ## Word choices
 
 - Don't say please. Don't use ampsersands (unless they're in the UI or a proper noun).
 - Use sign in, not log in.
-  - One word for adjective (the signin page) and two words for verb (sign in to your account)
-- For words with an acronym, write it out on first mention, then use the acronym.
+  - One word for adjective ("the signin page") and two words for verb ("sign in to your account")
+- For words with an acronym, write it out on first mention with the acronym in parentheses, then use only the acronym.
 
 ## Punctuation
 
@@ -112,6 +114,7 @@ Use them. Only use "Note:" if you have to include it somewhere an admonition can
 
 - Use *one* space after periods before the next word.
 - Use line spaces between headers and paras, and when introducing elements like tables or lists.
+- Line spacing helps make Markdown more readable.
 
 ## End of page
 
