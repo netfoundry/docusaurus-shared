@@ -7,7 +7,8 @@ This guide is the single source of truth for how we communicate at NetFoundry. W
 - Use everyday language. Use contractions freely. Use technical terms accurately but avoid unnecessary industry jargon or slang that can confuse non-experts.
 - Avoid pronouns but use 'you' and 'your' when needed, not "the user".
 - Write steps as if you were describing them aloud to a colleague.
-- Use active langauge whenever possible.
+- Use active langauge whenever possible. This is especially important in how-tos and tutorials.
+  - Use verb phrases for how-to titles: "Create a certificate", "Install an agent", etc.
 
 ## Structure and organization
 
