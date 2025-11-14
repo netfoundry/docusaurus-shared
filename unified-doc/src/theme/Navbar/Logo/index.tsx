@@ -10,6 +10,7 @@ const mapTitle = (p: string, defTitle: string) => {
     if (p.startsWith('/docs/onprem')) return {includeNFLogo: true, to: '/onprem',alt:'On-Prem', logoLight: `/docs/img/onprem-sm-logo.svg`, logoDark: `/docs/img/onprem-sm-logo.svg`};
     if (p.startsWith('/docs/openziti')) return {includeNFLogo: true, to: '/openziti',alt:'OpenZiti', logoLight: `/docs/img/openziti-sm-logo.svg`, logoDark: `/docs/img/openziti-sm-logo.svg`};
     if (p.startsWith('/docs/zlan')) return {includeNFLogo: true, to: '/zlan', alt:'zlan', logoLight: `/docs/img/zlan-logo.svg`, logoDark: `/docs/img/zlan-logo.svg`};
+    if (p.startsWith('/docs/zrok')) return {text: '', includeNFLogo: true, to: '/zrok', alt:'zrok', logoLight: `/docs/img/zrok-1.0.0-rocket-purple.svg`, logoDark: `/docs/img/zrok-1.0.0-rocket-green.svg`};
     return {
         includeNFLogo: false,
         to: '/',

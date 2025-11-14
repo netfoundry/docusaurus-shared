@@ -1,5 +1,5 @@
 import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
+import type {Config, PluginConfig} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import * as path from "node:path";
 import {
@@ -12,12 +12,13 @@ import {
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import {pluginHotjar} from "@openclint/docusaurus-shared/node";
 import {PublishConfig} from 'src/components/docusaurus'
+import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
 const onprem = `./_remotes/onprem`;
 const openziti = `./_remotes/openziti`;
-const zrok = `./_remotes/zrok`;
+const zrokRoot = `./_remotes/zrok/website`;
 const zlan = `./_remotes/zlan`;
 const docsBase = `/docs`
 
@@ -84,6 +85,25 @@ console.log("    algolia index  : " + cfg.algolia.indexName);
 console.log("    build mask     : " + buildMask);
 console.log("    hotjar app     : " + cfg.hotjar.id);
 
+function extendDocsPlugins(plugin: PluginConfig): PluginConfig {
+    if (!Array.isArray(plugin)) return plugin;
+
+    const [pluginName, config] = plugin;
+
+    config.beforeDefaultRemarkPlugins = [
+        ...(config.beforeDefaultRemarkPlugins || []),
+        remarkGithubAdmonitionsToDirectives,
+    ];
+
+    config.remarkPlugins = [
+        ...(config.remarkPlugins || []),
+        [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
+        [remarkCodeSections, { logLevel: LogLevel.Silent }],
+    ];
+
+    return [pluginName, config];
+}
+
 const config: Config = {
     title: 'NetFoundry Documentation',
     tagline: 'Documentation for NetFoundry products and projects',
@@ -107,7 +127,6 @@ const config: Config = {
     projectName: 'netfoundry', // Usually your repo name.
 
     onBrokenLinks: 'throw',
-    onBrokenMarkdownLinks: 'throw',
 
     // Even if you don't use internationalization, you can use this field to set
     // useful metadata like html lang. For example, if your site is Chinese, you
@@ -117,7 +136,25 @@ const config: Config = {
         locales: ['en'],
     },
     markdown: {
+        hooks: {
+            onBrokenMarkdownLinks: "throw"
+        },
         mermaid: true,
+    },
+    staticDirectories: [
+        'static',
+        '_remotes/frontdoor/docusaurus/static/',
+        '_remotes/onprem/docs-site/static/',
+        '_remotes/openziti/docusaurus/static/',
+        '_remotes/zlan/docusaurus/static/',
+        `${zrokRoot}/static/`,
+        `${zrokRoot}/docs/images`
+    ],
+    customFields: {
+        DOCUSAURUS_BASE_PATH: '/',
+        DOCUSAURUS_DOCS_PATH: '/docs/',
+        OPENZITI_DOCS_BASE: '/docs/openziti',
+        UNIFIED_DOC_PATH: true
     },
     themes: [
         ['@docusaurus/theme-classic', {
@@ -126,20 +163,8 @@ const config: Config = {
         '@docusaurus/theme-mermaid',
         '@docusaurus/theme-search-algolia',
     ],
-    staticDirectories: [
-        'static',
-        '_remotes/frontdoor/docusaurus/static/',
-        '_remotes/onprem/docs-site/static/',
-        '_remotes/openziti/docusaurus/static/',
-        '_remotes/zlan/docusaurus/static/'
-    ],
-    customFields: {
-        DOCUSAURUS_BASE_PATH: '/',
-        DOCUSAURUS_DOCS_PATH: '/docs/',
-        OPENZITI_DOCS_BASE: '/docs/openziti',
-        UNIFIED_DOC_PATH: true
-    },
     plugins: [
+        '@docusaurus/plugin-debug',
         function webpackAliases() {
             return {
                 name: 'unified-doc-webpack-aliases',
@@ -149,11 +174,20 @@ const config: Config = {
                             alias: {
                                 '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
                                 '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
-                                '@zrok': path.resolve(__dirname, `${zrok}/docusaurus`),
                                 '@onprem': path.resolve(__dirname, `${onprem}/docs-site`),
                                 '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
+                                '@zrok': path.resolve(__dirname, `${zrokRoot}`),
+                                '@zrokroot': path.resolve(__dirname, `${zrokRoot}`),
                                 '@staticdir': path.resolve(__dirname, `docusaurus/static`),
                             },
+                        },
+                        module: {
+                            rules: [
+                                {
+                                    test: /\.ya?ml$/,
+                                    use: 'yaml-loader',
+                                },
+                            ],
                         },
                     };
                 },
@@ -165,6 +199,7 @@ const config: Config = {
         build(BUILD_FLAGS.ONPREM) && ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docs-site/src/pages`, routeBasePath: '/onprem'}],
         build(BUILD_FLAGS.OPENZITI) && ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
         build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
+        build(BUILD_FLAGS.ZROK) && ['@docusaurus/plugin-content-pages',{id: `zrok-pages`, path: `${zrokRoot}/src/pages`, routeBasePath: '/zrok'}],
         build(BUILD_FLAGS.ONPREM) && [
             '@docusaurus/plugin-content-docs',
             {
@@ -252,11 +287,18 @@ const config: Config = {
                 blogSidebarTitle: 'All posts',
             },
         ],
+        build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot)),
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
         [pluginHotjar, {}],
         ['@docusaurus/plugin-google-tag-manager', {id: `openziti-gtm`, containerId: cfg.google.tag}],
     ].filter(Boolean),
     themeConfig: {
+        docs: {
+            sidebar: {
+                hideable: false, 
+                autoCollapseCategories: true
+            }
+        },
         mermaid: {
             theme: {light: 'neutral', dark: 'forest'},
         },
