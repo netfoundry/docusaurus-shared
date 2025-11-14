@@ -71,7 +71,7 @@ clone_or_update() {
     if [ "${CLEAN:-0}" -eq 1 ]; then
       if ! git -C "$target" fetch origin "$branch" --depth 1 \
            || ! git -C "$target" reset --hard "origin/$branch"; then
-        echo "❌ Branch '$branch' not found in $url"
+        echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
         echo "👉 Available branches:"
         git -C "$target" ls-remote --heads origin | awk '{print $2}' | sed 's|refs/heads/||'
         exit 1
@@ -83,7 +83,7 @@ clone_or_update() {
     git clone --single-branch --branch "$branch" --depth 1 "$url" "$target" || {
       echo "❌ Branch '$branch' not found in $url"
       echo "👉 Available branches:"
-      git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||'
+      git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||' | sed 's#://[^@]*@#://[REDACTED]@#'
       exit 1
     }
   fi
@@ -93,6 +93,10 @@ clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"           
 clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    main
 clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  main
 clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan      main
+clone_or_update "https://github.com/openziti/zrok.git"                           zrok      updates-towards-unified-doc
+
+echo "copying versionable docs locally as docusaurus requires them to be adjacent to the config file for reasosns"
+./sync-versioned-remote.sh zrok
 
 export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
 echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"

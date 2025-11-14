@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "start": "docusaurus start",
-    "build": "docusaurus build",
+    "start": "NODE_OPTIONS='--max-old-space-size=4096' docusaurus start",
+    "build": "NODE_OPTIONS='--max-old-space-size=4096' docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -15,9 +15,9 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "3.8.1",
-    "@docusaurus/preset-classic": "3.8.1",
-    "@docusaurus/theme-mermaid": "^3.8.1",
+    "@docusaurus/core": "^3.9.2",
+    "@docusaurus/preset-classic": "^3.9.2",
+    "@docusaurus/theme-mermaid": "^3.9.2",
     "@hotjar/browser": "^1.0.9",
     "@mdx-js/react": "^3.0.0",
     "@openclint/docusaurus-shared": "^0.0.168",
@@ -39,12 +39,13 @@
     "remark-github-admonitions-to-directives": "^2.1.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.8.1",
-    "@docusaurus/plugin-client-redirects": "^3.8.1",
-    "@docusaurus/theme-search-algolia": "^3.8.1",
-    "@docusaurus/tsconfig": "3.8.1",
-    "@docusaurus/types": "3.8.1",
-    "typescript": "~5.6.2"
+    "@docusaurus/module-type-aliases": "^3.9.2",
+    "@docusaurus/plugin-client-redirects": "^3.9.2",
+    "@docusaurus/theme-search-algolia": "^3.9.2",
+    "@docusaurus/tsconfig": "^3.9.2",
+    "@docusaurus/types": "^3.9.2",
+    "typescript": "~5.6.2",
+    "yaml-loader": "^0.8.1"
   },
   "browserslist": {
     "production": [

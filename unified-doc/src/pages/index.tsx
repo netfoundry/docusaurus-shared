@@ -99,6 +99,17 @@ export default function Home(): ReactNode {
                                     </div>
                                 </div>
                             </div>
+                            <div className="col col--4">
+                                <div className={styles.idxcard}>
+                                    <div className="card__header"><h3>zrok</h3></div>
+                                    <div className="card__body">
+                                        zrok is an open-source, self-hostable sharing platform that simplifies shielding and sharing network services or files.
+                                    </div>
+                                    <div className="card__footer">
+                                        <Link className="button button--primary button--block" to="/docs/zrok/getting-started">Go to zrok</Link>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="margin-top--lg row">

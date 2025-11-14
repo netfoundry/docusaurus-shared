@@ -24,3 +24,10 @@ build
 build-*
 
 static/openziti
+
+*_versioned_docs
+*_versioned_sidebars
+*_versions.json
+
+
+

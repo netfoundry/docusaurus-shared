@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {JSX} from 'react';
 import {useLocation} from '@docusaurus/router';
 import NavbarItem from '@theme/NavbarItem';
 import SearchBar from '@theme/SearchBar';
@@ -17,23 +17,31 @@ type Item = any;
 // change to '' if you don't use /docs
 const DOCS_PREFIX = '/docs';
 
-const unifiedNav: Item[] = [
+const defaultItems: Item[] = [
     // {label: 'NetFoundry', to: '/', position: 'left'},
     // {label: 'Downloads', to: '/downloads', position: 'left'},
     // {label: 'Blog', to: '/blog', position: 'left'},
 ];
 
+const netfoundryDocs = {to: `https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides`, label: 'NetFoundry SaaS'};
+const nfFrontDoorDocs = {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'};
+const onPremDocs = {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'};
+const zlanDocs = {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLAN'};
+const ozDocs =  {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'};
+const zrokDocs = {to: `${DOCS_PREFIX}/zrok/getting-started`, label: 'zrok'};
+
 const openZitiNav: Item[] = [
     {
         label: 'OpenZiti Docs',
+        to: `${DOCS_PREFIX}/openziti/learn/introduction`,
         position: 'left',
         type: 'dropdown',
         items: [
-            {to: `https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides`, label: 'NetFoundry SaaS'},
-            {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'},
-            {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
-            {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'},
-            {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLAN'},
+            netfoundryDocs,
+            nfFrontDoorDocs,
+            onPremDocs,
+            zlanDocs,
+            zrokDocs,
         ],
     }
 ];
@@ -41,14 +49,15 @@ const openZitiNav: Item[] = [
 const onpremNav: Item[] = [
     {
         label: 'On-Prem Docs',
+        to: `${DOCS_PREFIX}/onprem/intro`,
         position: 'left',
         type: 'dropdown',
         items: [
-            {to: `https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides`, label: 'NetFoundry SaaS'},
-            {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'},
-            {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
-            {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'},
-            {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLAN'},
+            netfoundryDocs,
+            nfFrontDoorDocs,
+            ozDocs,
+            zlanDocs,
+            zrokDocs,
         ],
     },
 ];
@@ -56,14 +65,15 @@ const onpremNav: Item[] = [
 const frontdoorNav: Item[] = [
     {
         label: 'Frontdoor Docs',
+        to: `${DOCS_PREFIX}/frontdoor/intro`,
         position: 'left',
         type: 'dropdown',
         items: [
-            {to: `https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides`, label: 'NetFoundry SaaS'},
-            {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'},
-            {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
-            {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'},
-            {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLAN'},
+            netfoundryDocs,
+            onPremDocs,
+            ozDocs,
+            zlanDocs,
+            zrokDocs,
         ],
     },
 ];
@@ -71,15 +81,38 @@ const frontdoorNav: Item[] = [
 const zlanNav: Item[] = [
     {
         label: 'zLAN Docs',
+        to: `${DOCS_PREFIX}/zlan/intro`,
         position: 'left',
         type: 'dropdown',
         items: [
-            {to: `https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides`, label: 'NetFoundry SaaS'},
-            {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'},
-            {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'},
-            {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'},
-            {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLAN'},
+            netfoundryDocs,
+            nfFrontDoorDocs,
+            onPremDocs,
+            ozDocs,
+            zrokDocs,
         ],
+    },
+];
+
+const zrokNav: Item[] = [
+    {
+        label: 'zrok Docs',
+        to: `${DOCS_PREFIX}/zrok/getting-started`,
+        position: 'left',
+        type: 'dropdown',
+        items: [
+            netfoundryDocs,
+            nfFrontDoorDocs,
+            onPremDocs,
+            ozDocs,
+            zlanDocs,
+        ],
+    },
+    {
+        type: 'docsVersionDropdown',
+        docsPluginId: 'zrok',
+        dropdownItemsBefore: [],
+        dropdownItemsAfter: [],
     },
 ];
 
@@ -88,7 +121,8 @@ const mapNavbar = (p: string): Item[] => {
     if (p.startsWith(`${DOCS_PREFIX}/onprem`))    return onpremNav;
     if (p.startsWith(`${DOCS_PREFIX}/openziti`))  return openZitiNav;
     if (p.startsWith(`${DOCS_PREFIX}/zlan`))  return zlanNav;
-    return unifiedNav;
+    if (p.startsWith(`${DOCS_PREFIX}/zrok`))  return zrokNav;
+    return defaultItems;
 };
 
 export default function NavbarContent(props: Props): JSX.Element {
