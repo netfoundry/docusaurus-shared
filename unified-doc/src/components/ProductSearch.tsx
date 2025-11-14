@@ -75,7 +75,7 @@ function ProductBadge({ p }: { p?: string }) {
 /** Configure-based filter (no remount, reliable) */
 function ProductFilter({ product }: { product: string }) {
     useConfigure({
-        facetFilters: product ? [[`product:${product}`]] : [],
+        facetFilters: product ? [[`docusaurus_tag:docs-${product}-current`]] : [],
     });
     return null;
 }
