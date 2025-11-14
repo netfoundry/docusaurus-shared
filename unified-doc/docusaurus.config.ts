@@ -71,7 +71,7 @@ const prod: PublishConfig = {
     }
 }
 
-const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV == 'prod' ? prod : staging;
+export const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod : staging;
 
 const REMARK_MAPPINGS = [
     { from: '@onpremdocs',   to: '/onprem' },

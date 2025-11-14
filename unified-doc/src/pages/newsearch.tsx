@@ -1,15 +1,15 @@
 import React from "react";
 import Layout from "@theme/Layout";
 import ProductSearch from "../components/ProductSearch";
-import {appId,apiKey,indexName} from "../consts"
+import {cfg} from '../../docusaurus.config';
 
 export default function NewSearchPage() {
     return (
         <Layout title="Search">
             <ProductSearch
-                appId={appId}
-                apiKey={apiKey}
-                indexName={indexName}
+                appId={cfg.algolia.appId}
+                apiKey={cfg.algolia.apiKey}
+                indexName={cfg.algolia.indexName}
             />
         </Layout>
     );
