@@ -146,7 +146,7 @@ export default function ProductSearch({
                                           appId,
                                           apiKey,
                                           indexName,
-                                          products = ["frontdoor", "openziti", "onprem", "zlan"],
+                                          products = ["frontdoor", "openziti", "onprem", "zlan", "zrok"],
                                           extraContainerClasses = [],
                                       }: Props) {
     // read initial pill from ?product= for back/forward + shareable URLs
