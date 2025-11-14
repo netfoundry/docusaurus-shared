@@ -71,7 +71,7 @@ clone_or_update() {
     if [ "${CLEAN:-0}" -eq 1 ]; then
       if ! git -C "$target" fetch origin "$branch" --depth 1 \
            || ! git -C "$target" reset --hard "origin/$branch"; then
-        echo "❌ Branch '$branch' not found in $url"
+        echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
         echo "👉 Available branches:"
         git -C "$target" ls-remote --heads origin | awk '{print $2}' | sed 's|refs/heads/||'
         exit 1
@@ -83,7 +83,7 @@ clone_or_update() {
     git clone --single-branch --branch "$branch" --depth 1 "$url" "$target" || {
       echo "❌ Branch '$branch' not found in $url"
       echo "👉 Available branches:"
-      git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||'
+      git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||' | sed 's#://[^@]*@#://[REDACTED]@#'
       exit 1
     }
   fi
