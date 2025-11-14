@@ -96,7 +96,7 @@ clone_or_update "https://github.com/netfoundry/zlan.git"                        
 clone_or_update "https://github.com/openziti/zrok.git"                           zrok      updates-towards-unified-doc
 
 echo "copying versionable docs locally as docusaurus requires them to be adjacent to the config file for reasosns"
-./sync-versioned-remote.sh zrok
+"${script_dir}/sync-versioned-remote.sh" zrok
 
 export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
 echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"
