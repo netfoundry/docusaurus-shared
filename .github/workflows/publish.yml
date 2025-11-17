@@ -94,10 +94,10 @@ jobs:
       - name: Build & Publish Docusaurus Site
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          ZITI_HOTJAR_APPID: ${{ secrets.STG_DOC_HOTJAR_APPID }}
+          ZITI_HOTJAR_APPID: ${{ secrets.PROD_DOC_HOTJAR_APPID }}
           DEPLOY_ENV: 'kinsta'
           DOCUSAURUS_URL: 'https://netfoundry.io'
-        run: unified-doc/publish-unified-doc.sh ${{ env.GIT_BRANCH }} -ds
+        run: unified-doc/publish-unified-doc.sh -ds
 
 #  check-links:
 #    if: github.ref_name == 'main'

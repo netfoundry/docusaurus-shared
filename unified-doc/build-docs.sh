@@ -81,7 +81,7 @@ clone_or_update() {
     fi
   else
     git clone --single-branch --branch "$branch" --depth 1 "$url" "$target" || {
-      echo "❌ Branch '$branch' not found in $url"
+      echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
       echo "👉 Available branches:"
       git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||' | sed 's#://[^@]*@#://[REDACTED]@#'
       exit 1
