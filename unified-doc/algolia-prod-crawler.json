@@ -1,19 +1,19 @@
 new Crawler({
-  appId: "YOUR_APP_ID",
-  apiKey: "YOUR_API_KEY",
+  appId: "APP_ID_HERE",
+  apiKey: "APP_KEY_HERE",
   rateLimit: 8,
   maxDepth: 10,
-
-  schedule: "on monday, wednesday, friday",
+  schedule: "on tuesday",
   startUrls: ["https://netfoundry.io/docs/"],
   ignoreCanonicalTo: true,
   sitemaps: ["https://netfoundry.io/docs/sitemap.xml"],
   discoveryPatterns: ["https://netfoundry.io/docs/**"],
   actions: [
     {
-      indexName: "nfdocs_prod",
-      pathsToMatch: ["https://netfoundry.io/**"],
+      indexName: "nfdocs",
+      pathsToMatch: ["https://netfoundry.io/docs/**"],
       recordExtractor: ({ $, helpers }) => {
+      // priority order: deepest active sub list header -> navbar active item -> 'Documentation'
       const lvl0 =
       $(
       ".menu__link.menu__link--sublist.menu__link--active, .navbar__item.navbar__link--active",
@@ -21,9 +21,12 @@ new Crawler({
       .last()
       .text() || "Documentation";
 
-      const records = helpers.docsearch({
+      return helpers.docsearch({
       recordProps: {
-        lvl0: { selectors: "", defaultValue: lvl0 },
+        lvl0: {
+          selectors: "",
+          defaultValue: lvl0,
+        },
         lvl1: ["header h1", "article h1"],
         lvl2: "article h2",
         lvl3: "article h3",
@@ -31,46 +34,56 @@ new Crawler({
         lvl5: "article h5, article td:first-child",
         lvl6: "article h6",
         content: "article p, article li, article td:last-child",
-        url: { selectors: [] },
-        selectors_exclude: [
-          ".navbar",
-          ".footer",
-          ".menu",
-          ".theme-doc-toc-desktop",
-          ".theme-doc-footer",
-          ".hash-link",
-          ".breadcrumbs"
-        ]
       },
       indexHeadings: true,
       aggregateContent: true,
-      recordVersion: "v3"
+      recordVersion: "v3",
     });
+  },
+  },
+    {
+      indexName: "netfoundry.io-docs-markdown",
+      pathsToMatch: ["https://netfoundry.io/docs/**"],
+      recordExtractor: ({ $, url, helpers }) => {
+      const text = helpers.markdown("main");
+      if (text === "") return [];
 
-    return records.map((rec) => {
-      rec.product = "unknown";
-      if (rec.url_without_anchor.includes("/docs/frontdoor"))
-      rec.product = "frontdoor";
-      else if (rec.url_without_anchor.includes("/docs/openziti"))
-      rec.product = "openziti";
-      else if (rec.url_without_anchor.includes("/docs/onprem"))
-      rec.product = "onprem";
-      else if (rec.url_without_anchor.includes("/docs/zlan"))
-      rec.product = "zlan";
-      return rec;
+    // Extract meta tag values. These are required for Docusaurus
+    const language =
+    $('meta[name="docsearch:language"]').attr("content") || "en";
+    const version =
+    $('meta[name="docsearch:version"]').attr("content") || "latest";
+    const docusaurus_tag =
+    $('meta[name="docsearch:docusaurus_tag"]').attr("content") || "";
+
+    return helpers.splitTextIntoRecords({
+      text,
+      baseRecord: {
+        url,
+        objectID: url,
+        title: $("head > title").text(),
+        lang: language, // Required for Docusaurus
+        language, // Required for Docusaurus
+        version: version.split(","), // in case there are multiple versions. Required for Docusaurus
+        docusaurus_tag: docusaurus_tag // Required for Docusaurus
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter(Boolean),
+      },
+      maxRecordBytes: 100000,
+      orderingAttributeName: "part",
     });
-  }
-  }
+  },
+  },
   ],
   initialIndexSettings: {
-    nfdocs_prod: {
+    nfdocs: {
       attributesForFaceting: [
         "type",
         "lang",
         "language",
         "version",
         "docusaurus_tag",
-        "searchable(product)",
       ],
       attributesToRetrieve: [
         "hierarchy",
@@ -78,16 +91,12 @@ new Crawler({
         "anchor",
         "url",
         "url_without_anchor",
-        "url_without_variables",
         "type",
-        "product",
-        "title"
       ],
-      attributesToHighlight: ["hierarchy", "content", "title"],
-      attributesToSnippet: ["content:30"],
+      attributesToHighlight: ["hierarchy", "content"],
+      attributesToSnippet: ["content:10"],
       camelCaseAttributes: ["hierarchy", "content"],
       searchableAttributes: [
-        "content",
         "unordered(hierarchy.lvl0)",
         "unordered(hierarchy.lvl1)",
         "unordered(hierarchy.lvl2)",
@@ -95,12 +104,13 @@ new Crawler({
         "unordered(hierarchy.lvl4)",
         "unordered(hierarchy.lvl5)",
         "unordered(hierarchy.lvl6)",
+        "content",
       ],
       distinct: true,
       attributeForDistinct: "url",
       customRanking: [
         "desc(weight.pageRank)",
-        "asc(weight.level)",
+        "desc(weight.level)",
         "asc(weight.position)",
       ],
       ranking: [
@@ -112,9 +122,7 @@ new Crawler({
         "exact",
         "custom",
       ],
-      disableTypoToleranceOnAttributes: ["hierarchy.lvl0", "hierarchy.lvl1"],
-      highlightPreTag:
-      '<span class="algolia-docsearch-suggestion--highlight">',
+      highlightPreTag: '<span class="algolia-docsearch-suggestion--highlight">',
       highlightPostTag: "</span>",
       minWordSizefor1Typo: 3,
       minWordSizefor2Typos: 7,
@@ -124,7 +132,16 @@ new Crawler({
       advancedSyntax: true,
       attributeCriteriaComputedByMinProximity: true,
       removeWordsIfNoResults: "allOptional",
-      separatorsToIndex: "_"
-    }
-  }
+      separatorsToIndex: "_",
+    },
+    "netfoundry.io-docs-markdown": {
+      attributesForFaceting: ["lang", "language", "version", "docusaurus_tag"],
+      ignorePlurals: true,
+      minProximity: 4,
+      removeStopWords: false,
+      searchableAttributes: ["unordered(title)", "unordered(text)"],
+      removeWordsIfNoResults: "allOptional",
+    },
+  },
+  exclusionPatterns: ["!https://netfoundry.io/docs/**"],
 });
