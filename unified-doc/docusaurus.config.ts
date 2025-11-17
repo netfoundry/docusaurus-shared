@@ -336,7 +336,13 @@ const config: Config = {
             apiKey: cfg.algolia.apiKey,
             indexName: cfg.algolia.indexName,
             contextualSearch: true,
-            searchParameters: {},
+            searchParameters: {
+                typoTolerance: "min",
+                hitsPerPage: 25,
+                attributesToRetrieve: ["content", "hierarchy", "url"],
+                attributesToHighlight: ["content", "hierarchy"],
+                restrictSearchableAttributes: ["content", "hierarchy"]
+            },
             searchPagePath: 'search'
         },
         hotjar: {
