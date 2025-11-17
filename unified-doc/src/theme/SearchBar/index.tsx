@@ -22,6 +22,7 @@ export default function SearchBar() {
     }, []);
     useEffect(() => { document.body.style.overflow = open ? "hidden" : ""; }, [open]);
 
+    const { customFields } = useDocusaurusContext().siteConfig;
     return (
         <>
             <DocSearchButton onClick={() => setOpen(true)} />
