@@ -79,11 +79,12 @@ const REMARK_MAPPINGS = [
     { from: '@static', to: `${docsBase}`},
 ];
 
-console.log("CANONICAL URL      : " + cfg.docusaurus.url);
-console.log("    docsBase       : " + docsBase);
-console.log("    algolia index  : " + cfg.algolia.indexName);
-console.log("    build mask     : " + buildMask);
-console.log("    hotjar app     : " + cfg.hotjar.id);
+console.log("CANONICAL URL          : " + cfg.docusaurus.url);
+console.log("DOCUSAURUS_PUBLISH_ENV : " + process.env.DOCUSAURUS_PUBLISH_ENV)
+console.log("    docsBase           : " + docsBase);
+console.log("    algolia index      : " + cfg.algolia.indexName);
+console.log("    build mask         : " + buildMask);
+console.log("    hotjar app         : " + cfg.hotjar.id);
 
 function extendDocsPlugins(plugin: PluginConfig): PluginConfig {
     if (!Array.isArray(plugin)) return plugin;
