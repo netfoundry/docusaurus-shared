@@ -2,9 +2,9 @@
 import React, {useEffect, useState} from "react";
 import ReactDOM from "react-dom";
 import {DocSearchButton, DocSearchModal} from "@docsearch/react";
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 import ProductSearch from "@site/src/components/ProductSearch";
-import {appId,apiKey,indexName} from "../../consts"
 import styles from "./SearchBar.module.css";
 import clsx from "clsx";
 
@@ -30,9 +30,9 @@ export default function SearchBar() {
                     <div className={styles.searchModal}>
                         <div className={clsx(styles.modal)} onClick={(e) => e.stopPropagation()}>
                             <ProductSearch
-                                appId={appId}
-                                apiKey={apiKey}
-                                indexName={indexName}
+                                appId={customFields.ALGOLIA_APPID}
+                                apiKey={customFields.ALGOLIA_APIKEY}
+                                indexName={customFields.ALGOLIA_INDEXNAME}
                                 extraContainerClasses={[styles.modalSearchContainer]}
                             />
                         </div>
