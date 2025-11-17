@@ -1,7 +1,7 @@
 // src/theme/SearchBar/index.tsx
 import React, {useEffect, useState} from "react";
 import ReactDOM from "react-dom";
-import {DocSearchButton, DocSearchModal} from "@docsearch/react";
+import {DocSearchButton} from "@docsearch/react";
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 import ProductSearch from "@site/src/components/ProductSearch";
@@ -36,13 +36,13 @@ export default function SearchBar() {
                 <div
                     className={styles.backdrop}
                     onMouseDown={(e) => setMouseDownTarget(e.target)}
-                    onClick={(e) => {
-                        if (e.target === mouseDownTarget) {
+                    onMouseUp={(e) => {
+                        if (e.target === mouseDownTarget && e.target === e.currentTarget) {
                             setOpen(false);
                         }
                     }}
                 >
-                    <div className={styles.searchModal}>
+                    <div className={styles.searchModal} onClick={(e) => e.stopPropagation()}>
                         <div className={clsx(styles.modal)} onClick={(e) => e.stopPropagation()}>
                             <ProductSearch
                                 appId={customFields.ALGOLIA_APPID}
