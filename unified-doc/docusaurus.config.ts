@@ -207,7 +207,7 @@ const config: Config = {
         build(BUILD_FLAGS.ONPREM) && [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'onprem',
+                id: 'onprem', // do not change - affects algolia search
                 path: `${onprem}/docs-site/docs`,
                 routeBasePath: 'onprem',
                 sidebarPath: `${onprem}/docs-site/sidebars.ts`,
@@ -224,7 +224,7 @@ const config: Config = {
         build(BUILD_FLAGS.FRONTDOOR) && [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'frontdoor',
+                id: 'frontdoor', // do not change - affects algolia search
                 path: `${frontdoor}/docusaurus/docs`,
                 routeBasePath: 'frontdoor',
                 sidebarPath: `${frontdoor}/docusaurus/sidebars.ts`,
@@ -241,7 +241,7 @@ const config: Config = {
         build(BUILD_FLAGS.OPENZITI) && [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'openziti',
+                id: 'openziti', // do not change - affects algolia search
                 path: `${openziti}/docusaurus/docs`,
                 routeBasePath: 'openziti',
                 sidebarPath: `${openziti}/docusaurus/sidebars.ts`,
@@ -259,7 +259,7 @@ const config: Config = {
         build(BUILD_FLAGS.ZLAN) && [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'zlan',
+                id: 'zlan', // do not change - affects algolia search
                 path: `${zlan}/docusaurus/docs`,
                 routeBasePath: 'zlan',
                 sidebarPath: `${zlan}/docusaurus/sidebars.ts`,
