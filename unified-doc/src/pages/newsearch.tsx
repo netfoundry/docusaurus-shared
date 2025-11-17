@@ -1,15 +1,18 @@
 import React from "react";
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from "@theme/Layout";
 import ProductSearch from "../components/ProductSearch";
-import {cfg} from '../../docusaurus.config';
+
 
 export default function NewSearchPage() {
+    const { customFields } = useDocusaurusContext().siteConfig;
+
     return (
         <Layout title="Search">
             <ProductSearch
-                appId={cfg.algolia.appId}
-                apiKey={cfg.algolia.apiKey}
-                indexName={cfg.algolia.indexName}
+                appId={customFields.ALGOLIA_APPID}
+                apiKey={customFields.ALGOLIA_APIKEY}
+                indexName={customFields.ALGOLIA_INDEXNAME}
             />
         </Layout>
     );

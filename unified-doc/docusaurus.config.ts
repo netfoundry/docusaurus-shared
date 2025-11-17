@@ -71,7 +71,7 @@ const prod: PublishConfig = {
     }
 }
 
-export const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod : staging;
+const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod : staging;
 
 const REMARK_MAPPINGS = [
     { from: '@onpremdocs',   to: '/onprem' },
@@ -154,7 +154,10 @@ const config: Config = {
         DOCUSAURUS_BASE_PATH: '/',
         DOCUSAURUS_DOCS_PATH: '/docs/',
         OPENZITI_DOCS_BASE: '/docs/openziti',
-        UNIFIED_DOC_PATH: true
+        UNIFIED_DOC_PATH: true,
+        ALGOLIA_APPID: cfg.algolia.appId,
+        ALGOLIA_APIKEY: cfg.algolia.apiKey,
+        ALGOLIA_INDEXNAME: cfg.algolia.indexName,
     },
     themes: [
         ['@docusaurus/theme-classic', {
