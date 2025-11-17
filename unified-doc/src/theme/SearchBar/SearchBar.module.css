@@ -4,8 +4,9 @@
     inset:0;
     background:rgba(0,0,0,.5);
     display:flex;
-    align-items:center;
+    align-items:flex-start;
     justify-content:center;
+    padding-top:10vh;
     z-index:9999;
     width:100%;
 }
@@ -31,5 +32,6 @@
     background: var(--ifm-background-color);
     padding: 10px;
     border-radius: 10px;
-    max-width: 1000px;
+    width: 80vw;
+    max-width: 800px;
 }

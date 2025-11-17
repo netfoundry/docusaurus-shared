@@ -56,6 +56,9 @@
     line-height:1.35;
     position:relative;
     padding-left:1rem;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 .snippet::before {
     content:"▸";
@@ -157,3 +160,30 @@
 
 /* tighten typographic weight in nested rows inside groups */
 .groupList > div > div {color:var(--ifm-color-primary);}
+
+/* Match pill colors to badge colors */
+.pill.active[data-product="frontdoor"] {
+    background: #e8f3ff;
+    border-color: #c6e1ff;
+    color: #145ea8;
+}
+.pill.active[data-product="openziti"] {
+    background: #e9fff3;
+    border-color: #c8f2df;
+    color: #0d7a4e;
+}
+.pill.active[data-product="onprem"] {
+    background: #fff3e8;
+    border-color: #ffdcbf;
+    color: #9a4d00;
+}
+.pill.active[data-product="zlan"] {
+    background: #f1edff;
+    border-color: #d9d0ff;
+    color: #5335b7;
+}
+.pill.active[data-product="zrok"] {
+    background: #fff0f0;
+    border-color: #ffd0d0;
+    color: #b71c1c;
+}

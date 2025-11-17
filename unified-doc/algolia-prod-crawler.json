@@ -21,7 +21,7 @@ new Crawler({
       .last()
       .text() || "Documentation";
 
-      return helpers.docsearch({
+      const records = helpers.docsearch({
       recordProps: {
         lvl0: {
           selectors: "",
@@ -35,9 +35,24 @@ new Crawler({
         lvl6: "article h6",
         content: "article p, article li, article td:last-child",
       },
-      indexHeadings: true,
+      indexHeadings: false, // ends up with empty results?
       aggregateContent: true,
       recordVersion: "v3",
+    },);
+
+    return records.map((rec) => {
+      rec.product = "unknown";
+      if (rec.url_without_anchor.includes("/docs/frontdoor"))
+      rec.product = "frontdoor";
+      else if (rec.url_without_anchor.includes("/docs/openziti"))
+      rec.product = "openziti";
+      else if (rec.url_without_anchor.includes("/docs/onprem"))
+      rec.product = "onprem";
+      else if (rec.url_without_anchor.includes("/docs/zlan"))
+      rec.product = "zlan";
+      else if (rec.url_without_anchor.includes("/docs/zrok"))
+      rec.product = "zrok";
+      return rec;
     });
   },
   },
@@ -84,6 +99,7 @@ new Crawler({
         "language",
         "version",
         "docusaurus_tag",
+        "searchable(product)",
       ],
       attributesToRetrieve: [
         "hierarchy",
@@ -92,6 +108,7 @@ new Crawler({
         "url",
         "url_without_anchor",
         "type",
+        "product",
       ],
       attributesToHighlight: ["hierarchy", "content"],
       attributesToSnippet: ["content:10"],

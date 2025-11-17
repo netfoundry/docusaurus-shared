@@ -207,7 +207,7 @@ const config: Config = {
         build(BUILD_FLAGS.ONPREM) && [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'nfonprem',
+                id: 'onprem',
                 path: `${onprem}/docs-site/docs`,
                 routeBasePath: 'onprem',
                 sidebarPath: `${onprem}/docs-site/sidebars.ts`,
