@@ -89,7 +89,7 @@ clone_or_update() {
   fi
 }
 
-clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor fix-arch-diagram
+clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor develop
 clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    main
 clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  main
 clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan      main
