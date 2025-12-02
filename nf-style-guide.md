@@ -118,7 +118,7 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 
 ## Images and file names
 
-- A signifcant amount of readers are on mobile. Don't use images wider than 600-700 px. Shrink browsers for screenshots.
+- A significant amount of readers are on mobile. Don't use images wider than 600-700 px. Shrink browsers for screenshots.
   Check the site on your phone.
 - Avoid spaces in file names. Descriptive filenames in kebab-case (alphanumeric, lowercase, and with hyphens to seperate
   words) is preferable.
@@ -127,13 +127,14 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 ## Word choices
 
 - Don't say please. Don't use ampsersands (unless they're in the UI or a proper noun).
-- Use sign in, not log in.
+- Use sign in, not log in. Sign in refers to actively entering a system and verifying identity, while the word log is
+  historically associated with creating a record. Also, this aligns with most modern tech doc style guides.
   - One word (hyphenated) for adjective ("the sign-in page") and two words for verb ("sign in to your account")
 - For words with an acronym, write it out on first mention with the acronym in parentheses, then use only the acronym.
 
 ## Punctuation
 
-- Use hyphens for compound adjectives, and em dashes for a break in thought.
+- Use hyphens for compound adjectives. Avoid em dashes.
 - Use colons to introduce or define items.
 - Use oxford commas.
 
