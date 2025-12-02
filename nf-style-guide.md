@@ -6,6 +6,12 @@ intelligence and reliability. Consistency in tone, voice, and style is not just 
 part of the user experience. When our docs are consistent, they're easier to read, faster to scan, and they build user
 trust.
 
+## TLDR
+
+- Use [sentence-style casing](#sentence-style-casing).
+- Use active voice when possible, especially for how-tos.
+- Use everyday language.
+
 ## Tone and voice
 
 - Use everyday language. Use contractions freely. Use technical terms accurately but avoid unnecessary industry jargon
@@ -14,6 +20,33 @@ trust.
 - Write steps as if you were describing them aloud to a colleague.
 - Use active language whenever possible. This is especially important in how-tos and tutorials.
   - Use verb phrases for how-to titles: "Create a certificate", "Install an agent", etc.
+
+## Headings
+
+- Use [ATX headings](https://github.github.com/gfm/#atx-headings), and include a line space after each heading.
+- When linking to a page, try to have the link text match the H1, unless you're using a shortened form as part of a
+  sentence.
+- For table of contents (ToC) headers, try to make them match the H1 unless you need to shorten for space, or shorten to
+  reduce redundancy of terms.
+
+### Sentence-style casing
+
+Use sentence-style casing: Only capitalize the first word of titles and any proper nouns. When in doubt, use lowercase.
+This ensures:
+
+- Improved readability and scanning (yes, backed by typographic and cognitive science research)
+- Improved accessibility
+- More conversational and casual tone
+- Consistency and ease of implementation
+
+References:
+
+- [Google developer docs style guide](https://developers.google.com/style/capitalization)
+- [Microsoft style guide](https://learn.microsoft.com/en-us/style-guide/capitalization)
+- [UX: Title case vs sentence case in ui](https://www.everyinteraction.com/articles/title-case-vs-sentence-case-in-ui/)
+- [Letter case and text legibility in normal and low vision](https://pmc.ncbi.nlm.nih.gov/articles/PMC2016788/)
+- [Writing readable content](https://www.mity.com.au/blog/writing-readable-content-and-why-all-caps-is-so-hard-to-read)
+- [Readability Guidelines: Capitals](https://readabilityguidelines.co.uk/grammar-points/capital-letters/#2-use-sentence-case-in-headlines-and-subheads)
 
 ## Structure and organization
 
@@ -67,20 +100,6 @@ Afterwards, you can start adding:
 
 The exact top-level buckets we use for the ToC can vary depending on the product and the context.
 
-## Headings
-
-- Use [ATX headings](https://github.github.com/gfm/#atx-headings), and include a line space after each heading.
-- Use sentence-style casing: Only capitalize the first word of titles and any proper nouns. When in doubt, use
-  lowercase. This ensures:
-  - Improved readability and scanning (yes, backed by typographic and cognitive science research)
-  - Improved accessibility
-  - More conversational and casual tone
-  - Consistencty and ease of implementation
-- When linking to a page, try to have the link text match the H1, unless you're using a shortened form as part of a
-  sentence.
-- For table of contents (ToC) headers, try to make them match the H1 unless you need to shorten for space, or shorten to
-  reduce redundancy of terms.
-
 ## Indentation
 
 | Element        | Indentation rule                            | Rationale                                                                    |
@@ -91,8 +110,8 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 
 ## Lists
 
-- Periods for bulleted lists: consistency is key.
-- Lean towards no periods, but complete sentences (especially multiple sentences) should all have periods.
+- Lean towards no periods, but complete sentences (especially multiple sentences) should all have periods. Consistency
+  is key.
 - Try not to mix full sentences with 1 or 2-word bullets.
 
 ## Code, text, and UI elements
@@ -106,8 +125,9 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 ## Images and file names
 
 - A signifcant amount of readers are on mobile. Don't use images wider than 600-700 px. Shrink browsers for screenshots.
-- Avoid spaces in file names. Descriptive filenames in kebab-case (alphanumeric, lowercase, and with hyphens to
-  seperate words) is preferable.
+  Check the site on your phone.
+- Avoid spaces in file names. Descriptive filenames in kebab-case (alphanumeric, lowercase, and with hyphens to seperate
+  words) is preferable.
 - Give images a descriptive alt text.
 
 ## Word choices
