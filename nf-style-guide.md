@@ -140,7 +140,7 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 
 ## Admonitions
 
-Use them. Only use "Note:" if you have to include it somewhere an admonition can't go.
+Use them. Only use "Note:" if you have to include it somewhere an admonition can't go (tables, lists, but try to avoid).
 
 ## Spacing
 
