@@ -14,7 +14,6 @@ trust.
   unnecessary industry jargon or slang that can confuse non-experts.
 - Use [screenshots](#images-and-file-names) compatible with mobile devices.
 - Avoid pronouns but use 'you' and 'your' when needed, not "the user".
-- Write steps as if you were describing them aloud to a colleague.
 
 ## Headings
 
