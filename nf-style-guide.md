@@ -10,23 +10,19 @@ trust.
 
 - Use [sentence-style casing](#sentence-style-casing).
 - Use active voice when possible, especially for how-tos.
-- Use everyday language.
+- Use everyday language. Be direct and conversational. Use contractions freely. Use technical terms accurately but avoid
+  unnecessary industry jargon or slang that can confuse non-experts.
 - Use [screenshots](#images-and-file-names) compatible with mobile devices.
-
-## Tone and voice
-
-- Use everyday language. Use contractions freely. Use technical terms accurately but avoid unnecessary industry jargon
-  or slang that can confuse non-experts.
 - Avoid pronouns but use 'you' and 'your' when needed, not "the user".
 - Write steps as if you were describing them aloud to a colleague.
-- Use active language whenever possible. This is especially important in how-tos and tutorials.
-  - Use verb phrases for how-to titles: "Create a certificate", "Install an agent", etc.
 
 ## Headings
 
 - Use [ATX headings](https://github.github.com/gfm/#atx-headings), and include a line space after each heading.
+- Each topic should have only one H1.
 - For table of contents (ToC) headers, try to make them match the H1 unless you need to shorten for space, or shorten to
   reduce redundancy of terms.
+- Use verb phrases for how-to titles: "Create a certificate", "Install an agent", etc.
 
 ### Sentence-style casing
 
