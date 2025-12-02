@@ -43,7 +43,7 @@ We use a Diátaxis framework. When creating content, think in terms of these fou
  For an MVP, a product should have:
 
 - `intro.md`: The docs landing page; an overview of the product which then leads you to the getting started.
-- `getting-started.md`: Get up-and-running with the product; the main use case or onboarding steps so a user can get started. This is the most important how-to
+- `get-started.md`: Get up-and-running with the product; the main use case or onboarding steps so a user can get started. This is the most important how-to
 
 Afterwards, you can start adding:
 
