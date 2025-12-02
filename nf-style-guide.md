@@ -1,49 +1,62 @@
 # NetFoundry style guide
 
-This guide is the single source of truth for how we communicate at NetFoundry. Whether you're writing a quick how-to guide, an in-depth reference, UI content, or a blog post, our documentation is a direct reflection of our brand's intelligence and reliability. Consistency in tone, voice, and style is not just a matter of good grammar; it's a vital part of the user experience. When our docs are consistent, they're easier to read, faster to scan, and they build user trust.
+This guide is the single source of truth for how we communicate at NetFoundry. Whether you're writing a quick how-to
+guide, an in-depth reference, UI content, or a blog post, our documentation is a direct reflection of our brand's
+intelligence and reliability. Consistency in tone, voice, and style is not just a matter of good grammar; it's a vital
+part of the user experience. When our docs are consistent, they're easier to read, faster to scan, and they build user
+trust.
 
 ## Tone and voice
 
-- Use everyday language. Use contractions freely. Use technical terms accurately but avoid unnecessary industry jargon or slang that can confuse non-experts.
+- Use everyday language. Use contractions freely. Use technical terms accurately but avoid unnecessary industry jargon
+  or slang that can confuse non-experts.
 - Avoid pronouns but use 'you' and 'your' when needed, not "the user".
 - Write steps as if you were describing them aloud to a colleague.
-- Use active langauge whenever possible. This is especially important in how-tos and tutorials.
+- Use active language whenever possible. This is especially important in how-tos and tutorials.
   - Use verb phrases for how-to titles: "Create a certificate", "Install an agent", etc.
 
 ## Structure and organization
 
 We use a Diátaxis framework. When creating content, think in terms of these four categories:
 
-* **Tutorials** (Learning-oriented)
-  * **Goal:** To help the user *learn* by doing.
-  * **Description:** Step-by-step lessons that allow the user to successfully complete a practical, simple project. They are focused on
-    **teaching**, not explaining, and prioritize the shortest path to success.
-  * **Question answered:** *How do I get started?*
+- **How-to guides** (Practical problem-solving)
+  - **Goal:** To help the user *achieve a specific goal* by performing a series of steps.
+  - **Description:** Prescriptive instructions that show the exact steps to solve a real-world problem. Unlike
+    tutorials, they assume some existing knowledge and don't explain concepts; they just command actions.
+  - **Question answered:** *How do I do X?*
 
-* **How-to guides** (Practical problem-solving)
-  * **Goal:** To help the user *achieve a specific goal* by performing a series of steps.
-  * **Description:** Prescriptive instructions that show the exact steps to solve a real-world problem. Unlike tutorials, they assume some
-    existing knowledge and don't explain concepts; they just command actions.
-  * **Question answered:** *How do I do X?*
+- **Reference** (Information-oriented)
+  - **Goal:** To *describe* the tools, APIs, and systems, answering what everything is.
+  - **Description:** Technical, accurate descriptions of code, configurations, functions, or UI elements. This content
+    is structured for easy look-up (like a dictionary or catalog) and is not intended to be read from start to finish.
+  - **Question answered:** *What is X?*
 
-* **Reference** (Information-oriented)
-  * **Goal:** To *describe* the tools, APIs, and systems, answering what everything is.
-  * **Description:** Technical, accurate descriptions of code, configurations, functions, or UI elements. This content is structured for
-    easy look-up (like a dictionary or catalog) and is not intended to be read from start to finish.
-  * **Question answered:** *What is X?*
+- **Explanation (or conceptual)** (Understanding-oriented)
+  - **Goal:** To help the user *understand* the background, context, and theory.
+  - **Description:** Discussions that clarify a topic. They provide the "why" and connect concepts, building theoretical
+    knowledge and insight rather than telling the user what to do.
+  - **Question answered:** *Why does X exist?* (or, *Why is X the way it is?*)
 
-* **Explanation** (Understanding-oriented)
-  * **Goal:** To help the user *understand* the background, context, and theory.
-  * **Description:** Discussions that clarify a topic. They provide the "why" and connect concepts, building theoretical knowledge and
-    insight rather than telling the user what to do.
-  * **Question answered:** *Why does X exist?* (or, *Why is X the way it is?*)
- 
- ## Table of contents
+- **Tutorials** (Learning-oriented)
+  - **Goal:** To help the user *learn* by doing.
+  - **Description:** Step-by-step lessons that allow the user to successfully complete a practical, simple project. They
+    are focused on **teaching**, not explaining, and prioritize the shortest path to success.
+  - **Question answered:** *How do I get started?*
+
+Do your best. Not everything will be obvious or cut-and-dry.
+
+To learn more, see:
+
+- [Diátaxis official website](https://diataxis.fr/)
+- [Better Docs with Diátaxis](https://www.youtube.com/watch?v=0BqucaRwHhA) YouTube video
+
+## Table of contents
 
  For an MVP, a product should have:
 
 - `intro.md`: The docs landing page; an overview of the product which then leads you to the getting started.
-- `get-started.md`: Get up-and-running with the product; the main use case or onboarding steps so a user can get started. This is the most important how-to
+- `get-started.md`: Get up-and-running with the product; the main use case or onboarding steps so a user can get
+  started. This is the most important how-to
 
 Afterwards, you can start adding:
 
@@ -57,14 +70,16 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 ## Headings
 
 - Use [ATX headings](https://github.github.com/gfm/#atx-headings), and include a line space after each heading.
-- Use sentence-style casing: Only capitalize the first word of titles and any proper nouns. When in doubt, use lowercase. This ensures:
+- Use sentence-style casing: Only capitalize the first word of titles and any proper nouns. When in doubt, use
+  lowercase. This ensures:
   - Improved readability and scanning (yes, backed by typographic and cognitive science research)
   - Improved accessibility
   - More conversational and casual tone
   - Consistencty and ease of implementation
-- When linking to a page, try have the link text match the H1, unless you're using a shortened form as part of a sentence.
-- For table of contents (ToC) headers, try to make them match the H1 unless you need to shorten for space, or shorten to reduce redundancy
-  of terms.
+- When linking to a page, try to have the link text match the H1, unless you're using a shortened form as part of a
+  sentence.
+- For table of contents (ToC) headers, try to make them match the H1 unless you need to shorten for space, or shorten to
+  reduce redundancy of terms.
 
 ## Indentation
 
@@ -82,15 +97,17 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 
 ## Code, text, and UI elements
 
-- Use **bold** for UI elements (or for terms being defined in a list). Use *italic* for emphasis. Use back ticks for code phrases, file paths, variables, CLI input, and other non-English terms.
+- Use **bold** for UI elements (or for terms being defined in a list). Use *italic* for emphasis. Use back ticks for
+  code phrases, file paths, variables, CLI input, and other non-English terms.
 - Use fenced code blocks. Make sure to include a language flag.
 - Don't use "the button". Say "Click **Next**."
-- You *click* UI items but you *select* from drop-downs.
+- Tell the user to *click* UI items. If it's a drop-down, use *select*.
 
 ## Images and file names
 
 - A signifcant amount of readers are on mobile. Don't use images wider than 600-700 px. Shrink browsers for screenshots.
-- Give your images and Markdown files descriptive filenames in kebab-case (alphanumeric, lowercase, and with hyphens to seperate words).
+- Avoid spaces in file names. Descriptive filenames in kebab-case (alphanumeric, lowercase, and with hyphens to
+  seperate words) is preferable.
 - Give images a descriptive alt text.
 
 ## Word choices
@@ -115,7 +132,6 @@ Use them. Only use "Note:" if you have to include it somewhere an admonition can
 - Use *one* space after periods before the next word.
 - Use line spaces between headers and paras, and when introducing elements like tables or lists.
 - Line spacing helps make Markdown more readable.
-
-## End of page
-
-You can use a "Next steps" section at the end of tutorials or how-tos, but use a "More info" section at the end of any other topics, if needed.
+- Establish a hard line limit of 120 characters for all body text lines in Markdown topics to improve readability on
+large screens and adhere to code formatting standards. To set this, go to VS Code settings, search for `editor ruler`,
+then add `120` to the `settings.json`.
