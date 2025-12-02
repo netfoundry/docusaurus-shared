@@ -6,7 +6,7 @@ intelligence and reliability. Consistency in tone, voice, and style is not just 
 part of the user experience. When our docs are consistent, they're easier to read, faster to scan, and they build user
 trust.
 
-## TLDR
+## TL;DR
 
 - Use [sentence-style casing](#sentence-style-casing).
 - Use active voice when possible, especially for how-tos.
