@@ -24,10 +24,14 @@ trust.
 ## Headings
 
 - Use [ATX headings](https://github.github.com/gfm/#atx-headings), and include a line space after each heading.
-- When linking to a page, try to have the link text match the H1, unless you're using a shortened form as part of a
-  sentence.
 - For table of contents (ToC) headers, try to make them match the H1 unless you need to shorten for space, or shorten to
   reduce redundancy of terms.
+
+## Linking
+
+- When linking to a page, try to have the link text match the H1, unless you're using a shortened form as part of a
+  sentence.
+- For help with linking, see the [README](README.md).
 
 ### Sentence-style casing
 
