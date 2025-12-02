@@ -11,6 +11,7 @@ trust.
 - Use [sentence-style casing](#sentence-style-casing).
 - Use active voice when possible, especially for how-tos.
 - Use everyday language.
+- Use [screenshots](#images-and-file-names) compatible with mobile devices.
 
 ## Tone and voice
 
