@@ -1,10 +1,10 @@
 # NetFoundry style guide
 
-This guide is the single source of truth for how we communicate at NetFoundry. Whether you're writing a quick how-to
-guide, an in-depth reference, UI content, or a blog post, our documentation is a direct reflection of our brand's
-intelligence and reliability. Consistency in tone, voice, and style is not just a matter of good grammar; it's a vital
-part of the user experience. When our docs are consistent, they're easier to read, faster to scan, and they build user
-trust.
+This guide is the single source of truth for all technical content and user-facing documentation at NetFoundry. Whether
+you're writing a quick how-to guide, an in-depth reference, UI content, or a blog post, our documentation is a direct
+reflection of our brand's intelligence and reliability. Consistency in tone, voice, and style is not just a matter of
+good grammar; it's a vital part of the user experience. When our docs are consistent, they're easier to read, faster to
+scan, and they build user trust.
 
 ## TL;DR
 
@@ -116,13 +116,17 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 - Don't use "the button". Say "Click **Next**."
 - Tell the user to *click* UI items. If it's a drop-down, use *select*.
 
-## Images and file names
+## Images and File Names
 
-- A significant amount of readers are on mobile. Don't use images wider than 600-700 px. Shrink browsers for screenshots.
-  Check the site on your phone.
-- Avoid spaces in file names. Descriptive filenames in kebab-case (alphanumeric, lowercase, and with hyphens to seperate
-  words) is preferable.
-- Give images a descriptive alt text.
+- A significant amount of readers are on mobile. Don't use images wider than 600-700 px. Shrink browsers for
+  screenshots.
+- Check the site on your phone. Alternatively, use Chrome DevTools:
+  - Open your documentation page in Chrome.
+  - Open DevTools (**F12** or **Ctrl+Shift+I** / **Cmd+Option+I**).
+  - Click the **Toggle device toolbar** icon (it looks like a phone and tablet) in the upper-left corner of the DevTools
+    window.
+  - Use the dropdown menu at the top of the viewport to select a common mobile device (e.g., iPhone SE) or enter the
+    target width manually (e.g., 414px). This simulates the mobile viewing environment.
 
 ## Word choices
 
@@ -145,7 +149,7 @@ Use them. Only use "Note:" if you have to include it somewhere an admonition can
 ## Spacing
 
 - Use *one* space after periods before the next word.
-- Use line spaces between headers and paras, and when introducing elements like tables or lists.
+- Use line spaces between headers and paragraphs, and when introducing elements like tables or lists.
 - Line spacing helps make Markdown more readable.
 - Establish a hard line limit of 120 characters for all body text lines in Markdown topics to improve readability on
 large screens and adhere to code formatting standards. To set this, go to VS Code settings, search for `editor ruler`,
