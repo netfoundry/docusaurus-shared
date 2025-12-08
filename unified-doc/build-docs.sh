@@ -93,7 +93,7 @@ clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"           
 clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    main
 clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  main
 clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan      main
-clone_or_update "https://github.com/openziti/zrok.git"                           zrok      updates-towards-unified-doc
+clone_or_update "https://github.com/openziti/zrok.git"                           zrok      main
 
 echo "copying versionable docs locally as docusaurus requires them to be adjacent to the config file for reasosns"
 "${script_dir}/sync-versioned-remote.sh" zrok
