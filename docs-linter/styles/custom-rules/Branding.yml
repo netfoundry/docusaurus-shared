@@ -1,20 +1,10 @@
-# styles/custom-rules/Branding.yml
 extends: substitution
 message: "Use '%s' instead of '%s'."
-link: https://my-company-style-guide.com
+link: https://netfoundry.io
 level: error
 ignorecase: true
 swap:
-  # Left side: The regex/text to find (lowercase)
-  # Right side: The correction to suggest
-  netfoundry: NetFoundry
-  frontdoor: Frontdoor
-  openziti: OpenZiti
-  zlan: zLAN
-  Zrok: zrok
-  docusaurus: Docusaurus
-  github: GitHub
-  bitbucket: Bitbucket
-  javascript: JavaScript
-  typescript: TypeScript
+  # KEEP: Substitutions that change structure (spaces, punctuation). For just capitalization, add to accept.txt
   vscode: VS Code
+  open ziti: OpenZiti
+  front door: Frontdoor

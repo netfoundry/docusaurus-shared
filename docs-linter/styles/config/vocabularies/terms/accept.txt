@@ -11,3 +11,7 @@ Frontdoor
 ZLAN
 OpenZiti
 Ziti
+zLAN
+zrok
+JavaScript
+TypeScript
