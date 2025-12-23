@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  vale-sanity-check:
+  vale-quality-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,11 +23,13 @@ jobs:
         run: |
           cd docs-linter
           vale sync
-          vale tests/sanity-check.md --no-exit
+          # Run against your renamed file
+          vale tests/smoke-test.md --no-exit
 
       - name: Install Markdownlint
         run: sudo npm install -g markdownlint-cli
 
       - name: Run Markdownlint (Format Check)
         run: |
-          markdownlint --config docs-linter/.markdownlint.json docs-linter/tests/sanity-check.md || true
+          cd docs-linter
+          markdownlint --config .markdownlint.json tests/smoke-test.md || true
