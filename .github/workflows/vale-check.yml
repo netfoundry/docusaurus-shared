@@ -17,14 +17,12 @@ jobs:
           wget https://github.com/errata-ai/vale/releases/download/v3.9.0/vale_3.9.0_Linux_64-bit.tar.gz
           tar -xvzf vale_3.9.0_Linux_64-bit.tar.gz
           sudo mv vale /usr/local/bin/
-          vale -v
 
       - name: Run Vale Smoke Test
         run: |
           cd docs-linter
           vale sync
-          # Run against your renamed file
-          vale tests/smoke-test.md --no-exit
+          vale smoke-test.md --no-exit
 
       - name: Install Markdownlint
         run: sudo npm install -g markdownlint-cli
@@ -32,4 +30,4 @@ jobs:
       - name: Run Markdownlint (Format Check)
         run: |
           cd docs-linter
-          markdownlint --config .markdownlint.json tests/smoke-test.md || true
+          markdownlint --config .markdownlint.json smoke-test.md || true
