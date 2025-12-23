@@ -23,5 +23,11 @@ jobs:
         run: |
           cd docs-linter
           vale sync
-          vale tests/sanity-check.md
           vale tests/sanity-check.md --no-exit
+
+      - name: Install Markdownlint
+        run: sudo npm install -g markdownlint-cli
+
+      - name: Run Markdownlint (Format Check)
+        run: |
+          markdownlint --config docs-linter/.markdownlint.json docs-linter/tests/sanity-check.md || true
