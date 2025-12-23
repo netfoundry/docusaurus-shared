@@ -24,3 +24,4 @@ jobs:
           cd docs-linter
           vale sync
           vale tests/sanity-check.md
+          vale tests/sanity-check.md --no-exit
