@@ -1,0 +1,26 @@
+name: Vale Linter Check
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  vale-sanity-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vale
+        run: |
+          wget https://github.com/errata-ai/vale/releases/download/v3.9.0/vale_3.9.0_Linux_64-bit.tar.gz
+          tar -xvzf vale_3.9.0_Linux_64-bit.tar.gz
+          sudo mv vale /usr/local/bin/
+          vale -v
+
+      - name: Run Vale Smoke Test
+        run: |
+          cd docs-linter
+          vale sync
+          vale tests/sanity-check.md
