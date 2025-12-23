@@ -1,0 +1,19 @@
+image: jdkato/vale:latest
+
+pipelines:
+  pull-requests:
+    '**': # Runs on all PRs
+      - step:
+          name: Validate Linter Config
+          script:
+            # 1. Download external styles (Microsoft)
+            # This ensures network + config paths are valid
+            - vale sync
+
+            # 2. Run a sanity check on a clean file
+            # If this fails, your config is broken (or the text is bad)
+            - vale tests/sanity-check.md
+
+            # 3. (Optional) Syntax check your YAML files
+            # This ensures you didn't leave a tab or bad space in Branding.yml
+            - vale ls-config
