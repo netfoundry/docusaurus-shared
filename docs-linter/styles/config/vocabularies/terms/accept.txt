@@ -1,21 +1,45 @@
+# ==========================================
+# GENERAL TECHNICAL TERMS
+# (Flexible: entering 'performant' allows 'Performant' at start of sentence)
+# ==========================================
+performant
+hostname
+repo
+linter
+egress
+egressed
+ingress
+ingressed
+sidebar_position
+sidebar_label
+config
+microsegmentation
+
+# ==========================================
+# BRANDS, PRODUCTS, & PROPER NOUNS
+# (Strict: must match this capitalization exactly)
+# ==========================================
+NetFoundry
+OpenZiti
+Ziti
+zrok
+zLAN
+Frontdoor
 Docusaurus
 GitHub
 Bitbucket
-API
-CLI
 Kubernetes
-repo
-linter
-NetFoundry
-Frontdoor
-ZLAN
-OpenZiti
-Ziti
-zLAN
-zrok
+Okta
 JavaScript
 TypeScript
-Okta
+Semver
+
+# ==========================================
+# ACRONYMS
+# (Strict: must be uppercase)
+# ==========================================
+API
+CLI
 JWT
 JWTs
 CA
@@ -23,15 +47,7 @@ CAs
 VM
 VMs
 TLDs
-hostname
-egressed
-egress
-ingress
-ingressed
-Semver
 FQDN
 FQDNs
 AMIs
-mfa
-sidebar_position
-sidebar_label
+MFA
