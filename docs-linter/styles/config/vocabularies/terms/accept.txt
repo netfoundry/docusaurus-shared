@@ -1,7 +1,3 @@
-# ==========================================
-# GENERAL TECHNICAL TERMS
-# (Flexible: entering 'performant' allows 'Performant' at start of sentence)
-# ==========================================
 performant
 hostname
 repo
@@ -20,11 +16,10 @@ untrusted
 failover
 failovers
 antivirus
-
-# ==========================================
-# BRANDS, PRODUCTS, & PROPER NOUNS
-# (Strict: must match this capitalization exactly)
-# ==========================================
+datacenter
+datacenters
+reachability
+signin
 NetFoundry
 OpenZiti
 Ziti
@@ -40,11 +35,6 @@ JavaScript
 TypeScript
 Semver
 Keycloak
-
-# ==========================================
-# ACRONYMS
-# (Strict: must be uppercase)
-# ==========================================
 API
 AMI
 AMIs
@@ -58,10 +48,6 @@ VMs
 TLDs
 FQDN
 FQDNs
-AMIs
 MFA
 IdP
 IdPs
-FQDN
-FQDNs
-
