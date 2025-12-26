@@ -14,6 +14,8 @@ sidebar_position
 sidebar_label
 config
 microsegmentation
+plaintext
+ciphertext
 
 # ==========================================
 # BRANDS, PRODUCTS, & PROPER NOUNS
@@ -33,6 +35,7 @@ Okta
 JavaScript
 TypeScript
 Semver
+Keycloak
 
 # ==========================================
 # ACRONYMS
@@ -51,3 +54,6 @@ FQDN
 FQDNs
 AMIs
 MFA
+IdP
+IdPs
+
