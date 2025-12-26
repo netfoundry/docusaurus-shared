@@ -16,6 +16,10 @@ config
 microsegmentation
 plaintext
 ciphertext
+untrusted
+failover
+failovers
+antivirus
 
 # ==========================================
 # BRANDS, PRODUCTS, & PROPER NOUNS
@@ -42,6 +46,8 @@ Keycloak
 # (Strict: must be uppercase)
 # ==========================================
 API
+AMI
+AMIs
 CLI
 JWT
 JWTs
@@ -56,4 +62,6 @@ AMIs
 MFA
 IdP
 IdPs
+FQDN
+FQDNs
 
