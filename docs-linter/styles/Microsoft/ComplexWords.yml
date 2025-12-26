@@ -1,0 +1,14 @@
+extends: substitution
+message: "Consider using '%s' instead of '%s'"
+level: warning
+ignorecase: true
+# This rule swaps complex words for simpler ones (e.g. utilize -> use)
+swap:
+  utilize: use
+  utilization: use
+  facilitate: help
+  leverage: use
+  commence: start
+  terminate: end
+  subsequently: later
+  
