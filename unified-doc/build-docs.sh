@@ -51,7 +51,8 @@ clone_or_update() {
       ;;
     *zrok-connector*)
       if [ -n "${BB_REPO_TOKEN_FRONTDOOR:-}" ]; then
-        url="https://x-token-auth:${BB_REPO_TOKEN_FRONTDOOR}@bitbucket.org/netfoundry/zrok-connector.git"
+        local bb_user="${BB_USERNAME:-x-token-auth}"
+        url="https://${bb_user}:${BB_REPO_TOKEN_FRONTDOOR}@bitbucket.org/netfoundry/zrok-connector.git"
         echo "🔑 Using BB_REPO_TOKEN_FRONTDOOR token" >&2
       else
         url="git@bitbucket.org:netfoundry/zrok-connector.git"
