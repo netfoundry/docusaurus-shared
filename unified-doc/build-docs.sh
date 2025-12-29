@@ -42,7 +42,9 @@ clone_or_update() {
       ;;
     *k8s-on-prem-installations*)
       if [ -n "${BB_REPO_TOKEN_ONPREM:-}" ]; then
-        url="https://x-token-auth:${BB_REPO_TOKEN_ONPREM}@bitbucket.org/netfoundry/k8s-on-prem-installations.git"
+        # ✅ This uses the variable logic you added to zrok
+        local bb_user="${BB_USERNAME:-x-token-auth}"
+        url="https://${bb_user}:${BB_REPO_TOKEN_ONPREM}@bitbucket.org/netfoundry/k8s-on-prem-installations.git"
         echo "🔑 Using BB_REPO_TOKEN_ONPREM token" >&2
       else
         url="git@bitbucket.org:netfoundry/k8s-on-prem-installations.git"
