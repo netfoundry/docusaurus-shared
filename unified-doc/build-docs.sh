@@ -3,6 +3,7 @@ set -euo pipefail
 
 # args: optional --clean flag + optional build qualifier like "-prod"
 CLEAN=0
+LINT_ONLY=0
 BUILD_QUALIFIER=""
 QUALIFIER_FLAG=()
 OTHER_FLAGS=()
@@ -11,6 +12,7 @@ EXTRA_ARGS=()
 for arg in "$@"; do
   case $arg in
     --clean) CLEAN=1; OTHER_FLAGS+=("$arg") ;;
+    --lint-only) LINT_ONLY=1 ;;
     --qualifier=*) BUILD_QUALIFIER="${arg#*=}"; QUALIFIER_FLAG=("$arg") ;;
     -*) OTHER_FLAGS+=("$arg") ;;   # only real flags go here, like -ds, -z
     *) EXTRA_ARGS+=("$arg") ;;
@@ -103,6 +105,44 @@ echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"
 mkdir -p "${SDK_ROOT_TARGET}"
 
 "${script_dir}/_remotes/openziti/gendoc.sh" "${OTHER_FLAGS[@]}"
+
+# -----------------------------------------------------------------------------
+# NEW: Linter Logic
+# -----------------------------------------------------------------------------
+lint_docs() {
+    echo "🔍 Starting Quality Checks..."
+
+    # 1. Check if tools are installed
+    if ! command -v vale &> /dev/null; then
+        echo "⚠️  Vale is not installed. Skipping grammar check."
+    else
+        echo "📝 Running Vale..."
+        # Point Vale to the config in docs-linter
+        # Added '|| true' so legacy errors don't break the build
+        vale --config "${script_dir}/docs-linter/.vale.ini" "${script_dir}/_remotes" || true
+    fi
+
+    # 2. Markdownlint Check
+    if ! command -v markdownlint &> /dev/null; then
+        echo "⚠️  Markdownlint is not installed. Skipping format check."
+    else
+        echo "🧹 Running Markdownlint..."
+        # Pointing directly to the folder lets the CLI handle recursion reliably.
+        # Added '|| true' so legacy formatting issues don't break the build
+        markdownlint --config "${script_dir}/docs-linter/.markdownlint.json" "${script_dir}/_remotes" || true
+    fi
+
+    echo "✅ Quality Checks Complete (Warnings logged)."
+}
+
+# Run the linter
+lint_docs
+
+# If we only wanted to lint, stop here.
+if [ "$LINT_ONLY" -eq 1 ]; then
+    echo "🛑 --lint-only specified. Exiting before build."
+    exit 0
+fi
 
 # before building apply and transmutations necessary...
 

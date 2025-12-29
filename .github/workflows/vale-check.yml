@@ -12,22 +12,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # 1. Install Vale
       - name: Install Vale
         run: |
           wget https://github.com/errata-ai/vale/releases/download/v3.9.0/vale_3.9.0_Linux_64-bit.tar.gz
           tar -xvzf vale_3.9.0_Linux_64-bit.tar.gz
           sudo mv vale /usr/local/bin/
 
-      - name: Run Vale Smoke Test
-        run: |
-          cd docs-linter
-          vale sync
-          vale smoke-test.md --no-exit
-
+      # 2. Install Markdownlint
       - name: Install Markdownlint
         run: sudo npm install -g markdownlint-cli
 
-      - name: Run Markdownlint (Format Check)
-        run: |
-          cd docs-linter
-          markdownlint --config .markdownlint.json smoke-test.md || true
+      # 3. Run the Build Script in "Lint Only" mode
+      - name: Run Unified Doc Linter
+        run: ./build-docs.sh --lint-only
