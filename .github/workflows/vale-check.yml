@@ -27,7 +27,7 @@ jobs:
       - name: Run Unified Doc Linter
         env:
           # Your work email (using %40 instead of @)
-          BB_USERNAME: "nico.alba@netfoundry.io"
+          BB_USERNAME: "nicoalba1"
 
           # The secrets you added to the repo settings
           GH_ZITI_CI_REPO_ACCESS_PAT: ${{ secrets.GH_ZITI_CI_REPO_ACCESS_PAT }}
