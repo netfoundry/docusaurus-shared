@@ -25,6 +25,11 @@ jobs:
 
       # 3. Run the Build Script in "Lint Only" mode
       - name: Run Unified Doc Linter
+        env:
+          # Pass the secrets so the script uses HTTPS instead of SSH
+          GH_ZITI_CI_REPO_ACCESS_PAT: ${{ secrets.GH_ZITI_CI_REPO_ACCESS_PAT }}
+          BB_REPO_TOKEN_ONPREM: ${{ secrets.BB_REPO_TOKEN_ONPREM }}
+          BB_REPO_TOKEN_FRONTDOOR: ${{ secrets.BB_REPO_TOKEN_FRONTDOOR }}
         run: |
           chmod +x unified-doc/build-docs.sh
           ./unified-doc/build-docs.sh --lint-only
