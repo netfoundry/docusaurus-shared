@@ -101,36 +101,131 @@ clone_or_update() {
 lint_docs() {
     echo "🔍 Starting Quality Checks..."
 
-    # 1. VALE CHECK
-    if ! command -v vale &> /dev/null; then
-        echo "⚠️  Vale is not installed. Skipping grammar check."
-    else
-        echo "📝 Running Vale (Targeting .md/.mdx only)..."
+    # 1. DEFINE TARGETS
+    POTENTIAL_TARGETS=(
+        "${script_dir}/_remotes/zlan/docusaurus/docs"
+        "${script_dir}/_remotes/frontdoor/docusaurus/docs"
+        "${script_dir}/_remotes/zrok/website/docs"
+        "${script_dir}/_remotes/onprem/docs"
+        "${script_dir}/_remotes/openziti/docusaurus/docs"
+    )
 
-        # EXPLANATION:
-        # -path '*/node_modules/*' -prune : Ignore node_modules folders entirely
-        # -name "*.md" -o -name "*.mdx"    : Look only for these extensions
-        # xargs -0                         : Pass the file list to Vale efficiently
-        find "${script_dir}/_remotes" \
-            -type d \( -name "node_modules" -o -name ".git" \) -prune -o \
-            -type f \( -name "*.md" -o -name "*.mdx" \) \
-            -print0 | xargs -0 vale --config "${script_dir}/../docs-linter/.vale.ini" --no-exit || true
+    # 2. VERIFY FOLDERS
+    VALID_TARGETS=()
+    for target in "${POTENTIAL_TARGETS[@]}"; do
+        if [ -d "$target" ]; then
+            VALID_TARGETS+=("$target")
+        fi
+    done
+
+    if [ ${#VALID_TARGETS[@]} -eq 0 ]; then
+        echo "⚠️  No documentation directories found. Skipping lint."
+        return
     fi
 
-    # 2. MARKDOWNLINT CHECK
-    if ! command -v markdownlint &> /dev/null; then
-        echo "⚠️  Markdownlint is not installed. Skipping format check."
-    else
-        echo "🧹 Running Markdownlint (Targeting .md/.mdx only)..."
+    # 3. GENERATE CLEAN FILE LIST
+    echo "🎯 Gathering file list..."
+    LIST_FILE=$(mktemp)
 
-        # Same find logic as above
-        find "${script_dir}/_remotes" \
-            -type d \( -name "node_modules" -o -name ".git" \) -prune -o \
-            -type f \( -name "*.md" -o -name "*.mdx" \) \
-            -print0 | xargs -0 markdownlint --config "${script_dir}/../docs-linter/.markdownlint.json" || true
+    find "${VALID_TARGETS[@]}" -type f \( -name "*.md" -o -name "*.mdx" \) \
+        | grep -v "/node_modules/" \
+        | grep -v "/docs/_remotes/" \
+        | grep -v "/versioned_docs/" \
+        | grep -v "/build/" \
+        | grep -v "/.git/" \
+        > "$LIST_FILE"
+
+    FILE_COUNT=$(wc -l < "$LIST_FILE")
+    echo "📊 Found $FILE_COUNT files to scan..."
+
+    if [ "$FILE_COUNT" -eq 0 ]; then
+        echo "⚠️  No files found. Skipping."
+        rm "$LIST_FILE"
+        return
     fi
 
-    echo "✅ Quality Checks Complete (Warnings logged)."
+    # 4. RUN LINTERS & CAPTURE
+    VALE_LOG=$(mktemp)
+    MDLINT_LOG=$(mktemp)
+
+    # --- Run Vale ---
+    if command -v vale &> /dev/null; then
+        echo "📝 Running Vale..."
+        tr '\n' '\0' < "$LIST_FILE" | xargs -0 -r timeout 2m vale \
+            --config "${script_dir}/../docs-linter/.vale.ini" \
+            --no-wrap \
+            --no-exit \
+            > "$VALE_LOG" 2>&1
+    fi
+
+    # --- Run Markdownlint ---
+    if command -v markdownlint &> /dev/null; then
+        echo "🧹 Running Markdownlint..."
+        # 2>&1 redirects stderr (where errors live) to stdout so we can capture it
+        tr '\n' '\0' < "$LIST_FILE" | xargs -0 -r timeout 2m markdownlint \
+            --config "${script_dir}/../docs-linter/.markdownlint.json" \
+            > "$MDLINT_LOG" 2>&1 || true
+    fi
+
+    # 5. FORMAT & CLEAN LOGS
+
+    # Format Vale: Strip absolute paths, strip color codes
+    VALE_CLEAN=$(mktemp)
+    sed "s|.*/_remotes/|_remotes/|g" "$VALE_LOG" | sed 's/\x1b\[[0-9;]*m//g' > "$VALE_CLEAN"
+
+    # Format Markdownlint: Strip absolute paths, strip color codes, AND Group by Filename
+    MDLINT_CLEAN=$(mktemp)
+    sed "s|.*/_remotes/|_remotes/|g" "$MDLINT_LOG" | sed 's/\x1b\[[0-9;]*m//g' | \
+    awk -F: '
+        $1!=last { if(NR>1)print""; print $1; last=$1 }
+        { $1=""; print "  " substr($0,2) }
+    ' > "$MDLINT_CLEAN"
+
+    # 6. CALCULATE STATS
+    V_ERR=$(grep -c "error" "$VALE_CLEAN" || true)
+    V_WARN=$(grep -c "warning" "$VALE_CLEAN" || true)
+    V_SUG=$(grep -c "suggestion" "$VALE_CLEAN" || true)
+
+    # For Markdownlint, we count the indented lines (individual errors)
+    MD_ERR=$(grep -c "^  " "$MDLINT_CLEAN" || true)
+
+    TOTAL_ISSUES=$((V_ERR + V_WARN + V_SUG + MD_ERR))
+
+    # 7. PRINT SUMMARY REPORT
+    echo ""
+    echo "========================================================"
+    echo "📊  QUALITY CHECK SUMMARY"
+    echo "========================================================"
+    echo "  📄 Files Scanned:       $FILE_COUNT"
+    echo "  🛑 Vale Errors:         $V_ERR"
+    echo "  ⚠️ Vale Warnings:       $V_WARN"
+    echo "  💡 Vale Suggestions:    $V_SUG"
+    echo "  🧹 Markdownlint Issues: $MD_ERR"
+    echo "--------------------------------------------------------"
+    echo "  🚨 TOTAL ISSUES:        $TOTAL_ISSUES"
+    echo "========================================================"
+    echo ""
+
+    if [ "$MD_ERR" -gt 0 ]; then
+        echo "########################################################"
+        echo "   MARKDOWNLINT REPORT"
+        echo "########################################################"
+        cat "$MDLINT_CLEAN"
+        echo ""
+    fi
+
+    if [ $((V_ERR + V_WARN + V_SUG)) -gt 0 ]; then
+        echo "########################################################"
+        echo "   VALE REPORT"
+        echo "########################################################"
+        cat "$VALE_CLEAN"
+        echo ""
+    fi
+
+    # Cleanup
+    rm "$LIST_FILE" "$VALE_LOG" "$MDLINT_LOG" "$VALE_CLEAN" "$MDLINT_CLEAN"
+
+    echo "✅ Quality Checks Complete."
 }
 
 # -----------------------------------------------------------------------------
