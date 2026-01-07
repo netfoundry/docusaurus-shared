@@ -26,6 +26,11 @@ echo "bd OTHER_FLAGS: ${OTHER_FLAGS[*]}"
 echo "bd EXTRA_ARGS: ${EXTRA_ARGS[*]}"
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+
+# -----------------------------------------------------------------------------
+# HELPER FUNCTIONS
+# -----------------------------------------------------------------------------
+
 clone_or_update() {
   local url="$1" dest="$2" branch="${3:-main}"
   local target="$script_dir/_remotes/$dest"
@@ -42,7 +47,6 @@ clone_or_update() {
       ;;
     *k8s-on-prem-installations*)
       if [ -n "${BB_REPO_TOKEN_ONPREM:-}" ]; then
-        # ✅ This uses the variable logic you added to zrok
         local bb_user="${BB_USERNAME:-x-token-auth}"
         url="https://${bb_user}:${BB_REPO_TOKEN_ONPREM}@bitbucket.org/netfoundry/k8s-on-prem-installations.git"
         echo "🔑 Using BB_REPO_TOKEN_ONPREM token" >&2
@@ -94,51 +98,57 @@ clone_or_update() {
   fi
 }
 
+lint_docs() {
+    echo "🔍 Starting Quality Checks..."
+
+    # 1. VALE CHECK
+    if ! command -v vale &> /dev/null; then
+        echo "⚠️  Vale is not installed. Skipping grammar check."
+    else
+        echo "📝 Running Vale (Targeting .md/.mdx only)..."
+
+        # EXPLANATION:
+        # -path '*/node_modules/*' -prune : Ignore node_modules folders entirely
+        # -name "*.md" -o -name "*.mdx"    : Look only for these extensions
+        # xargs -0                         : Pass the file list to Vale efficiently
+        find "${script_dir}/_remotes" \
+            -type d \( -name "node_modules" -o -name ".git" \) -prune -o \
+            -type f \( -name "*.md" -o -name "*.mdx" \) \
+            -print0 | xargs -0 vale --config "${script_dir}/../docs-linter/.vale.ini" --no-exit || true
+    fi
+
+    # 2. MARKDOWNLINT CHECK
+    if ! command -v markdownlint &> /dev/null; then
+        echo "⚠️  Markdownlint is not installed. Skipping format check."
+    else
+        echo "🧹 Running Markdownlint (Targeting .md/.mdx only)..."
+
+        # Same find logic as above
+        find "${script_dir}/_remotes" \
+            -type d \( -name "node_modules" -o -name ".git" \) -prune -o \
+            -type f \( -name "*.md" -o -name "*.mdx" \) \
+            -print0 | xargs -0 markdownlint --config "${script_dir}/../docs-linter/.markdownlint.json" || true
+    fi
+
+    echo "✅ Quality Checks Complete (Warnings logged)."
+}
+
+# -----------------------------------------------------------------------------
+# EXECUTION START
+# -----------------------------------------------------------------------------
+
 clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor develop
 clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    main
 clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  main
 clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan      main
 clone_or_update "https://github.com/openziti/zrok.git"                           zrok      main
 
-echo "copying versionable docs locally as docusaurus requires them to be adjacent to the config file for reasosns"
+echo "copying versionable docs locally..."
 "${script_dir}/sync-versioned-remote.sh" zrok
 
-export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
-echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"
-mkdir -p "${SDK_ROOT_TARGET}"
-
-"${script_dir}/_remotes/openziti/gendoc.sh" "${OTHER_FLAGS[@]}"
-
 # -----------------------------------------------------------------------------
-# NEW: Linter Logic
+# STEP 1: Linter (Run BEFORE heavy build steps)
 # -----------------------------------------------------------------------------
-lint_docs() {
-    echo "🔍 Starting Quality Checks..."
-
-    # 1. Check if tools are installed
-    if ! command -v vale &> /dev/null; then
-        echo "⚠️  Vale is not installed. Skipping grammar check."
-    else
-        echo "📝 Running Vale..."
-        # Point Vale to the config in docs-linter
-        # Added '|| true' so legacy errors don't break the build
-        vale --config "${script_dir}/docs-linter/.vale.ini" "${script_dir}/_remotes" || true
-    fi
-
-    # 2. Markdownlint Check
-    if ! command -v markdownlint &> /dev/null; then
-        echo "⚠️  Markdownlint is not installed. Skipping format check."
-    else
-        echo "🧹 Running Markdownlint..."
-        # Pointing directly to the folder lets the CLI handle recursion reliably.
-        # Added '|| true' so legacy formatting issues don't break the build
-        markdownlint --config "${script_dir}/docs-linter/.markdownlint.json" "${script_dir}/_remotes" || true
-    fi
-
-    echo "✅ Quality Checks Complete (Warnings logged)."
-}
-
-# Run the linter
 lint_docs
 
 # If we only wanted to lint, stop here.
@@ -147,7 +157,15 @@ if [ "$LINT_ONLY" -eq 1 ]; then
     exit 0
 fi
 
-# before building apply and transmutations necessary...
+# -----------------------------------------------------------------------------
+# STEP 2: Heavy Build (SDKs + Yarn)
+# -----------------------------------------------------------------------------
+
+export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
+echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"
+mkdir -p "${SDK_ROOT_TARGET}"
+
+"${script_dir}/_remotes/openziti/gendoc.sh" "${OTHER_FLAGS[@]}"
 
 pushd "${script_dir}" >/dev/null
 yarn install
