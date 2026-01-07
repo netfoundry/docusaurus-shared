@@ -24,13 +24,11 @@ jobs:
         run: sudo npm install -g markdownlint-cli
 
       # 3. Run Linter Locally
-      # We point the tools to the config files found inside THIS repo (unified-doc/docs-linter/)
-      # We tell them to scan the current directory (".")
       - name: Run Quality Checks
         run: |
           echo "📝 Running Vale..."
-          vale --config unified-doc/docs-linter/.vale.ini .
+          vale --config docs-linter/.vale.ini .
 
           echo "🧹 Running Markdownlint..."
           # The '|| true' prevents the build from failing if there are legacy formatting issues
-          markdownlint --config unified-doc/docs-linter/.markdownlint.json . || true
+          markdownlint --config docs-linter/.markdownlint.json . || true
