@@ -1,0 +1,23 @@
+bd CLEAN=0
+bd BUILD_QUALIFIER=''
+bd QUALIFIER_FLAG: 
+bd OTHER_FLAGS: 
+bd EXTRA_ARGS: 
+🔑 Using SSH for frontdoor
+ℹ️  /home/nicoa/code/netfoundry/docusaurus-shared/unified-doc/_remotes/frontdoor exists; skipping update (use --clean to reset).
+🔑 Using SSH for onprem
+ℹ️  /home/nicoa/code/netfoundry/docusaurus-shared/unified-doc/_remotes/onprem exists; skipping update (use --clean to reset).
+🔑 Using SSH for ziti-doc
+ℹ️  /home/nicoa/code/netfoundry/docusaurus-shared/unified-doc/_remotes/openziti exists; skipping update (use --clean to reset).
+🔑 Using SSH for zlan
+ℹ️  /home/nicoa/code/netfoundry/docusaurus-shared/unified-doc/_remotes/zlan exists; skipping update (use --clean to reset).
+ℹ️  /home/nicoa/code/netfoundry/docusaurus-shared/unified-doc/_remotes/zrok exists; skipping update (use --clean to reset).
+copying versionable docs locally...
+Syncing versioned docs from /home/nicoa/code/netfoundry/docusaurus-shared/unified-doc/_remotes/zrok/website...
+✓ Copied zrok_versioned_docs/
+✓ Copied zrok_versioned_sidebars/
+✓ Copied zrok_versions.json
+🔍 Starting Quality Checks...
+🎯 Gathering file list...
+📊 Found 355 files to scan...
+📝 Running Vale...
