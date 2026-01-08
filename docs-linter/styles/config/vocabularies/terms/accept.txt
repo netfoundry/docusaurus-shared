@@ -51,3 +51,4 @@ FQDNs
 MFA
 IdP
 IdPs
+namespace
