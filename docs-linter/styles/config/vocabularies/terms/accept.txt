@@ -1,4 +1,6 @@
 performant
+config
+Config
 hostname
 repo
 linter
