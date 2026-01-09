@@ -83,9 +83,9 @@ awk -F: '
 ' > "$MD_CLEAN"
 
 # --- 7. SUMMARY & REPORT ---
-V_ERR=$(grep -c "error" "$VALE_CLEAN" || true)
-V_WARN=$(grep -c "warning" "$VALE_CLEAN" || true)
-V_SUG=$(grep -c "suggestion" "$VALE_CLEAN" || true)
+V_ERR=$(grep -c " error " "$VALE_CLEAN" || true)
+V_WARN=$(grep -c " warning " "$VALE_CLEAN" || true)
+V_SUG=$(grep -c " suggestion " "$VALE_CLEAN" || true)
 MD_ERR=$(grep -c "^  " "$MD_CLEAN" || true)
 TOTAL=$((V_ERR + V_WARN + V_SUG + MD_ERR))
 
