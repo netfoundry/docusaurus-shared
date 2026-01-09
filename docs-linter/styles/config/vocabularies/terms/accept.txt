@@ -9,6 +9,8 @@ ingressed
 sidebar_position
 sidebar_label
 config
+Config types
+Config Types
 microsegmentation
 plaintext
 ciphertext
