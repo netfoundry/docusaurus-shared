@@ -1,34 +1,26 @@
-name: Vale Linter Check
+name: Lint Docs
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request]
 
 jobs:
-  vale-quality-check:
+  lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-      # 1. Install Vale
-      - name: Install Vale
+      # 1. Install Tools (Same as Bitbucket/Local)
+      - name: Install Tools
         run: |
+          # Install Vale
           wget https://github.com/errata-ai/vale/releases/download/v3.9.0/vale_3.9.0_Linux_64-bit.tar.gz
           tar -xvzf vale_3.9.0_Linux_64-bit.tar.gz
           sudo mv vale /usr/local/bin/
+          # Install Markdownlint
+          npm install -g markdownlint-cli
 
-      # 2. Install Markdownlint
-      - name: Install Markdownlint
-        run: sudo npm install -g markdownlint-cli
-
-      # 3. Run Linter Locally
-      - name: Run Quality Checks
+      # 2. Run your Custom Script
+      - name: Run Quality Check
         run: |
-          echo "📝 Running Vale..."
-          vale --config docs-linter/.vale.ini --no-exit .
-
-          echo "🧹 Running Markdownlint..."
-          # The '|| true' prevents the build from failing if there are legacy formatting issues
-          markdownlint --config docs-linter/.markdownlint.json . || true
+          chmod +x docs-linter/lint.sh
+          # Run lint.sh targeting the current directory "."
+          ./docs-linter/lint.sh .
