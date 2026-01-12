@@ -7,8 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      # 1. Install Tools (Same as Bitbucket/Local)
       - name: Install Tools
         run: |
           # Install Vale
@@ -17,8 +15,6 @@ jobs:
           sudo mv vale /usr/local/bin/
           # Install Markdownlint
           npm install -g markdownlint-cli
-
-      # 2. Run your Custom Script
       - name: Run Quality Check
         run: |
           chmod +x docs-linter/lint.sh

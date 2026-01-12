@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# args: optional --clean flag + optional build qualifier like "-prod"
+# --- ARGUMENT PARSING ---
 CLEAN=0
 LINT_ONLY=0
 BUILD_QUALIFIER=""
@@ -14,11 +14,12 @@ for arg in "$@"; do
     --clean) CLEAN=1; OTHER_FLAGS+=("$arg") ;;
     --lint-only) LINT_ONLY=1 ;;
     --qualifier=*) BUILD_QUALIFIER="${arg#*=}"; QUALIFIER_FLAG=("$arg") ;;
-    -*) OTHER_FLAGS+=("$arg") ;;   # only real flags go here, like -ds, -z
+    -*) OTHER_FLAGS+=("$arg") ;;   # Pass through flags like -ds, -z
     *) EXTRA_ARGS+=("$arg") ;;
   esac
 done
 
+# --- DEBUG CONFIG ---
 echo "bd CLEAN=$CLEAN"
 echo "bd BUILD_QUALIFIER='$BUILD_QUALIFIER'"
 echo "bd QUALIFIER_FLAG: ${QUALIFIER_FLAG[*]}"
@@ -27,14 +28,15 @@ echo "bd EXTRA_ARGS: ${EXTRA_ARGS[*]}"
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
-# -----------------------------------------------------------------------------
+# =============================================================================
 # HELPER FUNCTIONS
-# -----------------------------------------------------------------------------
+# =============================================================================
 
 clone_or_update() {
   local url="$1" dest="$2" branch="${3:-main}"
   local target="$script_dir/_remotes/$dest"
 
+  # --- AUTHENTICATION LOGIC ---
   case "$url" in
     *zlan*)
       if [ -n "${GH_ZITI_CI_REPO_ACCESS_PAT:-}" ]; then
@@ -76,10 +78,11 @@ clone_or_update() {
       ;;
   esac
 
+  # --- CLONE / UPDATE LOGIC ---
   if [ -d "$target/.git" ]; then
     if [ "${CLEAN:-0}" -eq 1 ]; then
       if ! git -C "$target" fetch origin "$branch" --depth 1 \
-           || ! git -C "$target" reset --hard "origin/$branch"; then
+            || ! git -C "$target" reset --hard "origin/$branch"; then
         echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
         echo "👉 Available branches:"
         git -C "$target" ls-remote --heads origin | awk '{print $2}' | sed 's|refs/heads/||'
@@ -123,7 +126,7 @@ lint_docs() {
         return
     fi
 
-    # 3. GENERATE CLEAN FILE LIST
+    # 3. GENERATE CLEAN FILE LIST (Restored exactly as it was)
     echo "🎯 Gathering file list..."
     LIST_FILE=$(mktemp)
 
@@ -161,7 +164,6 @@ lint_docs() {
     # --- Run Markdownlint ---
     if command -v markdownlint &> /dev/null; then
         echo "🧹 Running Markdownlint..."
-        # 2>&1 redirects stderr (where errors live) to stdout so we can capture it
         tr '\n' '\0' < "$LIST_FILE" | xargs -0 -r timeout 2m markdownlint \
             --config "${script_dir}/../docs-linter/.markdownlint.json" \
             > "$MDLINT_LOG" 2>&1 || true
@@ -185,8 +187,6 @@ lint_docs() {
     V_ERR=$(grep -c "error" "$VALE_CLEAN" || true)
     V_WARN=$(grep -c "warning" "$VALE_CLEAN" || true)
     V_SUG=$(grep -c "suggestion" "$VALE_CLEAN" || true)
-
-    # For Markdownlint, we count the indented lines (individual errors)
     MD_ERR=$(grep -c "^  " "$MDLINT_CLEAN" || true)
 
     TOTAL_ISSUES=$((V_ERR + V_WARN + V_SUG + MD_ERR))
@@ -198,7 +198,7 @@ lint_docs() {
     echo "========================================================"
     echo "  📄 Files Scanned:       $FILE_COUNT"
     echo "  🛑 Vale Errors:         $V_ERR"
-    echo "  ⚠️ Vale Warnings:       $V_WARN"
+    echo "  ⚠️  Vale Warnings:       $V_WARN"
     echo "  💡 Vale Suggestions:    $V_SUG"
     echo "  🧹 Markdownlint Issues: $MD_ERR"
     echo "--------------------------------------------------------"
@@ -207,18 +207,19 @@ lint_docs() {
     echo ""
 
     if [ "$MD_ERR" -gt 0 ]; then
-        echo "########################################################"
-        echo "   MARKDOWNLINT REPORT"
-        echo "########################################################"
+        echo "################### MARKDOWNLINT REPORT ###################"
         cat "$MDLINT_CLEAN"
         echo ""
     fi
 
     if [ $((V_ERR + V_WARN + V_SUG)) -gt 0 ]; then
-        echo "########################################################"
-        echo "   VALE REPORT"
-        echo "########################################################"
+        echo "####################### VALE REPORT #######################"
         cat "$VALE_CLEAN"
+
+        # The "Reality Check" Line
+        if [ "$MD_ERR" -gt 0 ]; then
+             echo "🛑 BUT WAIT! You also have $MD_ERR Markdownlint errors (see above)."
+        fi
         echo ""
     fi
 
@@ -228,9 +229,9 @@ lint_docs() {
     echo "✅ Quality Checks Complete."
 }
 
-# -----------------------------------------------------------------------------
-# EXECUTION START
-# -----------------------------------------------------------------------------
+# =============================================================================
+# MAIN EXECUTION
+# =============================================================================
 
 clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor develop
 clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    main
@@ -241,27 +242,22 @@ clone_or_update "https://github.com/openziti/zrok.git"                          
 echo "copying versionable docs locally..."
 "${script_dir}/sync-versioned-remote.sh" zrok
 
-# -----------------------------------------------------------------------------
-# STEP 1: Linter (Run BEFORE heavy build steps)
-# -----------------------------------------------------------------------------
+# --- STEP 1: LINT ---
 lint_docs
 
-# If we only wanted to lint, stop here.
 if [ "$LINT_ONLY" -eq 1 ]; then
     echo "🛑 --lint-only specified. Exiting before build."
     exit 0
 fi
 
-# -----------------------------------------------------------------------------
-# STEP 2: Heavy Build (SDKs + Yarn)
-# -----------------------------------------------------------------------------
-
+# --- STEP 2: BUILD SDKs ---
 export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
 echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"
 mkdir -p "${SDK_ROOT_TARGET}"
 
 "${script_dir}/_remotes/openziti/gendoc.sh" "${OTHER_FLAGS[@]}"
 
+# --- STEP 3: DOCUSAURUS BUILD ---
 pushd "${script_dir}" >/dev/null
 yarn install
 now=$(date)

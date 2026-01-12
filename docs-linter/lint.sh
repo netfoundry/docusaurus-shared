@@ -1,96 +1,84 @@
 #!/bin/bash
 
-# --- 1. SETUP PATHS ---
-# Determine where this script is located (inside docs-linter)
+# --- CONFIGURATION ---
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-# The config files are now in the SAME directory as the script
 CONFIG_DIR="$SCRIPT_DIR"
-
-# The target to scan is the first argument, or current directory if empty
 TARGET_DIR="${1:-.}"
 
-# --- 2. VALIDATION ---
+# --- VALIDATION ---
 if [ ! -f "$CONFIG_DIR/.vale.ini" ]; then
-    echo "❌ Error: Could not find .vale.ini in $CONFIG_DIR"
+    echo "❌ Error: .vale.ini not found in $CONFIG_DIR"
     exit 1
 fi
 
 if [ ! -d "$TARGET_DIR" ]; then
-    echo "❌ Error: Target directory '$TARGET_DIR' does not exist."
+    echo "❌ Error: Target '$TARGET_DIR' does not exist."
     exit 1
 fi
 
-# --- 3. PREPARE TEMPORARY LOGS ---
+# --- TEMP FILES ---
 LIST_FILE=$(mktemp)
 VALE_LOG=$(mktemp)
 MD_LOG=$(mktemp)
 VALE_CLEAN=$(mktemp)
 MD_CLEAN=$(mktemp)
 
-# --- 4. GATHER FILES ---
-echo "🎯 Gathering file list from '$TARGET_DIR'..."
+# --- GATHER FILES ---
+echo "🎯 Gathering files from '$TARGET_DIR'..."
 
-# Find markdown files, ignoring node_modules, remotes, and versioned docs
+# CHANGE 1: Added |_partials to the exclusion list to fix MD041 errors on snippets
 find "$TARGET_DIR" -type f \( -name "*.md" -o -name "*.mdx" \) \
-    | grep -v "/node_modules/" \
-    | grep -v "/_remotes/" \
-    | grep -v "/versioned_docs/" \
+    | grep -vE "/(node_modules|_remotes|versioned_docs|_partials)/" \
     > "$LIST_FILE"
 
 FILE_COUNT=$(wc -l < "$LIST_FILE")
 echo "📊 Found $FILE_COUNT files to scan..."
 
 if [ "$FILE_COUNT" -eq 0 ]; then
-    echo "⚠️  No files found to scan."
+    echo "⚠️  No files found."
     rm "$LIST_FILE" "$VALE_LOG" "$MD_LOG"
     exit 0
 fi
 
-# --- 5. RUN LINTERS ---
-
-# Check if Vale is installed
+# --- EXECUTION ---
+# 1. Run Vale
 if command -v vale &> /dev/null; then
     echo "📝 Running Vale..."
     tr '\n' '\0' < "$LIST_FILE" | xargs -0 -r timeout 5m vale \
         --config "$CONFIG_DIR/.vale.ini" \
-        --no-wrap \
-        --no-exit \
-        > "$VALE_LOG" 2>&1
+        --no-wrap --no-exit > "$VALE_LOG" 2>&1
 else
-    echo "⚠️  Vale is not installed. Skipping."
+    echo "⚠️  Vale not installed. Skipping."
 fi
 
-# Check if Markdownlint is installed
+# 2. Run Markdownlint
 if command -v markdownlint &> /dev/null; then
     echo "🧹 Running Markdownlint..."
     tr '\n' '\0' < "$LIST_FILE" | xargs -0 -r timeout 5m markdownlint \
         --config "$CONFIG_DIR/.markdownlint.json" \
         > "$MD_LOG" 2>&1 || true
 else
-    echo "⚠️  Markdownlint is not installed. Skipping."
+    echo "⚠️  Markdownlint not installed. Skipping."
 fi
 
-# --- 6. FORMAT OUTPUT ---
-# Strip absolute paths for readability
+# --- FORMAT LOG OUTPUT ---
 CWD=$(pwd)
-sed "s|$CWD/||g" "$VALE_LOG" | sed 's/\x1b\[[0-9;]*m//g' > "$VALE_CLEAN"
 
+sed "s|$CWD/||g" "$VALE_LOG" | sed 's/\x1b\[[0-9;]*m//g' > "$VALE_CLEAN"
 sed "s|$CWD/||g" "$MD_LOG" | sed 's/\x1b\[[0-9;]*m//g' | \
 awk -F: '
     $1!=last { if(NR>1)print""; print $1; last=$1 }
     { $1=""; print "  " substr($0,2) }
 ' > "$MD_CLEAN"
 
-# --- 7. SUMMARY & REPORT ---
+# --- SUMMARY ---
 V_ERR=$(grep -c " error " "$VALE_CLEAN" || true)
 V_WARN=$(grep -c " warning " "$VALE_CLEAN" || true)
 V_SUG=$(grep -c " suggestion " "$VALE_CLEAN" || true)
 MD_ERR=$(grep -c "^  " "$MD_CLEAN" || true)
 TOTAL=$((V_ERR + V_WARN + V_SUG + MD_ERR))
 
-echo ""
-echo "========================================================"
+echo -e "\n========================================================"
 echo "📊  LINT SUMMARY"
 echo "========================================================"
 echo "  📄 Files Scanned:       $FILE_COUNT"
@@ -100,27 +88,25 @@ echo "  💡 Vale Suggestions:    $V_SUG"
 echo "  🧹 Markdownlint Issues: $MD_ERR"
 echo "--------------------------------------------------------"
 echo "  🚨 TOTAL ISSUES:        $TOTAL"
-echo "========================================================"
-echo ""
+echo -e "========================================================\n"
 
+# --- REPORTING ---
 if [ "$MD_ERR" -gt 0 ]; then
-    echo "########################################################"
-    echo "   MARKDOWNLINT REPORT"
-    echo "########################################################"
+    echo "################### MARKDOWNLINT REPORT ###################"
     cat "$MD_CLEAN"
     echo ""
 fi
 
-if [ $((V_ERR + V_WARN + V_SUG)) -gt 0 ]; then
-    echo "########################################################"
-    echo "   VALE REPORT"
-    echo "########################################################"
+# Check if Vale actually ran (output is not empty)
+if [ -s "$VALE_CLEAN" ]; then
+    echo "####################### VALE REPORT #######################"
     cat "$VALE_CLEAN"
+    # If Markdownlint failed, remind the user right after Vale's "All Good" message
+    if [ "$MD_ERR" -gt 0 ]; then
+         echo "🛑 BUT WAIT! You also have $MD_ERR Markdownlint errors (see above)."
+    fi
     echo ""
 fi
 
-# Cleanup
+# --- REMOVE TEMP FILES ---
 rm "$LIST_FILE" "$VALE_LOG" "$MD_LOG" "$VALE_CLEAN" "$MD_CLEAN"
-
-# Optional: Exit with failure if errors found
-# [ "$TOTAL" -gt 0 ] && exit 1 || exit 0
