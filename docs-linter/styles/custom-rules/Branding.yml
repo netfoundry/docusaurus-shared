@@ -1,0 +1,10 @@
+extends: substitution
+message: "Use '%s' instead of '%s'."
+link: https://netfoundry.io
+level: error
+ignorecase: true
+swap:
+  # Substitutions that change structure (spaces, punctuation). For just capitalization, add to accept.txt
+  vscode: VS Code
+  open ziti: OpenZiti
+  front door: Frontdoor

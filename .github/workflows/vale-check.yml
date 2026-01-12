@@ -1,0 +1,22 @@
+name: Lint Docs
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Tools
+        run: |
+          # Install Vale
+          wget https://github.com/errata-ai/vale/releases/download/v3.9.0/vale_3.9.0_Linux_64-bit.tar.gz
+          tar -xvzf vale_3.9.0_Linux_64-bit.tar.gz
+          sudo mv vale /usr/local/bin/
+          # Install Markdownlint
+          npm install -g markdownlint-cli
+      - name: Run Quality Check
+        run: |
+          chmod +x docs-linter/lint.sh
+          # Run lint.sh targeting the current directory "."
+          ./docs-linter/lint.sh .

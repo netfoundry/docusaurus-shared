@@ -1,0 +1,74 @@
+# Regex patterns (case-insensitive matching)
+(?i)config
+(?i)ip
+(?i)hostname
+
+# URLs and domains
+openziti.io
+www.openziti.io
+netfoundry.io
+www.netfoundry.io
+
+# Technical terms (compound words, tech jargon)
+antivirus
+ciphertext
+datacenter
+datacenters
+egress
+egressed
+failover
+failovers
+ingress
+ingressed
+microsegmentation
+plaintext
+reachability
+signin
+untrusted
+
+# Documentation-specific terms
+sidebar_position
+sidebar_label
+
+# Product/Brand names
+Docusaurus
+Frontdoor
+NetFoundry
+OpenZiti
+Ziti
+zLAN
+zrok
+
+# Third-party products/services
+Bitbucket
+GitHub
+JavaScript
+Keycloak
+Kubernetes
+Okta
+TypeScript
+
+# Acronyms and initialisms
+AMI
+AMIs
+API
+CA
+CAs
+CLI
+FQDN
+FQDNs
+IdP
+IdPs
+JWT
+JWTs
+MFA
+TLDs
+VM
+VMs
+
+# Other terms
+namespace
+Semver
+linter
+performant
+repo
