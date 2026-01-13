@@ -28,7 +28,8 @@ echo "🎯 Gathering files from '$TARGET_DIR'..."
 
 # CHANGE 1: Added |_partials to the exclusion list to fix MD041 errors on snippets
 find "$TARGET_DIR" -type f \( -name "*.md" -o -name "*.mdx" \) \
-    | grep -vE "/(node_modules|_remotes|versioned_docs|_partials)/" \
+    | grep -vE "/(node_modules|versioned_docs)/" \
+    | grep -v "/_" \
     > "$LIST_FILE"
 
 FILE_COUNT=$(wc -l < "$LIST_FILE")
