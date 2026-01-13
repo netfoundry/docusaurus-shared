@@ -1,0 +1,185 @@
+---
+title: Social Media Preview Best Practices with NetFoundry Components
+description: Learn how to create compelling social media previews that drive engagement using our enhanced layout system
+slug: social-preview-best-practices
+authors: [ClintDovholuk]
+tags: [social-media, best-practices, seo, marketing]
+image: https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg
+---
+
+import {Alert, SocialHead, createSocialPreview, blogSocialPreviewTemplate} from '@openclint/docusaurus-shared/ui';
+
+<SocialHead socialMeta={createSocialPreview({
+  siteName: "NetFoundry Blog",
+  defaultImage: "https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg",
+  twitterSite: "@netfoundry"
+}, blogSocialPreviewTemplate)({
+  title: "Social Preview Best Practices Guide",
+  description: "Master the art of creating compelling social media previews that convert viewers into readers.",
+  image: "https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg",
+  author: "Sarah Johnson",
+  section: "Developer Experience",
+  tags: ["social-media", "best-practices", "seo"],
+  twitterX: {
+    creator: "@netfoundrydev"
+  }
+})} />
+
+![Social Media Preview Best Practices](https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg)
+
+Social media previews are your content's first impression. In this comprehensive guide, we'll explore how to leverage NetFoundry's enhanced layout system to create previews that stop the scroll and drive engagement.
+
+<!--truncate-->
+
+## Why Social Previews Matter
+
+When someone shares your content on Twitter, LinkedIn, Facebook, or Discord, the preview card is often the deciding factor between a click and a scroll. Studies show that posts with compelling images receive **94% more views** than text-only posts.
+
+<Alert title="Pro Tip" type="info">
+The first 3 seconds are crucial - your preview needs to communicate value immediately.
+</Alert>
+
+## The Anatomy of a Great Social Preview
+
+### 1. **Compelling Title** (55-60 characters)
+Your title should be:
+- Clear and descriptive
+- Action-oriented when appropriate
+- Optimized for the platform
+
+```yaml
+# Good ✅
+title: "Zero Trust Security: 5 Implementation Strategies That Work"
+
+# Bad ❌
+title: "Some thoughts on security and stuff we've been working on lately"
+```
+
+### 2. **Engaging Description** (155-160 characters)
+- Expand on the title's promise
+- Include a clear benefit or outcome
+- Use active voice
+
+### 3. **Visual Impact** (1200x630px recommended)
+- High contrast and readable text
+- Consistent branding
+- Mobile-friendly design
+
+## Implementation with NetFoundry Components
+
+### Blog Posts
+```tsx
+import {SocialHead, createSocialPreview, blogSocialPreviewTemplate} from '@openclint/docusaurus-shared/ui';
+
+<SocialHead socialMeta={createSocialPreview(config, blogSocialPreviewTemplate)({
+  title: "Your Compelling Title",
+  description: "A description that makes people want to click and read more.",
+  image: "/img/custom-blog-header.jpg",
+  author: "Your Name",
+  section: "Category",
+  tags: ["relevant", "tags"]
+})} />
+```
+
+### Documentation Pages
+```yaml
+---
+title: API Authentication Guide
+description: Learn how to implement secure API authentication in 10 minutes
+image: /img/api-auth-preview.png
+imageAlt: "API authentication flow diagram"
+author: Technical Team
+---
+```
+
+### Custom Pages
+```tsx
+const socialMeta = generateSocialMeta({
+  title: "Landing Page Title",
+  description: "Converting description text",
+  image: "/img/landing-hero.jpg",
+  type: "website"
+});
+
+return (
+  <Layout>
+    <SocialHead socialMeta={socialMeta} />
+    {/* Page content */}
+  </Layout>
+);
+```
+
+## Platform-Specific Considerations
+
+### Twitter/X
+- Focuses on the image and first line of description
+- 280-character limit affects sharing text
+- Use `summary_large_image` card type
+
+### LinkedIn
+- Professional tone works best
+- Company logos perform well
+- Longer descriptions are acceptable
+
+### Facebook
+- Emphasizes the image heavily
+- Description truncates around 300 characters
+- Videos auto-play in previews
+
+### Discord
+- Clean, simple designs work best
+- High contrast is important
+- Embeds show full content
+
+## Testing Your Previews
+
+<Alert title="Testing Checklist" type="success">
+1. **Facebook Debugger**: https://developers.facebook.com/tools/debug/
+2. **Twitter Card Validator**: https://cards-dev.twitter.com/validator
+3. **LinkedIn Inspector**: https://www.linkedin.com/post-inspector/
+4. **Real platform testing**: Share on actual platforms
+</Alert>
+
+## Common Mistakes to Avoid
+
+❌ **Generic stock photos** - Use custom, branded imagery
+❌ **Text-heavy images** - Keep it simple and readable
+❌ **Inconsistent branding** - Maintain visual consistency
+❌ **Forgetting mobile** - Test on mobile devices
+❌ **Ignoring alt text** - Always include descriptive alt text
+
+## Advanced Tips
+
+### 1. **A/B Testing**
+Test different titles, descriptions, and images to see what resonates with your audience.
+
+### 2. **Seasonal Updates**
+Update preview images for holidays, events, or product launches.
+
+### 3. **Template Systems**
+Create consistent templates for different content types:
+- Blog posts
+- Product announcements
+- Documentation updates
+- Event promotions
+
+### 4. **Analytics Integration**
+Track which previews drive the most traffic and engagement.
+
+## Measuring Success
+
+Key metrics to track:
+- **Click-through rate** from social platforms
+- **Engagement rate** on shared posts
+- **Traffic attribution** from social media
+- **Conversion rate** from social traffic
+
+## Conclusion
+
+Great social previews are a combination of compelling content, visual design, and technical implementation. With NetFoundry's enhanced layout system, you have all the tools needed to create previews that drive real results.
+
+Remember: your social preview is often the first touchpoint with potential readers. Make it count! 🎯
+
+---
+
+**Ready to optimize your social previews?** Check out our [documentation](/docs/example-doc) for more technical details, or explore our [meta test page](/meta/) to see these techniques in action.

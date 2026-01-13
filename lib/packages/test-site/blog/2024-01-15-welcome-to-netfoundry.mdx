@@ -1,0 +1,89 @@
+---
+title: Welcome to NetFoundry's Enhanced Layout System
+description: Introducing our new base layout + specific layout pattern for better social media integration
+slug: welcome-enhanced-layouts
+authors: [KennethBingham]
+tags: [layouts, social-media, docusaurus, components]
+image: https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg
+---
+
+import {SocialHead, createSocialPreview, blogSocialPreviewTemplate} from '@openclint/docusaurus-shared/ui';
+
+<SocialHead socialMeta={createSocialPreview({
+  siteName: "NetFoundry Blog",
+  defaultImage: "https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg",
+  twitterSite: "@netfoundry"
+}, blogSocialPreviewTemplate)({
+  title: "Enhanced Layout System Launch",
+  description: "We've revolutionized how you control social media previews with our new layout architecture.",
+  image: "https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg",
+  author: "NetFoundry Team",
+  section: "Engineering",
+  tags: ["layouts", "social-media", "components"]
+})} />
+
+![NetFoundry Enhanced Layouts](https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg)
+
+We're excited to announce the launch of our enhanced layout system for Docusaurus! This new architecture gives you complete control over social media previews for any blog post, documentation page, or custom page.
+
+<!--truncate-->
+
+## What's New?
+
+Our new layout system introduces:
+
+### 🎯 **BaseLayout Foundation**
+A solid foundation component that handles:
+- Core layout structure (navbar, footer, error boundaries)
+- Essential metadata management
+- Provider setup and theme management
+
+### 🎨 **Specific Layout Variants**
+- **PageLayout**: Perfect for simple pages with minimal structure
+- **DocLayout**: Documentation-focused with automatic frontmatter integration
+- **BlogLayout**: Blog-specific features like author attribution and publication dates
+
+### 📱 **Enhanced Social Preview Control**
+- Flexible metadata system with per-layout defaults
+- Support for layout-specific social preview templates
+- Easy frontmatter override support
+- Complete Open Graph and Twitter Card compatibility
+
+## Key Benefits
+
+✅ **Granular Control**: Each layout type optimizes social previews for its content type
+✅ **Automatic Enhancement**: DocLayout extracts metadata from Docusaurus frontmatter
+✅ **Consistent Branding**: Centralized social preview configuration
+✅ **SEO Optimized**: Proper Open Graph and Twitter Card meta tags
+✅ **Type Safety**: Full TypeScript support throughout
+
+## Usage Examples
+
+### For Blog Posts
+```tsx
+import {SocialHead, createSocialPreview, blogSocialPreviewTemplate} from '@openclint/docusaurus-shared/ui';
+
+<SocialHead socialMeta={createSocialPreview(config, blogSocialPreviewTemplate)({
+  title: "My Blog Post",
+  description: "An amazing blog post about...",
+  author: "Author Name",
+  tags: ["tag1", "tag2"]
+})} />
+```
+
+### For Documentation
+Just use frontmatter - it's automatically enhanced:
+```yaml
+---
+title: My Documentation
+description: Comprehensive guide to...
+author: Technical Writer
+image: /img/custom-preview.png
+---
+```
+
+## The Future
+
+This is just the beginning! We're continuing to enhance the system with more templates, better automation, and even more social platform support.
+
+Stay tuned for more updates, and happy blogging! 🚀

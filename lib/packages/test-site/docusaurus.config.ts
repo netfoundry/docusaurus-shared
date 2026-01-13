@@ -72,7 +72,15 @@ export default {
                 routeBasePath: '/docs',
                 sidebarPath: './sidebars.ts'
             },
-            blog: false,
+            blog: {
+                routeBasePath: '/blog',
+                showReadingTime: true,
+                feedOptions: {
+                    type: 'all',
+                    title: 'NetFoundry Blog',
+                    description: 'Latest updates from NetFoundry',
+                },
+            },
             theme: {
                 customCss: require.resolve('./src/custom/custom.css'),
             }
@@ -99,6 +107,11 @@ export default {
                         { to: 'https://localhost/frontdoor/intro', label: 'Frontdoor' },
                         { to: 'https://localhost/openziti/learn/introduction', label: 'OpenZiti' },
                     ],
+                },
+                {
+                    to: '/blog',
+                    label: 'Blog',
+                    position: 'left'
                 },
             ],
         },
