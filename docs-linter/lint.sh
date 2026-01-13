@@ -26,7 +26,6 @@ MD_CLEAN=$(mktemp)
 # --- GATHER FILES ---
 echo "🎯 Gathering files from '$TARGET_DIR'..."
 
-# CHANGE 1: Added |_partials to the exclusion list to fix MD041 errors on snippets
 find "$TARGET_DIR" -type f \( -name "*.md" -o -name "*.mdx" \) \
     | grep -vE "/(node_modules|versioned_docs)/" \
     | grep -v "/_" \
@@ -102,7 +101,6 @@ fi
 if [ -s "$VALE_CLEAN" ]; then
     echo "####################### VALE REPORT #######################"
     cat "$VALE_CLEAN"
-    # If Markdownlint failed, remind the user right after Vale's "All Good" message
     if [ "$MD_ERR" -gt 0 ]; then
          echo "🛑 BUT WAIT! You also have $MD_ERR Markdownlint errors (see above)."
     fi
