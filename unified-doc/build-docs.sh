@@ -126,7 +126,7 @@ lint_docs() {
         return
     fi
 
-    # 3. GENERATE CLEAN FILE LIST (Restored exactly as it was)
+    # 3. GENERATE CLEAN FILE LIST
     echo "🎯 Gathering file list..."
     LIST_FILE=$(mktemp)
 
@@ -136,6 +136,8 @@ lint_docs() {
         | grep -v "/versioned_docs/" \
         | grep -v "/build/" \
         | grep -v "/.git/" \
+        | grep -v "/_partials/" \
+        | grep -v "/_[^/]*$" \
         > "$LIST_FILE"
 
     FILE_COUNT=$(wc -l < "$LIST_FILE")
@@ -170,12 +172,9 @@ lint_docs() {
     fi
 
     # 5. FORMAT & CLEAN LOGS
-
-    # Format Vale: Strip absolute paths, strip color codes
     VALE_CLEAN=$(mktemp)
     sed "s|.*/_remotes/|_remotes/|g" "$VALE_LOG" | sed 's/\x1b\[[0-9;]*m//g' > "$VALE_CLEAN"
 
-    # Format Markdownlint: Strip absolute paths, strip color codes, AND Group by Filename
     MDLINT_CLEAN=$(mktemp)
     sed "s|.*/_remotes/|_remotes/|g" "$MDLINT_LOG" | sed 's/\x1b\[[0-9;]*m//g' | \
     awk -F: '
@@ -216,7 +215,6 @@ lint_docs() {
         echo "####################### VALE REPORT #######################"
         cat "$VALE_CLEAN"
 
-        # The "Reality Check" Line
         if [ "$MD_ERR" -gt 0 ]; then
              echo "🛑 BUT WAIT! You also have $MD_ERR Markdownlint errors (see above)."
         fi
