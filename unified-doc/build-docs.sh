@@ -109,7 +109,7 @@ lint_docs() {
         "${script_dir}/_remotes/zlan/docusaurus/docs"
         "${script_dir}/_remotes/frontdoor/docusaurus/docs"
         "${script_dir}/_remotes/zrok/website/docs"
-        "${script_dir}/_remotes/onprem/docs"
+        "${script_dir}/_remotes/onprem/docusaurus/docs"
         "${script_dir}/_remotes/openziti/docusaurus/docs"
     )
 
