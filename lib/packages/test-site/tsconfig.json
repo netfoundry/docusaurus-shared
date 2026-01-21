@@ -7,7 +7,7 @@
   "exclude": [".docusaurus", "build"],
   "baseUrl": ".",
   "paths": {
-    "@openclint/docusaurus-shared/ui": [
+    "@netfoundry/docusaurus-shared/ui": [
       "../docusaurus-shared/src/ui.ts"
     ]
   },

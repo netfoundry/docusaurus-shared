@@ -1,3 +1,67 @@
 # Page 1
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 this is page 1
+
+
+
+<Tabs
+defaultValue="Azure"
+values={[
+{ label: 'Azure', value: 'Azure', },
+{ label: 'AWS', value: 'AWS', },
+{ label: 'Google', value: 'GCP', },
+{ label: 'Digital Ocean', value: 'DigitalOcean', },
+{ label: 'Oracle', value: 'OCI', },
+{ label: 'IBM', value: 'IBM', },
+]}
+>
+<TabItem value="Azure">
+
+- Once the VM is created, we can get the IP address of the VM from the Virtual machine screen.
+- Login to the VM by using defined user "username" (default username is azureuser) and the private sshkey:
+```text
+ssh -i <private_key> <username>@<ip>
+```
+</TabItem>
+<TabItem value="AWS">
+
+- Once the VM is created, we can get the IP address of the VM from the Instance(s) screen.
+
+Login to the VM by using user name "ubuntu":
+```text
+ssh -i <private_key> ubuntu@<ip>
+```
+</TabItem>
+<TabItem value="GCP">
+
+- Once the VM is created, we can login through **SSH** button on the VM instances screen. Make sure **ssh is allow** on the firewall before you do this. Alternatively, you can [configure firewall](#29-firewall) first.
+
+</TabItem>
+<TabItem value="DigitalOcean">
+
+- Once the VM is created, get the IP address of the droplet from the Resources screen. Login to the VM by using user "root" and IP address:
+```text
+ssh root@<ip>
+```
+</TabItem>
+<TabItem value="OCI">
+
+- Once the VM is created, we can get the IP address of the VM from the instance details screen.
+- Login to the VM by using user name "ubuntu" and the IP address:
+```text
+ssh -i <private_key> ubuntu@<ip>
+```
+</TabItem>
+<TabItem value="IBM">
+
+- Once the VM is created, we can get the IP address of the VM from the Devices screen.
+- Login to the VM by using user name "ubuntu" and the IP address:
+```text
+ssh -i <private_key> ubuntu@<ip>
+```
+</TabItem>
+</Tabs>
+

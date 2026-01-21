@@ -1,5 +1,5 @@
 {
-  "name": "@openclint/docusaurus-shared",
+  "name": "@netfoundry/docusaurus-shared",
   "version": "0.0.168",
   "description": "Shared components for Docusaurus projects",
   "type": "module",

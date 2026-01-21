@@ -10,8 +10,8 @@ import Navbar from '@theme/Navbar';
 import LayoutProvider from '@theme/Layout/Provider';
 import ErrorPageContent from '@theme/ErrorPageContent';
 import styles from './NetFoundryLayout.module.css';
-import {NetFoundryFooter, NetFoundryFooterProps, StarUs} from "@openclint/docusaurus-shared/ui";
-import {StarUsProps} from "@openclint/docusaurus-shared/ui";
+import {NetFoundryFooter, NetFoundryFooterProps, StarUs} from "@netfoundry/docusaurus-shared/ui";
+import {StarUsProps} from "@netfoundry/docusaurus-shared/ui";
 
 
 export interface H1Props {

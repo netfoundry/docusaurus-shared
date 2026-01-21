@@ -1,6 +1,6 @@
 import React, {type ReactNode} from 'react';
 import {useKeyboardNavigation} from '@docusaurus/theme-common/internal';
-import {NetFoundryLayout, NetFoundryLayoutProps, StarUsProps} from '@openclint/docusaurus-shared/ui';
+import {NetFoundryLayout, NetFoundryLayoutProps, StarUsProps} from '@netfoundry/docusaurus-shared/ui';
 import {unifiedFooter} from "@site/src/footer";
 import useDocusaurusContext from "@docusaurus/core/lib/client/exports/useDocusaurusContext";
 

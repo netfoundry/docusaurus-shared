@@ -8,9 +8,9 @@ import {
     remarkReplaceMetaUrl,
     remarkScopedPath,
     remarkYouTube
-} from "@openclint/docusaurus-shared/plugins";
+} from "@netfoundry/docusaurus-shared/plugins";
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
-import {pluginHotjar} from "@openclint/docusaurus-shared/node";
+import {pluginHotjar} from "@netfoundry/docusaurus-shared/node";
 import {PublishConfig} from 'src/components/docusaurus'
 import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 

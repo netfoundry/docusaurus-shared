@@ -1,6 +1,6 @@
 import React, {JSX} from 'react';
 import Layout from '@theme/Layout';
-import {Alert, NetFoundryHorizontalSection} from '@openclint/docusaurus-shared/ui';
+import {Alert, NetFoundryHorizontalSection} from '@netfoundry/docusaurus-shared/ui';
 
 export default function Home(): JSX.Element {
     const title = 'Home AA';
