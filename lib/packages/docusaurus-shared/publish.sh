@@ -12,6 +12,7 @@ fi
 
 echo "Version $VERSION is available, proceeding..."
 
+yarn install
 yarn build
 yarn test
 yarn publish 
