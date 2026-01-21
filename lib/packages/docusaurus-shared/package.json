@@ -1,6 +1,6 @@
 {
   "name": "@netfoundry/docusaurus-shared",
-  "version": "0.0.168",
+  "version": "0.1.0",
   "description": "Shared components for Docusaurus projects",
   "type": "module",
   "main": "dist/ui.cjs.js",
