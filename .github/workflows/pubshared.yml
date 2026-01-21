@@ -9,6 +9,9 @@ permissions:
 
 jobs:
   publish:
+    defaults:
+      run:
+        working-directory: packages/shared
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
