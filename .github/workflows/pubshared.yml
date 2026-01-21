@@ -11,7 +11,7 @@ jobs:
   publish:
     defaults:
       run:
-        working-directory: packages/shared
+        working-directory: lib/packages/docusaurus-shared
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,6 +21,7 @@ jobs:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
+      - run: corepack enable
       - run: yarn install --immutable
       - run: yarn build --if-present
       - run: yarn test
