@@ -1,4 +1,4 @@
-name: Publish @netfoundry/docusaurus-shared
+name: Publish the shared library to npmjs
 
 on:
   workflow_dispatch:
