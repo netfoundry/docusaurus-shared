@@ -17,5 +17,7 @@ jobs:
           node-version: 24
           registry-url: 'https://registry.npmjs.org'
 
+      - run: npm install -g npm@latest # https://github.com/orgs/community/discussions/173102#discussioncomment-14367428 states the latest npm isn't installed???
+
       - name: Publish
         run: ./lib/packages/docusaurus-shared/publish.sh
