@@ -3,12 +3,13 @@ name: Publish @netfoundry/docusaurus-shared
 on:
   workflow_dispatch:
 
+permissions:
+  id-token: write  # Required for OIDC. see https://docs.npmjs.com/trusted-publishers#supported-cicd-providers
+  contents: read
+
 jobs:
   publish:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
     defaults:
       run:
         working-directory: lib/packages/docusaurus-shared
