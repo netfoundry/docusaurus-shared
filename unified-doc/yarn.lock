@@ -2398,6 +2398,14 @@
     hls.js "~1.6.6"
     mux-embed "^5.8.3"
 
+"@netfoundry/docusaurus-shared@^0.0.168":
+  version "0.0.168"
+  resolved "https://registry.yarnpkg.com/@netfoundry/docusaurus-shared/-/docusaurus-shared-0.0.168.tgz#60cdb4693377a2ffc176d12bd8080a79f5042033"
+  integrity sha512-jbgXAF9i/0by1iFgI5Wbr4qHVcqwQO2bbKktCk1T5iS9bpMGLquf5nITAxWj05f/XJMLXWWwerFMetYd3Q9xiA==
+  dependencies:
+    react-device-detect "^2.2.3"
+    react-github-btn "^1.4.0"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -2418,14 +2426,6 @@
   dependencies:
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
-
-"@openclint/docusaurus-shared@^0.0.168":
-  version "0.0.168"
-  resolved "https://registry.yarnpkg.com/@openclint/docusaurus-shared/-/docusaurus-shared-0.0.168.tgz#f6a0dd58535393f9961f311e7ba24704945aee43"
-  integrity sha512-uITA4Xf3ItQ8TKZR/N8IkWZDJaXoJQ7PntPIB8vjlH4qBkIIRVn3Gnc5eRt/hgRnUnK2Jxy5Gr0znS0M58NYyA==
-  dependencies:
-    react-device-detect "^2.2.3"
-    react-github-btn "^1.4.0"
 
 "@opentelemetry/api@1.9.0":
   version "1.9.0"

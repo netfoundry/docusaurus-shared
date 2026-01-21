@@ -1,14 +1,15 @@
 import type { Config } from '@docusaurus/types';
+import type * as Preset from '@docusaurus/preset-classic';
 import path from "node:path";
 import {themes as prismThemes} from 'prism-react-renderer';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
-const frontdoor = `./_remotes/frontdoor`;
-const onprem = `./_remotes/onprem`;
-const openziti = `./_remotes/openziti`;
-const zrok = `./_remotes/zrok`;
-const zlan = `./_remotes/zlan`;
-const docsBase = `/docs`
+
+interface PublishConfig {
+    docusaurus: { url: string };
+    algolia: { appId: string; apiKey: string; indexName: string };
+    hotjar: { id: string };
+}
 
 const staging: PublishConfig = {
     docusaurus: {
@@ -45,6 +46,12 @@ export default {
     url: 'https://netfoundry.io',
     baseUrl: '/',
 
+    // Register the NetFoundry theme
+    themes: [
+        // Use local path for development; in production would be '@netfoundry/docusaurus-theme'
+        path.resolve(__dirname, '../docusaurus-theme'),
+    ],
+
     plugins: [
         function webpackAliases() {
             return {
@@ -53,12 +60,10 @@ export default {
                     return {
                         resolve: {
                             alias: {
+                                // Alias for local development
                                 "@netfoundry/docusaurus-shared/ui": path.resolve(__dirname, "../docusaurus-shared/src/ui.ts"),
-                                '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
-                                '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
-                                '@zrok': path.resolve(__dirname, `${zrok}/docusaurus`),
-                                '@onprem': path.resolve(__dirname, `${onprem}/docs-site`),
-                                '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
+                                "@netfoundry/docusaurus-shared/index.css": path.resolve(__dirname, "../docusaurus-shared/dist/index.css"),
+                                "@netfoundry/docusaurus-shared/css/legacy.css": path.resolve(__dirname, "../docusaurus-shared/src/css/legacy.css"),
                             },
                         },
                     };
@@ -81,6 +86,23 @@ export default {
     ],
 
     themeConfig: {
+        // NetFoundry theme configuration
+        netfoundry: {
+            showStarBanner: true,
+            starBanner: {
+                repoUrl: 'https://github.com/openziti/ziti',
+                label: 'Star OpenZiti on GitHub',
+            },
+            footer: {
+                description: 'This is just a test site for the NetFoundry Docusaurus theme.',
+                socialProps: {
+                    githubUrl: 'https://github.com/netfoundry/',
+                    youtubeUrl: 'https://youtube.com/netfoundry/',
+                    linkedInUrl: 'https://www.linkedin.com/company/netfoundry/',
+                    twitterUrl: 'https://twitter.com/netfoundry/',
+                },
+            },
+        },
         // Replace with your project's social card
         image: 'https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg',
         navbar: {

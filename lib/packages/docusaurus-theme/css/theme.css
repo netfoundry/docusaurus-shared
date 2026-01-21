@@ -1,0 +1,15 @@
+/**
+ * NetFoundry Docusaurus Theme - Combined Styles
+ *
+ * This file is automatically loaded by the theme via getClientModules().
+ * It imports all necessary CSS from @netfoundry/docusaurus-shared.
+ *
+ * Consuming projects no longer need to manually add these imports
+ * to their custom.css files.
+ */
+
+/* Core theme CSS with variables and layout */
+@import "@netfoundry/docusaurus-shared/index.css";
+
+/* Legacy design system variables and comprehensive styling */
+@import "@netfoundry/docusaurus-shared/css/legacy.css";
