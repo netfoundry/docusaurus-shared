@@ -32,7 +32,7 @@ cd "$WHERE"
 yarn install
 
 # 4. add your published theme
-yarn add @openclint/docusaurus-shared@*
+yarn add @netfoundry/docusaurus-shared@*
 
 # 5. emit layout (conditionally include starProps if label and repoUrl provided)
 star_attr=""
@@ -43,7 +43,7 @@ fi
 mkdir -p src/theme/Layout && \
 cat <<EOF > src/theme/Layout/index.tsx
 import React, {type ReactNode} from 'react';
-import { NetFoundryLayout, NetFoundryLayoutProps } from '@openclint/docusaurus-shared';
+import { NetFoundryLayout, NetFoundryLayoutProps } from '@netfoundry/docusaurus-shared';
 
 export default function LayoutWrapper(props: NetFoundryLayoutProps): ReactNode {
   return (
@@ -57,10 +57,10 @@ EOF
 # 6. add css import
 if [[ "$OSTYPE" == "darwin"* ]]; then
   sed -i '' '1i\
-@import "@openclint/docusaurus-shared/dist/index.css";
+@import "@netfoundry/docusaurus-shared/dist/index.css";
 ' src/css/custom.css
 else
-  sed -i '1i@import "@openclint/docusaurus-shared/dist/index.css";' src/css/custom.css
+  sed -i '1i@import "@netfoundry/docusaurus-shared/dist/index.css";' src/css/custom.css
 fi
 
 # 7. backup and emit a basic .gitignore

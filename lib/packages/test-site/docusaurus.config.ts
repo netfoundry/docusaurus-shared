@@ -53,7 +53,7 @@ export default {
                     return {
                         resolve: {
                             alias: {
-                                "@openclint/docusaurus-shared/ui": path.resolve(__dirname, "../docusaurus-shared/src/ui.ts"),
+                                "@netfoundry/docusaurus-shared/ui": path.resolve(__dirname, "../docusaurus-shared/src/ui.ts"),
                                 '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
                                 '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
                                 '@zrok': path.resolve(__dirname, `${zrok}/docusaurus`),

@@ -6,7 +6,7 @@ import {
     defaultNetFoundryFooterProps,
     NetFoundryHorizontalSection,
     NetFoundryLayout,
-} from '@openclint/docusaurus-shared/ui';
+} from '@netfoundry/docusaurus-shared/ui';
 import styles from "./index.module.css";
 
 export default function Home(): ReactNode {
