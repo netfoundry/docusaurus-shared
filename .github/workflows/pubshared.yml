@@ -16,7 +16,6 @@ jobs:
         with:
           node-version: 24
           registry-url: 'https://registry.npmjs.org'
-          cache-dependency-path: lib/yarn.lock
 
       - name: Publish
         run: ./lib/packages/docusaurus-shared/publish.sh
