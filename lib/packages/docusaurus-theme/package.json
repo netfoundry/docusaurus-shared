@@ -1,6 +1,6 @@
 {
   "name": "@netfoundry/docusaurus-theme",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "NetFoundry Docusaurus theme with shared layout, footer, and styling",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -15,6 +15,25 @@
   "publishConfig": {
     "access": "public"
   },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./ui": {
+      "types": "./src/ui.ts",
+      "default": "./src/ui.ts"
+    },
+    "./plugins": {
+      "types": "./src/plugins.ts",
+      "default": "./src/plugins.ts"
+    },
+    "./node": {
+      "types": "./src/node.ts",
+      "default": "./src/node.ts"
+    },
+    "./css/*": "./css/*"
+  },
   "peerDependencies": {
     "@docusaurus/core": "^3",
     "@docusaurus/theme-classic": "^3",
@@ -23,8 +42,9 @@
     "react-dom": "^18 || ^19"
   },
   "dependencies": {
-    "@netfoundry/docusaurus-shared": "^0.1.1",
-    "clsx": "^2.0.0"
+    "clsx": "^2.0.0",
+    "react-device-detect": "^2.2.3",
+    "react-github-btn": "^1.4.0"
   },
   "devDependencies": {
     "@docusaurus/types": "^3",

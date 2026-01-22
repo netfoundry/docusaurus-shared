@@ -4,7 +4,7 @@ import {
   NetFoundryLayout,
   defaultNetFoundryFooterProps,
   defaultSocialProps,
-} from '@netfoundry/docusaurus-shared/ui';
+} from '../../src/ui';
 import type { ThemeConfigWithNetFoundry } from '../../src/options';
 
 export interface LayoutProps {

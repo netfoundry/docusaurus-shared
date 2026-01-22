@@ -52,25 +52,7 @@ export default {
         path.resolve(__dirname, '../docusaurus-theme'),
     ],
 
-    plugins: [
-        function webpackAliases() {
-            return {
-                name: 'unified-doc-webpack-aliases',
-                configureWebpack(config, isServer) {
-                    return {
-                        resolve: {
-                            alias: {
-                                // Alias for local development
-                                "@netfoundry/docusaurus-shared/ui": path.resolve(__dirname, "../docusaurus-shared/src/ui.ts"),
-                                "@netfoundry/docusaurus-shared/index.css": path.resolve(__dirname, "../docusaurus-shared/dist/index.css"),
-                                "@netfoundry/docusaurus-shared/css/legacy.css": path.resolve(__dirname, "../docusaurus-shared/src/css/legacy.css"),
-                            },
-                        },
-                    };
-                },
-            };
-        },
-    ],
+    plugins: [],
     presets: [
         ['classic', {
             docs: {
