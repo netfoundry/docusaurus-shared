@@ -1,6 +1,6 @@
 {
   "name": "@netfoundry/docusaurus-theme",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "NetFoundry Docusaurus theme with shared layout, footer, and styling",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build": "yarn clean && tsc && yarn build:css",
-    "build:css": "find src -name '*.css' -exec sh -c 'mkdir -p dist/$(dirname {}) && cp {} dist/{}' \\;",
+    "build:css": "cp -r css dist/ && find src -name '*.css' -exec sh -c 'mkdir -p dist/$(dirname {}) && cp {} dist/{}' \\;",
     "test": "jest",
     "prepublishOnly": "yarn build && yarn test"
   },
