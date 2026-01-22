@@ -6,44 +6,41 @@ This guide covers the development workflow for making changes to the NetFoundry 
 
 ```
 docusaurus-shared/
-├── lib/packages/
-│   ├── docusaurus-theme/     # @netfoundry/docusaurus-theme (THE THEME)
-│   │   ├── src/
-│   │   │   ├── index.ts          # Theme entry point
-│   │   │   ├── ui.ts             # UI components entry
-│   │   │   ├── plugins.ts        # Remark plugins entry
-│   │   │   ├── node.ts           # Node utilities entry
-│   │   │   ├── components/       # React components
-│   │   │   └── docusaurus-plugins/
-│   │   ├── theme/
-│   │   │   └── Layout/           # Docusaurus Layout override
-│   │   ├── css/
-│   │   │   ├── theme.css         # Main CSS (imports others)
-│   │   │   ├── vars.css          # Light mode variables
-│   │   │   ├── vars-dark.css     # Dark mode variables
-│   │   │   └── legacy.css        # Comprehensive styling
-│   │   └── __tests__/
-│   │
-│   ├── docusaurus-shared/    # @netfoundry/docusaurus-shared (LEGACY)
-│   │   └── ...               # Component library (being phased out)
-│   │
-│   └── test-site/            # Local development test site
-│       ├── docusaurus.config.ts
-│       ├── docs/
-│       └── src/
+├── packages/
+│   └── docusaurus-theme/     # @netfoundry/docusaurus-theme
+│       ├── src/
+│       │   ├── index.ts          # Theme entry point
+│       │   ├── ui.ts             # UI components entry
+│       │   ├── plugins.ts        # Remark plugins entry
+│       │   ├── node.ts           # Node utilities entry
+│       │   ├── components/       # React components
+│       │   └── docusaurus-plugins/
+│       ├── theme/
+│       │   └── Layout/           # Docusaurus Layout override
+│       ├── css/
+│       │   ├── theme.css         # Main CSS (imports others)
+│       │   ├── vars.css          # Light mode variables
+│       │   ├── vars-dark.css     # Dark mode variables
+│       │   └── legacy.css        # Comprehensive styling
+│       └── __tests__/
+│
+├── test-site/                # Local development test site
+│   ├── docusaurus.config.ts
+│   ├── docs/
+│   └── src/
 │
 ├── unified-doc/              # Unified documentation build system
 ├── docs-linter/              # Vale + markdownlint tooling
 ├── bootstrap.sh              # New site bootstrapper
+├── package.json              # Workspace root
 └── CONTRIBUTING.md           # You are here
 ```
 
-## Packages Overview
+## The Theme Package
 
 | Package | npm | Purpose |
 |---------|-----|---------|
-| `@netfoundry/docusaurus-theme` | [npm](https://www.npmjs.com/package/@netfoundry/docusaurus-theme) | **Primary package.** Drop-in Docusaurus theme with layout, footer, components, and styling. |
-| `@netfoundry/docusaurus-shared` | [npm](https://www.npmjs.com/package/@netfoundry/docusaurus-shared) | Legacy component library. Being merged into the theme. |
+| `@netfoundry/docusaurus-theme` | [npm](https://www.npmjs.com/package/@netfoundry/docusaurus-theme) | Drop-in Docusaurus theme with layout, footer, components, and styling. |
 
 ---
 
@@ -58,17 +55,16 @@ docusaurus-shared/
 
 ```bash
 git clone https://github.com/netfoundry/docusaurus-shared.git
-cd docusaurus-shared/lib/packages
+cd docusaurus-shared
 yarn install
 ```
 
-### Directory Navigation
+### Quick Commands (from repo root)
 
-From repo root:
 ```bash
-cd lib/packages/docusaurus-theme    # Theme package
-cd lib/packages/test-site           # Test site
-cd lib/packages/docusaurus-shared   # Legacy package
+yarn dev      # Start test-site dev server
+yarn build    # Build test-site
+yarn test     # Run theme tests
 ```
 
 ---
@@ -77,7 +73,7 @@ cd lib/packages/docusaurus-shared   # Legacy package
 
 ### 1. Configure Local Development
 
-Edit `test-site/docusaurus.config.ts` to use the local theme path:
+The test-site is pre-configured to use the local theme. Check `test-site/docusaurus.config.ts`:
 
 ```typescript
 import path from "node:path";
@@ -85,7 +81,7 @@ import path from "node:path";
 export default {
     themes: [
         // Use local path for development; in production would be '@netfoundry/docusaurus-theme'
-        path.resolve(__dirname, '../docusaurus-theme'),
+        path.resolve(__dirname, '../packages/docusaurus-theme'),
         // Remote reference to test the deployed package
         // '@netfoundry/docusaurus-theme'
     ],
@@ -96,8 +92,9 @@ export default {
 ### 2. Start Development Server
 
 ```bash
-cd lib/packages/test-site
-yarn start
+yarn dev
+# or
+cd test-site && yarn start
 ```
 
 Open http://localhost:3000. Changes to theme files hot-reload automatically.
@@ -108,39 +105,39 @@ Common file locations:
 
 | Change Type | File Location |
 |-------------|---------------|
-| CSS variables (colors, spacing) | `docusaurus-theme/css/legacy.css` |
-| Light mode variables | `docusaurus-theme/css/vars.css` |
-| Dark mode variables | `docusaurus-theme/css/vars-dark.css` |
-| Layout wrapper | `docusaurus-theme/theme/Layout/index.tsx` |
-| Footer component | `docusaurus-theme/src/components/NetFoundryFooter/` |
-| Star banner | `docusaurus-theme/src/components/StarUs/` |
-| Other components | `docusaurus-theme/src/components/` |
-| Remark plugins | `docusaurus-theme/src/docusaurus-plugins/` |
-| Theme config types | `docusaurus-theme/src/options.ts` |
+| CSS variables (colors, spacing) | `packages/docusaurus-theme/css/legacy.css` |
+| Light mode variables | `packages/docusaurus-theme/css/vars.css` |
+| Dark mode variables | `packages/docusaurus-theme/css/vars-dark.css` |
+| Layout wrapper | `packages/docusaurus-theme/theme/Layout/index.tsx` |
+| Footer component | `packages/docusaurus-theme/src/components/NetFoundryFooter/` |
+| Star banner | `packages/docusaurus-theme/src/components/StarUs/` |
+| Other components | `packages/docusaurus-theme/src/components/` |
+| Remark plugins | `packages/docusaurus-theme/src/docusaurus-plugins/` |
+| Theme config types | `packages/docusaurus-theme/src/options.ts` |
 
 ### 4. Test Your Changes
 
 ```bash
 # Development server (hot reload)
-cd lib/packages/test-site
-yarn start
+yarn dev
 
 # Production build (catches more issues)
 yarn build
-yarn serve
+cd test-site && yarn serve
 ```
 
 ### 5. Run Tests
 
 ```bash
-cd lib/packages/docusaurus-theme
 yarn test
+# or
+cd packages/docusaurus-theme && yarn test
 ```
 
 ### 6. Publish
 
 ```bash
-cd lib/packages/docusaurus-theme
+cd packages/docusaurus-theme
 
 # Bump version
 npm version patch   # 0.1.2 → 0.1.3
@@ -165,7 +162,7 @@ themes: [
 
 Then:
 ```bash
-cd lib/packages/test-site
+cd test-site
 yarn install
 yarn build
 ```
@@ -183,7 +180,7 @@ The tab highlight color (`--nf-tab-color`) is pink in light mode. We want grey i
 ### Step 1: Find the Variable
 
 ```bash
-grep -n "nf-tab-color" lib/packages/docusaurus-theme/css/legacy.css
+grep -n "nf-tab-color" packages/docusaurus-theme/css/legacy.css
 ```
 
 Output:
@@ -196,31 +193,15 @@ Output:
 - Line 89-90: Light mode (`:root`)
 - Line 143: Dark mode (`html[data-theme="dark"]`)
 
-### Step 2: Set Up Local Development
-
-Edit `lib/packages/test-site/docusaurus.config.ts`:
-
-```typescript
-import path from "node:path";
-
-export default {
-    themes: [
-        path.resolve(__dirname, '../docusaurus-theme'),
-    ],
-    // ...
-};
-```
-
-### Step 3: Start Dev Server
+### Step 2: Start Dev Server
 
 ```bash
-cd lib/packages/test-site
-yarn start
+yarn dev
 ```
 
-### Step 4: Make the Change
+### Step 3: Make the Change
 
-Edit `lib/packages/docusaurus-theme/css/legacy.css` around line 89:
+Edit `packages/docusaurus-theme/css/legacy.css` around line 89:
 
 ```css
 /* Before */
@@ -238,29 +219,26 @@ Edit `lib/packages/docusaurus-theme/css/legacy.css` around line 89:
 
 Save. Browser hot-reloads with new color.
 
-### Step 5: Test Dark Mode
+### Step 4: Test Dark Mode
 
 Toggle dark mode in browser. Dark mode uses a different value (line 143) - verify it still looks correct.
 
-### Step 6: Run Tests & Build
+### Step 5: Run Tests & Build
 
 ```bash
-cd lib/packages/docusaurus-theme
 yarn test
-
-cd ../test-site
 yarn build
 ```
 
-### Step 7: Publish
+### Step 6: Publish
 
 ```bash
-cd lib/packages/docusaurus-theme
+cd packages/docusaurus-theme
 npm version patch
 npm publish
 ```
 
-### Step 8: Final Verification
+### Step 7: Final Verification
 
 Update `test-site/package.json` to new version, switch config to package name, reinstall, rebuild.
 
@@ -268,7 +246,7 @@ Update `test-site/package.json` to new version, switch config to package name, r
 
 ## CSS Variable Reference
 
-Key variables in `docusaurus-theme/css/legacy.css`:
+Key variables in `packages/docusaurus-theme/css/legacy.css`:
 
 | Variable | Purpose | Light Mode | Dark Mode |
 |----------|---------|------------|-----------|
@@ -285,8 +263,8 @@ Key variables in `docusaurus-theme/css/legacy.css`:
 
 Before publishing:
 
-- [ ] `yarn test` passes in `docusaurus-theme/`
-- [ ] `yarn build` succeeds in `test-site/`
+- [ ] `yarn test` passes
+- [ ] `yarn build` succeeds
 - [ ] Light mode looks correct
 - [ ] Dark mode looks correct
 - [ ] Footer renders properly
@@ -301,7 +279,7 @@ Before publishing:
 ### Changes not appearing?
 
 ```bash
-cd lib/packages/test-site
+cd test-site
 yarn clear          # Clear Docusaurus cache
 yarn start          # Restart dev server
 ```
@@ -310,7 +288,7 @@ Also verify `docusaurus.config.ts` uses local path, not package name.
 
 ### Module not found?
 
-1. Run `yarn install` from `lib/packages/`
+1. Run `yarn install` from repo root
 2. Check the file exists at the path specified in `package.json` exports
 3. Restart dev server
 

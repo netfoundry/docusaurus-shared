@@ -49,7 +49,7 @@ export default {
     // Register the NetFoundry theme
     themes: [
         // Use local path for development; in production would be '@netfoundry/docusaurus-theme'
-        path.resolve(__dirname, '../packages/docusaurus-theme'),
+        path.resolve(__dirname, '../docusaurus-theme'),
         // Remote reference to test the deployed package
         // '@netfoundry/docusaurus-theme'
     ],
