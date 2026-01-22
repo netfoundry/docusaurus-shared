@@ -1,6 +1,6 @@
 {
   "name": "@netfoundry/docusaurus-theme",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "NetFoundry Docusaurus theme with shared layout, footer, and styling",
   "main": "src/index.ts",
   "types": "src/index.ts",
