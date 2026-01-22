@@ -1,0 +1,68 @@
+{
+  "name": "@netfoundry/docusaurus-theme",
+  "version": "0.1.2",
+  "description": "NetFoundry Docusaurus theme with shared layout, footer, and styling",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "files": [
+    "src",
+    "theme",
+    "css"
+  ],
+  "scripts": {
+    "build": "echo 'No build needed - theme uses source files directly'",
+    "test": "jest",
+    "prepublishOnly": "yarn test"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./ui": {
+      "types": "./src/ui.ts",
+      "default": "./src/ui.ts"
+    },
+    "./plugins": {
+      "types": "./src/plugins.ts",
+      "default": "./src/plugins.ts"
+    },
+    "./node": {
+      "types": "./src/node.ts",
+      "default": "./src/node.ts"
+    },
+    "./css/*": "./css/*"
+  },
+  "peerDependencies": {
+    "@docusaurus/core": "^3",
+    "@docusaurus/theme-classic": "^3",
+    "@docusaurus/theme-common": "^3",
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
+  },
+  "dependencies": {
+    "clsx": "^2.0.0",
+    "react-device-detect": "^2.2.3",
+    "react-github-btn": "^1.4.0"
+  },
+  "devDependencies": {
+    "@docusaurus/types": "^3",
+    "jest": "^30.0.4",
+    "typescript": "^5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/netfoundry/docusaurus-shared.git",
+    "directory": "packages/docusaurus-theme"
+  },
+  "keywords": [
+    "docusaurus",
+    "docusaurus-theme",
+    "netfoundry",
+    "openziti"
+  ],
+  "license": "Apache-2.0"
+}

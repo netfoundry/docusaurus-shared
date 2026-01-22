@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "test-site"
+  ],
+  "scripts": {
+    "test": "yarn workspace @netfoundry/docusaurus-theme test",
+    "dev": "yarn workspace test-site start",
+    "build": "yarn workspace test-site build"
+  },
+  "packageManager": "yarn@1.22.22"
+}
