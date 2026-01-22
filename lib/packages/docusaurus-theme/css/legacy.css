@@ -86,7 +86,8 @@
     --ziti-code-block-border-color: rgb(197, 199, 201);
     --ziti-code-block-font-color: rgb(57, 58, 52);
     --ifm-code-padding-horizontal: 7px;
-    --nf-tab-color: 255, 182, 193;
+    --nf-tab-color: 222, 222, 222;
+    --nf-tab-color-rgb: rgb(var(--nf-tab-color));
 }
 @media (max-height: 1024px) {
     /*for smaller screens, reduce space definitions*/
@@ -2007,7 +2008,7 @@ li a code {
     border-radius: 7px;
 }
 [class*="tabItem_"][role="tabpanel"] {
-    background-color: rgb(var(--nf-tab-color));
+    background-color: var(--nf-tab-color-rgb);
     padding: 1em 0.5em;
 }
 
@@ -2033,7 +2034,7 @@ li a code {
 }
 
 .tabs__item.tabs__item--active {
-    background-color: rgb(var(--nf-tab-color));
+    background-color: var(--nf-tab-color-rgb);
     border-bottom-width: 0;
     pointer-events: none;
 }

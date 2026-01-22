@@ -1,6 +1,6 @@
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
-import path from "node:path";
+import path from "node:path"
 import {themes as prismThemes} from 'prism-react-renderer';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
@@ -50,6 +50,8 @@ export default {
     themes: [
         // Use local path for development; in production would be '@netfoundry/docusaurus-theme'
         path.resolve(__dirname, '../docusaurus-theme'),
+        // Remote reference to test the deployed package
+        // '@netfoundry/docusaurus-theme'
     ],
 
     plugins: [],

@@ -86,6 +86,10 @@ example:
                repoUrl: 'https://github.com/openziti/ziti' }}>
 ```
 
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup, workflow, and a walkthrough example of making theme changes.
+
 ## Kinsta hosting
 
 The docusaurus site is hosted on Kinsta within the public pages of a WordPress site. To properly deliver the
