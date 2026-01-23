@@ -100,7 +100,7 @@ export function NetFoundryLayout({
                     className,
                 )}
             >
-                <ErrorBoundary fallback={<ErrorPageContent />}>
+                <ErrorBoundary fallback={(props) => <ErrorPageContent {...props} />}>
                     {children}
                 </ErrorBoundary>
                 {!noFooter && footerProps && <NetFoundryFooter {...footerProps} />}

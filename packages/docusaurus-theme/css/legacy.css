@@ -2345,3 +2345,13 @@ aside nav {
         margin-bottom: 70px; /* with the hide menu button on small screens, it obscures the last menu item without this */
     }
 }
+
+/*
+    starting with docusaurus 3.8 they have implemented css layers. these layers need to be
+    overridden here to ensure styles are applied properly
+ */
+@layer docusaurus.infima {
+    .margin-top--md {
+        margin-top: 0 !important;
+    }
+}

@@ -1,6 +1,6 @@
 {
   "name": "@netfoundry/docusaurus-theme",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "NetFoundry Docusaurus theme with shared layout, footer, and styling",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -54,6 +54,7 @@
     "@docusaurus/theme-classic": "^3",
     "@docusaurus/theme-common": "^3",
     "@docusaurus/types": "^3",
+    "@types/js-yaml": "^4.0.9",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "jest": "^30.0.4",

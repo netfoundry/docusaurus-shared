@@ -20,7 +20,7 @@ export function OsTabs(props: OsTabsProps): JSX.Element {
 
     return (
         <>
-            <OriginalTabs {...props} defaultValue={defaultValue}>
+            <OriginalTabs {...props} defaultValue={defaultValue ?? undefined}>
                 {props.children}
             </OriginalTabs>
             {/* Uncomment the following line to debug the detected and selected values */}
