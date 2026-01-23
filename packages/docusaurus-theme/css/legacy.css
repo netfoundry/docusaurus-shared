@@ -86,8 +86,6 @@
     --ziti-code-block-border-color: rgb(197, 199, 201);
     --ziti-code-block-font-color: rgb(57, 58, 52);
     --ifm-code-padding-horizontal: 7px;
-    --nf-tab-color: 222, 222, 222;
-    --nf-tab-color-rgb: rgb(var(--nf-tab-color));
 }
 @media (max-height: 1024px) {
     /*for smaller screens, reduce space definitions*/
@@ -140,7 +138,6 @@ html[data-theme="dark"] {
     --ziti-code-block-background-color: rgb(33, 47, 77);
     --ziti-code-block-border-color: rgb(33, 47, 77);
     --ziti-code-block-font-color: rgb(148, 163, 184);
-    --nf-tab-color: 67, 72, 98;
 }
 
 html[data-theme=dark] #Wizardly code {
@@ -1994,53 +1991,12 @@ li a code {
     color: rgba(117, 82, 136, 0.98);
 }
 
-.tabItem_node_modules {
-    background-color: rgba(117, 82, 136, 0.2) !important;
-    border: 1px solid rgba(117, 82, 136, 0.98);
-    color: rgba(117, 82, 136, 0.98);
-
-}
-
-[class*="tabItem_"] {
-    background-color: rgb(142,142,142, .2);
-    position: relative;
-    padding: 5px 10px;
-    border-radius: 7px;
-}
-[class*="tabItem_"][role="tabpanel"] {
-    background-color: var(--nf-tab-color-rgb);
-    padding: 1em 0.5em;
-}
-
-
-.tabs__item:hover {
-    background-color: rgba(var(--nf-tab-color), 0.5);
-}
-
-.tabs__item {
-    background-color: rgba(225,225,225, 0.3);
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    margin-right: 10px;
-    pointer-events: all;
+.margin-top--md {
+    margin-top: 0 !important;
 }
 
 [hidden] {
     display: none !important;
-}
-
-.tabs {
-    padding-left: 10px;
-}
-
-.tabs__item.tabs__item--active {
-    background-color: var(--nf-tab-color-rgb);
-    border-bottom-width: 0;
-    pointer-events: none;
-}
-
-.margin-top--md {
-    margin-top: 0 !important;
 }
 
 #Wizardly div {

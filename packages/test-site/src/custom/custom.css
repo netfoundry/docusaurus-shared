@@ -1,4 +1,6 @@
 
+@import '@netfoundry/docusaurus-theme/css/tabs-v8-float.css';
+
 :root {
     --ifm-navbar-height: 60px;
     --ziti-landing-max-width: 1800px;
@@ -69,3 +71,5 @@ body,
     margin: 0 auto;
     max-width: var(--ziti-landing-max-width);
 }
+
+

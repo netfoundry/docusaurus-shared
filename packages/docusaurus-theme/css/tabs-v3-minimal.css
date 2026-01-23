@@ -1,0 +1,86 @@
+/* ==========================================================================
+   TABS V3 - Minimal / Apple-style
+   Ultra clean, typography-focused, subtle and refined
+   ========================================================================== */
+
+:root {
+    --nf-tab-text: #86868b;
+    --nf-tab-text-hover: #1d1d1f;
+    --nf-tab-text-active: #1d1d1f;
+    --nf-tab-border: #d2d2d7;
+    --nf-tab-panel-bg: #fafafa;
+    --nf-tab-panel-border: #e5e5e5;
+}
+
+html[data-theme="dark"] {
+    --nf-tab-text: #86868b;
+    --nf-tab-text-hover: #f5f5f7;
+    --nf-tab-text-active: #f5f5f7;
+    --nf-tab-border: #424245;
+    --nf-tab-panel-bg: rgba(28, 28, 30, 0.6);
+    --nf-tab-panel-border: #38383a;
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 0;
+    margin-bottom: 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--nf-tab-border);
+}
+
+.tabs__item {
+    position: relative;
+    padding: 12px 20px;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: var(--nf-tab-text);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.tabs__item:hover {
+    color: var(--nf-tab-text-hover);
+    background: transparent;
+}
+
+.tabs__item.tabs__item--active {
+    color: var(--nf-tab-text-active);
+    font-weight: 600;
+    background: transparent;
+}
+
+/* Clean bottom highlight bar */
+.tabs__item.tabs__item--active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--nf-tab-text-active);
+    border-radius: 2px 2px 0 0;
+}
+
+[class*="tabItem_"][role="tabpanel"] {
+    background: var(--nf-tab-panel-bg);
+    border: 1px solid var(--nf-tab-panel-border);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 1.5rem;
+    animation: minimalFade 0.2s ease;
+}
+
+@keyframes minimalFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.margin-top--md { margin-top: 0 !important; }
+[hidden] { display: none !important; }

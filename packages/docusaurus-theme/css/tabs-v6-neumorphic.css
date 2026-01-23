@@ -1,0 +1,89 @@
+/* ==========================================================================
+   TABS V6 - Neumorphism
+   Soft UI with embossed/debossed shadows, tactile feel
+   ========================================================================== */
+
+:root {
+    --nf-neu-bg: #e4e8ec;
+    --nf-neu-shadow-dark: #c8ccd0;
+    --nf-neu-shadow-light: #ffffff;
+    --nf-tab-text: #6b7280;
+    --nf-tab-text-active: #374151;
+    --nf-tab-accent: #3b82f6;
+    --nf-tab-panel-bg: #e4e8ec;
+}
+
+html[data-theme="dark"] {
+    --nf-neu-bg: #2a2d35;
+    --nf-neu-shadow-dark: #1e2028;
+    --nf-neu-shadow-light: #363942;
+    --nf-tab-text: #9ca3af;
+    --nf-tab-text-active: #e5e7eb;
+    --nf-tab-accent: #60a5fa;
+    --nf-tab-panel-bg: #2a2d35;
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px;
+    background: var(--nf-neu-bg);
+    border-radius: 20px 20px 0 0;
+    border: none;
+    box-shadow:
+        inset 4px 4px 8px var(--nf-neu-shadow-dark),
+        inset -4px -4px 8px var(--nf-neu-shadow-light);
+}
+
+.tabs__item {
+    padding: 12px 24px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--nf-tab-text);
+    background: var(--nf-neu-bg);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow:
+        4px 4px 8px var(--nf-neu-shadow-dark),
+        -4px -4px 8px var(--nf-neu-shadow-light);
+}
+
+.tabs__item:hover {
+    color: var(--nf-tab-accent);
+}
+
+.tabs__item:active {
+    box-shadow:
+        inset 3px 3px 6px var(--nf-neu-shadow-dark),
+        inset -3px -3px 6px var(--nf-neu-shadow-light);
+}
+
+.tabs__item.tabs__item--active {
+    color: var(--nf-tab-accent);
+    font-weight: 600;
+    box-shadow:
+        inset 4px 4px 8px var(--nf-neu-shadow-dark),
+        inset -4px -4px 8px var(--nf-neu-shadow-light);
+}
+
+[class*="tabItem_"][role="tabpanel"] {
+    background: var(--nf-tab-panel-bg);
+    border: none;
+    border-radius: 0 0 20px 20px;
+    padding: 1.75rem;
+    box-shadow:
+        inset 4px 4px 8px var(--nf-neu-shadow-dark),
+        inset -4px -4px 8px var(--nf-neu-shadow-light);
+    animation: neuReveal 0.25s ease-out;
+}
+
+@keyframes neuReveal {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.margin-top--md { margin-top: 0 !important; }
+[hidden] { display: none !important; }
