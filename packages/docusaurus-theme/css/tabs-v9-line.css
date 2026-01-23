@@ -1,0 +1,104 @@
+/* ==========================================================================
+   TABS V9 - Sliding Line
+   Clean text tabs with animated line that slides between items
+   ========================================================================== */
+
+:root {
+    --nf-line-bg: transparent;
+    --nf-line-border: #e5e7eb;
+    --nf-line-text: #6b7280;
+    --nf-line-text-hover: #374151;
+    --nf-line-text-active: #111827;
+    --nf-line-accent: #0068f9;
+    --nf-line-accent-glow: rgba(0, 104, 249, 0.15);
+    --nf-panel-bg: #fafafa;
+    --nf-panel-border: #e5e7eb;
+}
+
+html[data-theme="dark"] {
+    --nf-line-bg: transparent;
+    --nf-line-border: #374151;
+    --nf-line-text: #9ca3af;
+    --nf-line-text-hover: #d1d5db;
+    --nf-line-text-active: #f9fafb;
+    --nf-line-accent: #38bdf8;
+    --nf-line-accent-glow: rgba(56, 189, 248, 0.15);
+    --nf-panel-bg: #1f2937;
+    --nf-panel-border: #374151;
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 0;
+    background: var(--nf-line-bg);
+    border: none;
+    border-bottom: 2px solid var(--nf-line-border);
+    border-radius: 0;
+    position: relative;
+}
+
+.tabs__item {
+    position: relative;
+    padding: 16px 28px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--nf-line-text);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.tabs__item:hover {
+    color: var(--nf-line-text-hover);
+}
+
+.tabs__item.tabs__item--active {
+    color: var(--nf-line-text-active);
+    font-weight: 600;
+}
+
+/* Animated underline */
+.tabs__item::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: var(--nf-line-accent);
+    border-radius: 3px 3px 0 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-50%);
+}
+
+.tabs__item:hover::after {
+    width: 30%;
+    background: var(--nf-line-text-hover);
+}
+
+.tabs__item.tabs__item--active::after {
+    width: calc(100% - 24px);
+    background: var(--nf-line-accent);
+    box-shadow: 0 0 12px var(--nf-line-accent-glow);
+}
+
+[class*="tabItem_"][role="tabpanel"] {
+    background: var(--nf-panel-bg);
+    border: 1px solid var(--nf-panel-border);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    padding: 1.5rem;
+    animation: lineSlide 0.25s ease-out;
+}
+
+@keyframes lineSlide {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.margin-top--md { margin-top: 0 !important; }
+[hidden] { display: none !important; }

@@ -1,0 +1,85 @@
+/* ==========================================================================
+   TABS V4 - Segmented Control
+   iOS-style segmented control with sliding background
+   ========================================================================== */
+
+:root {
+    --nf-tabs-bg: #e5e5ea;
+    --nf-tab-text: #3a3a3c;
+    --nf-tab-text-active: #000000;
+    --nf-tab-slider-bg: #ffffff;
+    --nf-tab-slider-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+    --nf-tab-panel-bg: #ffffff;
+    --nf-tab-panel-border: #e5e5ea;
+    --nf-tab-panel-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="dark"] {
+    --nf-tabs-bg: #2c2c2e;
+    --nf-tab-text: #98989d;
+    --nf-tab-text-active: #ffffff;
+    --nf-tab-slider-bg: #636366;
+    --nf-tab-slider-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    --nf-tab-panel-bg: #1c1c1e;
+    --nf-tab-panel-border: #38383a;
+    --nf-tab-panel-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tabs {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 3px;
+    margin-bottom: 0;
+    background: var(--nf-tabs-bg);
+    border-radius: 10px;
+    border: none;
+    position: relative;
+}
+
+.tabs__item {
+    position: relative;
+    padding: 8px 16px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--nf-tab-text);
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    z-index: 1;
+    min-width: 80px;
+    text-align: center;
+}
+
+.tabs__item:hover {
+    color: var(--nf-tab-text-active);
+    background: transparent;
+}
+
+.tabs__item.tabs__item--active {
+    color: var(--nf-tab-text-active);
+    font-weight: 600;
+    background: var(--nf-tab-slider-bg);
+    box-shadow: var(--nf-tab-slider-shadow);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[class*="tabItem_"][role="tabpanel"] {
+    background: var(--nf-tab-panel-bg);
+    border: 1px solid var(--nf-tab-panel-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 12px;
+    box-shadow: var(--nf-tab-panel-shadow);
+    animation: segmentSlide 0.25s ease-out;
+}
+
+@keyframes segmentSlide {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.margin-top--md { margin-top: 0 !important; }
+[hidden] { display: none !important; }

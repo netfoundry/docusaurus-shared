@@ -1,0 +1,116 @@
+/* ==========================================================================
+   TABS V2 - Glassmorphism
+   Frosted glass effect with blur, floating aesthetic
+   ========================================================================== */
+
+:root {
+    --nf-tabs-bg: rgba(255, 255, 255, 0.7);
+    --nf-tabs-blur: 12px;
+    --nf-tabs-border: rgba(255, 255, 255, 0.3);
+    --nf-tab-bg: transparent;
+    --nf-tab-bg-hover: rgba(0, 104, 249, 0.08);
+    --nf-tab-bg-active: rgba(0, 104, 249, 0.12);
+    --nf-tab-text: #475569;
+    --nf-tab-text-hover: #0068f9;
+    --nf-tab-text-active: #0068f9;
+    --nf-tab-glow: 0 0 20px rgba(0, 104, 249, 0.15);
+    --nf-tab-panel-bg: rgba(255, 255, 255, 0.85);
+    --nf-tab-panel-blur: 16px;
+    --nf-tab-panel-border: rgba(255, 255, 255, 0.4);
+    --nf-tab-panel-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="dark"] {
+    --nf-tabs-bg: rgba(15, 23, 42, 0.75);
+    --nf-tabs-blur: 12px;
+    --nf-tabs-border: rgba(255, 255, 255, 0.08);
+    --nf-tab-bg: transparent;
+    --nf-tab-bg-hover: rgba(56, 189, 248, 0.1);
+    --nf-tab-bg-active: rgba(56, 189, 248, 0.15);
+    --nf-tab-text: #94a3b8;
+    --nf-tab-text-hover: #38bdf8;
+    --nf-tab-text-active: #38bdf8;
+    --nf-tab-glow: 0 0 30px rgba(56, 189, 248, 0.2);
+    --nf-tab-panel-bg: rgba(15, 23, 42, 0.8);
+    --nf-tab-panel-blur: 16px;
+    --nf-tab-panel-border: rgba(255, 255, 255, 0.06);
+    --nf-tab-panel-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 6px;
+    margin-bottom: 0;
+    background: var(--nf-tabs-bg);
+    backdrop-filter: blur(var(--nf-tabs-blur));
+    -webkit-backdrop-filter: blur(var(--nf-tabs-blur));
+    border-radius: 14px 14px 0 0;
+    border: 1px solid var(--nf-tabs-border);
+    border-bottom: none;
+}
+
+.tabs__item {
+    position: relative;
+    padding: 12px 24px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--nf-tab-text);
+    background: var(--nf-tab-bg);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tabs__item:hover {
+    color: var(--nf-tab-text-hover);
+    background: var(--nf-tab-bg-hover);
+}
+
+.tabs__item.tabs__item--active {
+    color: var(--nf-tab-text-active);
+    background: var(--nf-tab-bg-active);
+    font-weight: 600;
+    box-shadow: var(--nf-tab-glow);
+}
+
+/* Subtle dot indicator for active tab */
+.tabs__item.tabs__item--active::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.2); opacity: 0.5; }
+}
+
+[class*="tabItem_"][role="tabpanel"] {
+    background: var(--nf-tab-panel-bg);
+    backdrop-filter: blur(var(--nf-tab-panel-blur));
+    -webkit-backdrop-filter: blur(var(--nf-tab-panel-blur));
+    border: 1px solid var(--nf-tab-panel-border);
+    border-radius: 0 0 14px 14px;
+    padding: 1.75rem;
+    box-shadow: var(--nf-tab-panel-shadow);
+    animation: glassReveal 0.35s ease-out;
+}
+
+@keyframes glassReveal {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.margin-top--md { margin-top: 0 !important; }
+[hidden] { display: none !important; }

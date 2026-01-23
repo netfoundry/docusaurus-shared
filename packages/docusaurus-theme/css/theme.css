@@ -1,0 +1,20 @@
+/**
+ * NetFoundry Docusaurus Theme - Combined Styles
+ *
+ * This file is automatically loaded by the theme via getClientModules().
+ *
+ * Consuming projects no longer need to manually add these imports
+ * to their custom.css files.
+ */
+
+/* CSS variables for light mode */
+@import "./vars.css";
+
+/* CSS variables for dark mode */
+@import "./vars-dark.css";
+
+/* Layout styles */
+@import "./layout.css";
+
+/* Legacy design system variables and comprehensive styling */
+@import "./legacy.css";

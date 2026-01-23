@@ -1,0 +1,81 @@
+/* ==========================================================================
+   TABS V7 - Brutalist
+   Raw, bold, unapologetic. Heavy borders, stark contrast
+   ========================================================================== */
+
+:root {
+    --nf-brutal-bg: #ffffff;
+    --nf-brutal-border: #000000;
+    --nf-brutal-accent: #ff3366;
+    --nf-brutal-text: #000000;
+    --nf-brutal-text-muted: #666666;
+    --nf-brutal-shadow: 4px 4px 0 #000000;
+    --nf-brutal-panel-bg: #f5f5f5;
+}
+
+html[data-theme="dark"] {
+    --nf-brutal-bg: #000000;
+    --nf-brutal-border: #ffffff;
+    --nf-brutal-accent: #00ff88;
+    --nf-brutal-text: #ffffff;
+    --nf-brutal-text-muted: #999999;
+    --nf-brutal-shadow: 4px 4px 0 #ffffff;
+    --nf-brutal-panel-bg: #111111;
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 0;
+    background: var(--nf-brutal-bg);
+    border: 3px solid var(--nf-brutal-border);
+    border-bottom: none;
+    border-radius: 0;
+}
+
+.tabs__item {
+    padding: 14px 28px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--nf-brutal-text-muted);
+    background: transparent;
+    border: none;
+    border-right: 3px solid var(--nf-brutal-border);
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.tabs__item:last-child {
+    border-right: none;
+}
+
+.tabs__item:hover {
+    color: var(--nf-brutal-text);
+    background: var(--nf-brutal-accent);
+}
+
+.tabs__item.tabs__item--active {
+    color: var(--nf-brutal-bg);
+    background: var(--nf-brutal-text);
+}
+
+[class*="tabItem_"][role="tabpanel"] {
+    background: var(--nf-brutal-panel-bg);
+    border: 3px solid var(--nf-brutal-border);
+    border-radius: 0;
+    padding: 1.5rem;
+    box-shadow: var(--nf-brutal-shadow);
+    animation: brutalSlam 0.15s ease-out;
+}
+
+@keyframes brutalSlam {
+    from { transform: translateY(-10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.margin-top--md { margin-top: 0 !important; }
+[hidden] { display: none !important; }

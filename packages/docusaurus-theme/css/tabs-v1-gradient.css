@@ -1,0 +1,92 @@
+/* ==========================================================================
+   TABS V1 - Gradient Pills
+   Floating pill tabs with gradient container, no underline
+   ========================================================================== */
+
+:root {
+    --nf-tabs-bg: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    --nf-tabs-border: rgba(0, 0, 0, 0.06);
+    --nf-tab-bg: rgba(255, 255, 255, 0.5);
+    --nf-tab-bg-hover: rgba(255, 255, 255, 0.8);
+    --nf-tab-bg-active: #ffffff;
+    --nf-tab-text: #64748b;
+    --nf-tab-text-hover: #334155;
+    --nf-tab-text-active: #0068f9;
+    --nf-tab-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --nf-tab-shadow-active: 0 4px 12px -2px rgba(0, 104, 249, 0.25), 0 2px 4px rgba(0, 0, 0, 0.05);
+    --nf-tab-panel-bg: #ffffff;
+    --nf-tab-panel-border: rgba(0, 0, 0, 0.06);
+    --nf-tab-panel-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.1);
+}
+
+html[data-theme="dark"] {
+    --nf-tabs-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --nf-tabs-border: rgba(255, 255, 255, 0.06);
+    --nf-tab-bg: rgba(255, 255, 255, 0.03);
+    --nf-tab-bg-hover: rgba(255, 255, 255, 0.08);
+    --nf-tab-bg-active: rgba(21, 142, 237, 0.2);
+    --nf-tab-text: #94a3b8;
+    --nf-tab-text-hover: #cbd5e1;
+    --nf-tab-text-active: #38bdf8;
+    --nf-tab-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    --nf-tab-shadow-active: 0 4px 12px -2px rgba(21, 142, 237, 0.3), 0 0 0 1px rgba(56, 189, 248, 0.2);
+    --nf-tab-panel-bg: rgba(30, 41, 59, 0.8);
+    --nf-tab-panel-border: rgba(255, 255, 255, 0.06);
+    --nf-tab-panel-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.4);
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px;
+    margin-bottom: 0;
+    background: var(--nf-tabs-bg);
+    border-radius: 16px 16px 0 0;
+    border: 1px solid var(--nf-tabs-border);
+    border-bottom: none;
+}
+
+.tabs__item {
+    padding: 10px 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--nf-tab-text);
+    background: var(--nf-tab-bg);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--nf-tab-shadow);
+}
+
+.tabs__item:hover {
+    color: var(--nf-tab-text-hover);
+    background: var(--nf-tab-bg-hover);
+    transform: translateY(-1px);
+}
+
+.tabs__item.tabs__item--active {
+    color: var(--nf-tab-text-active);
+    background: var(--nf-tab-bg-active);
+    font-weight: 600;
+    box-shadow: var(--nf-tab-shadow-active);
+    transform: translateY(-2px);
+}
+
+[class*="tabItem_"][role="tabpanel"] {
+    background: var(--nf-tab-panel-bg);
+    border: 1px solid var(--nf-tab-panel-border);
+    border-radius: 0 0 16px 16px;
+    padding: 1.5rem;
+    box-shadow: var(--nf-tab-panel-shadow);
+    animation: fadeSlideIn 0.25s ease-out;
+}
+
+@keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.margin-top--md { margin-top: 0 !important; }
+[hidden] { display: none !important; }

@@ -1,0 +1,99 @@
+/* ==========================================================================
+   TABS V5 - Neon Cyberpunk
+   Glowing edges, electric colors, dark-first aesthetic
+   ========================================================================== */
+
+:root {
+    --nf-tabs-bg: #0a0a0f;
+    --nf-tab-text: #6b7280;
+    --nf-tab-text-hover: #a78bfa;
+    --nf-tab-text-active: #f0abfc;
+    --nf-tab-glow: #c084fc;
+    --nf-tab-glow-secondary: #22d3ee;
+    --nf-tab-panel-bg: linear-gradient(145deg, #0f0f18 0%, #0a0a0f 100%);
+    --nf-tab-panel-border: rgba(192, 132, 252, 0.2);
+}
+
+html[data-theme="dark"] {
+    --nf-tabs-bg: #0a0a0f;
+    --nf-tab-text: #6b7280;
+    --nf-tab-text-hover: #a78bfa;
+    --nf-tab-text-active: #f0abfc;
+    --nf-tab-glow: #c084fc;
+    --nf-tab-glow-secondary: #22d3ee;
+    --nf-tab-panel-bg: linear-gradient(145deg, #0f0f18 0%, #0a0a0f 100%);
+    --nf-tab-panel-border: rgba(192, 132, 252, 0.2);
+}
+
+html:not([data-theme="dark"]) {
+    --nf-tabs-bg: #fafafa;
+    --nf-tab-text: #71717a;
+    --nf-tab-text-hover: #7c3aed;
+    --nf-tab-text-active: #9333ea;
+    --nf-tab-glow: #a855f7;
+    --nf-tab-glow-secondary: #06b6d4;
+    --nf-tab-panel-bg: linear-gradient(145deg, #ffffff 0%, #f4f4f5 100%);
+    --nf-tab-panel-border: rgba(168, 85, 247, 0.25);
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px 12px;
+    background: var(--nf-tabs-bg);
+    border-radius: 4px 4px 0 0;
+    border: 1px solid rgba(128, 128, 128, 0.15);
+    border-bottom: none;
+}
+
+.tabs__item {
+    position: relative;
+    padding: 10px 22px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--nf-tab-text);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tabs__item:hover {
+    color: var(--nf-tab-text-hover);
+    border-color: rgba(128, 128, 128, 0.3);
+    text-shadow: 0 0 12px var(--nf-tab-glow);
+}
+
+.tabs__item.tabs__item--active {
+    color: var(--nf-tab-text-active);
+    border-color: var(--nf-tab-glow);
+    background: rgba(192, 132, 252, 0.08);
+    box-shadow:
+        0 0 10px rgba(192, 132, 252, 0.3),
+        0 0 20px rgba(192, 132, 252, 0.15),
+        inset 0 0 15px rgba(192, 132, 252, 0.05);
+    text-shadow: 0 0 20px var(--nf-tab-glow);
+}
+
+[class*="tabItem_"][role="tabpanel"] {
+    background: var(--nf-tab-panel-bg);
+    border: 1px solid var(--nf-tab-panel-border);
+    border-radius: 0 0 4px 4px;
+    padding: 1.5rem;
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    animation: neonFade 0.3s ease;
+}
+
+@keyframes neonFade {
+    from { opacity: 0; filter: brightness(1.5); }
+    to { opacity: 1; filter: brightness(1); }
+}
+
+.margin-top--md { margin-top: 0 !important; }
+[hidden] { display: none !important; }

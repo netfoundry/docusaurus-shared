@@ -1,0 +1,114 @@
+/* ==========================================================================
+   TABS V8 - Floating Cards
+   Each tab as independent floating card, elevation on select
+   ========================================================================== */
+
+:root {
+    --nf-float-bg: transparent;
+    --nf-card-bg: #ffffff;
+    --nf-card-bg-hover: #f8fafc;
+    --nf-card-bg-active: #ffffff;
+    --nf-card-text: #64748b;
+    --nf-card-text-active: #0f172a;
+    --nf-card-border: rgba(0, 0, 0, 0.08);
+    --nf-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --nf-card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --nf-card-shadow-active: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --nf-card-accent: linear-gradient(135deg, #0068f9 0%, #00d4ff 100%);
+    --nf-panel-bg: #ffffff;
+    --nf-panel-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="dark"] {
+    --nf-float-bg: transparent;
+    --nf-card-bg: #1e293b;
+    --nf-card-bg-hover: #334155;
+    --nf-card-bg-active: #1e293b;
+    --nf-card-text: #94a3b8;
+    --nf-card-text-active: #f1f5f9;
+    --nf-card-border: rgba(255, 255, 255, 0.06);
+    --nf-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    --nf-card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --nf-card-shadow-active: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --nf-card-accent: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+    --nf-panel-bg: #1e293b;
+    --nf-panel-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 8px 4px;
+    background: var(--nf-float-bg);
+    border: none;
+    border-radius: 0;
+    margin-bottom: 10px;
+}
+
+.tabs__item {
+    position: relative;
+    padding: 14px 24px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--nf-card-text);
+    background: var(--nf-card-bg);
+    border: 1px solid var(--nf-card-border);
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: var(--nf-card-shadow);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.tabs__item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--nf-card-accent);
+    transform: scaleX(0);
+    transition: transform 0.25s ease;
+}
+
+.tabs__item:hover {
+    color: var(--nf-card-text-active);
+    background: var(--nf-card-bg-hover);
+    box-shadow: var(--nf-card-shadow-hover);
+    transform: translateY(-2px);
+}
+
+.tabs__item:hover::before {
+    transform: scaleX(0.5);
+}
+
+.tabs__item.tabs__item--active {
+    color: var(--nf-card-text-active);
+    background: var(--nf-card-bg-active);
+    font-weight: 600;
+    box-shadow: var(--nf-card-shadow-active);
+    transform: translateY(-4px);
+}
+
+.tabs__item.tabs__item--active::before {
+    transform: scaleX(1);
+}
+
+[class*="tabItem_"][role="tabpanel"] {
+    background: var(--nf-panel-bg);
+    border: 1px solid var(--nf-card-border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    box-shadow: var(--nf-panel-shadow);
+    animation: floatUp 0.3s ease-out;
+}
+
+@keyframes floatUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.margin-top--md { margin-top: 0 !important; }
+[hidden] { display: none !important; }
