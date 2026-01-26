@@ -8,9 +8,9 @@ import {
     remarkReplaceMetaUrl,
     remarkScopedPath,
     remarkYouTube
-} from "@netfoundry/docusaurus-shared/plugins";
+} from "@netfoundry/docusaurus-theme/plugins";
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
-import {pluginHotjar} from "@netfoundry/docusaurus-shared/node";
+import {pluginHotjar} from "@netfoundry/docusaurus-theme/node";
 import {PublishConfig} from 'src/components/docusaurus'
 import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 
@@ -145,7 +145,7 @@ const config: Config = {
     staticDirectories: [
         'static',
         '_remotes/frontdoor/docusaurus/static/',
-        '_remotes/onprem/docs-site/static/',
+        '_remotes/onprem/docusaurus/static/',
         '_remotes/openziti/docusaurus/static/',
         '_remotes/zlan/docusaurus/static/',
         `${zrokRoot}/static/`,
@@ -178,7 +178,7 @@ const config: Config = {
                             alias: {
                                 '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
                                 '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
-                                '@onprem': path.resolve(__dirname, `${onprem}/docs-site`),
+                                '@onprem': path.resolve(__dirname, `${onprem}/docusaurus`),
                                 '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
                                 '@zrok': path.resolve(__dirname, `${zrokRoot}`),
                                 '@zrokroot': path.resolve(__dirname, `${zrokRoot}`),
@@ -200,7 +200,7 @@ const config: Config = {
 
         ['@docusaurus/plugin-content-pages',{path: 'src/pages',routeBasePath: '/'}],
         build(BUILD_FLAGS.FRONTDOOR) && ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
-        build(BUILD_FLAGS.ONPREM) && ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docs-site/src/pages`, routeBasePath: '/onprem'}],
+        build(BUILD_FLAGS.ONPREM) && ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docusaurus/src/pages`, routeBasePath: '/onprem'}],
         build(BUILD_FLAGS.OPENZITI) && ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
         build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
         build(BUILD_FLAGS.ZROK) && ['@docusaurus/plugin-content-pages',{id: `zrok-pages`, path: `${zrokRoot}/src/pages`, routeBasePath: '/zrok'}],
@@ -208,9 +208,9 @@ const config: Config = {
             '@docusaurus/plugin-content-docs',
             {
                 id: 'onprem', // do not change - affects algolia search
-                path: `${onprem}/docs-site/docs`,
+                path: `${onprem}/docusaurus/docs`,
                 routeBasePath: 'onprem',
-                sidebarPath: `${onprem}/docs-site/sidebars.ts`,
+                sidebarPath: `${onprem}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
                 beforeDefaultRemarkPlugins: [
                     remarkGithubAdmonitionsToDirectives,

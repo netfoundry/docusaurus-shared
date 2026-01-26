@@ -6,7 +6,7 @@ import {
     defaultNetFoundryFooterProps,
     NetFoundryHorizontalSection,
     NetFoundryLayout,
-} from '@netfoundry/docusaurus-shared/ui';
+} from '@netfoundry/docusaurus-theme/ui';
 import styles from "./index.module.css";
 
 export default function Home(): ReactNode {
