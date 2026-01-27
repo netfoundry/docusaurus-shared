@@ -21,16 +21,27 @@ export const defaultSocialProps: SocialProps = {
     youtubeUrl: '',
 };
 
+// Link can be a ReactNode (JSX) or a plain object with href/label
+export type FooterLink = React.ReactNode | { href: string; label: string };
+
 export type NetFoundryFooterProps = {
     className?: string;
     style?: CSSProperties;
     description?: string;
     socialProps?: SocialProps;
-    documentationLinks?: React.ReactNode[];
-    communityLinks?: React.ReactNode[];
-    resourceLinks?: React.ReactNode[];
+    documentationLinks?: FooterLink[];
+    communityLinks?: FooterLink[];
+    resourceLinks?: FooterLink[];
     children?: ReactNode;
 };
+
+// Convert a FooterLink to a ReactNode
+function renderLink(link: FooterLink, index: number): React.ReactNode {
+    if (link && typeof link === 'object' && 'href' in link && 'label' in link) {
+        return <a key={index} href={link.href}>{link.label}</a>;
+    }
+    return link;
+}
 
 export function defaultNetFoundryFooterProps(overrides?: Partial<NetFoundryFooterProps>): NetFoundryFooterProps {
     return {
@@ -59,13 +70,13 @@ export function defaultNetFoundryFooterProps(overrides?: Partial<NetFoundryFoote
     };
 }
 
-function ListBlock({title, items}:{title:string; items?: React.ReactNode[]}) {
+function ListBlock({title, items}:{title:string; items?: FooterLink[]}) {
     if (!items?.length) return null;
     return (
         <div className={styles.footerColumn}>
             <h3>{title}</h3>
             <ul className={styles.footerLinks}>
-                {items.map((item, i) => <li key={i}>{item}</li>)}
+                {items.map((item, i) => <li key={i}>{renderLink(item, i)}</li>)}
             </ul>
         </div>
     );
