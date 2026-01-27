@@ -92,6 +92,14 @@
     "@algolia/requester-fetch" "5.42.0"
     "@algolia/requester-node-http" "5.42.0"
 
+"@algolia/autocomplete-core@1.17.9":
+  version "1.17.9"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-core/-/autocomplete-core-1.17.9.tgz#83374c47dc72482aa45d6b953e89377047f0dcdc"
+  integrity sha512-O7BxrpLDPJWWHv/DLA9DRFWs+iY1uOJZkqUwjS5HSZAGcl0hIVCQ97LTLewiZmZ402JYUrun+8NqFP+hCknlbQ==
+  dependencies:
+    "@algolia/autocomplete-plugin-algolia-insights" "1.17.9"
+    "@algolia/autocomplete-shared" "1.17.9"
+
 "@algolia/autocomplete-core@1.19.2":
   version "1.19.2"
   resolved "https://registry.yarnpkg.com/@algolia/autocomplete-core/-/autocomplete-core-1.19.2.tgz#702df67a08cb3cfe8c33ee1111ef136ec1a9e232"
@@ -100,12 +108,31 @@
     "@algolia/autocomplete-plugin-algolia-insights" "1.19.2"
     "@algolia/autocomplete-shared" "1.19.2"
 
+"@algolia/autocomplete-plugin-algolia-insights@1.17.9":
+  version "1.17.9"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-plugin-algolia-insights/-/autocomplete-plugin-algolia-insights-1.17.9.tgz#74c86024d09d09e8bfa3dd90b844b77d9f9947b6"
+  integrity sha512-u1fEHkCbWF92DBeB/KHeMacsjsoI0wFhjZtlCq2ddZbAehshbZST6Hs0Avkc0s+4UyBGbMDnSuXHLuvRWK5iDQ==
+  dependencies:
+    "@algolia/autocomplete-shared" "1.17.9"
+
 "@algolia/autocomplete-plugin-algolia-insights@1.19.2":
   version "1.19.2"
   resolved "https://registry.yarnpkg.com/@algolia/autocomplete-plugin-algolia-insights/-/autocomplete-plugin-algolia-insights-1.19.2.tgz#3584b625b9317e333d1ae43664d02358e175c52d"
   integrity sha512-TjxbcC/r4vwmnZaPwrHtkXNeqvlpdyR+oR9Wi2XyfORkiGkLTVhX2j+O9SaCCINbKoDfc+c2PB8NjfOnz7+oKg==
   dependencies:
     "@algolia/autocomplete-shared" "1.19.2"
+
+"@algolia/autocomplete-preset-algolia@1.17.9":
+  version "1.17.9"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-preset-algolia/-/autocomplete-preset-algolia-1.17.9.tgz#911f3250544eb8ea4096fcfb268f156b085321b5"
+  integrity sha512-Na1OuceSJeg8j7ZWn5ssMu/Ax3amtOwk76u4h5J4eK2Nx2KB5qt0Z4cOapCsxot9VcEN11ADV5aUSlQF4RhGjQ==
+  dependencies:
+    "@algolia/autocomplete-shared" "1.17.9"
+
+"@algolia/autocomplete-shared@1.17.9":
+  version "1.17.9"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-shared/-/autocomplete-shared-1.17.9.tgz#5f38868f7cb1d54b014b17a10fc4f7e79d427fa8"
+  integrity sha512-iDf05JDQ7I0b7JEA/9IektxN/80a2MZ1ToohfmNS3rfeuQnIKI3IJlIafD0xu4StbtQTghx9T3Maa97ytkXenQ==
 
 "@algolia/autocomplete-shared@1.19.2":
   version "1.19.2"
@@ -1777,10 +1804,25 @@
   resolved "https://registry.yarnpkg.com/@docsearch/core/-/core-4.3.1.tgz#88a97a6fe4d4025269b6dee8b9d070b76758ad82"
   integrity sha512-ktVbkePE+2h9RwqCUMbWXOoebFyDOxHqImAqfs+lC8yOU+XwEW4jgvHGJK079deTeHtdhUNj0PXHSnhJINvHzQ==
 
+"@docsearch/css@3.9.0":
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@docsearch/css/-/css-3.9.0.tgz#3bc29c96bf024350d73b0cfb7c2a7b71bf251cd5"
+  integrity sha512-cQbnVbq0rrBwNAKegIac/t6a8nWoUAn8frnkLFW6YARaRmAQr5/Eoe6Ln2fqkUCZ40KpdrKbpSAmgrkviOxuWA==
+
 "@docsearch/css@4.3.1":
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/@docsearch/css/-/css-4.3.1.tgz#bcb1115f3b65d41b61d30df0c9465b735c1fb28d"
   integrity sha512-Jnct7LKOi/+Oxbmq215YPYASkMdZqtyyDCkma8Cj4sCcbBuybL6fvyBaX7uJoM6kVF7aIpBA38RhHAyN5ByCHg==
+
+"@docsearch/react@^3":
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@docsearch/react/-/react-3.9.0.tgz#d0842b700c3ee26696786f3c8ae9f10c1a3f0db3"
+  integrity sha512-mb5FOZYZIkRQ6s/NWnM98k879vu5pscWqTLubLFBO87igYYT4VzVazh4h5o/zCvTIZgEt3PvsCOMOswOUo9yHQ==
+  dependencies:
+    "@algolia/autocomplete-core" "1.17.9"
+    "@algolia/autocomplete-preset-algolia" "1.17.9"
+    "@docsearch/css" "3.9.0"
+    algoliasearch "^5.14.2"
 
 "@docsearch/react@^3.9.0 || ^4.1.0":
   version "4.3.1"
@@ -2549,18 +2591,18 @@
     hls.js "~1.6.6"
     mux-embed "^5.8.3"
 
-"@netfoundry/docusaurus-theme@^0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@netfoundry/docusaurus-theme/-/docusaurus-theme-0.2.3.tgz#3da1e3c57cc92a9f04e38373ed6cf6ef63d66384"
-  integrity sha512-wkV1Lq+eHEgArxPo3vEXZExUnzzEuwvGuBu9beKOXtFpwAlrvv6VVNDRL3OZkZJjg6XvYJ3S3l8w3FPLONkWrg==
+"@netfoundry/docusaurus-theme@^0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@netfoundry/docusaurus-theme/-/docusaurus-theme-0.3.6.tgz#7331efd9ad8e42d2654dab599cc6cdc0fde14ca6"
+  integrity sha512-735Kz33XFmt0sHxDn7jJww7tJ1b1/sPmkgNPr8vgIFjXZJ7RrA41MapAHIMGTVarSFs/hcnTZe4sbFjr4uqsag==
   dependencies:
-    algoliasearch "^5.47.0"
+    "@docsearch/react" "^3"
+    algoliasearch "^5"
     clsx "^2.0.0"
-    instantsearch.js "^4.86.1"
+    instantsearch.js "^4"
     react-device-detect "^2.2.3"
     react-github-btn "^1.4.0"
-    react-instantsearch "^7.22.1"
-    react-lite-youtube-embed "^3.3.3"
+    react-instantsearch "^7"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -2655,16 +2697,6 @@
   version "1.34.5"
   resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-1.34.5.tgz#9c2cf901d1098ceb626e789e2065c762fe63727f"
   integrity sha512-0EbE8LRbkogtcCXU7liAyC00n9uNG9hJ+eMyHFdUsy9lB/WGqnEBgwjA9q2cyzAVcdTkQqTBBU1XePNnN3OijA==
-  dependencies:
-    "@redocly/ajv" "^8.11.2"
-    "@redocly/config" "^0.22.0"
-    colorette "^1.2.0"
-    https-proxy-agent "^7.0.5"
-    js-levenshtein "^1.1.6"
-    js-yaml "^4.1.0"
-    minimatch "^5.0.1"
-    pluralize "^8.0.0"
-    yaml-ast-parser "0.0.43"
 
 "@sideway/address@^4.1.5":
   version "4.1.5"
@@ -3715,6 +3747,26 @@ algoliasearch-helper@3.27.0:
   dependencies:
     "@algolia/events" "^4.0.1"
 
+algoliasearch@^5, algoliasearch@^5.14.2:
+  version "5.47.0"
+  resolved "https://registry.yarnpkg.com/algoliasearch/-/algoliasearch-5.47.0.tgz#ed95e008bf37806d320419f7f9ad329dc893c6fc"
+  integrity sha512-AGtz2U7zOV4DlsuYV84tLp2tBbA7RPtLA44jbVH4TTpDcc1dIWmULjHSsunlhscbzDydnjuFlNhflR3nV4VJaQ==
+  dependencies:
+    "@algolia/abtesting" "1.13.0"
+    "@algolia/client-abtesting" "5.47.0"
+    "@algolia/client-analytics" "5.47.0"
+    "@algolia/client-common" "5.47.0"
+    "@algolia/client-insights" "5.47.0"
+    "@algolia/client-personalization" "5.47.0"
+    "@algolia/client-query-suggestions" "5.47.0"
+    "@algolia/client-search" "5.47.0"
+    "@algolia/ingestion" "1.47.0"
+    "@algolia/monitoring" "1.47.0"
+    "@algolia/recommend" "5.47.0"
+    "@algolia/requester-browser-xhr" "5.47.0"
+    "@algolia/requester-fetch" "5.47.0"
+    "@algolia/requester-node-http" "5.47.0"
+
 algoliasearch@^5.28.0, algoliasearch@^5.37.0:
   version "5.42.0"
   resolved "https://registry.yarnpkg.com/algoliasearch/-/algoliasearch-5.42.0.tgz#c30247e6480030471dfa2899f591878ff2fc5e15"
@@ -3754,26 +3806,6 @@ algoliasearch@^5.36.0:
     "@algolia/requester-browser-xhr" "5.36.0"
     "@algolia/requester-fetch" "5.36.0"
     "@algolia/requester-node-http" "5.36.0"
-
-algoliasearch@^5.47.0:
-  version "5.47.0"
-  resolved "https://registry.yarnpkg.com/algoliasearch/-/algoliasearch-5.47.0.tgz#ed95e008bf37806d320419f7f9ad329dc893c6fc"
-  integrity sha512-AGtz2U7zOV4DlsuYV84tLp2tBbA7RPtLA44jbVH4TTpDcc1dIWmULjHSsunlhscbzDydnjuFlNhflR3nV4VJaQ==
-  dependencies:
-    "@algolia/abtesting" "1.13.0"
-    "@algolia/client-abtesting" "5.47.0"
-    "@algolia/client-analytics" "5.47.0"
-    "@algolia/client-common" "5.47.0"
-    "@algolia/client-insights" "5.47.0"
-    "@algolia/client-personalization" "5.47.0"
-    "@algolia/client-query-suggestions" "5.47.0"
-    "@algolia/client-search" "5.47.0"
-    "@algolia/ingestion" "1.47.0"
-    "@algolia/monitoring" "1.47.0"
-    "@algolia/recommend" "5.47.0"
-    "@algolia/requester-browser-xhr" "5.47.0"
-    "@algolia/requester-fetch" "5.47.0"
-    "@algolia/requester-node-http" "5.47.0"
 
 ansi-align@^3.0.1:
   version "3.0.1"
@@ -6624,7 +6656,7 @@ instantsearch.js@4.79.2:
     qs "^6.5.1 < 6.10"
     search-insights "^2.17.2"
 
-instantsearch.js@4.86.1, instantsearch.js@^4.86.1:
+instantsearch.js@4.86.1, instantsearch.js@^4:
   version "4.86.1"
   resolved "https://registry.yarnpkg.com/instantsearch.js/-/instantsearch.js-4.86.1.tgz#eb6a608e84324f96a2e9a2cf6830023416a20675"
   integrity sha512-ETazkxnWj3aOsHgQem1JQ4roqhfpkA32CZEW+ccP+rQqSbO4sCEEMJTy1A1BMiTD1iCoBFWD+x+8Bx73DOm/Gg==
@@ -9456,6 +9488,16 @@ react-instantsearch-core@7.22.1:
     zod "^3.25.76 || ^4"
     zod-to-json-schema "3.24.6"
 
+react-instantsearch@^7:
+  version "7.22.1"
+  resolved "https://registry.yarnpkg.com/react-instantsearch/-/react-instantsearch-7.22.1.tgz#7ce1b09d0765db291d480851eee24a0d3a705647"
+  integrity sha512-sTZ8z2JcSyveP0RmClmP9KFkJMQ9ZZmZKI05uSmfx7fP21N8Ry9CCyn2EvalGFm2gTPaB7VMFZrC9q7HXvG9wA==
+  dependencies:
+    "@babel/runtime" "^7.27.6"
+    instantsearch-ui-components "0.16.0"
+    instantsearch.js "4.86.1"
+    react-instantsearch-core "7.22.1"
+
 react-instantsearch@^7.16.2:
   version "7.16.2"
   resolved "https://registry.yarnpkg.com/react-instantsearch/-/react-instantsearch-7.16.2.tgz#f59d3f3b492a9f2c701ffb841fe8c9c34f4cdb99"
@@ -9465,16 +9507,6 @@ react-instantsearch@^7.16.2:
     instantsearch-ui-components "0.11.2"
     instantsearch.js "4.79.2"
     react-instantsearch-core "7.16.2"
-
-react-instantsearch@^7.22.1:
-  version "7.22.1"
-  resolved "https://registry.yarnpkg.com/react-instantsearch/-/react-instantsearch-7.22.1.tgz#7ce1b09d0765db291d480851eee24a0d3a705647"
-  integrity sha512-sTZ8z2JcSyveP0RmClmP9KFkJMQ9ZZmZKI05uSmfx7fP21N8Ry9CCyn2EvalGFm2gTPaB7VMFZrC9q7HXvG9wA==
-  dependencies:
-    "@babel/runtime" "^7.27.6"
-    instantsearch-ui-components "0.16.0"
-    instantsearch.js "4.86.1"
-    react-instantsearch-core "7.22.1"
 
 react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0:
   version "16.13.1"
@@ -9490,11 +9522,6 @@ react-lite-youtube-embed@^2.5.6:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/react-lite-youtube-embed/-/react-lite-youtube-embed-2.5.6.tgz#05f9802e7a3b13da0d5d6e3ae11cf467db802c89"
   integrity sha512-gbV2SCpAqZOJ/p8wsIbXahONtX3ofh7WZfOR9pCK5kXEbDhTh+bFTOT/fyE+v3ZP4loQkZRqfp8H67gEcGz74w==
-
-react-lite-youtube-embed@^3.3.3:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/react-lite-youtube-embed/-/react-lite-youtube-embed-3.3.3.tgz#a953e66d347c183b978d39257d93d6f4c46c377e"
-  integrity sha512-RGrRpVu4cUKnIlS0/mZoWdS4rwdL0xAWpinbnzW+RsVrzh28URzTLl5zdOazlDbm6C0UM4ssnChbgcmEflr35Q==
 
 react-loadable-ssr-addon-v5-slorber@^1.0.1:
   version "1.0.1"
