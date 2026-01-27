@@ -1,12 +1,13 @@
 {
   "name": "@netfoundry/docusaurus-theme",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "description": "NetFoundry Docusaurus theme with shared layout, footer, and styling",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "files": [
     "dist",
-    "css"
+    "css",
+    "theme"
   ],
   "scripts": {
     "clean": "node scripts/clean.mjs",
@@ -45,9 +46,13 @@
     "react-dom": "^18 || ^19"
   },
   "dependencies": {
+    "@docsearch/react": "^3",
+    "algoliasearch": "^5",
     "clsx": "^2.0.0",
+    "instantsearch.js": "^4",
     "react-device-detect": "^2.2.3",
-    "react-github-btn": "^1.4.0"
+    "react-github-btn": "^1.4.0",
+    "react-instantsearch": "^7"
   },
   "devDependencies": {
     "@docusaurus/core": "^3",
