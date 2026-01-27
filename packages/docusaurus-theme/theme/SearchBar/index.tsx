@@ -30,11 +30,16 @@ export default function SearchBar() {
     const { siteConfig } = useDocusaurusContext();
     const { customFields, themeConfig } = siteConfig;
 
-    // Get Algolia config from customFields or themeConfig.algolia
+    // NetFoundry Algolia defaults
+    const DEFAULT_APPID = 'UWUTF7ESUI';
+    const DEFAULT_APIKEY = '3a4a0691d0e8e3bb7c27c702c6a86ea9';
+    const DEFAULT_INDEXNAME = 'nfdocs';
+
+    // Get Algolia config from customFields or themeConfig.algolia, with defaults
     const algoliaConfig = (themeConfig as any)?.algolia || {};
-    const appId = (customFields?.ALGOLIA_APPID as string) || algoliaConfig.appId || '';
-    const apiKey = (customFields?.ALGOLIA_APIKEY as string) || algoliaConfig.apiKey || '';
-    const indexName = (customFields?.ALGOLIA_INDEXNAME as string) || algoliaConfig.indexName || '';
+    const appId = (customFields?.ALGOLIA_APPID as string) || algoliaConfig.appId || DEFAULT_APPID;
+    const apiKey = (customFields?.ALGOLIA_APIKEY as string) || algoliaConfig.apiKey || DEFAULT_APIKEY;
+    const indexName = (customFields?.ALGOLIA_INDEXNAME as string) || algoliaConfig.indexName || DEFAULT_INDEXNAME;
 
     if (!appId || !apiKey || !indexName) {
         // Fall back to default DocSearch if no valid config

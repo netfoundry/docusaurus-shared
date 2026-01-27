@@ -36,3 +36,12 @@ try {
     await copyFile(f, path.join("dist", f));
   }
 } catch {}
+
+// copy theme/**/*.css -> dist/theme/**/*
+try {
+  const files = await walk("theme");
+  for (const f of files) {
+    if (!f.endsWith(".css")) continue;
+    await copyFile(f, path.join("dist", f));
+  }
+} catch {}
