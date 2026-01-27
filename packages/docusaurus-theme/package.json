@@ -9,9 +9,9 @@
     "css"
   ],
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "node scripts/clean.mjs",
     "build": "yarn clean && tsc && yarn build:css",
-    "build:css": "cp -r css dist/ && find src -name '*.css' -exec sh -c 'mkdir -p dist/$(dirname {}) && cp {} dist/{}' \\;",
+    "build:css": "node scripts/build-css.mjs",
     "test": "jest",
     "prepublishOnly": "yarn build && yarn test"
   },
@@ -60,7 +60,7 @@
     "jest": "^30.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "typescript": "^5"
+    "typescript": "^5.9.3"
   },
   "repository": {
     "type": "git",
