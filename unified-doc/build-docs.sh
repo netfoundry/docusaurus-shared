@@ -78,33 +78,14 @@ clone_or_update() {
       ;;
   esac
 
-  if [ -d "$target" ] && [ ! -d "$target/.git" ]; then
-    if [ "${CLEAN:-0}" -eq 1 ]; then
-      rm -rf "$target"
-    else
-      echo "❌ ${target} exists but is not a git repo. Use --clean to remove it."
-      exit 1
-    fi
+  if [ "${CLEAN:-0}" -eq 1 ]; then
+    rm -rf "$script_dir/_remotes"
   fi
-  
-  # --- CLONE / UPDATE LOGIC ---
-  if [ -d "$target/.git" ]; then
-    if [ "${CLEAN:-0}" -eq 1 ]; then
-      git -C "$target" clean -fdx
-    fi
-    if ! git -C "$target" fetch --depth 1 origin "$branch" \
-          || ! git -C "$target" reset --hard FETCH_HEAD; then
-      echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
-      echo "👉 Available branches:"
-      git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||'
-      exit 1
-    fi
-  else
-    if [ -d "$target" ] && [ "${CLEAN:-0}" -eq 1 ]; then
-      rm -rf "$target"
-    fi
-    if ! git clone --single-branch --branch "$branch" --depth 1 "$url" "$target"; then
+
+  if ! git clone --single-branch --branch "$branch" --depth 1 "$url" "$target"; then
+    if [ -d "$target" ]; then
       if [ -d "$target/.git" ]; then
+        git -C "$target" remote set-url origin "$url" 2>/dev/null || git -C "$target" remote add origin "$url"
         if ! git -C "$target" fetch --depth 1 origin "$branch" \
               || ! git -C "$target" reset --hard FETCH_HEAD; then
           echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
@@ -113,12 +94,18 @@ clone_or_update() {
           exit 1
         fi
       else
-        echo "❌ ${target} exists but is not a git repo, and clone failed."
+        echo "❌ ${target} exists but is not a git repo."
         exit 1
       fi
+    else
+      echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
+      echo "👉 Available branches:"
+      git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||'
+      exit 1
     fi
   fi
 }
+
 
 lint_docs() {
     echo "🔍 Starting Quality Checks..."
