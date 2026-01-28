@@ -77,9 +77,9 @@ const prod: PublishConfig = {
 const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod : staging;
 
 const REMARK_MAPPINGS = [
-    { from: '@onpremdocs',   to: `${docsBase}/onprem` },
-    { from: '@openzitidocs', to: `${docsBase}/openziti`},
-    { from: '@static', to: `${docsBase}`},
+    { from: '@onpremdocs',   to: `${docsBase}onprem` },
+    { from: '@openzitidocs', to: `${docsBase}openziti`},
+    { from: '@static', to: docsBase},
 ];
 
 console.log("CANONICAL URL          : " + cfg.docusaurus.url);
