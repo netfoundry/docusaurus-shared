@@ -100,12 +100,23 @@ clone_or_update() {
       exit 1
     fi
   else
-    git clone --single-branch --branch "$branch" --depth 1 "$url" "$target" || {
-      echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
-      echo "👉 Available branches:"
-      git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||'
-      exit 1
-    }
+    if [ -d "$target" ] && [ "${CLEAN:-0}" -eq 1 ]; then
+      rm -rf "$target"
+    fi
+    if ! git clone --single-branch --branch "$branch" --depth 1 "$url" "$target"; then
+      if [ -d "$target/.git" ]; then
+        if ! git -C "$target" fetch --depth 1 origin "$branch" \
+              || ! git -C "$target" reset --hard FETCH_HEAD; then
+          echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
+          echo "👉 Available branches:"
+          git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||'
+          exit 1
+        fi
+      else
+        echo "❌ ${target} exists but is not a git repo, and clone failed."
+        exit 1
+      fi
+    fi
   fi
 }
 
