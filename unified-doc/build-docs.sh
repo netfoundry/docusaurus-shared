@@ -256,6 +256,8 @@ lint_docs() {
 # =============================================================================
 # MAIN EXECUTION
 # =============================================================================
+echo "bd DEBUG: scanning for git dirs under _remotes"
+find "$script_dir/_remotes" -name .git -type d 2>&1 || true
 
 clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor develop
 clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    update-to-theme
