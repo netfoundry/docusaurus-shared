@@ -20,7 +20,9 @@ const onprem = `./_remotes/onprem`;
 const openziti = `./_remotes/openziti`;
 const zrokRoot = `./_remotes/zrok/website`;
 const zlan = `./_remotes/zlan`;
-const docsBase = `/docs`
+
+const isVercel = process.env.IS_VERCEL === 'true';
+const docsBase = isVercel ? '/' : '/docs/';
 
 const buildMask = parseInt(process.env.DOCUSAURUS_BUILD_MASK ?? "0xFF", 16);
 

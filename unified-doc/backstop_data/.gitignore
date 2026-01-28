@@ -1,0 +1,8 @@
+# BackstopJS generated files
+bitmaps_reference*/
+bitmaps_test*/
+html_report*/
+ci_report*/
+
+# Keep engine scripts
+!engine_scripts/

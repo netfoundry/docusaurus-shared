@@ -29,5 +29,11 @@ static/openziti
 *_versioned_sidebars
 *_versions.json
 
+# BackstopJS visual regression testing
+backstop.*.json
+backstop_data/bitmaps_*
+backstop_data/html_report*
+backstop_data/ci_report*
+
 
 
