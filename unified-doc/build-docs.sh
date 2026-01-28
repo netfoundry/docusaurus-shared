@@ -82,11 +82,6 @@ clone_or_update() {
 
   echo "bd clone_or_update effective_url='${url//:*@/://[REDACTED]@}'"
 
-  if [ "${CLEAN:-0}" -eq 1 ]; then
-    echo "bd CLEAN=1 removing remotes root: '$script_dir/_remotes'"
-    rm -rf "$script_dir/_remotes"
-  fi
-
   echo "bd precheck target_exists=$([ -d "$target" ] && echo 1 || echo 0) git_dir_exists=$([ -d "$target/.git" ] && echo 1 || echo 0)"
   if [ -d "$target" ]; then
     echo "bd precheck target_listing:"
@@ -258,6 +253,12 @@ lint_docs() {
 # =============================================================================
 echo "bd DEBUG: scanning for git dirs under _remotes"
 find "$script_dir/_remotes" -name .git -type d 2>&1 || true
+
+
+if [ "${CLEAN:-0}" -eq 1 ]; then
+  echo "bd CLEAN=1 removing remotes root: '$script_dir/_remotes'"
+  rm -rf "$script_dir/_remotes"
+fi
 
 clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor develop
 clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    update-to-theme
