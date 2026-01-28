@@ -36,6 +36,8 @@ clone_or_update() {
   local url="$1" dest="$2" branch="${3:-main}"
   local target="$script_dir/_remotes/$dest"
 
+  echo "bd clone_or_update url='$url' dest='$dest' branch='$branch' target='$target' CLEAN='${CLEAN:-0}'"
+
   # --- AUTHENTICATION LOGIC ---
   case "$url" in
     *zlan*)
@@ -78,16 +80,33 @@ clone_or_update() {
       ;;
   esac
 
+  echo "bd clone_or_update effective_url='${url//:*@/://[REDACTED]@}'"
+
   if [ "${CLEAN:-0}" -eq 1 ]; then
+    echo "bd CLEAN=1 removing remotes root: '$script_dir/_remotes'"
     rm -rf "$script_dir/_remotes"
   fi
 
-  if ! git clone --single-branch --branch "$branch" --depth 1 "$url" "$target"; then
+  echo "bd precheck target_exists=$([ -d "$target" ] && echo 1 || echo 0) git_dir_exists=$([ -d "$target/.git" ] && echo 1 || echo 0)"
+  if [ -d "$target" ]; then
+    echo "bd precheck target_listing:"
+    ls -la "$target" 2>&1 || true
+  fi
+
+  echo "bd attempting clone: branch='$branch' depth=1 -> '$target'"
+  if ! git clone --single-branch --branch "$branch" --depth 1 "$url" "$target" 2>&1; then
+    echo "bd clone failed; inspecting existing target..."
+    echo "bd postclone target_exists=$([ -d "$target" ] && echo 1 || echo 0) git_dir_exists=$([ -d "$target/.git" ] && echo 1 || echo 0)"
+
     if [ -d "$target" ]; then
       if [ -d "$target/.git" ]; then
-        git -C "$target" remote set-url origin "$url" 2>/dev/null || git -C "$target" remote add origin "$url"
-        if ! git -C "$target" fetch --depth 1 origin "$branch" \
-              || ! git -C "$target" reset --hard FETCH_HEAD; then
+        echo "bd existing repo detected; setting origin url and fetching branch '$branch'"
+        git -C "$target" remote set-url origin "$url" 2>&1 || git -C "$target" remote add origin "$url" 2>&1 || true
+        echo "bd remotes:"
+        git -C "$target" remote -v 2>&1 || true
+        echo "bd fetch+reset..."
+        if ! git -C "$target" fetch --depth 1 origin "$branch" 2>&1 \
+              || ! git -C "$target" reset --hard FETCH_HEAD 2>&1; then
           echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
           echo "👉 Available branches:"
           git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||'
@@ -95,6 +114,8 @@ clone_or_update() {
         fi
       else
         echo "❌ ${target} exists but is not a git repo."
+        echo "bd target top-level listing:"
+        ls -la "$target" 2>&1 || true
         exit 1
       fi
     else
@@ -105,7 +126,6 @@ clone_or_update() {
     fi
   fi
 }
-
 
 lint_docs() {
     echo "🔍 Starting Quality Checks..."
