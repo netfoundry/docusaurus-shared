@@ -11,6 +11,7 @@ import {
 } from "@netfoundry/docusaurus-theme/plugins";
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import {pluginHotjar} from "@netfoundry/docusaurus-theme/node";
+import remarkStripDocsPrefix from "./src/plugins/remark-strip-docs-prefix";
 import {PublishConfig} from 'src/components/docusaurus'
 import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 
@@ -76,7 +77,7 @@ const prod: PublishConfig = {
 const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod : staging;
 
 const REMARK_MAPPINGS = [
-    { from: '@onpremdocs',   to: '/onprem' },
+    { from: '@onpremdocs',   to: `${docsBase}/onprem` },
     { from: '@openzitidocs', to: `${docsBase}/openziti`},
     { from: '@static', to: `${docsBase}`},
 ];
@@ -102,6 +103,7 @@ function extendDocsPlugins(plugin: PluginConfig): PluginConfig {
         ...(config.remarkPlugins || []),
         [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
         [remarkCodeSections, { logLevel: LogLevel.Silent }],
+        [remarkStripDocsPrefix, { enabled: isVercel }],
     ];
 
     return [pluginName, config];
@@ -154,9 +156,9 @@ const config: Config = {
         `${zrokRoot}/docs/images`
     ],
     customFields: {
-        DOCUSAURUS_BASE_PATH: '/',
-        DOCUSAURUS_DOCS_PATH: '/docs/',
-        OPENZITI_DOCS_BASE: '/docs/openziti',
+        DOCUSAURUS_BASE_PATH: docsBase,
+        DOCUSAURUS_DOCS_PATH: docsBase,
+        OPENZITI_DOCS_BASE: `${docsBase}openziti`,
         UNIFIED_DOC_PATH: true,
         ALGOLIA_APPID: cfg.algolia.appId,
         ALGOLIA_APIKEY: cfg.algolia.apiKey,
@@ -220,6 +222,7 @@ const config: Config = {
                 remarkPlugins: [
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
                     [remarkCodeSections, { logLevel: LogLevel.Silent }],
+                    [remarkStripDocsPrefix, { enabled: isVercel }],
                 ],
             },
         ],
@@ -237,6 +240,7 @@ const config: Config = {
                 remarkPlugins: [
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent}],
                     [remarkCodeSections, { logLevel: LogLevel.Silent }],
+                    [remarkStripDocsPrefix, { enabled: isVercel }],
                 ],
             },
         ],
@@ -252,9 +256,10 @@ const config: Config = {
                     remarkGithubAdmonitionsToDirectives,
                 ],
                 remarkPlugins: [
-                    [remarkReplaceMetaUrl, {from: '@staticoz', to: '/docs/openziti', logLevel: LogLevel.Silent}],
+                    [remarkReplaceMetaUrl, {from: '@staticoz', to: `${docsBase}openziti`, logLevel: LogLevel.Silent}],
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
                     [remarkCodeSections, { logLevel: LogLevel.Debug }],
+                    [remarkStripDocsPrefix, { enabled: isVercel }],
                 ],
             },
         ],
@@ -272,6 +277,7 @@ const config: Config = {
                 remarkPlugins: [
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
                     [remarkCodeSections, { logLevel: LogLevel.Silent }],
+                    [remarkStripDocsPrefix, { enabled: isVercel }],
                 ],
             },
         ],
@@ -285,15 +291,28 @@ const config: Config = {
                 path: '_remotes/openziti/docusaurus/blog',
                 remarkPlugins: [
                     remarkYouTube,
-                    [remarkReplaceMetaUrl, {from: '@staticoz', to: '/docs/openziti', logLevel: LogLevel.Silent}],
+                    [remarkReplaceMetaUrl, {from: '@staticoz', to: `${docsBase}openziti`, logLevel: LogLevel.Silent}],
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
                     [remarkCodeSections, { logLevel: LogLevel.Silent }],
+                    [remarkStripDocsPrefix, { enabled: isVercel }],
                 ],
                 blogSidebarCount: 'ALL',
                 blogSidebarTitle: 'All posts',
             },
         ],
         build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot)),
+        // Fallback redirects for JSX pages with hardcoded /docs/ paths (from upstream repos)
+        isVercel && [
+            '@docusaurus/plugin-client-redirects',
+            {
+                createRedirects(existingPath: string) {
+                    // Redirect /docs/X → /X for all doc paths
+                    return existingPath.match(/^\/(onprem|frontdoor|openziti|zrok|zlan)/)
+                        ? [`/docs${existingPath}`]
+                        : undefined;
+                },
+            },
+        ],
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
         [pluginHotjar, {}],
         ['@docusaurus/plugin-google-tag-manager', {id: `openziti-gtm`, containerId: cfg.google.tag}],
