@@ -78,18 +78,26 @@ clone_or_update() {
       ;;
   esac
 
+  if [ -d "$target" ] && [ ! -d "$target/.git" ]; then
+    if [ "${CLEAN:-0}" -eq 1 ]; then
+      rm -rf "$target"
+    else
+      echo "❌ ${target} exists but is not a git repo. Use --clean to remove it."
+      exit 1
+    fi
+  fi
+
   # --- CLONE / UPDATE LOGIC ---
   if [ -d "$target/.git" ]; then
     if [ "${CLEAN:-0}" -eq 1 ]; then
-      if ! git -C "$target" fetch origin "$branch" --depth 1 \
-            || ! git -C "$target" reset --hard "origin/$branch"; then
-        echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
-        echo "👉 Available branches:"
-        git -C "$target" ls-remote --heads origin | awk '{print $2}' | sed 's|refs/heads/||'
-        exit 1
-      fi
-    else
-      echo "ℹ️  ${target} exists; skipping update (use --clean to reset)."
+      git -C "$target" clean -fdx
+    fi
+    if ! git -C "$target" fetch origin "$branch" --depth 1 \
+          || ! git -C "$target" reset --hard "origin/$branch"; then
+      echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
+      echo "👉 Available branches:"
+      git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||' | sed 's#://[^@]*@#://[REDACTED]@#'
+      exit 1
     fi
   else
     git clone --single-branch --branch "$branch" --depth 1 "$url" "$target" || {
@@ -197,7 +205,7 @@ lint_docs() {
     echo "========================================================"
     echo "  📄 Files Scanned:       $FILE_COUNT"
     echo "  🛑 Vale Errors:         $V_ERR"
-    echo "  ⚠️  Vale Warnings:       $V_WARN"
+    echo "  ⚠️  Vale Warnings:      $V_WARN"
     echo "  💡 Vale Suggestions:    $V_SUG"
     echo "  🧹 Markdownlint Issues: $MD_ERR"
     echo "--------------------------------------------------------"
