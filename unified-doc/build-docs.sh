@@ -11,8 +11,8 @@ EXTRA_ARGS=()
 
 while [[ $# -gt 0 ]]; do
   case $1 in
-    --clean) CLEAN=1; OTHER_FLAGS+=("$1"); shift ;;
-    --lint-only|-l) LINT_ONLY=1; shift ;;
+    --clean) CLEAN=1; shift ;;
+    --lint-only) LINT_ONLY=1; shift ;;
     --qualifier=*) BUILD_QUALIFIER="${1#*=}"; QUALIFIER_FLAG=("$1"); shift ;;
     --qualifier)
       if [[ -n "${2:-}" && ! "$2" =~ ^- ]]; then
@@ -296,11 +296,10 @@ echo "========================================"
 echo "bd Directories in _remotes:"
 ls -la "$script_dir/_remotes" 2>/dev/null || echo "  (none)"
 echo "----------------------------------------"
-echo "bd Looking for build/ dirs in remotes:"
-find "$script_dir/_remotes" -type d -name "build" 2>/dev/null || echo "  (none found)"
-echo "----------------------------------------"
-echo "bd Looking for .docusaurus/ dirs in remotes:"
-find "$script_dir/_remotes" -type d -name ".docusaurus" 2>/dev/null || echo "  (none found)"
+echo "bd Looking for build/ and .docusaurus/ dirs in remotes:"
+find "$script_dir/_remotes" -type d \( -name "build" -o -name ".docusaurus" \) 2>/dev/null || echo "  (none found)"
+echo "bd Cleaning stale build artifacts from remotes..."
+find "$script_dir/_remotes" -type d \( -name "build" -o -name ".docusaurus" \) -exec rm -rf {} + 2>/dev/null || true
 echo "========================================"
 
 echo "copying versionable docs locally..."
@@ -319,11 +318,17 @@ export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
 echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"
 mkdir -p "${SDK_ROOT_TARGET}"
 
-"${script_dir}/_remotes/openziti/gendoc.sh" "${OTHER_FLAGS[@]}"
+# -d = skip docusaurus build (unified-doc does its own build)
+"${script_dir}/_remotes/openziti/gendoc.sh" -d "${OTHER_FLAGS[@]}"
 
 # --- STEP 3: DOCUSAURUS BUILD ---
 pushd "${script_dir}" >/dev/null
 yarn install
+
+if [ "${CLEAN:-0}" -eq 1 ]; then
+  echo "bd CLEAN=1: running yarn clear to remove .docusaurus cache"
+  yarn clear
+fi
 
 echo "========================================"
 echo "bd PRE-BUILD DEBUG"
