@@ -11,7 +11,6 @@ import {
 } from "@netfoundry/docusaurus-theme/plugins";
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import {pluginHotjar} from "@netfoundry/docusaurus-theme/node";
-import remarkStripDocsPrefix from "./src/plugins/remark-strip-docs-prefix";
 import {PublishConfig} from 'src/components/docusaurus'
 import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 
@@ -103,7 +102,6 @@ function extendDocsPlugins(plugin: PluginConfig): PluginConfig {
         ...(config.remarkPlugins || []),
         [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
         [remarkCodeSections, { logLevel: LogLevel.Silent }],
-        [remarkStripDocsPrefix, { enabled: isVercel }],
     ];
 
     return [pluginName, config];
@@ -222,7 +220,6 @@ const config: Config = {
                 remarkPlugins: [
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
                     [remarkCodeSections, { logLevel: LogLevel.Silent }],
-                    [remarkStripDocsPrefix, { enabled: isVercel }],
                 ],
             },
         ],
@@ -240,7 +237,6 @@ const config: Config = {
                 remarkPlugins: [
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent}],
                     [remarkCodeSections, { logLevel: LogLevel.Silent }],
-                    [remarkStripDocsPrefix, { enabled: isVercel }],
                 ],
             },
         ],
@@ -259,7 +255,6 @@ const config: Config = {
                     [remarkReplaceMetaUrl, {from: '@staticoz', to: `${docsBase}openziti`, logLevel: LogLevel.Silent}],
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
                     [remarkCodeSections, { logLevel: LogLevel.Debug }],
-                    [remarkStripDocsPrefix, { enabled: isVercel }],
                 ],
             },
         ],
@@ -277,7 +272,6 @@ const config: Config = {
                 remarkPlugins: [
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
                     [remarkCodeSections, { logLevel: LogLevel.Silent }],
-                    [remarkStripDocsPrefix, { enabled: isVercel }],
                 ],
             },
         ],
@@ -294,7 +288,6 @@ const config: Config = {
                     [remarkReplaceMetaUrl, {from: '@staticoz', to: `${docsBase}openziti`, logLevel: LogLevel.Silent}],
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
                     [remarkCodeSections, { logLevel: LogLevel.Silent }],
-                    [remarkStripDocsPrefix, { enabled: isVercel }],
                 ],
                 blogSidebarCount: 'ALL',
                 blogSidebarTitle: 'All posts',
