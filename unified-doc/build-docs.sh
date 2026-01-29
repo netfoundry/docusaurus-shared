@@ -36,6 +36,8 @@ clone_or_update() {
   local url="$1" dest="$2" branch="${3:-main}"
   local target="$script_dir/_remotes/$dest"
 
+  echo "bd clone_or_update url='$url' dest='$dest' branch='$branch' target='$target' CLEAN='${CLEAN:-0}'"
+
   # --- AUTHENTICATION LOGIC ---
   case "$url" in
     *zlan*)
@@ -78,26 +80,45 @@ clone_or_update() {
       ;;
   esac
 
-  # --- CLONE / UPDATE LOGIC ---
-  if [ -d "$target/.git" ]; then
-    if [ "${CLEAN:-0}" -eq 1 ]; then
-      if ! git -C "$target" fetch origin "$branch" --depth 1 \
-            || ! git -C "$target" reset --hard "origin/$branch"; then
-        echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
-        echo "👉 Available branches:"
-        git -C "$target" ls-remote --heads origin | awk '{print $2}' | sed 's|refs/heads/||'
+  echo "bd clone_or_update effective_url='${url//:*@/://[REDACTED]@}'"
+
+  echo "bd precheck target_exists=$([ -d "$target" ] && echo 1 || echo 0) git_dir_exists=$([ -d "$target/.git" ] && echo 1 || echo 0)"
+  if [ -d "$target" ]; then
+    echo "bd precheck target_listing:"
+    ls -la "$target" 2>&1 || true
+  fi
+
+  echo "bd attempting clone: branch='$branch' depth=1 -> '$target'"
+  if ! git clone --single-branch --branch "$branch" --depth 1 "$url" "$target" 2>&1; then
+    echo "bd clone failed; inspecting existing target..."
+    echo "bd postclone target_exists=$([ -d "$target" ] && echo 1 || echo 0) git_dir_exists=$([ -d "$target/.git" ] && echo 1 || echo 0)"
+
+    if [ -d "$target" ]; then
+      if [ -d "$target/.git" ]; then
+        echo "bd existing repo detected; setting origin url and fetching branch '$branch'"
+        git -C "$target" remote set-url origin "$url" 2>&1 || git -C "$target" remote add origin "$url" 2>&1 || true
+        echo "bd remotes:"
+        git -C "$target" remote -v 2>&1 || true
+        echo "bd fetch+reset..."
+        if ! git -C "$target" fetch --depth 1 origin "$branch" 2>&1 \
+              || ! git -C "$target" reset --hard FETCH_HEAD 2>&1; then
+          echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
+          echo "👉 Available branches:"
+          git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||'
+          exit 1
+        fi
+      else
+        echo "❌ ${target} exists but is not a git repo."
+        echo "bd target top-level listing:"
+        ls -la "$target" 2>&1 || true
         exit 1
       fi
     else
-      echo "ℹ️  ${target} exists; skipping update (use --clean to reset)."
-    fi
-  else
-    git clone --single-branch --branch "$branch" --depth 1 "$url" "$target" || {
       echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
       echo "👉 Available branches:"
-      git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||' | sed 's#://[^@]*@#://[REDACTED]@#'
+      git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||'
       exit 1
-    }
+    fi
   fi
 }
 
@@ -197,7 +218,7 @@ lint_docs() {
     echo "========================================================"
     echo "  📄 Files Scanned:       $FILE_COUNT"
     echo "  🛑 Vale Errors:         $V_ERR"
-    echo "  ⚠️  Vale Warnings:       $V_WARN"
+    echo "  ⚠️ Vale Warnings:       $V_WARN"
     echo "  💡 Vale Suggestions:    $V_SUG"
     echo "  🧹 Markdownlint Issues: $MD_ERR"
     echo "--------------------------------------------------------"
@@ -230,12 +251,20 @@ lint_docs() {
 # =============================================================================
 # MAIN EXECUTION
 # =============================================================================
+echo "bd DEBUG: scanning for git dirs under _remotes"
+find "$script_dir/_remotes" -name .git -type d 2>&1 || true
+
+
+if [ "${CLEAN:-0}" -eq 1 ]; then
+  echo "bd CLEAN=1 removing remotes root: '$script_dir/_remotes'"
+  rm -rf "$script_dir/_remotes"
+fi
 
 clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor develop
-clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    main
-clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  main
-clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan      main
-clone_or_update "https://github.com/openziti/zrok.git"                           zrok      main
+clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    update-to-theme
+clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  update-to-theme
+clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan      use-theme
+clone_or_update "https://github.com/openziti/zrok.git"                           zrok      update-to-theme
 
 echo "copying versionable docs locally..."
 "${script_dir}/sync-versioned-remote.sh" zrok

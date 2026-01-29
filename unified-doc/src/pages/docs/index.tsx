@@ -1,12 +1,13 @@
-// src/pages/index.tsx
+// src/pages/docs/index.tsx
 import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {
     defaultNetFoundryFooterProps,
     NetFoundryHorizontalSection,
     NetFoundryLayout,
-} from '@netfoundry/docusaurus-shared/ui';
+} from '@netfoundry/docusaurus-theme/ui';
 import styles from "./index.module.css";
 
 export default function Home(): ReactNode {
@@ -30,13 +31,13 @@ export default function Home(): ReactNode {
                         <div className="buttons">
                             <Link className="button button--secondary button--lg" to="https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides">NetFoundry SaaS Docs</Link>
                             <span style={{margin: '0 8px'}} />
-                            <Link className="button button--secondary button--lg" to="/docs/onprem/intro">On-Prem Docs</Link>
+                            <Link className="button button--secondary button--lg" to={useBaseUrl('/onprem/intro')}>On-Prem Docs</Link>
                             <span style={{margin: '0 8px'}} />
-                            <Link className="button button--secondary button--lg" to="/docs/frontdoor/intro">Frontdoor Docs</Link>
+                            <Link className="button button--secondary button--lg" to={useBaseUrl('/frontdoor/intro')}>Frontdoor Docs</Link>
                             <span style={{margin: '0 8px'}} />
-                            <Link className="button button--secondary button--lg" to="/docs/openziti/learn/introduction">OpenZiti Docs</Link>
+                            <Link className="button button--secondary button--lg" to={useBaseUrl('/openziti/learn/introduction')}>OpenZiti Docs</Link>
                             <span style={{margin: '0 8px'}} />
-                            <Link className="button button--secondary button--lg" to="/docs/zlan">zLAN Docs</Link>
+                            <Link className="button button--secondary button--lg" to={useBaseUrl('/zlan')}>zLAN Docs</Link>
                         </div>
                     </div>
                 </NetFoundryHorizontalSection>
@@ -62,7 +63,7 @@ export default function Home(): ReactNode {
                                         Enterprise self-hosted platform for OpenZiti overlays.
                                     </div>
                                     <div className="card__footer">
-                                        <Link className="button button--primary button--block" to="/docs/onprem/intro">Go to NetFoundry On-Prem</Link>
+                                        <Link className="button button--primary button--block" to={useBaseUrl('/onprem/intro')}>Go to NetFoundry On-Prem</Link>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +74,7 @@ export default function Home(): ReactNode {
                                         Zero-trust inbound access to private apps and services.
                                     </div>
                                     <div className="card__footer">
-                                        <Link className="button button--primary button--block" to="/docs/frontdoor/intro">Go to NetFoundry Frontdoor</Link>
+                                        <Link className="button button--primary button--block" to={useBaseUrl('/frontdoor/intro')}>Go to NetFoundry Frontdoor</Link>
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +85,7 @@ export default function Home(): ReactNode {
                                         Open-source zero-trust networking project and SDKs.
                                     </div>
                                     <div className="card__footer">
-                                        <Link className="button button--primary button--block" to="/docs/openziti/learn/introduction">Go to OpenZiti</Link>
+                                        <Link className="button button--primary button--block" to={useBaseUrl('/openziti/learn/introduction')}>Go to OpenZiti</Link>
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +96,7 @@ export default function Home(): ReactNode {
                                         Built on the robust foundation of NetFoundy OpenZiti, NetFoundry zLAN combines advanced firewall capabilities with the power of zero trust and secure network overlay
                                     </div>
                                     <div className="card__footer">
-                                        <Link className="button button--primary button--block" to="/docs/zlan">Go to zLAN</Link>
+                                        <Link className="button button--primary button--block" to={useBaseUrl('/zlan')}>Go to zLAN</Link>
                                     </div>
                                 </div>
                             </div>
@@ -107,11 +108,11 @@ export default function Home(): ReactNode {
                                     <div className="card__header"><h3>Quick Links</h3></div>
                                     <div className="card__body">
                                         <ul>
-                                            <li><Link to="/docs/onprem/troubleshooting">NetFoundry Troubleshooting</Link></li>
-                                            <li><Link to="/docs/onprem/intro">On-Prem Deployment</Link></li>
-                                            <li><Link to="/docs/frontdoor/intro">Frontdoor Getting Started</Link></li>
-                                            <li><Link to="/docs/openziti/reference/command-line/login">OpenZiti CLI Reference</Link></li>
-                                            <li><Link to="/docs/zlan">zLAN FAQ</Link></li>
+                                            <li><Link to={useBaseUrl('/onprem/troubleshooting')}>NetFoundry Troubleshooting</Link></li>
+                                            <li><Link to={useBaseUrl('/onprem/intro')}>On-Prem Deployment</Link></li>
+                                            <li><Link to={useBaseUrl('/frontdoor/intro')}>Frontdoor Getting Started</Link></li>
+                                            <li><Link to={useBaseUrl('/openziti/reference/command-line/login')}>OpenZiti CLI Reference</Link></li>
+                                            <li><Link to={useBaseUrl('/zlan')}>zLAN FAQ</Link></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -121,11 +122,11 @@ export default function Home(): ReactNode {
                                     <div className="card__header"><h3>Support</h3></div>
                                     <div className="card__body">
                                         <ul>
-                                            <li><Link to="/docs/onprem/troubleshooting">NetFoundry Troubleshooting</Link></li>
-                                            <li><Link to="/docs/onprem/troubleshooting">On-Prem Troubleshooting</Link></li>
-                                            <li><Link to="/docs/frontdoor/learn/health-checks">Frontdoor Troubleshooting</Link></li>
-                                            <li><Link to="/docs/openziti/learn/identity-providers">OpenZiti FAQ</Link></li>
-                                            <li><Link to="/docs/zlan">zLAN FAQ</Link></li>
+                                            <li><Link to={useBaseUrl('/onprem/troubleshooting')}>NetFoundry Troubleshooting</Link></li>
+                                            <li><Link to={useBaseUrl('/onprem/troubleshooting')}>On-Prem Troubleshooting</Link></li>
+                                            <li><Link to={useBaseUrl('/frontdoor/learn/health-checks')}>Frontdoor Troubleshooting</Link></li>
+                                            <li><Link to={useBaseUrl('/openziti/learn/identity-providers')}>OpenZiti FAQ</Link></li>
+                                            <li><Link to={useBaseUrl('/zlan')}>zLAN FAQ</Link></li>
                                         </ul>
                                     </div>
                                 </div>

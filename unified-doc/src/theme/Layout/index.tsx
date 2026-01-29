@@ -1,5 +1,5 @@
 import React, {type ReactNode} from 'react';
-import {NetFoundryLayout, NetFoundryLayoutProps, StarUsProps} from '@netfoundry/docusaurus-shared/ui';
+import {NetFoundryLayout, NetFoundryLayoutProps, StarUsProps} from '@netfoundry/docusaurus-theme/ui';
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import {useLocation} from "@docusaurus/router";
 import {unifiedFooter} from "@site/src/components/footer";

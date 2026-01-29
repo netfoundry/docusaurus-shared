@@ -8,9 +8,9 @@ import {
     remarkReplaceMetaUrl,
     remarkScopedPath,
     remarkYouTube
-} from "@netfoundry/docusaurus-shared/plugins";
+} from "@netfoundry/docusaurus-theme/plugins";
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
-import {pluginHotjar} from "@netfoundry/docusaurus-shared/node";
+import {pluginHotjar} from "@netfoundry/docusaurus-theme/node";
 import {PublishConfig} from 'src/components/docusaurus'
 import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 
@@ -20,7 +20,9 @@ const onprem = `./_remotes/onprem`;
 const openziti = `./_remotes/openziti`;
 const zrokRoot = `./_remotes/zrok/website`;
 const zlan = `./_remotes/zlan`;
-const docsBase = `/docs`
+
+const isVercel = process.env.IS_VERCEL === 'true';
+const docsBase = isVercel ? '/' : '/docs/';
 
 const buildMask = parseInt(process.env.DOCUSAURUS_BUILD_MASK ?? "0xFF", 16);
 
@@ -74,9 +76,9 @@ const prod: PublishConfig = {
 const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod : staging;
 
 const REMARK_MAPPINGS = [
-    { from: '@onpremdocs',   to: '/onprem' },
-    { from: '@openzitidocs', to: `${docsBase}/openziti`},
-    { from: '@static', to: `${docsBase}`},
+    { from: '@onpremdocs',   to: `${docsBase}onprem` },
+    { from: '@openzitidocs', to: `${docsBase}openziti`},
+    { from: '@static', to: docsBase},
 ];
 
 console.log("CANONICAL URL          : " + cfg.docusaurus.url);
@@ -145,16 +147,16 @@ const config: Config = {
     staticDirectories: [
         'static',
         '_remotes/frontdoor/docusaurus/static/',
-        '_remotes/onprem/docs-site/static/',
+        '_remotes/onprem/docusaurus/static/',
         '_remotes/openziti/docusaurus/static/',
         '_remotes/zlan/docusaurus/static/',
         `${zrokRoot}/static/`,
         `${zrokRoot}/docs/images`
     ],
     customFields: {
-        DOCUSAURUS_BASE_PATH: '/',
-        DOCUSAURUS_DOCS_PATH: '/docs/',
-        OPENZITI_DOCS_BASE: '/docs/openziti',
+        DOCUSAURUS_BASE_PATH: docsBase,
+        DOCUSAURUS_DOCS_PATH: docsBase,
+        OPENZITI_DOCS_BASE: `${docsBase}openziti`,
         UNIFIED_DOC_PATH: true,
         ALGOLIA_APPID: cfg.algolia.appId,
         ALGOLIA_APIKEY: cfg.algolia.apiKey,
@@ -178,7 +180,7 @@ const config: Config = {
                             alias: {
                                 '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
                                 '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
-                                '@onprem': path.resolve(__dirname, `${onprem}/docs-site`),
+                                '@onprem': path.resolve(__dirname, `${onprem}/docusaurus`),
                                 '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
                                 '@zrok': path.resolve(__dirname, `${zrokRoot}`),
                                 '@zrokroot': path.resolve(__dirname, `${zrokRoot}`),
@@ -200,7 +202,7 @@ const config: Config = {
 
         ['@docusaurus/plugin-content-pages',{path: 'src/pages',routeBasePath: '/'}],
         build(BUILD_FLAGS.FRONTDOOR) && ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
-        build(BUILD_FLAGS.ONPREM) && ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docs-site/src/pages`, routeBasePath: '/onprem'}],
+        build(BUILD_FLAGS.ONPREM) && ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docusaurus/src/pages`, routeBasePath: '/onprem'}],
         build(BUILD_FLAGS.OPENZITI) && ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
         build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
         build(BUILD_FLAGS.ZROK) && ['@docusaurus/plugin-content-pages',{id: `zrok-pages`, path: `${zrokRoot}/src/pages`, routeBasePath: '/zrok'}],
@@ -208,9 +210,9 @@ const config: Config = {
             '@docusaurus/plugin-content-docs',
             {
                 id: 'onprem', // do not change - affects algolia search
-                path: `${onprem}/docs-site/docs`,
+                path: `${onprem}/docusaurus/docs`,
                 routeBasePath: 'onprem',
-                sidebarPath: `${onprem}/docs-site/sidebars.ts`,
+                sidebarPath: `${onprem}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
                 beforeDefaultRemarkPlugins: [
                     remarkGithubAdmonitionsToDirectives,
@@ -250,7 +252,7 @@ const config: Config = {
                     remarkGithubAdmonitionsToDirectives,
                 ],
                 remarkPlugins: [
-                    [remarkReplaceMetaUrl, {from: '@staticoz', to: '/docs/openziti', logLevel: LogLevel.Silent}],
+                    [remarkReplaceMetaUrl, {from: '@staticoz', to: `${docsBase}openziti`, logLevel: LogLevel.Silent}],
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
                     [remarkCodeSections, { logLevel: LogLevel.Debug }],
                 ],
@@ -283,7 +285,7 @@ const config: Config = {
                 path: '_remotes/openziti/docusaurus/blog',
                 remarkPlugins: [
                     remarkYouTube,
-                    [remarkReplaceMetaUrl, {from: '@staticoz', to: '/docs/openziti', logLevel: LogLevel.Silent}],
+                    [remarkReplaceMetaUrl, {from: '@staticoz', to: `${docsBase}openziti`, logLevel: LogLevel.Silent}],
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
                     [remarkCodeSections, { logLevel: LogLevel.Silent }],
                 ],
@@ -292,6 +294,18 @@ const config: Config = {
             },
         ],
         build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot)),
+        // Fallback redirects for JSX pages with hardcoded /docs/ paths (from upstream repos)
+        isVercel && [
+            '@docusaurus/plugin-client-redirects',
+            {
+                createRedirects(existingPath: string) {
+                    // Redirect /docs/X → /X for all doc paths
+                    return existingPath.match(/^\/(onprem|frontdoor|openziti|zrok|zlan)/)
+                        ? [`/docs${existingPath}`]
+                        : undefined;
+                },
+            },
+        ],
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
         [pluginHotjar, {}],
         ['@docusaurus/plugin-google-tag-manager', {id: `openziti-gtm`, containerId: cfg.google.tag}],

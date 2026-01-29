@@ -1,17 +1,18 @@
 {
   "name": "@netfoundry/docusaurus-theme",
-  "version": "0.1.9",
+  "version": "0.3.6",
   "description": "NetFoundry Docusaurus theme with shared layout, footer, and styling",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "files": [
     "dist",
-    "css"
+    "css",
+    "theme"
   ],
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "node scripts/clean.mjs",
     "build": "yarn clean && tsc && yarn build:css",
-    "build:css": "cp -r css dist/ && find src -name '*.css' -exec sh -c 'mkdir -p dist/$(dirname {}) && cp {} dist/{}' \\;",
+    "build:css": "node scripts/build-css.mjs",
     "test": "jest",
     "prepublishOnly": "yarn build && yarn test"
   },
@@ -45,9 +46,13 @@
     "react-dom": "^18 || ^19"
   },
   "dependencies": {
+    "@docsearch/react": "^3",
+    "algoliasearch": "^5",
     "clsx": "^2.0.0",
+    "instantsearch.js": "^4",
     "react-device-detect": "^2.2.3",
-    "react-github-btn": "^1.4.0"
+    "react-github-btn": "^1.4.0",
+    "react-instantsearch": "^7"
   },
   "devDependencies": {
     "@docusaurus/core": "^3",
@@ -60,7 +65,7 @@
     "jest": "^30.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "typescript": "^5"
+    "typescript": "^5.9.3"
   },
   "repository": {
     "type": "git",
