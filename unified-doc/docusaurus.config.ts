@@ -78,6 +78,7 @@ const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod 
 const REMARK_MAPPINGS = [
     { from: '@onpremdocs',   to: `${docsBase}onprem` },
     { from: '@openzitidocs', to: `${docsBase}openziti`},
+    { from: '@zrokdocs', to: `${docsBase}zrok`},
     { from: '@static', to: docsBase},
 ];
 
@@ -87,6 +88,8 @@ console.log("    docsBase           : " + docsBase);
 console.log("    algolia index      : " + cfg.algolia.indexName);
 console.log("    build mask         : " + buildMask);
 console.log("    hotjar app         : " + cfg.hotjar.id);
+console.log('REMARK_MAPPINGS:', JSON.stringify(REMARK_MAPPINGS, null, 2));
+
 
 function extendDocsPlugins(plugin: PluginConfig): PluginConfig {
     if (!Array.isArray(plugin)) return plugin;
@@ -106,6 +109,44 @@ function extendDocsPlugins(plugin: PluginConfig): PluginConfig {
 
     return [pluginName, config];
 }
+
+function dumpRoutes() {
+    return {
+        name: 'dump-routes',
+        async allContentLoaded({allContent, actions}: any) {
+            const fs = require('node:fs');
+
+            // route list (most stable in v3)
+            const routes = actions.routesPaths ?? actions.routePaths ?? [];
+
+            // optional: also dump plugin content ids so you can correlate routes
+            fs.writeFileSync(
+                'routes.json',
+                JSON.stringify({routes, allContent}, null, 2),
+            );
+        },
+    };
+}
+
+function assertNoDocsPrefix() {
+    return (tree: any, file: any) => {
+        const p = String(file.path || '');
+        const {visit} = require('unist-util-visit');
+
+        visit(tree, 'link', (node: any) => {
+            if (typeof node.url === 'string' && node.url.startsWith('/docs/')) {
+                console.log(`[assertNoDocsPrefix] ${p} url=${node.url}`);
+            }
+        });
+
+        visit(tree, 'jsx', (node: any) => {
+            if (typeof node.value === 'string' && node.value.includes('"/docs/')) {
+                console.log(`[assertNoDocsPrefix] ${p} jsx contains "/docs/`);
+            }
+        });
+    };
+}
+
 
 const config: Config = {
     title: 'NetFoundry Documentation',
@@ -293,7 +334,7 @@ const config: Config = {
                 blogSidebarTitle: 'All posts',
             },
         ],
-        build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot)),
+        build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS)),
         // Fallback redirects for JSX pages with hardcoded /docs/ paths (from upstream repos)
         isVercel && [
             '@docusaurus/plugin-client-redirects',
