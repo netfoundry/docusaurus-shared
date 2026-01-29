@@ -262,8 +262,8 @@ fi
 
 clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor develop
 clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    main
-clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  update-to-theme
-clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan      use-theme
+clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  main 
+clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan      main
 clone_or_update "https://github.com/openziti/zrok.git"                           zrok      update-to-theme
 
 echo "copying versionable docs locally..."
