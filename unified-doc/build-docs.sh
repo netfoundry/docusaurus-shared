@@ -9,22 +9,46 @@ QUALIFIER_FLAG=()
 OTHER_FLAGS=()
 EXTRA_ARGS=()
 
-for arg in "$@"; do
-  case $arg in
-    --clean) CLEAN=1; OTHER_FLAGS+=("$arg") ;;
-    --lint-only) LINT_ONLY=1 ;;
-    --qualifier=*) BUILD_QUALIFIER="${arg#*=}"; QUALIFIER_FLAG=("$arg") ;;
-    -*) OTHER_FLAGS+=("$arg") ;;   # Pass through flags like -ds, -z
-    *) EXTRA_ARGS+=("$arg") ;;
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --clean) CLEAN=1; OTHER_FLAGS+=("$1"); shift ;;
+    --lint-only|-l) LINT_ONLY=1; shift ;;
+    --qualifier=*) BUILD_QUALIFIER="${1#*=}"; QUALIFIER_FLAG=("$1"); shift ;;
+    --qualifier)
+      if [[ -n "${2:-}" && ! "$2" =~ ^- ]]; then
+        BUILD_QUALIFIER="$2"; QUALIFIER_FLAG=("--qualifier=$2"); shift 2
+      else
+        echo "Error: --qualifier requires a value" >&2; exit 1
+      fi
+      ;;
+    -*) OTHER_FLAGS+=("$1"); shift ;;
+    *) EXTRA_ARGS+=("$1"); shift ;;
   esac
 done
 
 # --- DEBUG CONFIG ---
+echo "========================================"
+echo "bd BUILD ENVIRONMENT DEBUG"
+echo "========================================"
 echo "bd CLEAN=$CLEAN"
 echo "bd BUILD_QUALIFIER='$BUILD_QUALIFIER'"
-echo "bd QUALIFIER_FLAG: ${QUALIFIER_FLAG[*]}"
-echo "bd OTHER_FLAGS: ${OTHER_FLAGS[*]}"
-echo "bd EXTRA_ARGS: ${EXTRA_ARGS[*]}"
+echo "bd QUALIFIER_FLAG: ${QUALIFIER_FLAG[*]:-}"
+echo "bd OTHER_FLAGS: ${OTHER_FLAGS[*]:-}"
+echo "bd EXTRA_ARGS: ${EXTRA_ARGS[*]:-}"
+echo "----------------------------------------"
+echo "bd ENV VARS:"
+echo "bd   IS_VERCEL='${IS_VERCEL:-}'"
+echo "bd   VERCEL='${VERCEL:-}'"
+echo "bd   VERCEL_ENV='${VERCEL_ENV:-}'"
+echo "bd   CI='${CI:-}'"
+echo "bd   NODE_ENV='${NODE_ENV:-}'"
+echo "bd   PWD='$(pwd)'"
+echo "----------------------------------------"
+echo "bd VERSIONS:"
+echo "bd   node: $(node --version 2>/dev/null || echo 'not found')"
+echo "bd   yarn: $(yarn --version 2>/dev/null || echo 'not found')"
+echo "bd   npm: $(npm --version 2>/dev/null || echo 'not found')"
+echo "========================================"
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -262,9 +286,22 @@ fi
 
 clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor develop
 clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    main
-clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  main 
+clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  main
 clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan      main
 clone_or_update "https://github.com/openziti/zrok.git"                           zrok      update-to-theme
+
+echo "========================================"
+echo "bd POST-CLONE DEBUG"
+echo "========================================"
+echo "bd Directories in _remotes:"
+ls -la "$script_dir/_remotes" 2>/dev/null || echo "  (none)"
+echo "----------------------------------------"
+echo "bd Looking for build/ dirs in remotes:"
+find "$script_dir/_remotes" -type d -name "build" 2>/dev/null || echo "  (none found)"
+echo "----------------------------------------"
+echo "bd Looking for .docusaurus/ dirs in remotes:"
+find "$script_dir/_remotes" -type d -name ".docusaurus" 2>/dev/null || echo "  (none found)"
+echo "========================================"
 
 echo "copying versionable docs locally..."
 "${script_dir}/sync-versioned-remote.sh" zrok
@@ -287,6 +324,17 @@ mkdir -p "${SDK_ROOT_TARGET}"
 # --- STEP 3: DOCUSAURUS BUILD ---
 pushd "${script_dir}" >/dev/null
 yarn install
+
+echo "========================================"
+echo "bd PRE-BUILD DEBUG"
+echo "========================================"
+echo "bd   IS_VERCEL='${IS_VERCEL:-}'"
+echo "bd   VERCEL='${VERCEL:-}'"
+echo "bd   script_dir='${script_dir}'"
+echo "bd   BUILD_QUALIFIER='${BUILD_QUALIFIER}'"
+echo "bd   output dir: build${BUILD_QUALIFIER}"
+echo "========================================"
+
 now=$(date)
 echo "$now" > "${script_dir}/static/build-time.txt"
 echo "BUILDING docs into: build${BUILD_QUALIFIER} at $now"
