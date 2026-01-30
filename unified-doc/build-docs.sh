@@ -284,10 +284,10 @@ if [ "${CLEAN:-0}" -eq 1 ]; then
   rm -rf "$script_dir/_remotes"
 fi
 
-clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor develop
-clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    main
-clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  main
-clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan      main
+clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor reusable-doc-plugin
+clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    reusable-doc-plugin
+clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  reusable-doc-plugin
+clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan      reusable-doc-plugin
 clone_or_update "https://github.com/openziti/zrok.git"                           zrok      update-to-theme-with-versioning
 
 echo "========================================"
