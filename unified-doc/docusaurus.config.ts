@@ -87,10 +87,10 @@ const prod: PublishConfig = {
 const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod : staging;
 
 const REMARK_MAPPINGS = [
-    { from: '@onpremdocs',   to: `${docsBase}onprem` },
-    { from: '@openzitidocs', to: `${docsBase}openziti`},
+    { from: '@onpremdocs',   to: `/docs/onprem` },
+    { from: '@openzitidocs', to: `/docs/openziti`},
     { from: '@zrokdocs', to: `/docs/zrok`},
-    { from: '@static', to: docsBase},
+    { from: '@static', to: `/docs/`},
 ];
 
 console.log("CANONICAL URL          : " + cfg.docusaurus.url);
@@ -260,7 +260,7 @@ const config: Config = {
         build(BUILD_FLAGS.ZROK) && ['@docusaurus/plugin-content-pages',{id: `zrok-pages`, path: `${zrokRoot}/src/pages`, routeBasePath: '/zrok'}],
         build(BUILD_FLAGS.ONPREM) && extendDocsPlugins(onpremDocsPluginConfig(onpremRoot, REMARK_MAPPINGS, onpremRouteBase)),
         build(BUILD_FLAGS.FRONTDOOR) && extendDocsPlugins(frontdoorDocsPluginConfig(frontdoorRoot, REMARK_MAPPINGS, frontdoorRouteBase)),
-        build(BUILD_FLAGS.OPENZITI) && extendDocsPlugins(openzitiDocsPluginConfig(openzitiRoot, REMARK_MAPPINGS, openzitiRouteBase, `${docsBase}openziti`)),
+        build(BUILD_FLAGS.OPENZITI) && extendDocsPlugins(openzitiDocsPluginConfig(openzitiRoot, REMARK_MAPPINGS, openzitiRouteBase, `/docs/openziti`)),
         build(BUILD_FLAGS.ZLAN) && extendDocsPlugins(zlanDocsPluginConfig(zlanRoot, REMARK_MAPPINGS, zlanRouteBase)),
         build(BUILD_FLAGS.OPENZITI) && [
             '@docusaurus/plugin-content-blog',
@@ -321,9 +321,9 @@ const config: Config = {
                     label: 'Docs',
                     position: 'left',
                     items: [
-                        { to: '/onprem/intro', label: 'On-Prem' },
-                        { to: '/frontdoor/intro', label: 'Frontdoor' },
-                        { to: '/openziti/learn/introduction', label: 'OpenZiti' },
+                        { to: '/docs/onprem/intro', label: 'On-Prem' },
+                        { to: '/docs/frontdoor/intro', label: 'Frontdoor' },
+                        { to: '/docs/openziti/learn/introduction', label: 'OpenZiti' },
                     ],
                 },
             ],
