@@ -2688,6 +2688,21 @@
     require-from-string "^2.0.2"
     uri-js-replace "^1.0.1"
 
+"@redocly/ajv@^8.11.2":
+  version "8.17.2"
+  resolved "https://registry.yarnpkg.com/@redocly/ajv/-/ajv-8.17.2.tgz#17abe1f8b6d17c1d4185be5359bac394b13bec4d"
+  integrity sha512-rcbDZOfXAgGEJeJ30aWCVVJvxV9ooevb/m1/SFblO2qHs4cqTk178gx7T/vdslf57EA4lTofrwsq5K8rxK9g+g==
+  dependencies:
+    fast-deep-equal "^3.1.3"
+    fast-uri "^3.0.1"
+    json-schema-traverse "^1.0.0"
+    require-from-string "^2.0.2"
+
+"@redocly/config@^0.22.0":
+  version "0.22.2"
+  resolved "https://registry.yarnpkg.com/@redocly/config/-/config-0.22.2.tgz#9a05e694816d53a5236cf8768d3cad0e49d8b116"
+  integrity sha512-roRDai8/zr2S9YfmzUfNhKjOF0NdcOIqF7bhf4MVC5UxpjIysDjyudvlAiVbpPHp3eDRWbdzUgtkK1a7YiDNyQ==
+
 "@redocly/config@^0.6.0":
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/@redocly/config/-/config-0.6.3.tgz#0dab6278721abd5aae6b375deee97665005b0472"
@@ -6906,7 +6921,7 @@ http2-wrapper@^2.1.10:
     quick-lru "^5.1.1"
     resolve-alpn "^1.2.0"
 
-https-proxy-agent@^7.0.4, https-proxy-agent@^7.0.6:
+https-proxy-agent@^7.0.4, https-proxy-agent@^7.0.5, https-proxy-agent@^7.0.6:
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-7.0.6.tgz#da8dfeac7da130b05c2ba4b59c9b6cd66611a6b9"
   integrity sha512-vK9P5/iUfdl95AI+JVyUuIcVtd4ofvtrOr3HNtM2yxC9bnMbEdp3x01OhQNnjb8IJYi38VlTE3mBXwcfvywuSw==

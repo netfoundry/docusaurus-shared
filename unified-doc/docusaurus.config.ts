@@ -24,6 +24,9 @@ const zlan = `./_remotes/zlan`;
 const isVercel = process.env.IS_VERCEL === 'true';
 const docsBase = isVercel ? '/' : '/docs/';
 
+// For unified-doc (baseUrl '/docs/'), use just the name. For standalone (baseUrl '/'), use 'docs/{name}'.
+const zrokRouteBase = isVercel ? 'docs/zrok' : 'zrok';
+
 const buildMask = parseInt(process.env.DOCUSAURUS_BUILD_MASK ?? "0xFF", 16);
 
 const BUILD_FLAGS = {
@@ -78,7 +81,7 @@ const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod 
 const REMARK_MAPPINGS = [
     { from: '@onpremdocs',   to: `${docsBase}onprem` },
     { from: '@openzitidocs', to: `${docsBase}openziti`},
-    { from: '@zrokdocs', to: `${docsBase}zrok`},
+    { from: '@zrokdocs', to: `/docs/zrok`},
     { from: '@static', to: docsBase},
 ];
 
@@ -334,7 +337,7 @@ const config: Config = {
                 blogSidebarTitle: 'All posts',
             },
         ],
-        build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS)),
+        build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, zrokRouteBase)),
         // Fallback redirects for JSX pages with hardcoded /docs/ paths (from upstream repos)
         isVercel && [
             '@docusaurus/plugin-client-redirects',
