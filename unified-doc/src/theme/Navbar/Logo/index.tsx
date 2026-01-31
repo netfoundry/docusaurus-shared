@@ -1,22 +1,26 @@
 import React, {JSX} from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import {useLocation} from '@docusaurus/router';
 import type {DocusaurusConfig} from "@docusaurus/types/src/config";
 import ThemedImage from "@theme/ThemedImage";
 
-const mapTitle = (p: string, defTitle: string) => {
-    if (p.startsWith('/docs/frontdoor')) return {includeNFLogo: true, to: '/frontdoor', alt:'Frontdoor', logoLight: `/docs/img/frontdoor-sm-logo.svg`, logoDark: `/docs/img/frontdoor-sm-logo.svg`};
-    if (p.startsWith('/docs/onprem')) return {includeNFLogo: true, to: '/onprem',alt:'On-Prem', logoLight: `/docs/img/onprem-sm-logo.svg`, logoDark: `/docs/img/onprem-sm-logo.svg`};
-    if (p.startsWith('/docs/openziti')) return {includeNFLogo: true, to: '/openziti',alt:'OpenZiti', logoLight: `/docs/img/openziti-sm-logo.svg`, logoDark: `/docs/img/openziti-sm-logo.svg`};
-    if (p.startsWith('/docs/zlan')) return {includeNFLogo: true, to: '/zlan', alt:'zlan', logoLight: `/docs/img/zlan-logo.svg`, logoDark: `/docs/img/zlan-logo.svg`};
-    if (p.startsWith('/docs/zrok')) return {text: '', includeNFLogo: true, to: '/zrok', alt:'zrok', logoLight: `/docs/img/zrok-1.0.0-rocket-purple.svg`, logoDark: `/docs/img/zrok-1.0.0-rocket-green.svg`};
+const mapTitle = (p: string, baseUrl: string) => {
+    // Check paths with baseUrl prefix (e.g., /docs/openziti or /openziti depending on config)
+    const checkPath = (segment: string) => p.startsWith(`${baseUrl}${segment}`) || p.startsWith(`/${segment}`);
+
+    if (checkPath('frontdoor')) return {includeNFLogo: true, to: '/frontdoor', alt:'Frontdoor', logoLight: `/img/frontdoor-sm-logo.svg`, logoDark: `/img/frontdoor-sm-logo.svg`};
+    if (checkPath('onprem')) return {includeNFLogo: true, to: '/onprem',alt:'On-Prem', logoLight: `/img/onprem-sm-logo.svg`, logoDark: `/img/onprem-sm-logo.svg`};
+    if (checkPath('openziti')) return {includeNFLogo: true, to: '/openziti',alt:'OpenZiti', logoLight: `/img/openziti-sm-logo.svg`, logoDark: `/img/openziti-sm-logo.svg`};
+    if (checkPath('zlan')) return {includeNFLogo: true, to: '/zlan', alt:'zlan', logoLight: `/img/zlan-logo.svg`, logoDark: `/img/zlan-logo.svg`};
+    if (checkPath('zrok')) return {text: '', includeNFLogo: true, to: '/zrok', alt:'zrok', logoLight: `/img/zrok-1.0.0-rocket-purple.svg`, logoDark: `/img/zrok-1.0.0-rocket-green.svg`};
     return {
         includeNFLogo: false,
         to: '/',
         alt:'NetFoundry',
-        logoLight: `/docs/img/netfoundry-name-and-logo.svg`,
-        logoDark: `/docs/img/netfoundry-name-and-logo-dark.svg`
+        logoLight: `/img/netfoundry-name-and-logo.svg`,
+        logoDark: `/img/netfoundry-name-and-logo-dark.svg`
     };
 };
 
@@ -27,8 +31,15 @@ function navbarpoke(cfg:DocusaurusConfig) {
 export default function NavbarLogo(): JSX.Element {
     const {siteConfig} = useDocusaurusContext();
     const {pathname} = useLocation();
-    const title = mapTitle(pathname, siteConfig.title);
+    const baseUrl = siteConfig.baseUrl;
+    const title = mapTitle(pathname, baseUrl);
     navbarpoke(siteConfig);
+
+    const nfLogoLight = useBaseUrl('/img/netfoundry-name-and-logo.svg');
+    const nfLogoDark = useBaseUrl('/img/netfoundry-name-and-logo-dark.svg');
+    const logoLight = useBaseUrl(title.logoLight);
+    const logoDark = useBaseUrl(title.logoDark);
+
     return (
         <>
         <Link className="navbar__brand" to="https://netfoundry.io">
@@ -36,8 +47,8 @@ export default function NavbarLogo(): JSX.Element {
                 className="navbar__logo_nf"
                 alt={title.alt}
                 sources={{
-                    light: `/docs/img/netfoundry-name-and-logo.svg`,
-                    dark:  `/docs/img/netfoundry-name-and-logo-dark.svg`,
+                    light: nfLogoLight,
+                    dark:  nfLogoDark,
                 }}
             />
         </Link>
@@ -46,8 +57,8 @@ export default function NavbarLogo(): JSX.Element {
                 className="navbar__logo"
                 alt={title.alt}
                 sources={{
-                    light: title.logoLight,
-                    dark:  title.logoDark,
+                    light: logoLight,
+                    dark:  logoDark,
                 }}
             />
             <span className="navbar__title">{title.text}</span>
