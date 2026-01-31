@@ -13,16 +13,27 @@ import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-di
 import {pluginHotjar} from "@netfoundry/docusaurus-theme/node";
 import {PublishConfig} from 'src/components/docusaurus'
 import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
+import {frontdoorDocsPluginConfig} from "./_remotes/frontdoor/docusaurus/docusaurus-plugin-frontdoor-docs.ts";
+import {onpremDocsPluginConfig} from "./_remotes/onprem/docusaurus/docusaurus-plugin-onprem-docs.ts";
+import {openzitiDocsPluginConfig} from "./_remotes/openziti/docusaurus/docusaurus-plugin-openziti-docs.ts";
+import {zlanDocsPluginConfig} from "./_remotes/zlan/docusaurus/docusaurus-plugin-zlan-docs.ts";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
-const frontdoor = `./_remotes/frontdoor`;
-const onprem = `./_remotes/onprem`;
-const openziti = `./_remotes/openziti`;
+const frontdoorRoot = `./_remotes/frontdoor/docusaurus`;
+const onpremRoot = `./_remotes/onprem/docusaurus`;
+const openzitiRoot = `./_remotes/openziti/docusaurus`;
 const zrokRoot = `./_remotes/zrok/website`;
-const zlan = `./_remotes/zlan`;
+const zlanRoot = `./_remotes/zlan/docusaurus`;
 
 const isVercel = process.env.IS_VERCEL === 'true';
 const docsBase = isVercel ? '/' : '/docs/';
+
+// For unified-doc (baseUrl '/docs/'), use just the name. For standalone (baseUrl '/'), use 'docs/{name}'.
+const frontdoorRouteBase = isVercel ? 'docs/frontdoor' : 'frontdoor';
+const onpremRouteBase = isVercel ? 'docs/onprem' : 'onprem';
+const openzitiRouteBase = isVercel ? 'docs/openziti' : 'openziti';
+const zrokRouteBase = isVercel ? 'docs/zrok' : 'zrok';
+const zlanRouteBase = isVercel ? 'docs/zlan' : 'zlan';
 
 const buildMask = parseInt(process.env.DOCUSAURUS_BUILD_MASK ?? "0xFF", 16);
 
@@ -76,10 +87,10 @@ const prod: PublishConfig = {
 const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod : staging;
 
 const REMARK_MAPPINGS = [
-    { from: '@onpremdocs',   to: `${docsBase}onprem` },
-    { from: '@openzitidocs', to: `${docsBase}openziti`},
-    { from: '@zrokdocs', to: `${docsBase}zrok`},
-    { from: '@static', to: docsBase},
+    { from: '@onpremdocs',   to: `/docs/onprem` },
+    { from: '@openzitidocs', to: `/docs/openziti`},
+    { from: '@zrokdocs', to: `/docs/zrok`},
+    { from: '@static', to: `/docs/`},
 ];
 
 console.log("CANONICAL URL          : " + cfg.docusaurus.url);
@@ -187,10 +198,10 @@ const config: Config = {
     },
     staticDirectories: [
         'static',
-        '_remotes/frontdoor/docusaurus/static/',
-        '_remotes/onprem/docusaurus/static/',
-        '_remotes/openziti/docusaurus/static/',
-        '_remotes/zlan/docusaurus/static/',
+        `${frontdoorRoot}/static/`,
+        `${onpremRoot}/static/`,
+        `${openzitiRoot}/static/`,
+        `${zlanRoot}/static/`,
         `${zrokRoot}/static/`,
         `${zrokRoot}/docs/images`
     ],
@@ -219,10 +230,10 @@ const config: Config = {
                     return {
                         resolve: {
                             alias: {
-                                '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
-                                '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
-                                '@onprem': path.resolve(__dirname, `${onprem}/docusaurus`),
-                                '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
+                                '@openziti': path.resolve(__dirname, openzitiRoot),
+                                '@frontdoor': path.resolve(__dirname, frontdoorRoot),
+                                '@onprem': path.resolve(__dirname, onpremRoot),
+                                '@zlan': path.resolve(__dirname, zlanRoot),
                                 '@zrok': path.resolve(__dirname, `${zrokRoot}`),
                                 '@zrokroot': path.resolve(__dirname, `${zrokRoot}`),
                                 '@staticdir': path.resolve(__dirname, `docusaurus/static`),
@@ -242,80 +253,15 @@ const config: Config = {
         },
 
         ['@docusaurus/plugin-content-pages',{path: 'src/pages',routeBasePath: '/'}],
-        build(BUILD_FLAGS.FRONTDOOR) && ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
-        build(BUILD_FLAGS.ONPREM) && ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docusaurus/src/pages`, routeBasePath: '/onprem'}],
-        build(BUILD_FLAGS.OPENZITI) && ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
-        build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
+        build(BUILD_FLAGS.FRONTDOOR) && ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoorRoot}/src/pages`, routeBasePath: '/frontdoor'}],
+        build(BUILD_FLAGS.ONPREM) && ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onpremRoot}/src/pages`, routeBasePath: '/onprem'}],
+        build(BUILD_FLAGS.OPENZITI) && ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openzitiRoot}/src/pages`, routeBasePath: '/openziti'}],
+        build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlanRoot}/src/pages`, routeBasePath: '/zlan'}],
         build(BUILD_FLAGS.ZROK) && ['@docusaurus/plugin-content-pages',{id: `zrok-pages`, path: `${zrokRoot}/src/pages`, routeBasePath: '/zrok'}],
-        build(BUILD_FLAGS.ONPREM) && [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'onprem', // do not change - affects algolia search
-                path: `${onprem}/docusaurus/docs`,
-                routeBasePath: 'onprem',
-                sidebarPath: `${onprem}/docusaurus/sidebars.ts`,
-                includeCurrentVersion: true,
-                beforeDefaultRemarkPlugins: [
-                    remarkGithubAdmonitionsToDirectives,
-                ],
-                remarkPlugins: [
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
-                    [remarkCodeSections, { logLevel: LogLevel.Silent }],
-                ],
-            },
-        ],
-        build(BUILD_FLAGS.FRONTDOOR) && [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'frontdoor', // do not change - affects algolia search
-                path: `${frontdoor}/docusaurus/docs`,
-                routeBasePath: 'frontdoor',
-                sidebarPath: `${frontdoor}/docusaurus/sidebars.ts`,
-                includeCurrentVersion: true,
-                beforeDefaultRemarkPlugins: [
-                    remarkGithubAdmonitionsToDirectives,
-                ],
-                remarkPlugins: [
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent}],
-                    [remarkCodeSections, { logLevel: LogLevel.Silent }],
-                ],
-            },
-        ],
-        build(BUILD_FLAGS.OPENZITI) && [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'openziti', // do not change - affects algolia search
-                path: `${openziti}/docusaurus/docs`,
-                routeBasePath: 'openziti',
-                sidebarPath: `${openziti}/docusaurus/sidebars.ts`,
-                includeCurrentVersion: true,
-                beforeDefaultRemarkPlugins: [
-                    remarkGithubAdmonitionsToDirectives,
-                ],
-                remarkPlugins: [
-                    [remarkReplaceMetaUrl, {from: '@staticoz', to: `${docsBase}openziti`, logLevel: LogLevel.Silent}],
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
-                    [remarkCodeSections, { logLevel: LogLevel.Debug }],
-                ],
-            },
-        ],
-        build(BUILD_FLAGS.ZLAN) && [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'zlan', // do not change - affects algolia search
-                path: `${zlan}/docusaurus/docs`,
-                routeBasePath: 'zlan',
-                sidebarPath: `${zlan}/docusaurus/sidebars.ts`,
-                includeCurrentVersion: true,
-                beforeDefaultRemarkPlugins: [
-                    remarkGithubAdmonitionsToDirectives,
-                ],
-                remarkPlugins: [
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
-                    [remarkCodeSections, { logLevel: LogLevel.Silent }],
-                ],
-            },
-        ],
+        build(BUILD_FLAGS.ONPREM) && extendDocsPlugins(onpremDocsPluginConfig(onpremRoot, REMARK_MAPPINGS, onpremRouteBase)),
+        build(BUILD_FLAGS.FRONTDOOR) && extendDocsPlugins(frontdoorDocsPluginConfig(frontdoorRoot, REMARK_MAPPINGS, frontdoorRouteBase)),
+        build(BUILD_FLAGS.OPENZITI) && extendDocsPlugins(openzitiDocsPluginConfig(openzitiRoot, REMARK_MAPPINGS, openzitiRouteBase, `/docs/openziti`)),
+        build(BUILD_FLAGS.ZLAN) && extendDocsPlugins(zlanDocsPluginConfig(zlanRoot, REMARK_MAPPINGS, zlanRouteBase)),
         build(BUILD_FLAGS.OPENZITI) && [
             '@docusaurus/plugin-content-blog',
             {
@@ -323,7 +269,7 @@ const config: Config = {
                 routeBasePath: 'openziti/blog',
                 tagsBasePath: 'tags',
                 include: ['**/*.{md,mdx}'],
-                path: '_remotes/openziti/docusaurus/blog',
+                path: `${openzitiRoot}/blog`,
                 remarkPlugins: [
                     remarkYouTube,
                     [remarkReplaceMetaUrl, {from: '@staticoz', to: `${docsBase}openziti`, logLevel: LogLevel.Silent}],
@@ -334,7 +280,7 @@ const config: Config = {
                 blogSidebarTitle: 'All posts',
             },
         ],
-        build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS)),
+        build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, zrokRouteBase)),
         // Fallback redirects for JSX pages with hardcoded /docs/ paths (from upstream repos)
         isVercel && [
             '@docusaurus/plugin-client-redirects',
@@ -375,9 +321,9 @@ const config: Config = {
                     label: 'Docs',
                     position: 'left',
                     items: [
-                        { to: '/onprem/intro', label: 'On-Prem' },
-                        { to: '/frontdoor/intro', label: 'Frontdoor' },
-                        { to: '/openziti/learn/introduction', label: 'OpenZiti' },
+                        { to: '/docs/onprem/intro', label: 'On-Prem' },
+                        { to: '/docs/frontdoor/intro', label: 'Frontdoor' },
+                        { to: '/docs/openziti/learn/introduction', label: 'OpenZiti' },
                     ],
                 },
             ],
@@ -410,7 +356,7 @@ const config: Config = {
                 specs: [
                     {
                         id: 'openapi',
-                        spec: `${frontdoor}/docusaurus/static/frontdoor-api-spec.yaml`,
+                        spec: `${frontdoorRoot}/static/frontdoor-api-spec.yaml`,
                     },
                     {
                         id: 'edge-client',
