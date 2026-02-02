@@ -880,7 +880,7 @@ input {
     height: 50px;
     box-sizing: border-box;
     padding: 0 var(--space-md);
-    color: #222;
+    color: var(--ifm-font-color-base);
     font-weight: bold;
     font-size: 14px;
     font-family: var(--ifm-font-family-sans), var(--ifm-font-family-sans-default);

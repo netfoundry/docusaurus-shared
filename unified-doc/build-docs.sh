@@ -343,5 +343,12 @@ echo "========================================"
 now=$(date)
 echo "$now" > "${script_dir}/static/build-time.txt"
 echo "BUILDING docs into: build${BUILD_QUALIFIER} at $now"
-yarn build --no-minify --out-dir "build${BUILD_QUALIFIER}" 2>&1
+
+MINIFY_FLAG=""
+if [ -n "${NO_MINIFY:-}" ]; then
+  MINIFY_FLAG="--no-minify"
+  echo "bd NO_MINIFY set, using --no-minify"
+fi
+
+yarn build $MINIFY_FLAG --out-dir "build${BUILD_QUALIFIER}" 2>&1
 popd >/dev/null

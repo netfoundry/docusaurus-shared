@@ -6,9 +6,9 @@ import {useLocation} from '@docusaurus/router';
 import type {DocusaurusConfig} from "@docusaurus/types/src/config";
 import ThemedImage from "@theme/ThemedImage";
 
-const mapTitle = (p: string, baseUrl: string) => {
-    // Check paths with baseUrl prefix (e.g., /docs/openziti or /openziti depending on config)
-    const checkPath = (segment: string) => p.startsWith(`${baseUrl}${segment}`) || p.startsWith(`/${segment}`);
+const mapTitle = (p: string) => {
+    // pathname may or may not include baseUrl prefix, so check for both /docs/X and /X patterns
+    const checkPath = (segment: string) => p.includes(`/${segment}`);
 
     if (checkPath('frontdoor')) return {includeNFLogo: true, to: '/frontdoor', alt:'Frontdoor', logoLight: `/img/frontdoor-sm-logo.svg`, logoDark: `/img/frontdoor-sm-logo.svg`};
     if (checkPath('onprem')) return {includeNFLogo: true, to: '/onprem',alt:'On-Prem', logoLight: `/img/onprem-sm-logo.svg`, logoDark: `/img/onprem-sm-logo.svg`};
@@ -31,8 +31,7 @@ function navbarpoke(cfg:DocusaurusConfig) {
 export default function NavbarLogo(): JSX.Element {
     const {siteConfig} = useDocusaurusContext();
     const {pathname} = useLocation();
-    const baseUrl = siteConfig.baseUrl;
-    const title = mapTitle(pathname, baseUrl);
+    const title = mapTitle(pathname);
     navbarpoke(siteConfig);
 
     const nfLogoLight = useBaseUrl('/img/netfoundry-name-and-logo.svg');
