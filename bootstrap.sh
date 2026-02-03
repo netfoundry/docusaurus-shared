@@ -77,3 +77,4 @@ echo " "
 echo " --------- bootstrap complete --------- "
 echo "Site created at '$WHERE'."
 echo "Run 'yarn start' inside '$WHERE' to start the local dev server."
+
