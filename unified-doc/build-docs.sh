@@ -280,8 +280,8 @@ find "$script_dir/_remotes" -name .git -type d 2>&1 || true
 
 
 if [ "${CLEAN:-0}" -eq 1 ]; then
-  echo "bd CLEAN=1 removing remotes root: '$script_dir/_remotes'"
-  rm -rf "$script_dir/_remotes"
+  echo "bd CLEAN=1 removing contents of _remotes (preserving package.json)"
+  find "$script_dir/_remotes" -mindepth 1 -maxdepth 1 ! -name 'package.json' -exec rm -rf {} +
 fi
 
 clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor reusable-doc-plugin
@@ -349,6 +349,7 @@ if [ -n "${NO_MINIFY:-}" ]; then
   MINIFY_FLAG="--no-minify"
   echo "bd NO_MINIFY set, using --no-minify"
 fi
+echo "NO_MINIFY flag: $MINIFY_FLAG"
 
 yarn build $MINIFY_FLAG --out-dir "build${BUILD_QUALIFIER}" 2>&1
 popd >/dev/null
