@@ -3,11 +3,11 @@
 # Copy this file to .github/workflows/cla.yml in any repository that should
 # require CLA signatures from contributors.
 #
-# REQUIRED: Add CLA_TOKEN as a repository or organization secret.
-# This should be a fine-grained PAT with Contents (read/write) access
-# to the netfoundry/cla repository.
+# REQUIRED: Add CLA_APP_ID and CLA_APP_PRIVATE_KEY as organization secrets
+# accessible to this repository.
 
 name: "CLA Check"
+
 on:
   issue_comment:
     types: [created]
@@ -21,26 +21,6 @@ permissions:
   statuses: write
 
 jobs:
-  CLAAssistant:
-    runs-on: ubuntu-latest
-    # Skip CLA check for org members/owners (they're covered by employment agreement)
-    # But always run for issue_comment events (to process signatures)
-    if: |
-      github.event_name == 'issue_comment' ||
-      (github.event_name == 'pull_request_target' &&
-       github.event.pull_request.author_association != 'MEMBER' &&
-       github.event.pull_request.author_association != 'OWNER')
-    steps:
-      - name: "CLA Assistant"
-        if: (github.event.comment.body == 'recheck' || github.event.comment.body == 'I have read the CLA Document and I hereby sign the CLA') || github.event_name == 'pull_request_target'
-        uses: contributor-assistant/github-action@v2.6.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PERSONAL_ACCESS_TOKEN: ${{ secrets.CLA_TOKEN }}
-        with:
-          path-to-signatures: 'signatures/cla.json'
-          path-to-document: 'https://netfoundry.io/docs/assets/files/NetFoundry-ICLA-32974791ae564dd1878a7d2ab1ab8d5e.pdf'
-          branch: 'main'
-          allowlist: dependabot[bot],renovate[bot],github-actions[bot],bot*
-          remote-organization-name: 'netfoundry'
-          remote-repository-name: 'cla'
+  cla:
+    uses: netfoundry/cla/.github/workflows/cla-workflow.yml@main
+    secrets: inherit
