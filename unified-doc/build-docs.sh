@@ -284,10 +284,10 @@ if [ "${CLEAN:-0}" -eq 1 ]; then
   find "$script_dir/_remotes" -mindepth 1 -maxdepth 1 ! -name 'package.json' -exec rm -rf {} +
 fi
 
-clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor reusable-doc-plugin
-clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    reusable-doc-plugin
-clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  reusable-doc-plugin
-clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan      reusable-doc-plugin
+clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor develop
+clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    main
+clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  main
+clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan      main
 clone_or_update "https://github.com/openziti/zrok.git"                           zrok      main
 
 echo "========================================"
