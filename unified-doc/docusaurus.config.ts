@@ -24,6 +24,12 @@ const zlan = `./_remotes/zlan`;
 const isVercel = process.env.IS_VERCEL === 'true';
 const docsBase = isVercel ? '/' : '/docs/';
 
+// On Vercel previews, the baseUrl needs to be '/', routes need a 'docs/' prefix to match hardcoded /docs/ links in remote content.
+// On default non-Vercel-preview builds baseUrl is '/docs/'
+function routeBase(name: string) {
+    return isVercel ? `docs/${name}` : name;
+}
+
 const buildMask = parseInt(process.env.DOCUSAURUS_BUILD_MASK ?? "0xFF", 16);
 
 const BUILD_FLAGS = {
@@ -80,6 +86,11 @@ const REMARK_MAPPINGS = [
     { from: '@openzitidocs', to: `${docsBase}openziti`},
     { from: '@zrokdocs', to: `${docsBase}zrok`},
     { from: '@static', to: docsBase},
+    { from: '/openziti/', to: `${docsBase}/openziti/` },
+    { from: '/frontdoor/', to: `${docsBase}/frontdoor/` },
+    { from: '/onprem/', to: `${docsBase}/onprem/` },
+    { from: '/zrok/', to: `${docsBase}/zrok/` },
+    { from: '/zlan/', to: `${docsBase}/zlan/` },
 ];
 
 console.log("CANONICAL URL          : " + cfg.docusaurus.url);
@@ -252,7 +263,7 @@ const config: Config = {
             {
                 id: 'onprem', // do not change - affects algolia search
                 path: `${onprem}/docusaurus/docs`,
-                routeBasePath: 'onprem',
+                routeBasePath: routeBase('onprem'),
                 sidebarPath: `${onprem}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
                 beforeDefaultRemarkPlugins: [
@@ -269,7 +280,7 @@ const config: Config = {
             {
                 id: 'frontdoor', // do not change - affects algolia search
                 path: `${frontdoor}/docusaurus/docs`,
-                routeBasePath: 'frontdoor',
+                routeBasePath: routeBase('frontdoor'),
                 sidebarPath: `${frontdoor}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
                 beforeDefaultRemarkPlugins: [
@@ -286,7 +297,7 @@ const config: Config = {
             {
                 id: 'openziti', // do not change - affects algolia search
                 path: `${openziti}/docusaurus/docs`,
-                routeBasePath: 'openziti',
+                routeBasePath: routeBase('openziti'),
                 sidebarPath: `${openziti}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
                 beforeDefaultRemarkPlugins: [
@@ -304,7 +315,7 @@ const config: Config = {
             {
                 id: 'zlan', // do not change - affects algolia search
                 path: `${zlan}/docusaurus/docs`,
-                routeBasePath: 'zlan',
+                routeBasePath: routeBase('zlan'),
                 sidebarPath: `${zlan}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
                 beforeDefaultRemarkPlugins: [
@@ -320,7 +331,7 @@ const config: Config = {
             '@docusaurus/plugin-content-blog',
             {
                 showReadingTime: true,
-                routeBasePath: 'openziti/blog',
+                routeBasePath: `${routeBase('openziti')}/blog`,
                 tagsBasePath: 'tags',
                 include: ['**/*.{md,mdx}'],
                 path: '_remotes/openziti/docusaurus/blog',
@@ -334,7 +345,7 @@ const config: Config = {
                 blogSidebarTitle: 'All posts',
             },
         ],
-        build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, 'zrok')),
+        build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, routeBase('zrok'))),
         // Fallback redirects for JSX pages with hardcoded /docs/ paths (from upstream repos)
         isVercel && [
             '@docusaurus/plugin-client-redirects',
