@@ -1,0 +1,35 @@
+---
+title: Configuration
+---
+
+# Configuring zLAN
+
+## Basic setup
+
+```bash
+# Initialize zLAN
+zlan init --network my-network
+
+# Add a node
+zlan join --token <enrollment-token>
+```
+
+## Network configuration
+
+```json
+{
+  "network": "my-network",
+  "nodes": [
+    { "name": "node-1", "role": "gateway" },
+    { "name": "node-2", "role": "client" }
+  ]
+}
+```
+
+:::tip
+Use the `zlan status` command to verify connectivity between nodes.
+:::
+
+:::note
+All traffic between nodes is encrypted end-to-end using OpenZiti's zero trust overlay.
+:::

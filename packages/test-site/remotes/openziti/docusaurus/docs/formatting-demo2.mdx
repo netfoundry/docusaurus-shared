@@ -1,0 +1,67 @@
+---
+title: OpenZiti formatting demo
+---
+
+# Complex markdown examples
+
+Use `ziti edge create service` to register a new service.
+
+```sh
+# Install the OpenZiti CLI
+curl -sS https://get.openziti.io/install | bash
+```
+
+## JSON config
+
+```json
+{
+  "ztAPI": "https://ctrl.example.com:1280",
+  "configTypes": ["intercept.v1", "host.v1"]
+}
+```
+
+## Inside admonition
+
+:::note YAML inside a note
+```yaml
+identity:
+  cert: /path/to/client.cert
+  key: /path/to/client.key
+  ca: /path/to/ca-chain.cert
+```
+:::
+
+## Lists with code
+
+- Create an identity with `ziti edge create identity`
+- Enroll with `ziti edge enroll token.jwt`
+- Connect:
+  ```bash
+  ziti-edge-tunnel run -i identity.json
+  ```
+
+## Code inside table
+
+| Command | Description |
+|---------|-------------|
+| `ziti edge list services` | List all services |
+| `ziti edge create config` | Create a config |
+| `ziti edge delete service` | Delete a service |
+
+## Expandable content
+
+<details>
+<summary>Click to expand OpenZiti architecture details</summary>
+
+### Controller and routers
+
+```bash
+ziti edge list edge-routers
+ziti edge list terminators
+```
+
+:::note
+OpenZiti uses a mesh overlay network for secure connectivity.
+:::
+
+</details>

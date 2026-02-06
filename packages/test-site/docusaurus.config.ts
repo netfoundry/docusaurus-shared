@@ -1,9 +1,21 @@
-import type { Config } from '@docusaurus/types';
+import type { Config, PluginConfig } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import path from "node:path"
 import {themes as prismThemes} from 'prism-react-renderer';
+import {zrokDocsPluginConfig} from "./remotes/zrok/website/docusaurus-plugin-zrok-docs";
+import {openzitiDocsPluginConfig} from "./remotes/openziti/docusaurus/docusaurus-plugin-openziti-docs";
+import {frontdoorDocsPluginConfig} from "./remotes/frontdoor/docusaurus/docusaurus-plugin-frontdoor-docs";
+import {onpremDocsPluginConfig} from "./remotes/onprem/docusaurus/docusaurus-plugin-onprem-docs";
+import {zlanDocsPluginConfig} from "./remotes/zlan/docusaurus/docusaurus-plugin-zlan-docs";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
+
+// Sub-project paths (mirrors unified-doc structure)
+const frontdoor = `./remotes/frontdoor`;
+const onprem = `./remotes/onprem`;
+const openziti = `./remotes/openziti`;
+const zlan = `./remotes/zlan`;
+const zrokRoot = `./remotes/zrok/website`;
 
 interface PublishConfig {
     docusaurus: { url: string };
@@ -41,20 +53,57 @@ const prod: PublishConfig = {
 
 const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV == 'prod' ? prod : staging;
 
+const REMARK_MAPPINGS: { from: string; to: string }[] = [];
+
 export default {
-    title: 'This is the title of the site',
+    title: 'Test Site - Unified Doc Structure',
     url: 'https://netfoundry.io',
     baseUrl: '/',
 
-    // Register the NetFoundry theme
+    // Register the NetFoundry theme (local path for development)
     themes: [
-        // Use local path for development; in production would be '@netfoundry/docusaurus-theme'
         path.resolve(__dirname, '../docusaurus-theme'),
-        // Remote reference to test the deployed package
-        // '@netfoundry/docusaurus-theme'
     ],
 
-    plugins: [],
+    staticDirectories: [
+        'static',
+        `${frontdoor}/docusaurus/static`,
+        `${onprem}/docusaurus/static`,
+        `${openziti}/docusaurus/static`,
+        `${zlan}/docusaurus/static`,
+        `${zrokRoot}/static`,
+    ],
+
+    plugins: [
+        // Webpack aliases for sub-project imports (mirrors unified-doc)
+        function webpackAliases() {
+            return {
+                name: 'test-site-webpack-aliases',
+                configureWebpack() {
+                    return {
+                        resolve: {
+                            alias: {
+                                '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
+                                '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
+                                '@onprem': path.resolve(__dirname, `${onprem}/docusaurus`),
+                                '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
+                                '@zrok': path.resolve(__dirname, `${zrokRoot}`),
+                                '@zrokroot': path.resolve(__dirname, `${zrokRoot}`),
+                            },
+                        },
+                    };
+                },
+            };
+        },
+
+        // Sub-project docs plugins (same pattern as unified-doc)
+        openzitiDocsPluginConfig(`${openziti}/docusaurus`, REMARK_MAPPINGS, 'docs/openziti'),
+        frontdoorDocsPluginConfig(`${frontdoor}/docusaurus`, REMARK_MAPPINGS, 'docs/frontdoor'),
+        onpremDocsPluginConfig(`${onprem}/docusaurus`, REMARK_MAPPINGS, 'docs/onprem'),
+        zlanDocsPluginConfig(`${zlan}/docusaurus`, REMARK_MAPPINGS, 'docs/zlan'),
+        zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, 'docs/zrok'),
+    ].filter(Boolean) as PluginConfig[],
+
     presets: [
         ['classic', {
             docs: {
@@ -101,10 +150,17 @@ export default {
                     label: 'Docs',
                     position: 'left',
                     items: [
-                        { to: 'https://localhost/onprem/intro', label: 'On-Prem' },
-                        { to: 'https://localhost/frontdoor/intro', label: 'Frontdoor' },
-                        { to: 'https://localhost/openziti/learn/introduction', label: 'OpenZiti' },
+                        { to: '/docs/openziti', label: 'OpenZiti' },
+                        { to: '/docs/frontdoor', label: 'Frontdoor' },
+                        { to: '/docs/onprem', label: 'On-Prem' },
+                        { to: '/docs/zlan', label: 'zLAN' },
+                        { to: '/docs/zrok', label: 'zrok' },
                     ],
+                },
+                {
+                    to: '/docs',
+                    label: 'Main Docs',
+                    position: 'left',
                 },
             ],
         },

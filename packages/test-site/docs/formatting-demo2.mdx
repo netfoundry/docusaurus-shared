@@ -201,10 +201,10 @@ echo "Inside admonition, inside details"
 
 ## Import GitHub Markdown
 
-You can import Markdown from other repositories, e.g., README.md, by adding the Git remote to `gendoc.sh`, then importing the Markdown with the `import` component from the correlated path within the `_remotes` directory.
+You can import Markdown from other repositories, e.g., README.md, by adding the Git remote to `gendoc.sh`, then importing the Markdown with the `import` component from the correlated path within the `remotes` directory.
 
 ```md
-import SomeMd from '/docs/_remotes/some-remote/README.md';
+import SomeMd from '/docs/remotes/some-remote/README.md';
 
 <SomeMd />
 ```
@@ -224,7 +224,7 @@ To use the imported title, set `hide_title: true` in front matter to hide the Do
 hide_title: true
 ---
 
-import SomeMd from '/docs/_remotes/some-remote/README.md';
+import SomeMd from '/docs/remotes/some-remote/README.md';
 
 <SomeMd />
 ```
@@ -236,7 +236,7 @@ To hide the imported title and use the Docusaurus title, set `hide_title: false`
 title: A Descriptive Title 
 ---
 
-import SomeMd from '/docs/_remotes/some-remote/README.md';
+import SomeMd from '/docs/remotes/some-remote/README.md';
 import MarkdownWithoutH1 from '@site/src/components/MarkdownWithoutH1';
 
 <MarkdownWithoutH1>

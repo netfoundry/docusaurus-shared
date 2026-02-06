@@ -1,0 +1,44 @@
+---
+title: Installation
+---
+
+# Installing self-hosted
+
+## Prerequisites
+
+- Kubernetes cluster (k3s, k3d, EKS, RKE2, microk8s)
+- 4 CPU cores, 16 GB RAM, 50 GB storage
+- `kubectl`, `helm`, `git`
+
+## Quick start
+
+```bash
+# Download the installer
+curl -sS https://get.netfoundry.io/self-hosted | bash
+
+# Run the quickstart
+nf-quickstart
+```
+
+:::note
+The installer creates three namespaces: `cert-manager`, `ziti`, and `support`.
+:::
+
+## Configuration
+
+```yaml
+controller:
+  replicas: 1
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "512Mi"
+router:
+  replicas: 2
+  edge:
+    enabled: true
+```
+
+:::warning
+Ensure your Kubernetes cluster meets the minimum resource requirements before proceeding.
+:::
