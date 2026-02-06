@@ -77,6 +77,10 @@ yarn test
 yarn build
 ```
 
+## Local Development
+
+See [packages/LOCAL-DEV.md](./packages/LOCAL-DEV.md) for the full local development guide, including how to use the test-site, test with remote sites via `file:` protocol, and publish.
+
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup, workflow, and a walkthrough example of making theme changes.
