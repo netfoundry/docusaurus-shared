@@ -1,0 +1,49 @@
+---
+title: Frontdoor detail examples
+---
+
+# Expandable content
+
+Here is a line of regular text with `inline code` blocks.
+
+```yaml
+frontdoor:
+  enabled: true
+  listen: 0.0.0.0:8443
+  upstream: localhost:3000
+```
+
+<details>
+<summary>Frontdoor configuration example</summary>
+
+```yaml
+services:
+  - name: my-app
+    frontend:
+      host: app.example.com
+      port: 443
+    backend:
+      host: localhost
+      port: 3000
+```
+
+</details>
+
+:::tip
+Frontdoor provides zero-trust access without exposing ports to the internet.
+:::
+
+:::warning
+Ensure your identity file is stored securely and not committed to version control.
+:::
+
+<details>
+<summary>This is a summary with `inline code`</summary>
+
+Some text with `an inline code block`.
+
+```bash
+frontdoor connect --identity ./my-identity.json
+```
+
+</details>

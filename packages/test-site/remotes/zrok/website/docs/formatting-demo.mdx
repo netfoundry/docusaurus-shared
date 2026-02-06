@@ -1,0 +1,38 @@
+---
+title: zrok formatting demo
+---
+
+# Code block formatting
+
+This is `what` a `regular` code block `that is inline` will look like.
+
+```
+@results: total 12
+drwxr-xr-x  5 user staff 160 Jan 28 12:34 .
+drwxr-xr-x 20 user staff 640 Jan 28 12:34 ..
+```
+
+```bash
+echo "Hello from zrok!" # Bash
+zrok share public localhost:8080
+```
+
+```json
+{
+  "shareMode": "public",
+  "backendMode": "proxy",
+  "target": "localhost:8080"
+}
+```
+
+:::note
+This is a note admonition in the zrok docs.
+:::
+
+:::tip
+Use `zrok invite` to get started with the zrok network.
+:::
+
+:::warning
+Shares are ephemeral by default. Use `zrok reserve` for persistent shares.
+:::
