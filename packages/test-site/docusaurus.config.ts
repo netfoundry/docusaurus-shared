@@ -62,7 +62,7 @@ export default {
 
     // Register the NetFoundry theme (local path for development)
     themes: [
-        path.resolve(__dirname, '../docusaurus-theme'),
+      '@netfoundry/docusaurus-theme',
     ],
 
     staticDirectories: [
@@ -104,6 +104,7 @@ export default {
         zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, 'docs/zrok'),
     ].filter(Boolean) as PluginConfig[],
 
+// packages/test-site/docusaurus.config.ts
     presets: [
         ['classic', {
             docs: {
@@ -112,10 +113,13 @@ export default {
             },
             blog: false,
             theme: {
-                customCss: require.resolve('./src/custom/custom.css'),
+                // We use an array to load the theme's base AND your specific site overrides
+                customCss: [
+                    require.resolve('../docusaurus-theme/css/vars.css'),
+                    require.resolve('./src/custom/custom.css'), // THIS IS THE MISSING LINK
+                ],
             }
-        }
-    ]
+        }]
     ],
 
     themeConfig: {

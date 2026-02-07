@@ -1,8 +1,25 @@
 :root {
+    /* --- KEEP: Your Manager's Layout Settings --- */
     --ifm-navbar-height: 50px;
     --nf-docs-max-width: 1400px;
-    /*--nf-docs-main-color: purple;*/
-    .container {
-        /*background: sandybrown;*/
-    }
+
+    /* --- ADD: NetFoundry Brand Colors (Replaces the "Ghost" Purples) --- */
+    --ifm-color-primary: #0076FF;        /* NetFoundry Blue */
+    --ifm-color-primary-dark: #006ae6;
+    --ifm-color-primary-darker: #0064d9;
+    --ifm-color-primary-darkest: #0053b3;
+    --ifm-color-primary-light: #1a84ff;
+    --ifm-color-primary-lighter: #268aff;
+    --ifm-color-primary-lightest: #4da0ff;
+
+    /* --- ADD: Modern UI Polish --- */
+    --ifm-font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+    --ifm-navbar-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    --ifm-global-border-radius: 8px;
+}
+
+/* Light mode specifics to ensure a clean look */
+[data-theme='light'] {
+    --ifm-background-color: #f8fafc;
+    --ifm-navbar-background-color: #ffffff;
 }

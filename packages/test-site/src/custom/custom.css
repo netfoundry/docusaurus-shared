@@ -1,75 +1,164 @@
-
 @import '@netfoundry/docusaurus-theme/css/tabs-v8-float.css';
 
 :root {
+    --ifm-color-primary: #0076FF;
+    /* Soft Light Mode Backgrounds */
+    --ifm-background-color: #f8fafc;
+    --ifm-card-background-color: #ffffff;
+
     --ifm-navbar-height: 60px;
-    --ziti-landing-max-width: 1800px;
-    --ifm-container-width-xl: 1400px;
-    --ziti-star-us-height: 1px;
+    --ifm-font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-html,
-body,
-#__docusaurus {
-    height: 100%;
+[data-theme='dark'] {
+    --ifm-background-color: #0f111a;
+    --ifm-card-background-color: #1a1b26;
+}
+
+/* --- THE PURPLE KILLER (PRIMARY BUTTON) --- */
+.button--primary {
+    background-color: #0076FF !important;
+    border-color: #0076FF !important;
+    color: #ffffff !important;
+    transition: background-color 0.2s ease;
+}
+
+/* Hard-coding the hover to a deep blue to prevent the purple calculation */
+.button--primary:hover {
+    background-color: #0059CC !important;
+    border-color: #0059CC !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+/* --- EXPLORE ZROK BUTTON (OUTLINE) --- */
+.nf-cta-outline {
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+    background: transparent !important;
+}
+
+.nf-cta-outline:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+/* --- HERO STAGE --- */
+.nf-hero-stage {
+    position: relative;
     width: 100%;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #090a11;
+    background-image: url('../../static/img/nf-docs-hero.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.nf-hero-stage::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(9, 10, 17, 0.6);
+    z-index: 1;
+}
+
+.nf-hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.nf-hero-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+}
+
+.nf-green-text {
+    color: #2ecc71 !important;
+}
+
+.nf-hero-subtext {
+    color: #cbd5e1 !important;
+    font-size: 1.25rem;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+}
+
+/* --- PRODUCT PANELS --- */
+.nf-card {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background-color: var(--ifm-card-background-color) !important;
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0 !important;
+    text-decoration: none !important;
 }
 
-/* Docusaurus-specific utility class */
-:global(.docusaurus-mt-lg) {
-    margin-top: 3rem;
+.nf-card h3 {
+    color: #0076FF !important;
+    font-size: 1.35rem;
+    margin-bottom: 0.6rem !important;
 }
 
-:global(#__docusaurus) {
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
+.nf-card p {
+    color: var(--ifm-font-color-base) !important;
+    font-size: 1.05rem;
+    line-height: 1.5;
 }
 
-.navbar__brand { /* squeeze whitespace */
-    margin-right: 0;
-    display:flex;
-    align-items:center;
-    justify-content: end;
-    min-width: 185px;
-}
-.navbar__logo { /* squeeze whitespace */
-    margin-right: 0;
-}
-.clean-btn svg {
-    /*
-    used to change the size of the light/dark toggle
-    needs to be this specific for docusaurus
-    */
-    height: 30px;
-    width: 30px;
+.nf-card:hover {
+    transform: translateY(-5px);
+    border-color: #0076FF !important;
+    box-shadow: 0 10px 25px rgba(0, 118, 255, 0.08);
 }
 
-.DocSearch-Button {
-    background: #ebedf0;
-    color: var(--ifm-color-primary);
+/* --- THE STAR BANNER REBOOT (Blue to Green) --- */
+
+/* Target your specific element class */
+.starUsRoot_XOT4 {
+    /* NetFoundry Blue to NetFoundry Green - NO PURPLE OR RED */
+    background: linear-gradient(90deg, #0076FF 0%, #2ecc71 100%) !important;
+
+    /* Layout cleanup */
+    padding: 6px 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
+/* --- THE STAR BANNER REBOOT (Sleek, Narrow, Black Text) --- */
 
-.main-wrapper {
-    flex: 1 0 auto;
-    display: flex;
-    flex-direction: column;
+/* Target your specific element class */
+.starUsRoot_XOT4 {
+    /* NetFoundry Blue to NetFoundry Green gradient */
+    background: linear-gradient(90deg, #0076FF 0%, #2ecc71 100%) !important;
 
-    article {
-        padding-bottom: 2em;
-    }
-    > div {
-        max-width: var(--ziti-landing-max-width);
-        width: 100%;
-    }
+    /* Layout cleanup - Made much narrower */
+    padding: 3px 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    min-height: 30px; /* Ensures it doesn't get too crushed by the GitHub button */
 }
 
-.navbar .navbar__inner {
-    margin: 0 auto;
-    max-width: var(--ziti-landing-max-width);
+/* Ensure the label text inside is BLACK and crisp */
+/* We use > span to only target the direct text child, not the button container */
+.starUsRoot_XOT4 > span:first-child {
+    color: #000000 !important; /* Change white to black */
+    font-weight: 600 !important;
+    font-size: 0.85rem !important; /* Slightly smaller font for the thinner bar */
+    margin-right: 8px; /* Ensure spacing between text and button */
 }
-
-
