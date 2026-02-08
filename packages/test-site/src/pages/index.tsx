@@ -3,36 +3,12 @@ import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 
 const products = [
-  {
-    title: 'NetFoundry Console',
-    description: 'Our managed orchestration and control console.',
-    link: '#'
-  },
-  {
-    title: 'NetFoundry Self-Hosted',
-    description: 'Deploy and manage the NetFoundry stack in your own environment.',
-    link: '#'
-  },
-  {
-    title: 'Frontdoor',
-    description: 'Secure, private application access without a VPN.',
-    link: '/docs/frontdoor'
-  },
-  {
-    title: 'zrok',
-    description: 'Geo-scale, secure sharing platform built on OpenZiti.',
-    link: '/docs/zrok'
-  },
-  {
-    title: 'OpenZiti',
-    description: 'Programmable, secure networking directly in your apps.',
-    link: '/docs/openziti'
-  },
-  {
-    title: 'zLAN',
-    description: 'Extend your secure local network to the cloud.',
-    link: '/docs/zlan'
-  },
+  { title: 'NetFoundry Console', icon: 'console', tag: 'SaaS', description: 'Our managed orchestration and control console.', link: '#' },
+  { title: 'NetFoundry Self-Hosted', icon: 'server', tag: 'Managed', description: 'Deploy and manage the NetFoundry stack in your own environment.', link: '#' },
+  { title: 'Frontdoor', icon: 'door', tag: 'New', description: 'Secure, private application access without a VPN.', link: '/docs/frontdoor' },
+  { title: 'zrok', icon: 'share', tag: 'OSS', description: 'Geo-scale, secure sharing platform built on OpenZiti.', link: '/docs/zrok' },
+  { title: 'OpenZiti', icon: 'mesh', tag: 'Core', description: 'Programmable, secure networking directly in your apps.', link: '/docs/openziti' },
+  { title: 'zLAN', icon: 'network', tag: 'Alpha', description: 'Extend your secure local network to the cloud.', link: '/docs/zlan' },
 ];
 
 export default function Home(): JSX.Element {
@@ -44,20 +20,27 @@ export default function Home(): JSX.Element {
           <p className="nf-hero-subtext">Secure, high-performance networking for the modern era.</p>
           <div style={{display: 'flex', gap: '1rem', justifyContent: 'center'}}>
             <Link className="button button--primary button--md" to="/docs/openziti">Get Started</Link>
-            {/* Button text updated to Explore NetFoundry */}
             <Link className="button button--outline nf-cta-outline button--md" to="/docs/zrok">Explore NetFoundry</Link>
           </div>
         </div>
       </header>
 
-      <main className="container margin-vert--xl">
+      <main className="nf-main-grid container margin-vert--xl">
         <div className="row">
           {products.map((props, idx) => (
-            <div key={idx} className="col col--4 margin-bottom--lg">
+            <div key={idx} className="cawol col--4 margin-bottom--lg">
               <Link to={props.link} className="nf-card">
-                <h3>{props.title}</h3>
+                {/* Status Badge */}
+                <div className="nf-card-badge">{props.tag}</div>
+
+                <div className="nf-card-header">
+                  <div className={`nf-card-icon icon-${props.icon}`}></div>
+                  <h3>{props.title}</h3>
+                </div>
+
                 <p>{props.description}</p>
-                <div style={{color: 'var(--ifm-color-primary)', fontWeight: '700', marginTop: '1rem', fontSize: '0.9rem'}}>
+
+                <div className="nf-card-link">
                   Explore &rarr;
                 </div>
               </Link>

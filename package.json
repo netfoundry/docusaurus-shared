@@ -9,5 +9,8 @@
     "dev": "yarn workspace test-site start",
     "build": "yarn workspace test-site build"
   },
-  "packageManager": "yarn@1.22.22"
+  "packageManager": "yarn@1.22.22",
+  "dependencies": {
+    "prismjs": "^1.30.0"
+  }
 }
