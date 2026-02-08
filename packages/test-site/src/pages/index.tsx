@@ -28,7 +28,7 @@ export default function Home(): JSX.Element {
       <main className="nf-main-grid container margin-vert--xl">
         <div className="row">
           {products.map((props, idx) => (
-            <div key={idx} className="cawol col--4 margin-bottom--lg">
+            <div key={idx} className="col col--4 margin-bottom--lg">
               <Link to={props.link} className="nf-card">
                 {/* Status Badge */}
                 <div className="nf-card-badge">{props.tag}</div>

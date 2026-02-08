@@ -1,6 +1,6 @@
 @import '@netfoundry/docusaurus-theme/css/tabs-v8-float.css';
 
-/* CACHE BUST v45.0 - LOCKED GOLDEN STATE + SURGICAL PANEL FIX */
+/* CACHE BUST v33.0 - TOTAL RESTORATION & DYNAMIC HEADER */
 
 :root {
     --ifm-color-primary: #0076FF;
@@ -103,18 +103,6 @@ aside[class*='sidebar'], .theme-doc-sidebar-container { background: #f6f6f6 !imp
 .menu__link--active { background: #f0f0f0 !important; color: var(--ifm-color-primary) !important; font-weight: 700 !important; border-left: 4px solid var(--ifm-color-primary) !important; padding-left: calc(0.75rem - 4px) !important; }
 .menu__link::before { content: none !important; }
 
-/* --- 10. GITHUB STAR (FIXED PROXIMITY) --- */
-.gh-star-badge {
-    display: flex !important; align-items: center; background: rgba(0, 0, 0, 0.04) !important; border: 1px solid rgba(0, 0, 0, 0.1) !important;
-    padding: 2px 10px !important; border-radius: 6px !important;
-    margin-left: 15px !important; /* FIXED: Moves star away from GitHub icon */
-}
+/* --- 10. GITHUB STAR (YELLOW/BLACK) --- */
+.gh-star-badge { display: flex !important; align-items: center; background: rgba(0, 0, 0, 0.04) !important; border: 1px solid rgba(0, 0, 0, 0.1) !important; padding: 2px 10px !important; border-radius: 6px !important; }
 .gh-star-icon { fill: #f1c40f !important; stroke: #000000 !important; stroke-width: 1.2px !important; margin-right: 6px !important; }
-
-/* --- 11. SURGICAL GRID FIX (FOR INDEX.TSX TYPO) --- */
-/* Target 'cawol' typo to force 3-columns without affecting rest of site */
-.cawol.col--4 {
-    flex: 0 0 33.3333% !important;
-    max-width: 33.3333% !important;
-    padding: 1rem !important;
-}
