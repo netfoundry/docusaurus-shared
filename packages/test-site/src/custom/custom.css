@@ -91,10 +91,29 @@ main.nf-main-grid::before {
     font-weight: 800 !important;
     font-size: 1.1rem !important;
     transition: color 0.3s ease;
+    position: relative;
+    padding-right: 2rem;
 }
 .navbar__title:hover {
     color: var(--ifm-color-primary) !important;
 }
+
+/* Add separator after logo/title */
+.navbar__title::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 24px;
+    width: 1px;
+    background: linear-gradient(to bottom,
+        transparent 0%,
+        rgba(0, 118, 255, 0.3) 20%,
+        rgba(0, 118, 255, 0.3) 80%,
+        transparent 100%);
+}
+
 .nf-mega-dropdown, .nf-resources-dropdown {
     font-weight: 600 !important;
     color: var(--ifm-font-color-base) !important;
@@ -136,12 +155,12 @@ main.nf-main-grid::before {
     opacity: 1;
 }
 
-/* Navbar link hover effects */
-.navbar__link {
+/* Navbar link hover effects - ONLY for left side items */
+.navbar__item--left .navbar__link {
     transition: all 0.3s ease;
     position: relative;
 }
-.navbar__link::before {
+.navbar__item--left .navbar__link::before {
     content: '';
     position: absolute;
     bottom: -0.6rem;
@@ -153,7 +172,7 @@ main.nf-main-grid::before {
     transition: transform 0.3s ease;
     border-radius: 2px;
 }
-.navbar__link:hover::before {
+.navbar__item--left .navbar__link:hover::before {
     transform: translateX(-50%) scaleX(1);
 }
 
@@ -251,19 +270,39 @@ article a:hover {
 }
 
 /* --- 12. BREADCRUMB LINKS --- */
-.breadcrumbs__link {
+/* Home icon stays blue with green hover */
+.breadcrumbs__item:first-child .breadcrumbs__link {
     color: var(--ifm-color-primary) !important;
     text-decoration: none !important;
     transition: color 0.2s ease;
 }
-.breadcrumbs__link:hover {
+.breadcrumbs__item:first-child .breadcrumbs__link:hover {
     color: #2ecc71 !important;
 }
+
+/* Intermediate breadcrumb links are black - override blue default */
+.breadcrumbs__item:not(:first-child):not(.breadcrumbs__item--active) .breadcrumbs__link {
+    color: #1f2937 !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease;
+}
+.breadcrumbs__item:not(:first-child):not(.breadcrumbs__item--active) .breadcrumbs__link:hover {
+    color: #4b5563 !important;
+}
+
+/* Active/current page stays highlighted */
 .breadcrumbs__item--active .breadcrumbs__link {
     color: var(--ifm-color-primary) !important;
     background: rgba(0, 118, 255, 0.08) !important;
     padding: 2px 8px !important;
     border-radius: 4px !important;
+}
+
+[data-theme='dark'] .breadcrumbs__item:not(:first-child):not(.breadcrumbs__item--active) .breadcrumbs__link {
+    color: #e5e7eb !important;
+}
+[data-theme='dark'] .breadcrumbs__item:not(:first-child):not(.breadcrumbs__item--active) .breadcrumbs__link:hover {
+    color: #94a3b8 !important;
 }
 [data-theme='dark'] .breadcrumbs__item--active .breadcrumbs__link {
     color: #60a5fa !important;
