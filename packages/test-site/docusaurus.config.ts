@@ -153,7 +153,7 @@ const config: Config = {
                     </a>
                     <a class="mega-link" href="https://openziti.discourse.group/" target="_blank" rel="noopener noreferrer">
                       <div class="mega-icon icon-forum"></div>
-                      <div class="mega-text"><strong>OpenZiti Forum</strong><span>Ask questions and connect with the community.</span></div>
+                      <div class="mega-text"><strong>OpenZiti Discourse</strong><span>Ask questions and connect with the community.</span></div>
                     </a>
                   </div>
                 </div>`,
