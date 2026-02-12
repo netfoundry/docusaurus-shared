@@ -53,7 +53,7 @@
     "@docusaurus/theme-mermaid": "^3.9.2",
     "@hotjar/browser": "^1.0.9",
     "@mdx-js/react": "^3.0.0",
-    "@netfoundry/docusaurus-theme": "^0.4.0",
+    "@netfoundry/docusaurus-theme": "^0.5.0",
     "algoliasearch": "^5.36.0",
     "asciinema-player": "^3.10.0",
     "clsx": "^2.0.0",
