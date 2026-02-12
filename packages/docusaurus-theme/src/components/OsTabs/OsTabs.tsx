@@ -10,21 +10,25 @@ export function OsTabs(props: OsTabsProps): JSX.Element {
     const [defaultValue, setDefaultValue] = useState<string | null>(null);
 
     useEffect(() => {
-        const tabs = ['iOS', 'Android', 'Mac OS', 'Windows', 'Linux'];
-        if (tabs.includes(osName)) {
-            setDefaultValue(osName);
+        const knownOs = ['iOS', 'Android', 'Mac OS', 'Windows', 'Linux'];
+        const preferred = knownOs.includes(osName) ? osName : 'Windows';
+
+        // Validate preferred value against available tabs to prevent crash
+        // when a page provides a subset of tabs (e.g. only Linux + Docker)
+        const available = props.values?.map(v =>
+            typeof v === 'string' ? v : v.value
+        );
+
+        if (available && available.length > 0 && !available.includes(preferred)) {
+            setDefaultValue(available[0]);
         } else {
-            setDefaultValue('Windows');
+            setDefaultValue(preferred);
         }
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <>
-            <OriginalTabs {...props} defaultValue={defaultValue ?? undefined}>
-                {props.children}
-            </OriginalTabs>
-            {/* Uncomment the following line to debug the detected and selected values */}
-            {/* <h2>detected={osName}, selected={defaultValue}</h2> */}
-        </>
+        <OriginalTabs {...props} defaultValue={defaultValue ?? undefined}>
+            {props.children}
+        </OriginalTabs>
     );
 }
