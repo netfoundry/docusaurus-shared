@@ -108,7 +108,7 @@ export default function Home(): ReactNode {
                                     <div className="card__header"><h3>Quick Links</h3></div>
                                     <div className="card__body">
                                         <ul>
-                                            <li><Link to={useBaseUrl('/docs/onprem/troubleshooting')}>NetFoundry Troubleshooting</Link></li>
+                                            <li><Link to={useBaseUrl('/docs/onprem/support/troubleshooting')}>NetFoundry Troubleshooting</Link></li>
                                             <li><Link to={useBaseUrl('/docs/onprem/intro')}>On-Prem Deployment</Link></li>
                                             <li><Link to={useBaseUrl('/docs/frontdoor/intro')}>Frontdoor Getting Started</Link></li>
                                             <li><Link to={useBaseUrl('/docs/openziti/reference/command-line/login')}>OpenZiti CLI Reference</Link></li>
@@ -122,8 +122,8 @@ export default function Home(): ReactNode {
                                     <div className="card__header"><h3>Support</h3></div>
                                     <div className="card__body">
                                         <ul>
-                                            <li><Link to={useBaseUrl('/docs/onprem/troubleshooting')}>NetFoundry Troubleshooting</Link></li>
-                                            <li><Link to={useBaseUrl('/docs/onprem/troubleshooting')}>On-Prem Troubleshooting</Link></li>
+                                            <li><Link to={useBaseUrl('/docs/onprem/support/troubleshooting')}>NetFoundry Troubleshooting</Link></li>
+                                            <li><Link to={useBaseUrl('/docs/onprem/support/troubleshooting')}>On-Prem Troubleshooting</Link></li>
                                             <li><Link to={useBaseUrl('/docs/frontdoor/learn/health-checks')}>Frontdoor Troubleshooting</Link></li>
                                             <li><Link to={useBaseUrl('/docs/openziti/learn/identity-providers')}>OpenZiti FAQ</Link></li>
                                             <li><Link to={useBaseUrl('/docs/zlan/intro')}>zLAN FAQ</Link></li>
