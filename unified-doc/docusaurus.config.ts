@@ -16,7 +16,7 @@ import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zr
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
-const selfhosted = `./_remotes/selfhosted`;
+const onprem = `./_remotes/selfhosted`;
 const openziti = `./_remotes/openziti`;
 const zrokRoot = `./_remotes/zrok/website`;
 const zlan = `./_remotes/zlan`;
@@ -36,7 +36,7 @@ const BUILD_FLAGS = {
     NONE:      0x0,
     OPENZITI:  0x1,
     FRONTDOOR: 0x2,
-    SELFHOSTED: 0x4,
+    ONPREM: 0x4,
     ZROK:      0x8,
     ZLAN:      0x10,
 };
@@ -232,7 +232,7 @@ const config: Config = {
                             alias: {
                                 '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
                                 '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
-                                '@selfhosted': path.resolve(__dirname, `${selfhosted}/docusaurus`),
+                                '@selfhosted': path.resolve(__dirname, `${onprem}/docusaurus`),
                                 '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
                                 '@zrok': path.resolve(__dirname, `${zrokRoot}`),
                                 '@zrokroot': path.resolve(__dirname, `${zrokRoot}`),
@@ -254,17 +254,17 @@ const config: Config = {
 
         ['@docusaurus/plugin-content-pages',{path: 'src/pages',routeBasePath: '/'}],
         build(BUILD_FLAGS.FRONTDOOR) && ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
-        build(BUILD_FLAGS.SELFHOSTED) && ['@docusaurus/plugin-content-pages',{id: `selfhosted-pages`, path: `${selfhosted}/docusaurus/src/pages`, routeBasePath: '/selfhosted'}],
+        build(BUILD_FLAGS.ONPREM) && ['@docusaurus/plugin-content-pages',{id: `selfhosted-pages`, path: `${onprem}/docusaurus/src/pages`, routeBasePath: '/selfhosted'}],
         build(BUILD_FLAGS.OPENZITI) && ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
         build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
         build(BUILD_FLAGS.ZROK) && ['@docusaurus/plugin-content-pages',{id: `zrok-pages`, path: `${zrokRoot}/src/pages`, routeBasePath: '/zrok'}],
-        build(BUILD_FLAGS.SELFHOSTED) && [
+        build(BUILD_FLAGS.ONPREM) && [
             '@docusaurus/plugin-content-docs',
             {
                 id: 'selfhosted',
-                path: `${selfhosted}/docusaurus/docs`,
+                path: `${onprem}/docusaurus/docs`,
                 routeBasePath: routeBase('selfhosted'),
-                sidebarPath: `${selfhosted}/docusaurus/sidebars.ts`,
+                sidebarPath: `${onprem}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
                 beforeDefaultRemarkPlugins: [
                     remarkGithubAdmonitionsToDirectives,

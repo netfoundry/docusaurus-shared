@@ -25,7 +25,7 @@ const defaultItems: Item[] = [
 
 const netfoundryDocs = {to: `https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides`, label: 'NetFoundry SaaS'};
 const nfFrontDoorDocs = {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'};
-const selfHostedDocs = {to: `${DOCS_PREFIX}/selfhosted/intro`, label: 'Self-Hosted'};
+const onPremDocs = {to: `${DOCS_PREFIX}/selfhosted/intro`, label: 'Self-Hosted'};
 const zlanDocs = {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLAN'};
 const ozDocs =  {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'};
 const zrokDocs = {to: `${DOCS_PREFIX}/zrok/getting-started`, label: 'zrok'};
@@ -39,14 +39,14 @@ const openZitiNav: Item[] = [
         items: [
             netfoundryDocs,
             nfFrontDoorDocs,
-            selfHostedDocs,
+            onPremDocs,
             zlanDocs,
             zrokDocs,
         ],
     }
 ];
 
-const selfhostedNav: Item[] = [
+const onpremNav: Item[] = [
     {
         label: 'Self-Hosted Docs',
         to: `${DOCS_PREFIX}/selfhosted/intro`,
@@ -70,7 +70,7 @@ const frontdoorNav: Item[] = [
         type: 'dropdown',
         items: [
             netfoundryDocs,
-            selfHostedDocs,
+            onPremDocs,
             ozDocs,
             zlanDocs,
             zrokDocs,
@@ -87,7 +87,7 @@ const zlanNav: Item[] = [
         items: [
             netfoundryDocs,
             nfFrontDoorDocs,
-            selfHostedDocs,
+            onPremDocs,
             ozDocs,
             zrokDocs,
         ],
@@ -103,7 +103,7 @@ const zrokNav: Item[] = [
         items: [
             netfoundryDocs,
             nfFrontDoorDocs,
-            selfHostedDocs,
+            onPremDocs,
             ozDocs,
             zlanDocs,
         ],
@@ -118,7 +118,7 @@ const zrokNav: Item[] = [
 
 const mapNavbar = (p: string): Item[] => {
     if (p.startsWith(`${DOCS_PREFIX}/frontdoor`)) return frontdoorNav;
-    if (p.startsWith(`${DOCS_PREFIX}/selfhosted`)) return selfhostedNav;
+    if (p.startsWith(`${DOCS_PREFIX}/selfhosted`)) return onpremNav;
     if (p.startsWith(`${DOCS_PREFIX}/openziti`))  return openZitiNav;
     if (p.startsWith(`${DOCS_PREFIX}/zlan`))  return zlanNav;
     if (p.startsWith(`${DOCS_PREFIX}/zrok`))  return zrokNav;
