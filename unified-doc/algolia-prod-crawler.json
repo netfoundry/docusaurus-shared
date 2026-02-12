@@ -46,8 +46,10 @@ new Crawler({
       rec.product = "frontdoor";
       else if (rec.url_without_anchor.includes("/docs/openziti"))
       rec.product = "openziti";
+      else if (rec.url_without_anchor.includes("/docs/selfhosted"))
+      rec.product = "selfhosted";
       else if (rec.url_without_anchor.includes("/docs/onprem"))
-      rec.product = "onprem";
+      rec.product = "selfhosted";
       else if (rec.url_without_anchor.includes("/docs/zlan"))
       rec.product = "zlan";
       else if (rec.url_without_anchor.includes("/docs/zrok"))

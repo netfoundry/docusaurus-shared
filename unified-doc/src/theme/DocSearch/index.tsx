@@ -5,7 +5,7 @@ import type { Props } from "@theme/DocSearch";
 import { createPortal } from "react-dom";
 import styles from "./styles.module.css";
 
-const PRODUCTS = ["frontdoor", "openziti", "onprem", "zlan"] as const;
+const PRODUCTS = ["frontdoor", "openziti", "selfhosted", "zlan"] as const;
 
 function Pills({
                    product,

@@ -3,7 +3,7 @@ import {NetFoundryLayout, NetFoundryLayoutProps, StarUsProps} from '@netfoundry/
 import {useLocation} from "@docusaurus/router";
 import {unifiedFooter} from "@site/src/components/footer";
 import {frontdoorFooter} from "@frontdoor/src/components/footer";
-import {onpremFooter} from "@onprem/src/components/footer";
+import {selfhostedFooter} from "@selfhosted/src/components/footer";
 import {zlanFooter} from "@zlan/src/components/footer";
 import {openZitiFooter} from "@openziti/src/components/footer";
 import {zrokFooter} from "@zrok/src/components/footer";
@@ -13,7 +13,7 @@ const matchPath = (p: string, segment: string) =>
 
 const mapFooter = (p: string) => {
     if (matchPath(p, 'frontdoor')) return frontdoorFooter;
-    if (matchPath(p, 'onprem')) return onpremFooter;
+    if (matchPath(p, 'selfhosted')) return selfhostedFooter;
     if (matchPath(p, 'openziti')) return openZitiFooter;
     if (matchPath(p, 'zlan')) return zlanFooter;
     if (matchPath(p, 'zrok')) return zrokFooter;

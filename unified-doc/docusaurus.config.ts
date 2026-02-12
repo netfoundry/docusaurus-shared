@@ -16,7 +16,7 @@ import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zr
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
-const onprem = `./_remotes/onprem`;
+const selfhosted = `./_remotes/selfhosted`;
 const openziti = `./_remotes/openziti`;
 const zrokRoot = `./_remotes/zrok/website`;
 const zlan = `./_remotes/zlan`;
@@ -36,7 +36,7 @@ const BUILD_FLAGS = {
     NONE:      0x0,
     OPENZITI:  0x1,
     FRONTDOOR: 0x2,
-    ONPREM:    0x4,
+    SELFHOSTED: 0x4,
     ZROK:      0x8,
     ZLAN:      0x10,
 };
@@ -82,13 +82,13 @@ const prod: PublishConfig = {
 const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod : staging;
 
 const REMARK_MAPPINGS = [
-    { from: '@onpremdocs',   to: `${docsBase}onprem` },
+    { from: '@selfhosteddocs', to: `${docsBase}selfhosted` },
     { from: '@openzitidocs', to: `${docsBase}openziti`},
     { from: '@zrokdocs', to: `${docsBase}zrok`},
     { from: '@static', to: docsBase},
     { from: '/openziti/', to: `${docsBase}/openziti/` },
     { from: '/frontdoor/', to: `${docsBase}/frontdoor/` },
-    { from: '/onprem/', to: `${docsBase}/onprem/` },
+    { from: '/selfhosted/', to: `${docsBase}/selfhosted/` },
     { from: '/zrok/', to: `${docsBase}/zrok/` },
     { from: '/zlan/', to: `${docsBase}/zlan/` },
 ];
@@ -199,7 +199,7 @@ const config: Config = {
     staticDirectories: [
         'static',
         '_remotes/frontdoor/docusaurus/static/',
-        '_remotes/onprem/docusaurus/static/',
+        '_remotes/selfhosted/docusaurus/static/',
         '_remotes/openziti/docusaurus/static/',
         '_remotes/zlan/docusaurus/static/',
         `${zrokRoot}/static/`,
@@ -232,7 +232,7 @@ const config: Config = {
                             alias: {
                                 '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
                                 '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
-                                '@onprem': path.resolve(__dirname, `${onprem}/docusaurus`),
+                                '@selfhosted': path.resolve(__dirname, `${selfhosted}/docusaurus`),
                                 '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
                                 '@zrok': path.resolve(__dirname, `${zrokRoot}`),
                                 '@zrokroot': path.resolve(__dirname, `${zrokRoot}`),
@@ -254,17 +254,17 @@ const config: Config = {
 
         ['@docusaurus/plugin-content-pages',{path: 'src/pages',routeBasePath: '/'}],
         build(BUILD_FLAGS.FRONTDOOR) && ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
-        build(BUILD_FLAGS.ONPREM) && ['@docusaurus/plugin-content-pages',{id: `onprem-pages`, path: `${onprem}/docusaurus/src/pages`, routeBasePath: '/onprem'}],
+        build(BUILD_FLAGS.SELFHOSTED) && ['@docusaurus/plugin-content-pages',{id: `selfhosted-pages`, path: `${selfhosted}/docusaurus/src/pages`, routeBasePath: '/selfhosted'}],
         build(BUILD_FLAGS.OPENZITI) && ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
         build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
         build(BUILD_FLAGS.ZROK) && ['@docusaurus/plugin-content-pages',{id: `zrok-pages`, path: `${zrokRoot}/src/pages`, routeBasePath: '/zrok'}],
-        build(BUILD_FLAGS.ONPREM) && [
+        build(BUILD_FLAGS.SELFHOSTED) && [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'onprem', // do not change - affects algolia search
-                path: `${onprem}/docusaurus/docs`,
-                routeBasePath: routeBase('onprem'),
-                sidebarPath: `${onprem}/docusaurus/sidebars.ts`,
+                id: 'selfhosted',
+                path: `${selfhosted}/docusaurus/docs`,
+                routeBasePath: routeBase('selfhosted'),
+                sidebarPath: `${selfhosted}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
                 beforeDefaultRemarkPlugins: [
                     remarkGithubAdmonitionsToDirectives,
@@ -346,15 +346,20 @@ const config: Config = {
             },
         ],
         build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, routeBase('zrok'))),
-        // Fallback redirects for JSX pages with hardcoded /docs/ paths (from upstream repos)
-        isVercel && [
+        [
             '@docusaurus/plugin-client-redirects',
             {
                 createRedirects(existingPath: string) {
-                    // Redirect /docs/X → /X for all doc paths
-                    return existingPath.match(/^\/(onprem|frontdoor|openziti|zrok|zlan)/)
-                        ? [`/docs${existingPath}`]
-                        : undefined;
+                    const redirects: string[] = [];
+                    // Vercel previews: redirect /docs/X → /X for all doc paths
+                    if (isVercel && existingPath.match(/^\/(selfhosted|frontdoor|openziti|zrok|zlan)/)) {
+                        redirects.push(`/docs${existingPath}`);
+                    }
+                    // Migration: redirect old /onprem/* paths to /selfhosted/*
+                    if (existingPath.startsWith('/selfhosted/')) {
+                        redirects.push(existingPath.replace('/selfhosted/', '/onprem/'));
+                    }
+                    return redirects.length > 0 ? redirects : undefined;
                 },
             },
         ],
@@ -386,7 +391,7 @@ const config: Config = {
                     label: 'Docs',
                     position: 'left',
                     items: [
-                        { to: '/onprem/intro', label: 'On-Prem' },
+                        { to: '/selfhosted/intro', label: 'Self-Hosted' },
                         { to: '/frontdoor/intro', label: 'Frontdoor' },
                         { to: '/openziti/learn/introduction', label: 'OpenZiti' },
                     ],
