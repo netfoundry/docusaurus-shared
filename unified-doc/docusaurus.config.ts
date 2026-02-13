@@ -16,7 +16,7 @@ import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zr
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
-const selfhosted = `./_remotes/selfhosted`; // REBRAND: Renamed from onprem
+const selfhosted = `./_remotes/selfhosted`;
 const openziti = `./_remotes/openziti`;
 const zrokRoot = `./_remotes/zrok/website`;
 const zlan = `./_remotes/zlan`;
@@ -36,7 +36,7 @@ const BUILD_FLAGS = {
     NONE:      0x0,
     OPENZITI:  0x1,
     FRONTDOOR: 0x2,
-    SELFHOSTED: 0x4, // REBRAND: Renamed from ONPREM
+    SELFHOSTED: 0x4,
     ZROK:      0x8,
     ZLAN:      0x10,
 };
@@ -83,14 +83,14 @@ const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod 
 
 const REMARK_MAPPINGS = [
     { from: '@selfhosteddocs', to: `${docsBase}selfhosted` },
-    { from: '@onpremdocs', to: `${docsBase}selfhosted` }, // Legacy alias points to new rebrand
+    { from: '@onpremdocs', to: `${docsBase}selfhosted` },
     { from: '@openzitidocs', to: `${docsBase}openziti`},
     { from: '@zrokdocs', to: `${docsBase}zrok`},
     { from: '@static', to: docsBase},
     { from: '/openziti/', to: `${docsBase}/openziti/` },
     { from: '/frontdoor/', to: `${docsBase}/frontdoor/` },
     { from: '/selfhosted/', to: `${docsBase}/selfhosted/` },
-    { from: '/onprem/', to: `${docsBase}/selfhosted/` }, // Legacy path points to new rebrand
+    { from: '/onprem/', to: `${docsBase}/selfhosted/` },
     { from: '/zrok/', to: `${docsBase}/zrok/` },
     { from: '/zlan/', to: `${docsBase}/zlan/` },
 ];
@@ -225,7 +225,6 @@ const config: Config = {
     ],
     plugins: [
         '@docusaurus/plugin-debug',
-        dumpRoutes(), // RESTORED
         function webpackAliases() {
             return {
                 name: 'unified-doc-webpack-aliases',
@@ -261,8 +260,6 @@ const config: Config = {
         build(BUILD_FLAGS.OPENZITI) && ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
         build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
         build(BUILD_FLAGS.ZROK) && ['@docusaurus/plugin-content-pages',{id: `zrok-pages`, path: `${zrokRoot}/src/pages`, routeBasePath: '/zrok'}],
-
-        // --- DUAL PATH: SELF-HOSTED (NEW IDENTITY) ---
         build(BUILD_FLAGS.SELFHOSTED) && [
             '@docusaurus/plugin-content-docs',
             {
@@ -281,8 +278,6 @@ const config: Config = {
                 ],
             },
         ],
-
-        // --- DUAL PATH: ONPREM (LEGACY SEARCH BRIDGE) ---
         build(BUILD_FLAGS.SELFHOSTED) && [
             '@docusaurus/plugin-content-docs',
             {
