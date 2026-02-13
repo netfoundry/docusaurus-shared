@@ -16,6 +16,7 @@ import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zr
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
+const onprem = `./_remotes/onprem`;
 const selfhosted = `./_remotes/selfhosted`;
 const openziti = `./_remotes/openziti`;
 const zrokRoot = `./_remotes/zrok/website`;
@@ -201,6 +202,7 @@ const config: Config = {
     staticDirectories: [
         'static',
         '_remotes/frontdoor/docusaurus/static/',
+        '_remotes/onprem/docusaurus/static/',
         '_remotes/selfhosted/docusaurus/static/',
         '_remotes/openziti/docusaurus/static/',
         '_remotes/zlan/docusaurus/static/',
@@ -234,6 +236,7 @@ const config: Config = {
                             alias: {
                                 '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
                                 '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
+                                '@onprem': path.resolve(__dirname, `${onprem}/docusaurus`),
                                 '@selfhosted': path.resolve(__dirname, `${selfhosted}/docusaurus`),
                                 '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
                                 '@zrok': path.resolve(__dirname, `${zrokRoot}`),
@@ -282,9 +285,9 @@ const config: Config = {
             '@docusaurus/plugin-content-docs',
             {
                 id: 'onprem', // RETAINED: Critical for Algolia Index continuity
-                path: `${selfhosted}/docusaurus/docs`,
+                path: `${onprem}/docusaurus/docs`,
                 routeBasePath: routeBase('onprem'),
-                sidebarPath: `${selfhosted}/docusaurus/sidebars.ts`,
+                sidebarPath: `${onprem}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
                 beforeDefaultRemarkPlugins: [
                     remarkGithubAdmonitionsToDirectives,

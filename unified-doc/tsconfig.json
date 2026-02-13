@@ -12,12 +12,17 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "skipLibCheck": true
-  },
-  "paths": {
-    "@frontdoor/*": ["_remotes/frontdoor/*"],
-    "@selfhosted/*": ["_remotes/selfhosted/*"],
-    "@openziti/*": ["_remotes/openziti/*"]
+    "skipLibCheck": true,
+    "paths": {
+      "@frontdoor/*": ["_remotes/frontdoor/*"],
+      "@onprem/*": ["_remotes/onprem/*"],
+      "@selfhosted/*": ["_remotes/selfhosted/*"],
+      "@openziti/*": ["_remotes/openziti/*"],
+      "@zlan/*": ["_remotes/zlan/*"],
+      "@zrok/*": ["_remotes/zrok/website/*"],
+      "@zrokroot/*": ["_remotes/zrok/website/*"],
+      "@site/*": ["./*"]
+    }
   },
   "exclude": [".docusaurus", "build"]
 }
