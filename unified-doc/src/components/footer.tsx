@@ -4,7 +4,7 @@ import React from "react";
 export const unifiedFooter = {
     ...defaultNetFoundryFooterProps(),
     description:
-        'Cloud isn't always viable. NetFoundry Self-Hosted™ lets you control and manage your own OpenZiti overlay network.',
+        'Cloud isn\'t always viable. NetFoundry Self-Hosted™ lets you control and manage your own OpenZiti overlay network.',
     socialProps: {
         ...defaultSocialProps,
         githubUrl: 'https://github.com/netfoundry/',
@@ -13,10 +13,10 @@ export const unifiedFooter = {
         twitterUrl: 'https://twitter.com/netfoundry/',
     },
     documentationLinks: [
-        <a key="new" href="/installation">Getting Starteda 4</a>
+        <a key="new" href="/installation">Getting Started</a>
     ],
     communityLinks: [
-        <a key="new" href="/installation">Getting Startedb 5</a>
+        <a key="new" href="/installation">Getting Started</a>
     ],
     resourceLinks: [
         <a href="https://blog.openziti.io">OpenZiti Tech Blog</a>,

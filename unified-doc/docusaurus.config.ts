@@ -273,7 +273,6 @@ const config: Config = {
                 includeCurrentVersion: true,
                 beforeDefaultRemarkPlugins: [
                     remarkGithubAdmonitionsToDirectives,
-                    assertNoDocsPrefix(), // RESTORED
                 ],
                 remarkPlugins: [
                     [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
