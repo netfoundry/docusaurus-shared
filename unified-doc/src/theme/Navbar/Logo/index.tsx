@@ -11,7 +11,7 @@ const mapTitle = (p: string) => {
     const checkPath = (segment: string) => p.includes(`/${segment}`);
 
     if (checkPath('frontdoor')) return {includeNFLogo: true, to: '/frontdoor', alt:'Frontdoor', logoLight: `/img/frontdoor-sm-logo.svg`, logoDark: `/img/frontdoor-sm-logo.svg`};
-    if (checkPath('onprem')) return {includeNFLogo: true, to: '/onprem',alt:'On-Prem', logoLight: `/img/onprem-sm-logo.svg`, logoDark: `/img/onprem-sm-logo.svg`};
+    if (checkPath('selfhosted')) return {includeNFLogo: true, to: '/selfhosted',alt:'Self-Hosted', logoLight: `/img/onprem-sm-logo.svg`, logoDark: `/img/onprem-sm-logo.svg`};
     if (checkPath('openziti')) return {includeNFLogo: true, to: '/openziti',alt:'OpenZiti', logoLight: `/img/openziti-sm-logo.svg`, logoDark: `/img/openziti-sm-logo.svg`};
     if (checkPath('zlan')) return {includeNFLogo: true, to: '/zlan', alt:'zlan', logoLight: `/img/zlan-logo.svg`, logoDark: `/img/zlan-logo.svg`};
     if (checkPath('zrok')) return {text: '', includeNFLogo: true, to: '/zrok', alt:'zrok', logoLight: `/img/zrok-1.0.0-rocket-purple.svg`, logoDark: `/img/zrok-1.0.0-rocket-green.svg`};

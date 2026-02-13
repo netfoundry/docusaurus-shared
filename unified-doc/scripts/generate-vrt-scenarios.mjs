@@ -5,7 +5,7 @@
  * Usage:
  *   node scripts/generate-vrt-scenarios.mjs [product]
  *
- * Products: openziti, frontdoor, onprem, zrok, zlan, home, all
+ * Products: openziti, frontdoor, selfhosted, zrok, zlan, home, all
  *
  * Examples:
  *   node scripts/generate-vrt-scenarios.mjs openziti   # Only OpenZiti pages
@@ -40,10 +40,10 @@ const PRODUCTS = {
     pattern: /\/frontdoor\//,
     include: (url) => url.includes('/frontdoor/')
   },
-  onprem: {
-    label: 'On-Prem',
-    pattern: /\/onprem\//,
-    include: (url) => url.includes('/onprem/')
+  selfhosted: {
+    label: 'Self-Hosted',
+    pattern: /\/selfhosted\//,
+    include: (url) => url.includes('/selfhosted/')
   },
   zrok: {
     label: 'zrok',
@@ -96,7 +96,7 @@ function categorizeUrls(urls) {
     home: [],
     openziti: [],
     frontdoor: [],
-    onprem: [],
+    selfhosted: [],
     zrok: [],
     zlan: [],
     other: []

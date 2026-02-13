@@ -25,7 +25,7 @@ const defaultItems: Item[] = [
 
 const netfoundryDocs = {to: `https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides`, label: 'NetFoundry SaaS'};
 const nfFrontDoorDocs = {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'};
-const onPremDocs = {to: `${DOCS_PREFIX}/onprem/intro`, label: 'On-Prem'};
+const onPremDocs = {to: `${DOCS_PREFIX}/selfhosted/intro`, label: 'Self-Hosted'};
 const zlanDocs = {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLAN'};
 const ozDocs =  {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'};
 const zrokDocs = {to: `${DOCS_PREFIX}/zrok/getting-started`, label: 'zrok'};
@@ -48,8 +48,8 @@ const openZitiNav: Item[] = [
 
 const onpremNav: Item[] = [
     {
-        label: 'On-Prem Docs',
-        to: `${DOCS_PREFIX}/onprem/intro`,
+        label: 'Self-Hosted Docs',
+        to: `${DOCS_PREFIX}/selfhosted/intro`,
         position: 'left',
         type: 'dropdown',
         items: [
@@ -118,7 +118,7 @@ const zrokNav: Item[] = [
 
 const mapNavbar = (p: string): Item[] => {
     if (p.startsWith(`${DOCS_PREFIX}/frontdoor`)) return frontdoorNav;
-    if (p.startsWith(`${DOCS_PREFIX}/onprem`))    return onpremNav;
+    if (p.startsWith(`${DOCS_PREFIX}/selfhosted`)) return onpremNav;
     if (p.startsWith(`${DOCS_PREFIX}/openziti`))  return openZitiNav;
     if (p.startsWith(`${DOCS_PREFIX}/zlan`))  return zlanNav;
     if (p.startsWith(`${DOCS_PREFIX}/zrok`))  return zrokNav;

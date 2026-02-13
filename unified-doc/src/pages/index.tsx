@@ -31,7 +31,7 @@ export default function Home(): ReactNode {
                         <div className="buttons">
                             <Link className="button button--secondary button--lg" to="https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides">NetFoundry SaaS Docs</Link>
                             <span style={{margin: '0 8px'}} />
-                            <Link className="button button--secondary button--lg" to={useBaseUrl('/docs/onprem/intro')}>On-Prem Docs</Link>
+                            <Link className="button button--secondary button--lg" to={useBaseUrl('/docs/selfhosted/intro')}>Self-Hosted Docs</Link>
                             <span style={{margin: '0 8px'}} />
                             <Link className="button button--secondary button--lg" to={useBaseUrl('/docs/frontdoor/intro')}>Frontdoor Docs</Link>
                             <span style={{margin: '0 8px'}} />
@@ -58,12 +58,12 @@ export default function Home(): ReactNode {
                             </div>
                             <div className="col col--4">
                                 <div className={styles.idxcard}>
-                                    <div className="card__header"><h3>NetFoundry On-Prem</h3></div>
+                                    <div className="card__header"><h3>NetFoundry Self-Hosted</h3></div>
                                     <div className="card__body">
                                         Enterprise self-hosted platform for OpenZiti overlays.
                                     </div>
                                     <div className="card__footer">
-                                        <Link className="button button--primary button--block" to={useBaseUrl('/docs/onprem/intro')}>Go to NetFoundry On-Prem</Link>
+                                        <Link className="button button--primary button--block" to={useBaseUrl('/docs/selfhosted/intro')}>Go to NetFoundry Self-Hosted</Link>
                                     </div>
                                 </div>
                             </div>
@@ -119,8 +119,8 @@ export default function Home(): ReactNode {
                                     <div className="card__header"><h3>Quick Links</h3></div>
                                     <div className="card__body">
                                         <ul>
-                                            <li><Link to={useBaseUrl('/docs/onprem/support/troubleshooting')}>NetFoundry Troubleshooting</Link></li>
-                                            <li><Link to={useBaseUrl('/docs/onprem/intro')}>On-Prem Deployment</Link></li>
+                                            <li><Link to={useBaseUrl('/docs/selfhosted/support/troubleshooting')}>NetFoundry Troubleshooting</Link></li>
+                                            <li><Link to={useBaseUrl('/docs/selfhosted/intro')}>Self-Hosted Deployment</Link></li>
                                             <li><Link to={useBaseUrl('/docs/frontdoor/intro')}>Frontdoor Getting Started</Link></li>
                                             <li><Link to={useBaseUrl('/docs/openziti/reference/command-line/login')}>OpenZiti CLI Reference</Link></li>
                                             <li><Link to={useBaseUrl('/docs/zlan/intro')}>zLAN FAQ</Link></li>
@@ -133,8 +133,8 @@ export default function Home(): ReactNode {
                                     <div className="card__header"><h3>Support</h3></div>
                                     <div className="card__body">
                                         <ul>
-                                            <li><Link to={useBaseUrl('/docs/onprem/support/troubleshooting')}>NetFoundry Troubleshooting</Link></li>
-                                            <li><Link to={useBaseUrl('/docs/onprem/support/troubleshooting')}>On-Prem Troubleshooting</Link></li>
+                                            <li><Link to={useBaseUrl('/docs/selfhosted/support/troubleshooting')}>NetFoundry Troubleshooting</Link></li>
+                                            <li><Link to={useBaseUrl('/docs/selfhosted/support/troubleshooting')}>Self-Hosted Troubleshooting</Link></li>
                                             <li><Link to={useBaseUrl('/docs/frontdoor/learn/health-checks')}>Frontdoor Troubleshooting</Link></li>
                                             <li><Link to={useBaseUrl('/docs/openziti/learn/identity-providers')}>OpenZiti FAQ</Link></li>
                                             <li><Link to={useBaseUrl('/docs/zlan/intro')}>zLAN FAQ</Link></li>

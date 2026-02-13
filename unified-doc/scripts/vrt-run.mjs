@@ -15,7 +15,7 @@ const [,, action, product, flag] = process.argv;
 
 if (!action || !product) {
   console.error('[VRT] Usage: vrt-run.mjs <reference|test|approve> <product> [--filter]');
-  console.error('[VRT] Products: home, openziti, frontdoor, onprem, zrok, zlan');
+  console.error('[VRT] Products: home, openziti, frontdoor, selfhosted, zrok, zlan');
   process.exit(1);
 }
 

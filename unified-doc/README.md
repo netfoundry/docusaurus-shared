@@ -60,7 +60,7 @@ The unified-doc site includes BackstopJS for visual regression testing against p
 ### Overview
 
 - Compares screenshots of local dev site vs production (`https://netfoundry.io/docs/`)
-- Tests organized by product: `openziti`, `frontdoor`, `onprem`, `zrok`, `zlan`, `home`
+- Tests organized by product: `openziti`, `frontdoor`, `selfhosted`, `zrok`, `zlan`, `home`
 - 3 viewports: desktop (1920x1080), tablet (768x1024), mobile (375x812)
 - Generates HTML diff reports highlighting visual differences
 
@@ -100,7 +100,7 @@ Each product has its own set of commands:
 | `vrt:approve:<product>` | Approve current test screenshots as new reference |
 | `vrt:report:<product>` | Open HTML diff report in browser |
 
-Products: `home`, `openziti`, `frontdoor`, `onprem`, `zrok`, `zlan`
+Products: `home`, `openziti`, `frontdoor`, `selfhosted`, `zrok`, `zlan`
 
 ### Workflow
 
