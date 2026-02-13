@@ -16,7 +16,7 @@ import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zr
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
-const onprem = `./_remotes/selfhosted`;
+const selfhosted = `./_remotes/selfhosted`; // REBRAND: Renamed from onprem
 const openziti = `./_remotes/openziti`;
 const zrokRoot = `./_remotes/zrok/website`;
 const zlan = `./_remotes/zlan`;
@@ -36,7 +36,7 @@ const BUILD_FLAGS = {
     NONE:      0x0,
     OPENZITI:  0x1,
     FRONTDOOR: 0x2,
-    ONPREM: 0x4,
+    SELFHOSTED: 0x4, // REBRAND: Renamed from ONPREM
     ZROK:      0x8,
     ZLAN:      0x10,
 };
@@ -83,12 +83,14 @@ const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod 
 
 const REMARK_MAPPINGS = [
     { from: '@selfhosteddocs', to: `${docsBase}selfhosted` },
+    { from: '@onpremdocs', to: `${docsBase}selfhosted` }, // Legacy alias points to new rebrand
     { from: '@openzitidocs', to: `${docsBase}openziti`},
     { from: '@zrokdocs', to: `${docsBase}zrok`},
     { from: '@static', to: docsBase},
     { from: '/openziti/', to: `${docsBase}/openziti/` },
     { from: '/frontdoor/', to: `${docsBase}/frontdoor/` },
     { from: '/selfhosted/', to: `${docsBase}/selfhosted/` },
+    { from: '/onprem/', to: `${docsBase}/selfhosted/` }, // Legacy path points to new rebrand
     { from: '/zrok/', to: `${docsBase}/zrok/` },
     { from: '/zlan/', to: `${docsBase}/zlan/` },
 ];
@@ -223,6 +225,7 @@ const config: Config = {
     ],
     plugins: [
         '@docusaurus/plugin-debug',
+        dumpRoutes(), // RESTORED
         function webpackAliases() {
             return {
                 name: 'unified-doc-webpack-aliases',
@@ -232,7 +235,7 @@ const config: Config = {
                             alias: {
                                 '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
                                 '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
-                                '@selfhosted': path.resolve(__dirname, `${onprem}/docusaurus`),
+                                '@selfhosted': path.resolve(__dirname, `${selfhosted}/docusaurus`),
                                 '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
                                 '@zrok': path.resolve(__dirname, `${zrokRoot}`),
                                 '@zrokroot': path.resolve(__dirname, `${zrokRoot}`),
@@ -254,17 +257,39 @@ const config: Config = {
 
         ['@docusaurus/plugin-content-pages',{path: 'src/pages',routeBasePath: '/'}],
         build(BUILD_FLAGS.FRONTDOOR) && ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
-        build(BUILD_FLAGS.ONPREM) && ['@docusaurus/plugin-content-pages',{id: `selfhosted-pages`, path: `${onprem}/docusaurus/src/pages`, routeBasePath: '/selfhosted'}],
+        build(BUILD_FLAGS.SELFHOSTED) && ['@docusaurus/plugin-content-pages',{id: `selfhosted-pages`, path: `${selfhosted}/docusaurus/src/pages`, routeBasePath: '/selfhosted'}],
         build(BUILD_FLAGS.OPENZITI) && ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
         build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
         build(BUILD_FLAGS.ZROK) && ['@docusaurus/plugin-content-pages',{id: `zrok-pages`, path: `${zrokRoot}/src/pages`, routeBasePath: '/zrok'}],
-        build(BUILD_FLAGS.ONPREM) && [
+
+        // --- DUAL PATH: SELF-HOSTED (NEW IDENTITY) ---
+        build(BUILD_FLAGS.SELFHOSTED) && [
             '@docusaurus/plugin-content-docs',
             {
                 id: 'selfhosted',
-                path: `${onprem}/docusaurus/docs`,
+                path: `${selfhosted}/docusaurus/docs`,
                 routeBasePath: routeBase('selfhosted'),
-                sidebarPath: `${onprem}/docusaurus/sidebars.ts`,
+                sidebarPath: `${selfhosted}/docusaurus/sidebars.ts`,
+                includeCurrentVersion: true,
+                beforeDefaultRemarkPlugins: [
+                    remarkGithubAdmonitionsToDirectives,
+                    assertNoDocsPrefix(), // RESTORED
+                ],
+                remarkPlugins: [
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
+                    [remarkCodeSections, { logLevel: LogLevel.Silent }],
+                ],
+            },
+        ],
+
+        // --- DUAL PATH: ONPREM (LEGACY SEARCH BRIDGE) ---
+        build(BUILD_FLAGS.SELFHOSTED) && [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'onprem', // RETAINED: Critical for Algolia Index continuity
+                path: `${selfhosted}/docusaurus/docs`,
+                routeBasePath: routeBase('onprem'),
+                sidebarPath: `${selfhosted}/docusaurus/sidebars.ts`,
                 includeCurrentVersion: true,
                 beforeDefaultRemarkPlugins: [
                     remarkGithubAdmonitionsToDirectives,
@@ -275,6 +300,7 @@ const config: Config = {
                 ],
             },
         ],
+
         build(BUILD_FLAGS.FRONTDOOR) && [
             '@docusaurus/plugin-content-docs',
             {
@@ -370,7 +396,7 @@ const config: Config = {
     themeConfig: {
         docs: {
             sidebar: {
-                hideable: false, 
+                hideable: false,
                 autoCollapseCategories: true
             }
         },
