@@ -20,7 +20,6 @@
       "@zlan/*": ["_remotes/zlan/*"],
       "@zrok/*": ["_remotes/zrok/website/*"],
       "@zrokroot/*": ["_remotes/zrok/website/*"],
-      "@site/*": ["./*"]
     }
   },
   "exclude": [".docusaurus", "build"]
