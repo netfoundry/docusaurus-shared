@@ -341,7 +341,8 @@ echo "bd   output dir: build${BUILD_QUALIFIER}"
 echo "========================================"
 
 now=$(date)
-echo "$now" > "${script_dir}/static/build-time.txt"
+commit=$(git -C "${script_dir}" rev-parse --short HEAD 2>/dev/null || echo "unknown")
+printf "%s\n%s\n" "$now" "$commit" > "${script_dir}/static/build-time.txt"
 echo "BUILDING docs into: build${BUILD_QUALIFIER} at $now"
 
 MINIFY_FLAG=""
