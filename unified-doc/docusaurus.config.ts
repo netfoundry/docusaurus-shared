@@ -84,14 +84,12 @@ const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod 
 
 const REMARK_MAPPINGS = [
     { from: '@selfhosteddocs', to: `${docsBase}selfhosted` },
-    { from: '@onpremdocs', to: `${docsBase}selfhosted` },
     { from: '@openzitidocs', to: `${docsBase}openziti`},
     { from: '@zrokdocs', to: `${docsBase}zrok`},
     { from: '@static', to: docsBase},
     { from: '/openziti/', to: `${docsBase}/openziti/` },
     { from: '/frontdoor/', to: `${docsBase}/frontdoor/` },
     { from: '/selfhosted/', to: `${docsBase}/selfhosted/` },
-    { from: '/onprem/', to: `${docsBase}/selfhosted/` },
     { from: '/zrok/', to: `${docsBase}/zrok/` },
     { from: '/zlan/', to: `${docsBase}/zlan/` },
 ];
@@ -202,7 +200,6 @@ const config: Config = {
     staticDirectories: [
         'static',
         '_remotes/frontdoor/docusaurus/static/',
-        '_remotes/onprem/docusaurus/static/',
         '_remotes/selfhosted/docusaurus/static/',
         '_remotes/openziti/docusaurus/static/',
         '_remotes/zlan/docusaurus/static/',
@@ -236,7 +233,6 @@ const config: Config = {
                             alias: {
                                 '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
                                 '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
-                                '@onprem': path.resolve(__dirname, `${onprem}/docusaurus`),
                                 '@selfhosted': path.resolve(__dirname, `${selfhosted}/docusaurus`),
                                 '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
                                 '@zrok': path.resolve(__dirname, `${zrokRoot}`),
@@ -263,6 +259,7 @@ const config: Config = {
         build(BUILD_FLAGS.OPENZITI) && ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
         build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
         build(BUILD_FLAGS.ZROK) && ['@docusaurus/plugin-content-pages',{id: `zrok-pages`, path: `${zrokRoot}/src/pages`, routeBasePath: '/zrok'}],
+        build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, routeBase('zrok'))),
         build(BUILD_FLAGS.SELFHOSTED) && [
             '@docusaurus/plugin-content-docs',
             {
@@ -280,24 +277,6 @@ const config: Config = {
                 ],
             },
         ],
-        build(BUILD_FLAGS.SELFHOSTED) && [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'onprem', // RETAINED: Critical for Algolia Index continuity
-                path: `${onprem}/docusaurus/docs`,
-                routeBasePath: routeBase('onprem'),
-                sidebarPath: `${onprem}/docusaurus/sidebars.ts`,
-                includeCurrentVersion: true,
-                beforeDefaultRemarkPlugins: [
-                    remarkGithubAdmonitionsToDirectives,
-                ],
-                remarkPlugins: [
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, debug: false }],
-                    [remarkCodeSections, { logLevel: LogLevel.Silent }],
-                ],
-            },
-        ],
-
         build(BUILD_FLAGS.FRONTDOOR) && [
             '@docusaurus/plugin-content-docs',
             {
@@ -366,24 +345,6 @@ const config: Config = {
                 ],
                 blogSidebarCount: 'ALL',
                 blogSidebarTitle: 'All posts',
-            },
-        ],
-        build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, routeBase('zrok'))),
-        [
-            '@docusaurus/plugin-client-redirects',
-            {
-                createRedirects(existingPath: string) {
-                    const redirects: string[] = [];
-                    // Vercel previews: redirect /docs/X → /X for all doc paths
-                    if (isVercel && existingPath.match(/^\/(selfhosted|frontdoor|openziti|zrok|zlan)/)) {
-                        redirects.push(`/docs${existingPath}`);
-                    }
-                    // Migration: redirect old /onprem/* paths to /selfhosted/*
-                    if (existingPath.startsWith('/selfhosted/')) {
-                        redirects.push(existingPath.replace('/selfhosted/', '/onprem/'));
-                    }
-                    return redirects.length > 0 ? redirects : undefined;
-                },
             },
         ],
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
