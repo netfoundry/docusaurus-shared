@@ -15,7 +15,6 @@
     "skipLibCheck": true,
     "paths": {
       "@frontdoor/*": ["_remotes/frontdoor/*"],
-      "@onprem/*": ["_remotes/onprem/*"],
       "@selfhosted/*": ["_remotes/selfhosted/*"],
       "@openziti/*": ["_remotes/openziti/*"],
       "@zlan/*": ["_remotes/zlan/*"],

@@ -16,7 +16,6 @@ import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zr
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
-const onprem = `./_remotes/onprem`;
 const selfhosted = `./_remotes/selfhosted`;
 const openziti = `./_remotes/openziti`;
 const zrokRoot = `./_remotes/zrok/website`;

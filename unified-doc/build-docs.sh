@@ -80,7 +80,7 @@ clone_or_update() {
         echo "🔑 Using BB_REPO_TOKEN_ONPREM token" >&2
       else
         url="git@bitbucket.org:netfoundry/k8s-on-prem-installations.git"
-        echo "🔑 Using SSH for onprem" >&2
+        echo "🔑 Using SSH for self-hosted" >&2
       fi
       ;;
     *zrok-connector*)
