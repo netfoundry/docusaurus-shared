@@ -79,7 +79,7 @@
 .badge{padding:.16rem .55rem;border-radius:999px;font-size:.72rem;border:1px solid var(--ifm-color-emphasis-300)}
 .p_frontdoor{background:#e8f3ff;border-color:#c6e1ff;color:#145ea8}
 .p_openziti{background:#e9fff3;border-color:#c8f2df;color:#0d7a4e}
-.p_onprem{background:#fff3e8;border-color:#ffdcbf;color:#9a4d00}
+.p_selfhosted{background:#fff3e8;border-color:#ffdcbf;color:#9a4d00}
 .p_zlan{background:#f1edff;border-color:#d9d0ff;color:#5335b7}
 
 /* ===== Pagination ===== */
@@ -172,7 +172,7 @@
     border-color: #c8f2df;
     color: #0d7a4e;
 }
-.pill.active[data-product="onprem"] {
+.pill.active[data-product="selfhosted"] {
     background: #fff3e8;
     border-color: #ffdcbf;
     color: #9a4d00;

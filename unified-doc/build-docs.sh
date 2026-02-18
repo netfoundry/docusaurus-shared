@@ -80,7 +80,7 @@ clone_or_update() {
         echo "🔑 Using BB_REPO_TOKEN_ONPREM token" >&2
       else
         url="git@bitbucket.org:netfoundry/k8s-on-prem-installations.git"
-        echo "🔑 Using SSH for onprem" >&2
+        echo "🔑 Using SSH for self-hosted" >&2
       fi
       ;;
     *zrok-connector*)
@@ -154,7 +154,7 @@ lint_docs() {
         "${script_dir}/_remotes/zlan/docusaurus/docs"
         "${script_dir}/_remotes/frontdoor/docusaurus/docs"
         "${script_dir}/_remotes/zrok/website/docs"
-        "${script_dir}/_remotes/onprem/docusaurus/docs"
+        "${script_dir}/_remotes/selfhosted/docusaurus/docs"
         "${script_dir}/_remotes/openziti/docusaurus/docs"
     )
 
@@ -284,11 +284,11 @@ if [ "${CLEAN:-0}" -eq 1 ]; then
   find "$script_dir/_remotes" -mindepth 1 -maxdepth 1 ! -name 'package.json' -exec rm -rf {} +
 fi
 
-clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor develop
-clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" onprem    main
-clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti  main
-clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan      main
-clone_or_update "https://github.com/openziti/zrok.git"                           zrok      main
+clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor  develop
+clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" selfhosted full-rename
+clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti   main
+clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan       main
+clone_or_update "https://github.com/openziti/zrok.git"                           zrok       main
 
 echo "========================================"
 echo "bd POST-CLONE DEBUG"
