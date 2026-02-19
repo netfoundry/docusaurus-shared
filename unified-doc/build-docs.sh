@@ -285,7 +285,7 @@ if [ "${CLEAN:-0}" -eq 1 ]; then
 fi
 
 clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor  develop
-clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" selfhosted full-rename
+clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" selfhosted update-redir
 clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti   main
 clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan       main
 clone_or_update "https://github.com/openziti/zrok.git"                           zrok       main
@@ -296,10 +296,10 @@ echo "========================================"
 echo "bd Directories in _remotes:"
 ls -la "$script_dir/_remotes" 2>/dev/null || echo "  (none)"
 echo "----------------------------------------"
-echo "bd Looking for build/ and .docusaurus/ dirs in remotes:"
-find "$script_dir/_remotes" -type d \( -name "build" -o -name ".docusaurus" \) 2>/dev/null || echo "  (none found)"
+echo "bd Looking for docusaurus build/ and .docusaurus/ dirs in remotes:"
+find "$script_dir/_remotes" -type d \( -path "*/docusaurus/build" -o -path "*/docusaurus/.docusaurus" -o -path "*/website/build" -o -path "*/website/.docusaurus" \) 2>/dev/null || echo "  (none found)"
 echo "bd Cleaning stale build artifacts from remotes..."
-find "$script_dir/_remotes" -type d \( -name "build" -o -name ".docusaurus" \) -exec rm -rf {} + 2>/dev/null || true
+find "$script_dir/_remotes" -type d \( -path "*/docusaurus/build" -o -path "*/docusaurus/.docusaurus" -o -path "*/website/build" -o -path "*/website/.docusaurus" \) -exec rm -rf {} + 2>/dev/null || true
 echo "========================================"
 
 echo "copying versionable docs locally..."

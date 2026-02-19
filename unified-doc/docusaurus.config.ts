@@ -350,7 +350,7 @@ const config: Config = {
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
         [pluginHotjar, {}],
         ['@docusaurus/plugin-google-tag-manager', {id: `openziti-gtm`, containerId: cfg.google.tag}],
-        onpremRedirects(),
+        build(BUILD_FLAGS.SELFHOSTED) && onpremRedirects(docsBase),
     ].filter(Boolean),
     themeConfig: {
         docs: {
