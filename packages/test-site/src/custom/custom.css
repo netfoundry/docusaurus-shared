@@ -1,20 +1,12 @@
 @import '@netfoundry/docusaurus-theme/css/tabs-v8-float.css';
 
-/* CACHE BUST v85.0 - LIGHT+DARK DROPDOWN HOVER MATCHES FOOTER */
+/* CACHE BUST v89.0 - NAVBAR TITLE GRADIENT BREAKPOINT NUDGE */
 
 :root {
     --ifm-color-primary: #0076FF;
     --ifm-background-color: #f8fafc;
     --ifm-card-background-color: #ffffff;
-    --product-name: 'NETFOUNDRY';
 }
-
-/* --- DYNAMIC PRODUCT NAME MAPPING --- */
-[class*='frontdoor'] { --product-name: 'FRONTDOOR'; }
-[class*='openziti'] { --product-name: 'OPENZITI'; }
-[class*='zrok']      { --product-name: 'ZROK'; }
-[class*='zlan']      { --product-name: 'ZLAN'; }
-[class*='onprem']    { --product-name: 'ON-PREM'; }
 
 [data-theme='dark'] {
     --ifm-background-color: #0f111a;
@@ -183,14 +175,35 @@ main.nf-main-grid::before {
     border-bottom-color: rgba(0, 118, 255, 0.15);
 }
 .navbar__title {
-    font-weight: 800 !important;
+    font-weight: 900 !important;
     font-size: 1.1rem !important;
-    transition: color 0.3s ease;
+    letter-spacing: -0.02em;
     position: relative;
     padding-right: 2rem;
+    /* Gradient text mirrors hero: "NetFoundry" in theme color, "Docs" in green.
+       Break at 63% — not 72% — because padding-right: 2rem widens the element
+       box, shifting the character/percentage relationship leftward. */
+    background: linear-gradient(to right,
+        var(--ifm-font-color-base) 0 59%,
+        #16a34a 59%,
+        #15803d 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.3s ease;
 }
 .navbar__title:hover {
-    color: var(--ifm-color-primary) !important;
+    opacity: 0.8;
+}
+[data-theme='dark'] .navbar__title {
+    background: linear-gradient(to right,
+        #ffffff 0 59%,
+        #22c55e 59%,
+        #86efac 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
 }
 
 /* Add separator after logo/title */
@@ -294,139 +307,68 @@ main.nf-main-grid::before {
 .mega-link strong { color: var(--ifm-font-color-base); font-size: 0.95rem; font-weight: 900; letter-spacing: -0.02em; display: block !important; }
 .mega-link span { color: #64748b; font-size: 0.82rem; display: block !important; margin-top: 2px; line-height: 1.35; }
 
-/* --- 9. SIDEBAR: DYNAMIC VARIABLE HEADER (CLEAN & SUBTLE) --- */
-aside[class*='sidebar'], .theme-doc-sidebar-container {
-    background: #f6f6f6 !important;
-    border-left: 1px solid #e0e0e0 !important;
-    border-right: 1px solid #e0e0e0 !important;
-}
 
-.menu__list:first-child::before {
-    content: var(--product-name);
-    display: block !important;
 
-    /* Small, elegant typography */
-    color: #64748b;
-    font-size: 0.7rem !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.1em !important;
+/* ═══════════════════════════════════════════════════════════════════════════
+   DOC PAGES — minimal alignment with landing page
+   Docusaurus defaults handle layout, spacing, and typography.
+   These rules only align accent colors with the established palette.
+   ═══════════════════════════════════════════════════════════════════════════ */
 
-    /* Compact layout */
-    padding: 0.5rem 0.75rem !important;
-    margin-bottom: 0.75rem !important;
-
-    /* Minimal styling - just a subtle left accent */
-    border-left: 3px solid var(--ifm-color-primary);
-    background: rgba(0, 118, 255, 0.03);
-    position: relative;
-
-    /* Subtle depth */
-    opacity: 0.75;
-    transition: opacity 0.3s ease;
-}
-
-.menu__list:first-child:hover::before {
-    opacity: 1;
-}
-
-/* Dark mode variant */
-[data-theme='dark'] .menu__list:first-child::before {
-    color: #94a3b8;
-    background: rgba(0, 118, 255, 0.08);
-}
-
-[data-theme='dark'] aside[class*='sidebar'],
-[data-theme='dark'] .theme-doc-sidebar-container {
-    background: #1a1b26 !important;
-    border-color: #2a2b36 !important;
-}
-
-/* --- 10. PAGINATION LINKS (PREVIOUS/NEXT) --- */
-.pagination-nav__label {
-    color: var(--ifm-color-primary) !important;
-    font-weight: 600 !important;
-}
-
-.pagination-nav__sublabel {
-    color: #64748b !important;
-}
-
-[data-theme='dark'] .pagination-nav__sublabel {
-    color: #94a3b8 !important;
-}
-
-.pagination-nav__link--prev .pagination-nav__label::before {
-    content: '← ';
-    color: #2ecc71 !important;
-}
-
-.pagination-nav__link--next .pagination-nav__label::after {
-    content: ' →';
-    color: #2ecc71 !important;
-}
-
-/* --- 11. MARKDOWN CONTENT LINKS --- */
-article a {
-    color: var(--ifm-color-primary) !important;
-    text-decoration: none !important;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-article a:hover {
-    color: #2ecc71 !important;
-    text-decoration: underline !important;
-}
-
-/* --- 12. BREADCRUMB LINKS --- */
-/* Home icon stays blue with green hover */
-.breadcrumbs__item:first-child .breadcrumbs__link {
-    color: var(--ifm-color-primary) !important;
-    text-decoration: none !important;
-    transition: color 0.2s ease;
-}
-.breadcrumbs__item:first-child .breadcrumbs__link:hover {
-    color: #2ecc71 !important;
-}
-
-/* Intermediate breadcrumb links are black - override blue default */
-.breadcrumbs__item:not(:first-child):not(.breadcrumbs__item--active) .breadcrumbs__link {
-    color: #1f2937 !important;
-    text-decoration: none !important;
-    transition: color 0.2s ease;
-}
-.breadcrumbs__item:not(:first-child):not(.breadcrumbs__item--active) .breadcrumbs__link:hover {
-    color: #4b5563 !important;
-}
-
-/* Active/current page stays highlighted */
-.breadcrumbs__item--active .breadcrumbs__link {
-    color: var(--ifm-color-primary) !important;
-    background: rgba(0, 118, 255, 0.08) !important;
-    padding: 2px 8px !important;
-    border-radius: 4px !important;
-}
-
-[data-theme='dark'] .breadcrumbs__item:not(:first-child):not(.breadcrumbs__item--active) .breadcrumbs__link {
-    color: #e5e7eb !important;
-}
-[data-theme='dark'] .breadcrumbs__item:not(:first-child):not(.breadcrumbs__item--active) .breadcrumbs__link:hover {
-    color: #94a3b8 !important;
-}
-[data-theme='dark'] .breadcrumbs__item--active .breadcrumbs__link {
-    color: #60a5fa !important;
-    background: rgba(0, 118, 255, 0.12) !important;
-}
-
-.menu__list-item-collapsible > .menu__link { font-weight: 800 !important; color: #000000 !important; font-size: 0.92rem !important; margin-top: 0.4rem !important; padding: 0.4rem 0.75rem !important; }
-.menu__link { font-size: 0.9rem !important; color: #4b5563 !important; }
-.menu__link--active { background: #f0f0f0 !important; color: var(--ifm-color-primary) !important; font-weight: 700 !important; border-left: 4px solid var(--ifm-color-primary) !important; padding-left: calc(0.75rem - 4px) !important; }
-.menu__link::before { content: none !important; }
-
-/* Dark mode active menu item */
+/* Active sidebar item — cyan in dark mode, our cyan-600 in light */
 [data-theme='dark'] .menu__link--active {
-    background: rgba(0, 118, 255, 0.15) !important;
-    color: #60a5fa !important;
+    color: #22d3ee !important;
+    background: rgba(34, 211, 238, 0.08) !important;
+    border-left-color: #22d3ee !important;
+}
+[data-theme='light'] .menu__link--active {
+    color: #0891b2 !important;
+    background: rgba(8, 145, 178, 0.08) !important;
+    border-left-color: #0891b2 !important;
+}
+
+/* ── Sidebar product indicator ───────────────────────────────────────────
+   Uses :has() to read which product's links are in the sidebar — works
+   for both /product/ and /docs/product/ path structures.
+   The ::before only renders inside a recognised product sidebar.
+   ─────────────────────────────────────────────────────────────────────── */
+.theme-doc-sidebar-container:has(a[href*="/frontdoor/"])  { --product-name: 'Frontdoor'; }
+.theme-doc-sidebar-container:has(a[href*="/openziti/"])   { --product-name: 'OpenZiti'; }
+.theme-doc-sidebar-container:has(a[href*="/onprem/"])     { --product-name: 'Self-Hosted'; }
+.theme-doc-sidebar-container:has(a[href*="/zrok/"])       { --product-name: 'zrok'; }
+.theme-doc-sidebar-container:has(a[href*="/zlan/"])       { --product-name: 'zLAN'; }
+
+/* Apply badge only when a product was detected */
+.theme-doc-sidebar-container:has(
+    a[href*="/frontdoor/"],
+    a[href*="/openziti/"],
+    a[href*="/onprem/"],
+    a[href*="/zrok/"],
+    a[href*="/zlan/"]
+) .menu__list:first-child::before {
+    content: var(--product-name);
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #64748b;
+    padding: 0.4rem 0.75rem;
+    margin-bottom: 0.75rem;
+    border-left: 3px solid var(--ifm-color-primary);
+    background: rgba(0, 118, 255, 0.04);
+}
+
+[data-theme='dark'] .theme-doc-sidebar-container:has(
+    a[href*="/frontdoor/"],
+    a[href*="/openziti/"],
+    a[href*="/onprem/"],
+    a[href*="/zrok/"],
+    a[href*="/zlan/"]
+) .menu__list:first-child::before {
+    color: #94a3b8;
+    border-left-color: #22d3ee;
+    background: rgba(34, 211, 238, 0.06);
 }
 
 /* --- 10. GITHUB STAR (ENHANCED) --- */

@@ -15,12 +15,13 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@docsearch/react": "^4",
     "@docusaurus/preset-classic": "3.9.2",
     "@docusaurus/theme-common": "3.9.2",
     "@docusaurus/theme-mermaid": "^3.7.0",
     "@docusaurus/utils": "3.9.2",
     "@mdx-js/react": "^3.0.0",
-    "@netfoundry/docusaurus-theme": "^0.1.2",
+    "@netfoundry/docusaurus-theme": "^0.7.0",
     "clsx": "^2.0.0",
     "framer-motion": "^12.34.2",
     "lucide-react": "^0.525.0",
