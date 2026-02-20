@@ -1,4 +1,4 @@
-import React, { type ReactNode } from 'react';
+import React, { type ReactNode, createElement } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {
   NetFoundryLayout,
@@ -13,6 +13,27 @@ export interface LayoutProps {
   wrapperClassName?: string;
   title?: string;
   description?: string;
+}
+
+/**
+ * Convert plain {href, label} config objects to React <a> elements.
+ * Docusaurus themeConfig must be JSON-serializable, so links arrive as plain
+ * objects from docusaurus.config.ts; this converts them at the component boundary.
+ */
+function resolveLinks(links?: ReactNode[]): ReactNode[] | undefined {
+  return links?.map((link, i) => {
+    if (
+      link &&
+      typeof link === 'object' &&
+      !React.isValidElement(link) &&
+      'href' in link &&
+      'label' in link
+    ) {
+      const l = link as { href: string; label: string };
+      return createElement('a', { key: i, href: l.href }, l.label);
+    }
+    return link;
+  });
 }
 
 /**
@@ -36,7 +57,7 @@ export default function Layout({
   const nfConfig = themeConfig.netfoundry ?? {};
 
   // Build footer props from config, falling back to defaults
-  const footerProps = noFooter
+  const rawFooterProps = noFooter
     ? undefined
     : {
         ...defaultNetFoundryFooterProps(),
@@ -46,6 +67,16 @@ export default function Layout({
           ...nfConfig.footer?.socialProps,
         },
       };
+
+  // Convert any plain {href, label} config objects to React elements
+  const footerProps = rawFooterProps
+    ? {
+        ...rawFooterProps,
+        resourceLinks:      resolveLinks(rawFooterProps.resourceLinks),
+        documentationLinks: resolveLinks(rawFooterProps.documentationLinks),
+        communityLinks:     resolveLinks(rawFooterProps.communityLinks),
+      }
+    : undefined;
 
   // Build star props if enabled
   const starProps =

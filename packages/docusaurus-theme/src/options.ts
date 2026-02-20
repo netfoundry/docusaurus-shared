@@ -13,6 +13,11 @@ export interface SocialProps {
 }
 
 /**
+ * A footer link: either a plain object with href/label, or an arbitrary ReactNode (JSX).
+ */
+export type FooterLinkItem = { href: string; label: string } | ReactNode;
+
+/**
  * Footer configuration for the theme
  */
 export interface FooterConfig {
@@ -20,12 +25,12 @@ export interface FooterConfig {
   description?: string;
   /** Social media links */
   socialProps?: SocialProps;
-  /** Documentation section links (as ReactNode for JSX support) */
-  documentationLinks?: ReactNode[];
+  /** Documentation section links */
+  documentationLinks?: FooterLinkItem[];
   /** Community section links */
-  communityLinks?: ReactNode[];
+  communityLinks?: FooterLinkItem[];
   /** Resources section links */
-  resourceLinks?: ReactNode[];
+  resourceLinks?: FooterLinkItem[];
 }
 
 /**

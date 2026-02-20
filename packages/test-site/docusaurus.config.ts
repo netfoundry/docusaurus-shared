@@ -34,6 +34,16 @@ const config: Config = {
   url: 'https://netfoundry.io',
   baseUrl: '/',
   themes: ['@netfoundry/docusaurus-theme'],
+  // Inline script in <head>: on first visit (no stored preference) detect OS
+  // colour scheme and write it to localStorage before React hydrates.
+  // This gives the correct initial theme without the "system" toggle button.
+  headTags: [
+    {
+      tagName: 'script',
+      attributes: {},
+      innerHTML: `(function(){try{if(!localStorage.getItem('theme')){var dark=window.matchMedia('(prefers-color-scheme: dark)').matches;var t=dark?'dark':'light';document.documentElement.setAttribute('data-theme',t);localStorage.setItem('theme',t);}}catch(e){}})();`,
+    },
+  ],
   staticDirectories: [
     'static',
     `${frontdoor}/docusaurus/static`,
@@ -56,6 +66,11 @@ const config: Config = {
                 '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
                 '@zrok': path.resolve(__dirname, `${zrokRoot}`),
               },
+              // Allow importing from the workspace root node_modules (yarn workspace hoisting)
+              modules: [
+                path.resolve(__dirname, '../../node_modules'),
+                'node_modules',
+              ],
             },
           };
         },
@@ -80,6 +95,11 @@ const config: Config = {
     }]
   ],
   themeConfig: {
+    colorMode: {
+      defaultMode: 'dark',   // fallback if OS pref undetectable
+      disableSwitch: false,
+      respectPrefersColorScheme: false,  // false = only light/dark toggle (no "system" button)
+    },
     netfoundry: {
       showStarBanner: false, // Banner OFF
       starBanner: { repoUrl: 'https://github.com/openziti/ziti', label: 'Star OpenZiti on GitHub' },
@@ -92,6 +112,11 @@ const config: Config = {
           linkedInUrl: 'https://www.linkedin.com/company/netfoundry/',
           twitterUrl: 'https://x.com/netfoundry/',
         },
+        resourceLinks: [
+          {href: 'https://netfoundry.io/', label: 'NetFoundry'},
+          {href: 'https://netfoundry.io/blog/', label: 'NetFoundry Tech Blog'},
+          {href: 'https://blog.openziti.io', label: 'OpenZiti Tech Blog'},
+        ],
       },
     },
     navbar: {
@@ -109,16 +134,19 @@ const config: Config = {
               value: `
                 <div class="mega-menu-content">
                   <div class="mega-column">
-                    <span class="mega-header">Managed & Enterprise</span>
-                    <a class="mega-link" href="#"><div class="mega-icon icon-console"></div><div class="mega-text"><strong>NetFoundry Console</strong><span>Cloud-managed orchestration and global fabric control.</span></div></a>
-                    <a class="mega-link" href="#"><div class="mega-icon icon-server"></div><div class="mega-text"><strong>NetFoundry Self-Hosted</strong><span>Private managed stack deployment for environment sovereignty.</span></div></a>
-                    <a class="mega-link" href="/docs/frontdoor"><div class="mega-icon icon-door"></div><div class="mega-text"><strong>Frontdoor</strong><span>Secure application access gateway without a legacy VPN.</span></div></a>
+                    <span class="mega-header mega-header--managed">Managed Cloud</span>
+                    <a class="mega-link" href="#"><img src="/img/netfoundry-icon-color.svg" alt="NetFoundry Console" class="mega-logo"><div class="mega-text"><strong>NetFoundry Console</strong><span>Cloud-managed orchestration and global fabric control.</span></div></a>
+                    <a class="mega-link" href="/docs/frontdoor"><img src="/img/frontdoor-sm-logo.svg" alt="Frontdoor" class="mega-logo"><div class="mega-text"><strong>Frontdoor</strong><span>Secure application access gateway without a legacy VPN.</span></div></a>
                   </div>
                   <div class="mega-column">
-                    <span class="mega-header">Open Source & Core</span>
-                    <a class="mega-link" href="/docs/zrok"><div class="mega-icon icon-share"></div><div class="mega-text"><strong>zrok</strong><span>Secure peer-to-peer sharing built on the OpenZiti mesh.</span></div></a>
-                    <a class="mega-link" href="/docs/openziti"><div class="mega-icon icon-mesh"></div><div class="mega-text"><strong>OpenZiti</strong><span>Programmable zero-trust mesh infrastructure for any app.</span></div></a>
-                    <a class="mega-link" href="/docs/zlan"><div class="mega-icon icon-network"></div><div class="mega-text"><strong>zLAN</strong><span>Extend secure local network segments to the cloud edge.</span></div></a>
+                    <span class="mega-header mega-header--opensource">Open Source</span>
+                    <a class="mega-link" href="/docs/openziti"><img src="/img/openziti-sm-logo.svg" alt="OpenZiti" class="mega-logo"><div class="mega-text"><strong>OpenZiti</strong><span>Programmable zero-trust mesh infrastructure for any app.</span></div></a>
+                    <a class="mega-link" href="/docs/zrok"><img src="/img/zrok-logo.svg" alt="zrok" class="mega-logo"><div class="mega-text"><strong>zrok</strong><span>Secure peer-to-peer sharing built on the OpenZiti mesh.</span></div></a>
+                  </div>
+                  <div class="mega-column">
+                    <span class="mega-header mega-header--infra">Your infrastructure</span>
+                    <a class="mega-link" href="#"><img src="/img/onprem-sm-logo.svg" alt="NetFoundry Self-Hosted" class="mega-logo"><div class="mega-text"><strong>NetFoundry Self-Hosted</strong><span>Private managed stack deployment for environment sovereignty.</span></div></a>
+                    <a class="mega-link" href="/docs/zlan"><img src="/img/zlan-logo.svg" alt="zLAN" class="mega-logo"><div class="mega-text"><strong>zLAN</strong><span>Extend secure local network segments to the cloud edge.</span></div></a>
                   </div>
                 </div>`,
             },
@@ -137,22 +165,22 @@ const config: Config = {
                   <div class="mega-column">
                     <span class="mega-header">Learn & Engage</span>
                     <a class="mega-link" href="https://netfoundry.io/blog/" target="_blank" rel="noopener noreferrer">
-                      <div class="mega-icon icon-blog"></div>
+                      <svg class="mega-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/><polyline points="14 2 14 8 20 8" stroke="#64748b" stroke-width="1.5"/><line x1="8" y1="13" x2="16" y2="13" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="17" x2="13" y2="17" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"/></svg>
                       <div class="mega-text"><strong>NetFoundry Blog</strong><span>Latest news, updates, and insights from NetFoundry.</span></div>
                     </a>
                     <a class="mega-link" href="https://blog.openziti.io/" target="_blank" rel="noopener noreferrer">
-                      <div class="mega-icon icon-blog"></div>
+                      <svg class="mega-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/><polyline points="14 2 14 8 20 8" stroke="#64748b" stroke-width="1.5"/><line x1="8" y1="13" x2="16" y2="13" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="17" x2="13" y2="17" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"/></svg>
                       <div class="mega-text"><strong>OpenZiti Blog</strong><span>Technical articles and community updates.</span></div>
                     </a>
                   </div>
                   <div class="mega-column">
                     <span class="mega-header">Community & Support</span>
                     <a class="mega-link" href="https://www.youtube.com/c/NetFoundry" target="_blank" rel="noopener noreferrer">
-                      <div class="mega-icon icon-youtube"></div>
+                      <svg class="mega-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" fill="#ff0000"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
                       <div class="mega-text"><strong>NetFoundry YouTube</strong><span>Video tutorials, demos, and technical deep dives.</span></div>
                     </a>
                     <a class="mega-link" href="https://openziti.discourse.group/" target="_blank" rel="noopener noreferrer">
-                      <div class="mega-icon icon-forum"></div>
+                      <svg class="mega-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="#ffedd5" stroke="#f97316" stroke-width="1.5"/></svg>
                       <div class="mega-text"><strong>OpenZiti Discourse</strong><span>Ask questions and connect with the community.</span></div>
                     </a>
                   </div>

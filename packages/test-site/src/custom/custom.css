@@ -1,6 +1,6 @@
 @import '@netfoundry/docusaurus-theme/css/tabs-v8-float.css';
 
-/* CACHE BUST v33.0 - TOTAL RESTORATION & DYNAMIC HEADER */
+/* CACHE BUST v85.0 - LIGHT+DARK DROPDOWN HOVER MATCHES FOOTER */
 
 :root {
     --ifm-color-primary: #0076FF;
@@ -24,16 +24,113 @@
 /* --- 1. STAR BANNER (HIDDEN) --- */
 .starUsRoot_XOT4 { display: none !important; }
 
-/* --- 2. HERO SECTION --- */
+/* --- 2. HERO SECTION -------------------------------------------------------- */
+/*
+ * HeroBackground.tsx owns the dark background and the animated SVG network.
+ * This file only handles layout, the legibility overlay, and text styling.
+ */
+
+/* Stage: full-width hero.
+ * z-index: 4 keeps the hero ON TOP of the feature section (z-index: 3).
+ * ::after is a gradient overlay that fades the hero bottom to #0f172a —
+ * exactly matching the section background color — so there is no hard line. */
 .nf-hero-stage {
-    position: relative; width: 100%; min-height: 380px; display: flex; align-items: center; justify-content: center;
-    background-color: #090a11; background-image: url('../../static/img/nf-docs-hero.png'); background-size: cover; background-position: center; text-align: center;
+    position: relative;
+    width: 100%;
+    min-height: 370px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+    background: #020617;
+    z-index: 4;
 }
-.nf-hero-stage::before { content: ''; position: absolute; inset: 0; background: rgba(9, 10, 17, 0.65); z-index: 1; }
-.nf-hero-content { position: relative; z-index: 10; }
-.nf-hero-title { font-size: 3.5rem !important; font-weight: 900 !important; color: #ffffff !important; margin-bottom: 0.75rem !important; }
-.nf-green-text { color: #2ecc71 !important; display: inline-block; }
-.nf-hero-subtext { color: #cbd5e1 !important; font-size: 1.25rem !important; max-width: 700px; margin: 0 auto 2rem !important; }
+.nf-hero-stage::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 220px;
+    background: linear-gradient(to bottom, transparent 0%, #0f172a 100%);  /* overridden in light mode below */
+    pointer-events: none;
+    z-index: 1;   /* above animation layers, below hero text (z-index: 2) */
+}
+
+/* Overlay removed — the animation is the background. Text uses glow for legibility. */
+.nf-hero-overlay { display: none; }
+
+/*
+ * Hero text container — no background, no blur, no border.
+ * The animation is fully visible. Text-shadow handles legibility.
+ */
+.nf-hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 2.5rem 3.5rem;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+/* ── Hero text ───────────────────────────────────────────────────────────── */
+.nf-hero-title {
+    font-size: 4rem !important;
+    font-weight: 900 !important;
+    color: #ffffff !important;
+    margin-bottom: 0.75rem !important;
+    letter-spacing: -0.02em;
+    line-height: 1.05 !important;
+    text-shadow: 0 0 20px rgba(34, 211, 238, 0.8), 0 2px 12px rgba(0, 0, 0, 0.9);
+}
+.nf-green-text {
+    /* #22c55e matches packets in the hero, badges and links in the feature section */
+    background: linear-gradient(135deg, #22c55e 0%, #86efac 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+.nf-hero-subtext {
+    color: rgba(203, 213, 225, 0.95) !important;
+    font-size: 1.15rem !important;
+    max-width: 560px;
+    margin: 0 auto 2rem !important;
+    line-height: 1.65 !important;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.95);
+}
+.nf-hero-ctas { display: flex; gap: 1rem; justify-content: center; }
+.nf-btn-primary {
+    display: inline-flex; align-items: center;
+    padding: 0.65rem 1.75rem;
+    background: #0076FF; color: #ffffff !important;
+    border-radius: 8px; font-weight: 700; font-size: 0.95rem;
+    text-decoration: none !important;
+    transition: all 0.25s ease;
+    border: 2px solid #0076FF;
+}
+.nf-btn-primary:hover {
+    background: #005ce6; border-color: #005ce6;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,118,255,0.4);
+    color: #ffffff !important;
+}
+.nf-btn-ghost {
+    display: inline-flex; align-items: center;
+    padding: 0.65rem 1.75rem;
+    background: transparent; color: #ffffff !important;
+    border-radius: 8px; font-weight: 700; font-size: 0.95rem;
+    text-decoration: none !important;
+    transition: all 0.25s ease;
+    border: 2px solid rgba(255,255,255,0.25);
+}
+.nf-btn-ghost:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(34,211,238,0.5);
+    transform: translateY(-2px);
+    color: #ffffff !important;
+}
 
 /* --- 3. BUTTONS (FIXED VISIBILITY) --- */
 .button--primary { background-color: #0076FF !important; border-color: #0076FF !important; color: #ffffff !important; transition: all 0.25s ease !important; font-weight: 600 !important; }
@@ -62,14 +159,12 @@ main.nf-main-grid::before {
 
 /* --- 6. ICONS --- */
 .nf-card-header { display: flex; align-items: center; margin-bottom: 0.5rem; }
-.nf-card-icon, .mega-icon { width: 28px; height: 28px; margin-right: 0.75rem; background-color: var(--ifm-color-primary); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; display: inline-block; }
-.mega-icon { width: 20px; height: 20px; margin-right: 0.8rem; }
-.icon-console { -webkit-mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/layout-dashboard.svg'); }
-.icon-server  { -webkit-mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/server.svg'); }
-.icon-door    { -webkit-mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/door-open.svg'); }
-.icon-share   { -webkit-mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/rocket.svg'); }
-.icon-mesh    { -webkit-mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/shield-check.svg'); }
-.icon-network { -webkit-mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/network.svg'); }
+/* Product logos in bento cards — <img class="nf-card-logo"> */
+.nf-card-logo { width: 44px; height: 44px; object-fit: contain; flex-shrink: 0; }
+/* Product logos in mega menu — <img class="mega-logo"> */
+.mega-logo { width: 32px; height: 32px; object-fit: contain; flex-shrink: 0; margin-right: 0.8rem; }
+/* Resource icons in Resources dropdown — CSS mask approach retained */
+.mega-icon { width: 20px; height: 20px; margin-right: 0.8rem; background-color: var(--ifm-color-primary); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; display: inline-block; }
 .icon-blog    { -webkit-mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/newspaper.svg') !important; }
 .icon-youtube { -webkit-mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/video.svg') !important; }
 .icon-forum   { -webkit-mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/messages-square.svg') !important; }
@@ -123,6 +218,14 @@ main.nf-main-grid::before {
 }
 .nf-mega-dropdown:hover, .nf-resources-dropdown:hover {
     color: var(--ifm-color-primary) !important;
+}
+[data-theme='dark'] .nf-mega-dropdown:hover,
+[data-theme='dark'] .nf-resources-dropdown:hover {
+    color: #22d3ee !important;
+}
+[data-theme='light'] .nf-mega-dropdown:hover,
+[data-theme='light'] .nf-resources-dropdown:hover {
+    color: #0891b2 !important;
 }
 
 /* Animated chevron for dropdowns */
@@ -178,11 +281,17 @@ main.nf-main-grid::before {
 
 /* --- 8. MEGA MENU --- */
 .dropdown__menu:has(.mega-menu-content) { position: fixed !important; left: 50% !important; transform: translateX(-50%) !important; width: 85vw !important; max-width: 1000px !important; padding: 1.5rem 2rem !important; border-radius: 12px !important; border: 1px solid rgba(0, 118, 255, 0.12) !important; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15) !important; background: var(--ifm-card-background-color) !important; }
-.mega-menu-content { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 3rem !important; }
-.mega-header { font-size: 0.7rem !important; font-weight: 900 !important; color: #ff5c35 !important; text-transform: uppercase; border-bottom: 2px solid rgba(255, 92, 53, 0.15) !important; display: block !important; margin-bottom: 0.75rem !important; }
-.mega-link { display: flex !important; align-items: flex-start !important; padding: 0.55rem 0.65rem !important; text-decoration: none !important; transition: all 0.2s ease !important; border-radius: 8px; }
+.mega-menu-content { display: grid !important; grid-template-columns: 1fr 1fr 1fr !important; gap: 2rem !important; }
+.mega-header { font-size: 0.7rem !important; font-weight: 900 !important; color: #94a3b8 !important; text-transform: uppercase !important; letter-spacing: 0.1em !important; border-bottom: 2px solid rgba(148, 163, 184, 0.2) !important; display: block !important; padding-bottom: 0.5rem !important; margin-bottom: 0.75rem !important; }
+.mega-header--managed { color: #22d3ee !important; border-bottom-color: rgba(34, 211, 238, 0.3) !important; }
+.mega-header--opensource { color: #22c55e !important; border-bottom-color: rgba(34, 197, 94, 0.3) !important; }
+.mega-header--infra { color: #94a3b8 !important; border-bottom-color: rgba(148, 163, 184, 0.2) !important; }
+[data-theme='light'] .mega-header--managed { color: #0891b2 !important; border-bottom-color: rgba(8, 145, 178, 0.3) !important; }
+[data-theme='light'] .mega-header--opensource { color: #16a34a !important; border-bottom-color: rgba(22, 163, 74, 0.3) !important; }
+[data-theme='light'] img[src*="zrok-logo"] { filter: drop-shadow(0 0 1.5px rgba(0, 0, 0, 0.55)); }
+.mega-link { display: flex !important; align-items: flex-start !important; gap: 0.75rem !important; padding: 0.55rem 0.65rem !important; text-decoration: none !important; transition: all 0.2s ease !important; border-radius: 8px; }
 .mega-link:hover { background: rgba(0, 118, 255, 0.06) !important; transform: translateX(3px) !important; }
-.mega-link strong { color: var(--ifm-font-color-base); font-size: 0.95rem; display: block !important; }
+.mega-link strong { color: var(--ifm-font-color-base); font-size: 0.95rem; font-weight: 900; letter-spacing: -0.02em; display: block !important; }
 .mega-link span { color: #64748b; font-size: 0.82rem; display: block !important; margin-top: 2px; line-height: 1.35; }
 
 /* --- 9. SIDEBAR: DYNAMIC VARIABLE HEADER (CLEAN & SUBTLE) --- */
@@ -382,4 +491,497 @@ article a:hover {
 }
 [data-theme='dark'] .gh-star-badge:hover .gh-star-count {
     color: var(--ifm-color-primary) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FEATURE SECTION
+   Blends seamlessly from hero via the .nf-hero-stage::after gradient.
+   Section background: #0f172a. Cards: flat #1e293b slate — no gradient,
+   visible contrast against the navy background.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* margin-top / z-index live in JSX inline style — see index.tsx.
+   padding-top = 5rem = 80px, exactly matching the marginTop: '-80px' overlap.
+   This puts the column headers flush at the hero's visual bottom with no gap,
+   while keeping the features section at z-index:3 so the hero gradient blends. */
+.nf-features-section {
+    width: 100%;
+    background: #0f172a;
+    padding: 5rem 0 2.5rem;
+}
+
+/* ── Flat 2-column CSS grid — all cards and headers are direct children ──── */
+/*
+ * Column 1 = Managed Cloud, Column 2 = Open Source.
+ * Grid auto-placement puts Console+OpenZiti in row 2, Frontdoor+zrok in row 3.
+ * The divider spans both columns via grid-column: 1 / -1.
+ * Header bar colours are applied via JSX inline styles (immune to CSS cascade).
+ */
+.nf-bento-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+/* ── Column header labels (Managed Cloud / Open Source) ─────────────────── */
+.nf-col-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.nf-col-header::before,
+.nf-col-header::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+}
+
+.nf-col-header--managed {
+    color: #22d3ee;
+}
+.nf-col-header--managed::before,
+.nf-col-header--managed::after {
+    background: rgba(34, 211, 238, 0.3);
+}
+
+.nf-col-header--open {
+    color: #22c55e;
+}
+.nf-col-header--open::before,
+.nf-col-header--open::after {
+    background: rgba(34, 197, 94, 0.3);
+}
+
+/* ── Section labels / dividers (all span both columns) ──────────────────── */
+.nf-bento-divider {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 0 0.65rem;
+    color: #94a3b8;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.nf-bento-divider::before,
+.nf-bento-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(148, 163, 184, 0.2);
+}
+
+/* First label sits flush against the hero — no top padding */
+.nf-divider--top { padding-top: 0; }
+
+/* Managed Cloud — larger and more prominent than the other labels */
+.nf-divider--managed {
+    color: #22d3ee;
+    font-size: 1.05rem;
+    letter-spacing: 0.15em;
+    text-shadow: 0 0 18px rgba(34, 211, 238, 0.5);
+}
+.nf-divider--managed::before,
+.nf-divider--managed::after { background: rgba(34, 211, 238, 0.4); height: 2px; }
+
+/* Open Source — green */
+.nf-divider--open { color: #22c55e; }
+.nf-divider--open::before,
+.nf-divider--open::after { background: rgba(34, 197, 94, 0.3); }
+
+/* ── Paired column: managed (featured) card + connector + OSS card ───────── */
+.nf-pair {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Connector between the managed card and its OSS counterpart —
+   matches .nf-bento-divider in size, weight, and line style. */
+.nf-pair-connector {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #94a3b8;
+}
+
+.nf-pair-connector::before,
+.nf-pair-connector::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(148, 163, 184, 0.2);
+}
+
+.nf-bento-wrap {
+    display: flex;        /* makes the inner Link fill the cell height */
+    flex-direction: column;
+}
+
+/* ── Flat slate card ────────────────────────────────────────────────────── */
+/*
+ * Solid #1e293b sits clearly above the #0f172a section — no gradient needed.
+ * A 2px cyan top border is the only accent; it switches to green on hover.
+ * Three-level box-shadow (contact / mid / ambient) gives physical lift.
+ * Hover: 4px translateY + deeper shadow + green top border.
+ */
+.nf-bento-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;              /* fill the .nf-bento-wrap flex container */
+    padding: 1rem;
+    border-radius: 12px;
+    text-decoration: none !important;
+    background: #1a1b2e;
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-top: 2px solid #22d3ee;
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.3),
+        0 6px 20px rgba(0, 0, 0, 0.3),
+        0 16px 40px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-top-color 0.2s ease;
+}
+
+.nf-bento-card:hover {
+    transform: translateY(-4px);
+    border-top-color: #22c55e;
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.4),
+        0 12px 32px rgba(0, 0, 0, 0.45),
+        0 24px 60px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(34, 197, 94, 0.12);
+}
+
+/* ── Tag pill ────────────────────────────────────────────────────────────── */
+.nf-bento-card .nf-card-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: inline-flex;
+    width: fit-content;
+    background: rgba(34, 197, 94, 0.1);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+/* ── Card header: icon + title ──────────────────────────────────────────── */
+.nf-bento-card .nf-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding-right: 3rem;   /* clear the badge */
+}
+
+.nf-bento-card .nf-card-header h3 {
+    margin: 0 !important;
+}
+
+/* ── Typography ─────────────────────────────────────────────────────────── */
+.nf-bento-card h3 {
+    color: #f1f5f9 !important;
+    font-weight: 900;
+    font-size: 1.05rem;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+}
+
+.nf-bento-card p {
+    color: #94a3b8 !important;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    flex-grow: 1;
+    margin: 0 0 0.5rem !important;
+}
+
+/* ── Feature checklist ───────────────────────────────────────────────────── */
+.nf-bento-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.nf-bento-features li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.775rem;
+    color: #64748b;
+}
+
+.nf-bento-features li::before {
+    content: '✓';
+    color: #22c55e;
+    font-weight: 800;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+/* ── Explore link ────────────────────────────────────────────────────────── */
+.nf-bento-card .nf-card-link {
+    color: #22d3ee !important;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    letter-spacing: 0.03em;
+}
+
+/* ── Product logo ────────────────────────────────────────────────────────── */
+.nf-bento-card .nf-card-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+/* ── Featured cards (Console + Frontdoor) ───────────────────────────────── */
+.nf-bento-card--featured {
+    padding: 1.25rem;
+    border-top-width: 3px;
+}
+
+.nf-bento-card--featured .nf-card-logo {
+    width: 48px;
+    height: 48px;
+}
+
+.nf-bento-card--featured .nf-card-header h3 {
+    font-size: 1.25rem;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+    .nf-bento-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — landing page overrides
+   The hero stays dark (intentional); only the product section below it adapts.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Hero ::after: cover the animation-canvas clip edge, fading to the section's
+   starting colour (#020617) so the hero bottom and section top are seamless. */
+[data-theme='light'] .nf-hero-stage::after {
+    height: 80px;
+    background: linear-gradient(to bottom, transparent 0%, #020617 100%);
+}
+
+/* Ease-out curve approximated with piecewise-linear stops.
+   ALL intermediate colours are on the direct RGB line between #020617 and
+   #f8fafc — no hue shift, no colour band. Stops are front-loaded so the fade
+   APPEARS complete around 48% of section height, but the gradient technically
+   extends to 100% with a sub-perceptual tail (~0.06 units/px change).
+   Because there is never a "gradient ends here" moment, there is no Mach band.
+     80px  → 18%  fast: dark navy → dark neutral grey  (t 0→0.25)
+     18%   → 28%  medium: dark → mid grey               (t 0.25→0.50)
+     28%   → 38%  slowing: mid → light grey              (t 0.50→0.74)
+     38%   → 48%  slow: light grey → near-white          (t 0.74→0.92)
+     48%   → 100% imperceptible: near-white → page bg    (20 units / 52%) */
+[data-theme='light'] .nf-features-section {
+    background: linear-gradient(to bottom,
+        #020617 0px,
+        #020617 80px,
+        #404350 18%,
+        #7d808a 28%,
+        #b8bbc1 38%,
+        #e4e7ea 48%,
+        #f8fafc 100%
+    );
+}
+
+/* Cards — very light blue-gray (#edf3f8) on near-white (#f8fafc) background.
+   Much lighter than slate-200: clearly reads as a panel without the heavy
+   "gray box" feel. Shadow + coloured top border carry the visual distinction. */
+[data-theme='light'] .nf-bento-card {
+    background: #edf3f8;
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.06),
+        0 4px 14px rgba(0, 0, 0, 0.05);
+}
+[data-theme='light'] .nf-bento-card:hover {
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.09),
+        0 8px 24px rgba(0, 0, 0, 0.07),
+        0 0 0 1px rgba(34, 197, 94, 0.18);
+}
+[data-theme='light'] .nf-bento-card h3 {
+    color: #0f172a !important;
+}
+[data-theme='light'] .nf-bento-card p {
+    color: #475569 !important;
+}
+[data-theme='light'] .nf-bento-card .nf-card-badge {
+    color: #15803d;
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.25);
+}
+[data-theme='light'] .nf-bento-features li {
+    color: #64748b;
+}
+[data-theme='light'] .nf-bento-card .nf-card-link {
+    color: #0284c7 !important;   /* darker cyan — readable on white */
+}
+
+/* Light-mode accent overrides — inline borderTopColor is too pale on light cards.
+   nf-bento-card--accent-cyan / --green classes are added via JSX. */
+[data-theme='light'] .nf-bento-card--accent-cyan { border-top-color: #0891b2 !important; }
+[data-theme='light'] .nf-bento-card--accent-green { border-top-color: #16a34a !important; }
+
+/* Features checkmarks — green is too pale on the light card */
+[data-theme='light'] .nf-bento-features li::before { color: #16a34a; }
+
+/* Section labels and connectors */
+[data-theme='light'] .nf-bento-divider {
+    color: #64748b;
+}
+[data-theme='light'] .nf-bento-divider::before,
+[data-theme='light'] .nf-bento-divider::after {
+    background: rgba(100, 116, 139, 0.25);
+}
+/* Coloured labels: darker shades so cyan/green read on a light background.
+   These rules must come AFTER the generic nf-bento-divider override to win. */
+[data-theme='light'] .nf-divider--managed {
+    color: #0891b2;
+    text-shadow: none;   /* no glow on light background */
+}
+[data-theme='light'] .nf-divider--managed::before,
+[data-theme='light'] .nf-divider--managed::after { background: rgba(8, 145, 178, 0.35); height: 2px; }
+[data-theme='light'] .nf-divider--open   { color: #16a34a; }
+[data-theme='light'] .nf-divider--open::before,
+[data-theme='light'] .nf-divider--open::after   { background: rgba(22, 163, 74, 0.3); }
+[data-theme='light'] .nf-pair-connector {
+    color: #64748b;
+}
+[data-theme='light'] .nf-pair-connector::before,
+[data-theme='light'] .nf-pair-connector::after {
+    background: rgba(100, 116, 139, 0.3);
+}
+[data-theme='light'] .nf-pair-connector::before,
+[data-theme='light'] .nf-pair-connector::after {
+    background: rgba(148, 163, 184, 0.35);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FOOTER — themed per mode
+   Uses !important to override CSS module specificity (0,2,0).
+   DOM: <footer> > <section> > <div.footerContainer> > columns / copyright
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Shared typography structure ─────────────────────────────────────────── */
+footer h3 {
+    font-size: 0.7rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    margin-bottom: 1.25rem !important;
+}
+footer p {
+    font-size: 0.875rem !important;
+    line-height: 1.65 !important;
+}
+footer ul {
+    padding: 0 !important;
+}
+footer ul a {
+    font-size: 0.875rem !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease !important;
+}
+footer ul a:hover {
+    text-decoration: none !important;
+}
+footer [class*="footerCopyright"] {
+    font-size: 0.82rem !important;
+}
+/* Use 'a' tag selector so hover doesn't light up the entire container div */
+a[class*="footerSocialLink"] {
+    transition: all 0.2s ease !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   DARK MODE FOOTER
+   Deep navy gradient — distinct from features (#0f172a),
+   bookends the page like the hero (#020617).
+   ══════════════════════════════════════════════════════ */
+[data-theme='dark'] footer > section {
+    background: linear-gradient(180deg, #0d1a2e 0%, #060d1a 100%) !important;
+    border-top: 1px solid rgba(34, 211, 238, 0.22) !important;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.4) !important;
+}
+[data-theme='dark'] footer h3        { color: #22d3ee !important; }
+[data-theme='dark'] footer p         { color: #64748b !important; }
+[data-theme='dark'] footer ul a      { color: #94a3b8 !important; }
+[data-theme='dark'] footer ul a:hover { color: #22d3ee !important; }
+[data-theme='dark'] a[class*="footerSocialLink"] {
+    background-color: #1a2640 !important;
+    color: #64748b !important;
+    border: 1px solid rgba(148, 163, 184, 0.1) !important;
+}
+[data-theme='dark'] a[class*="footerSocialLink"]:hover {
+    background-color: #22d3ee !important;
+    color: #020617 !important;
+    border-color: transparent !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 6px 16px rgba(34, 211, 238, 0.35) !important;
+}
+[data-theme='dark'] footer [class*="footerCopyright"] {
+    border-top-color: rgba(34, 211, 238, 0.1) !important;
+    color: #475569 !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   LIGHT MODE FOOTER
+   Clean white gradient, dark slate text, cyan-600 accents.
+   ══════════════════════════════════════════════════════ */
+[data-theme='light'] footer > section {
+    background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%) !important;
+    border-top: 2px solid rgba(8, 145, 178, 0.3) !important;
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.06) !important;
+}
+[data-theme='light'] footer h3        { color: #0891b2 !important; }
+[data-theme='light'] footer p         { color: #64748b !important; }
+[data-theme='light'] footer ul a      { color: #475569 !important; }
+[data-theme='light'] footer ul a:hover { color: #0891b2 !important; }
+[data-theme='light'] a[class*="footerSocialLink"] {
+    background-color: #e2e8f0 !important;
+    color: #475569 !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+[data-theme='light'] a[class*="footerSocialLink"]:hover {
+    background-color: #0891b2 !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 6px 16px rgba(8, 145, 178, 0.3) !important;
+}
+[data-theme='light'] footer [class*="footerCopyright"] {
+    border-top-color: rgba(0, 0, 0, 0.08) !important;
+    color: #94a3b8 !important;
 }
