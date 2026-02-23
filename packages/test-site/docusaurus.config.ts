@@ -150,6 +150,12 @@ const config: Config = {
                   </div>
                 </div>`,
             },
+            // Mobile sidebar fallbacks — hidden on desktop via .mobile-nav-link CSS rule
+            { href: '/docs/frontdoor',  label: 'Frontdoor',               className: 'mobile-nav-link' },
+            { href: '/docs/openziti',   label: 'OpenZiti',                 className: 'mobile-nav-link' },
+            { href: '/docs/zrok',       label: 'zrok',                     className: 'mobile-nav-link' },
+            { href: '#',               label: 'NetFoundry Self-Hosted',   className: 'mobile-nav-link' },
+            { href: '/docs/zlan',       label: 'zLAN',                     className: 'mobile-nav-link' },
           ],
         },
         {
@@ -186,6 +192,11 @@ const config: Config = {
                   </div>
                 </div>`,
             },
+            // Mobile sidebar fallbacks — hidden on desktop via .mobile-nav-link CSS rule
+            { href: 'https://netfoundry.io/blog/',          label: 'NetFoundry Blog',    className: 'mobile-nav-link' },
+            { href: 'https://blog.openziti.io/',            label: 'OpenZiti Blog',       className: 'mobile-nav-link' },
+            { href: 'https://www.youtube.com/c/NetFoundry', label: 'NetFoundry YouTube', className: 'mobile-nav-link' },
+            { href: 'https://openziti.discourse.group/',    label: 'OpenZiti Discourse', className: 'mobile-nav-link' },
           ],
         },
         {

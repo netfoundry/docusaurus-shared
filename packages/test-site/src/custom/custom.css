@@ -1,5 +1,54 @@
 @import '@netfoundry/docusaurus-theme/css/tabs-v8-float.css';
 
+/**
+ * AGGRESSIVE SEARCH MOBILE OVERRIDES
+ * Force centering of Algolia logo and hide shortcuts
+ */
+@media (max-width: 996px) {
+  /* Hide shortcut legend (kbd elements) in search PROMPT only */
+  [class*="searchModal"] [class*="kbdRow"],
+  [class*="searchModal"] div:has(> kbd),
+  .DocSearch-Modal .DocSearch-Commands {
+    display: none !important;
+  }
+
+  /* Center the search modal footer and Algolia logo in search PROMPT only */
+  [class*="searchModal"] [class*="footer"] {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    padding: 15px 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Target Algolia PoweredBy in search PROMPT specifically */
+  [class*="searchModal"] .ais-PoweredBy, 
+  [class*="searchModal"] [class*="ais-PoweredBy"] {
+    margin: 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: auto !important;
+  }
+
+  /* Center Stats in search PROMPT only */
+  [class*="searchModal"] .ais-Stats, 
+  [class*="searchModal"] [class*="meta"] {
+    display: flex !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  /* Modal width and positioning */
+  [class*="searchModal"] {
+    width: 96vw !important;
+    max-width: 96vw !important;
+    margin: 0 auto !important;
+  }
+}
+
 /* CACHE BUST v91.0 - FORCING BLUE THEME OVER PINK */
 
 :root {
@@ -219,13 +268,32 @@ main.nf-main-grid::before {
 .icon-forum   { -webkit-mask-image: url('https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/messages-square.svg') !important; }
 
 /* --- 7. NAVBAR (ENHANCED) --- */
+/*
+ * IMPORTANT: Do NOT put backdrop-filter directly on .navbar.
+ * backdrop-filter creates a new containing block for position:fixed children,
+ * which confines the mobile sidebar (position:fixed) to the navbar's 3.75rem
+ * height, making Products/Resources invisible in the hamburger menu.
+ * Use a ::before pseudo-element for the blur instead.
+ */
 .navbar {
     background: rgba(255, 255, 255, 0.95) !important;
-    backdrop-filter: blur(12px) saturate(180%);
     border-bottom: 1px solid rgba(0, 118, 255, 0.1);
     padding: 0.25rem 2rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     transition: all 0.3s ease;
+    position: relative;
+    overflow: visible;
+}
+/* Frosted-glass blur via ::before so it doesn't create a containing block
+   for the mobile sidebar's position:fixed element. */
+.navbar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    z-index: -1;
+    pointer-events: none;
 }
 [data-theme='dark'] .navbar {
     background: rgba(26, 27, 38, 0.95) !important;
@@ -534,6 +602,61 @@ main.nf-main-grid::before {
     background: linear-gradient(-26.5deg,#565872,#31355b) !important;
     box-shadow: inset 0 -2px 0 0 #282d55,inset 0 0 1px 1px #51577d,0 2px 2px 0 rgba(3,4,9,.3) !important;
     color: #f5f6f7 !important;
+}
+
+/* --- 9c. MOBILE NAVBAR ---
+ * Below 996px Docusaurus switches to the hamburger/sidebar layout.
+ * - Keep the DocSearch button visible — DocSearch renders a compact icon-only button on mobile.
+ *   We constrain .navbar__inner to flex-nowrap so it doesn't wrap onto the logo.
+ * - Hide the HTML mega menu blobs in the sidebar — they're a 3-column fixed grid
+ *   that makes no sense in a narrow panel. The .mobile-nav-link items replace them.
+ * - Hide the star badge (decorative, not nav).
+ *
+ * Above 996px (desktop):
+ * - Hide the .mobile-nav-link fallback links — the mega menu shows instead.
+ */
+@media (max-width: 996px) {
+    /* Keep navbar content from overflowing: logo left, actions (search + dark toggle) right */
+    .navbar__inner { flex-wrap: nowrap; justify-content: space-between; }
+    .navbar__items:not(.navbar__items--right) { flex: 0 1 auto; min-width: 0; overflow: hidden; }
+    .navbar__items--right { flex: 1 0 auto; gap: 4px; justify-content: flex-end; }
+
+    /* Shrink search button to icon-only to prevent overlap with logo */
+    .DocSearch-Button-Keys,
+    .DocSearch-Button-Placeholder { 
+        display: none !important; 
+    }
+    .DocSearch-Button { 
+        min-width: 0 !important; 
+        width: 32px !important; 
+        padding: 0 !important;
+        margin: 0 4px !important;
+        justify-content: center !important;
+    }
+    .DocSearch-Button-Container {
+        margin: 0 !important;
+    }
+
+    /* > (direct child) prevents hiding the outer Products/Resources headers */
+    .menu__list-item:has(> .mega-menu-content) { display: none !important; }
+    .navbar-github-stars { display: none !important; }
+
+    /* Hero: scale down title, tighten padding, shrink buttons */
+    .nf-hero-title { font-size: 2.2rem !important; }
+    .nf-hero-content { padding: 2rem 1.25rem !important; }
+    .nf-hero-ctas { flex-wrap: wrap; }
+    .nf-btn-primary, .nf-btn-ghost { padding: 0.55rem 1.25rem !important; font-size: 0.9rem !important; }
+
+    /* Hide custom chevrons in mobile hamburger menu to prevent double chevrons */
+    .nf-mega-dropdown::after, .nf-resources-dropdown::after {
+        display: none !important;
+    }
+    .nf-mega-dropdown, .nf-resources-dropdown {
+        padding-right: 0.5rem !important;
+    }
+}
+@media (min-width: 997px) {
+    .dropdown__menu .mobile-nav-link { display: none !important; }
 }
 
 /* --- 10. GITHUB STAR (ENHANCED) --- */
