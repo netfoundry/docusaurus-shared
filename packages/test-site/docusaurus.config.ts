@@ -144,7 +144,7 @@ const config: Config = {
                     <a class="mega-link" href="/docs/zrok"><img src="/img/zrok-logo.svg" alt="zrok" class="mega-logo"><div class="mega-text"><strong>zrok</strong><span>Secure peer-to-peer sharing built on the OpenZiti mesh.</span></div></a>
                   </div>
                   <div class="mega-column">
-                    <span class="mega-header mega-header--infra">Your infrastructure</span>
+                    <span class="mega-header mega-header--infra">Your own infrastructure</span>
                     <a class="mega-link" href="#"><img src="/img/onprem-sm-logo.svg" alt="NetFoundry Self-Hosted" class="mega-logo"><div class="mega-text"><strong>NetFoundry Self-Hosted</strong><span>Private managed stack deployment for environment sovereignty.</span></div></a>
                     <a class="mega-link" href="/docs/zlan"><img src="/img/zlan-logo.svg" alt="zLAN" class="mega-logo"><div class="mega-text"><strong>zLAN</strong><span>Extend secure local network segments to the cloud edge.</span></div></a>
                   </div>
@@ -163,7 +163,7 @@ const config: Config = {
               value: `
                 <div class="mega-menu-content mega-menu-resources">
                   <div class="mega-column">
-                    <span class="mega-header">Learn & Engage</span>
+                    <span class="mega-header mega-header--managed">Learn & Engage</span>
                     <a class="mega-link" href="https://netfoundry.io/blog/" target="_blank" rel="noopener noreferrer">
                       <svg class="mega-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/><polyline points="14 2 14 8 20 8" stroke="#64748b" stroke-width="1.5"/><line x1="8" y1="13" x2="16" y2="13" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="17" x2="13" y2="17" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"/></svg>
                       <div class="mega-text"><strong>NetFoundry Blog</strong><span>Latest news, updates, and insights from NetFoundry.</span></div>
@@ -174,7 +174,7 @@ const config: Config = {
                     </a>
                   </div>
                   <div class="mega-column">
-                    <span class="mega-header">Community & Support</span>
+                    <span class="mega-header mega-header--opensource">Community & Support</span>
                     <a class="mega-link" href="https://www.youtube.com/c/NetFoundry" target="_blank" rel="noopener noreferrer">
                       <svg class="mega-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" fill="#ff0000"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
                       <div class="mega-text"><strong>NetFoundry YouTube</strong><span>Video tutorials, demos, and technical deep dives.</span></div>

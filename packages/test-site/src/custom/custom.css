@@ -1,17 +1,74 @@
 @import '@netfoundry/docusaurus-theme/css/tabs-v8-float.css';
 
-/* CACHE BUST v90.0 - DOCSEARCH NAVBAR PADDING FIX */
+/* CACHE BUST v91.0 - FORCING BLUE THEME OVER PINK */
 
 :root {
-    --ifm-color-primary: #0076FF;
+    --ifm-color-primary: #0076FF !important;
     --ifm-background-color: #f8fafc;
     --ifm-card-background-color: #ffffff;
+    --ifm-link-color: #0076FF !important;
+    --ifm-breadcrumb-color-actives: #0076FF !important;
+    --ziti-color-red: 0, 118, 255 !important;
+    --ziti-rgb-red: rgb(0, 118, 255) !important;
 }
 
 [data-theme='dark'] {
     --ifm-background-color: #0f111a;
     --ifm-card-background-color: #1a1b26;
+    --ifm-link-color: #22d3ee !important;
+    --ifm-breadcrumb-color-actives: #22d3ee !important;
 }
+
+/* --- GLOBAL COLOR OVERRIDES (FORCING BLUE THEME FOR CONTENT) --- */
+
+/* 1. Hyperlinks inside Markdown/Docs content ONLY */
+.markdown a,
+.theme-doc-markdown a {
+    color: var(--ifm-link-color) !important;
+}
+
+/* 2. Pagination links (Next / Previous) */
+.pagination-nav__link {
+    color: var(--ifm-link-color) !important;
+}
+.pagination-nav__link:hover {
+    border-color: var(--ifm-link-color) !important;
+}
+
+/* 3. Active Breadcrumbs */
+.breadcrumbs__item--active .breadcrumbs__link {
+    color: var(--ifm-link-color) !important;
+}
+
+/* 4. Code blocks inside hyperlinks */
+.markdown a code {
+    background-color: rgba(0, 118, 255, 0.1) !important;
+    border: 1px solid var(--ifm-link-color) !important;
+    color: var(--ifm-link-color) !important;
+}
+[data-theme='dark'] .markdown a code {
+    background-color: rgba(34, 211, 238, 0.1) !important;
+}
+
+/* 5. Notifications and Radio Buttons */
+.notification_new,
+input[type="radio"]+label:hover:before {
+    background: var(--ifm-color-primary) !important;
+}
+
+/* 6. Specifically ensure Navbar links are NOT forced to blue */
+.navbar__item .navbar__link {
+    color: inherit;
+}
+
+/* 7. Error states */
+label.error,
+input.error {
+    color: #ef4444 !important;
+    border-color: #ef4444 !important;
+}
+
+
 
 /* --- 1. STAR BANNER (HIDDEN) --- */
 .starUsRoot_XOT4 { display: none !important; }
@@ -78,7 +135,7 @@
 }
 .nf-green-text {
     /* #22c55e matches packets in the hero, badges and links in the feature section */
-    background: linear-gradient(135deg, #22c55e 0%, #86efac 100%);
+    background: linear-gradient(to right, #22c55e 0%, #86efac 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -229,16 +286,12 @@ main.nf-main-grid::before {
     padding-right: 1.2rem !important;
     transition: color 0.3s ease;
 }
-.nf-mega-dropdown:hover, .nf-resources-dropdown:hover {
+
+.nf-mega-dropdown:hover, .nf-resources-dropdown:hover,
+.navbar__item.dropdown--show .nf-mega-dropdown,
+.navbar__item.dropdown--show .nf-resources-dropdown {
     color: var(--ifm-color-primary) !important;
-}
-[data-theme='dark'] .nf-mega-dropdown:hover,
-[data-theme='dark'] .nf-resources-dropdown:hover {
-    color: #22d3ee !important;
-}
-[data-theme='light'] .nf-mega-dropdown:hover,
-[data-theme='light'] .nf-resources-dropdown:hover {
-    color: #0891b2 !important;
+    text-decoration: none !important;
 }
 
 /* Animated chevron for dropdowns */
@@ -327,6 +380,21 @@ main.nf-main-grid::before {
     border-left-color: #0891b2 !important;
 }
 
+/* Navbar hover (Products / Resources) — cyan in dark mode */
+[data-theme='dark'] .nf-mega-dropdown:hover,
+[data-theme='dark'] .nf-resources-dropdown:hover,
+[data-theme='dark'] .navbar__item.dropdown--show .nf-mega-dropdown,
+[data-theme='dark'] .navbar__item.dropdown--show .nf-resources-dropdown {
+    color: #22d3ee !important;
+}
+
+/* ToC active link — cyan in dark mode */
+[data-theme='dark'] .table-of-contents__link--active,
+[data-theme='dark'] .table-of-contents__link--active:hover {
+    color: #22d3ee !important;
+    font-weight: 600;
+}
+
 /* ── Sidebar product indicator ───────────────────────────────────────────
    Uses :has() to read which product's links are in the sidebar — works
    for both /product/ and /docs/product/ path structures.
@@ -400,8 +468,9 @@ main.nf-main-grid::before {
 }
 [data-theme='dark'] .DocSearch-Button:hover,
 [data-theme='dark'] .DocSearch-Button:focus {
-    background: rgba(0, 118, 255, 0.12) !important;
-    border-color: rgba(0, 118, 255, 0.35) !important;
+    background: rgba(34, 211, 238, 0.1) !important;
+    border-color: rgba(34, 211, 238, 0.4) !important;
+    box-shadow: 0 2px 8px rgba(34, 211, 238, 0.12) !important;
 }
 
 /* Container for icon and placeholder text */
@@ -528,8 +597,13 @@ main.nf-main-grid::before {
 [data-theme='dark'] .gh-star-count {
     color: #e5e7eb !important;
 }
+[data-theme='dark'] .gh-star-badge:hover {
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.08), rgba(34, 211, 238, 0.14)) !important;
+    border-color: rgba(34, 211, 238, 0.35) !important;
+    box-shadow: 0 2px 8px rgba(34, 211, 238, 0.12) !important;
+}
 [data-theme='dark'] .gh-star-badge:hover .gh-star-count {
-    color: var(--ifm-color-primary) !important;
+    color: #22d3ee !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
