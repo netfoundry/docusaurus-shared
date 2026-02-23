@@ -305,7 +305,7 @@ echo "========================================"
 echo "copying versionable docs locally..."
 "${script_dir}/sync-versioned-remote.sh" zrok
 
-# --- STEP 1: LINT ---
+# --- LINT DOCS ---
 lint_docs
 
 if [ "$LINT_ONLY" -eq 1 ]; then
@@ -313,7 +313,7 @@ if [ "$LINT_ONLY" -eq 1 ]; then
     exit 0
 fi
 
-# --- STEP 2: BUILD SDKs ---
+# --- BUILD OPENZITI SDK REFERENCE DOCS ---
 export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
 echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"
 mkdir -p "${SDK_ROOT_TARGET}"
@@ -321,7 +321,11 @@ mkdir -p "${SDK_ROOT_TARGET}"
 # -d = skip docusaurus build (unified-doc does its own build)
 "${script_dir}/_remotes/openziti/gendoc.sh" -d "${OTHER_FLAGS[@]}"
 
-# --- STEP 3: DOCUSAURUS BUILD ---
+# --- GENERATE SELFHOSTED CHANGELOG ---
+echo "Generating selfhosted changelog from CHANGELOG file..."
+node "${script_dir}/_remotes/selfhosted/docusaurus/scripts/generate-changelog.mjs"
+
+# --- DOCUSAURUS BUILD ---
 pushd "${script_dir}" >/dev/null
 yarn install
 
