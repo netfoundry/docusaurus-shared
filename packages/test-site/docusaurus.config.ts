@@ -112,6 +112,16 @@ const config: Config = {
           linkedInUrl: 'https://www.linkedin.com/company/netfoundry/',
           twitterUrl: 'https://x.com/netfoundry/',
         },
+        documentationLinks: [
+          {href: '/docs/learn/quickstarts/services/ztha', label: 'Get Started'},
+          {href: '/docs/reference/developer/api/', label: 'API Reference'},
+          {href: '/docs/reference/developer/sdk/', label: 'SDK Integration'},
+        ],
+        communityLinks: [
+          {href: 'https://github.com/openziti/ziti', label: 'GitHub'},
+          {href: 'https://openziti.discourse.group/', label: 'Discourse Forum'},
+          {href: '/docs/openziti/policies/CONTRIBUTING', label: 'Contribute'},
+        ],
         resourceLinks: [
           {href: 'https://netfoundry.io/', label: 'NetFoundry'},
           {href: 'https://netfoundry.io/blog/', label: 'NetFoundry Tech Blog'},
