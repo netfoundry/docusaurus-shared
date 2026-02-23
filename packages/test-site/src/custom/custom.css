@@ -1,6 +1,6 @@
 @import '@netfoundry/docusaurus-theme/css/tabs-v8-float.css';
 
-/* CACHE BUST v89.0 - NAVBAR TITLE GRADIENT BREAKPOINT NUDGE */
+/* CACHE BUST v90.0 - DOCSEARCH NAVBAR PADDING FIX */
 
 :root {
     --ifm-color-primary: #0076FF;
@@ -166,7 +166,7 @@ main.nf-main-grid::before {
     background: rgba(255, 255, 255, 0.95) !important;
     backdrop-filter: blur(12px) saturate(180%);
     border-bottom: 1px solid rgba(0, 118, 255, 0.1);
-    padding: 0.6rem 2rem;
+    padding: 0.25rem 2rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     transition: all 0.3s ease;
 }
@@ -371,6 +371,102 @@ main.nf-main-grid::before {
     background: rgba(34, 211, 238, 0.06);
 }
 
+/* --- 9b. DOCSEARCH BUTTON (NAVBAR SEARCH) ---
+ * Force alignment with adjacent navbar items like the Github star badge.
+ */
+.DocSearch-Button {
+    background: #eef0f3 !important;
+    border: 1.5px solid rgba(0, 0, 0, 0.12) !important;
+    border-radius: 6px !important;
+    height: 32px !important;
+    padding: 0 10px !important;
+    margin: 0 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    transition: all 0.3s ease !important;
+    min-width: 160px !important;
+}
+.DocSearch-Button:hover,
+.DocSearch-Button:focus {
+    background: rgba(0, 118, 255, 0.08) !important;
+    border-color: rgba(0, 118, 255, 0.3) !important;
+    box-shadow: 0 2px 8px rgba(0, 118, 255, 0.15) !important;
+    outline: none !important;
+}
+[data-theme='dark'] .DocSearch-Button {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+[data-theme='dark'] .DocSearch-Button:hover,
+[data-theme='dark'] .DocSearch-Button:focus {
+    background: rgba(0, 118, 255, 0.12) !important;
+    border-color: rgba(0, 118, 255, 0.35) !important;
+}
+
+/* Container for icon and placeholder text */
+.DocSearch-Button-Container {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    position: relative !important;
+    top: -1.5px !important; /* Unified nudge for text and icon */
+}
+
+/* Ensure placeholder text is sized appropriately */
+.DocSearch-Button-Placeholder {
+    padding: 0 !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    color: inherit !important;
+}
+
+.DocSearch-Search-Icon {
+    width: 15px !important;
+    height: 15px !important;
+    stroke-width: 2.2 !important;
+    margin: 0 !important;
+}
+
+/* v3 keys: ensure they are perfectly aligned and centered. */
+.DocSearch-Button-Keys {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    height: 100% !important;
+    margin-left: 12px !important;
+}
+
+.DocSearch-Button-Key {
+    height: 18px !important;
+    width: auto !important;
+    min-width: 26px !important;
+    /* Add slight top padding/offset to help with vertical centering of font characters */
+    padding: 1px 4px 0 !important; 
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    top: 0 !important;
+    border-radius: 3px !important;
+    /* Physical key aesthetics */
+    background: linear-gradient(-225deg,#d5dbe4,#f8f8f8) !important;
+    box-shadow: inset 0 -2px 0 0 #cdcde6,inset 0 0 1px 1px #fff,0 1px 2px 1px rgba(30,35,90,.4) !important;
+    border: none !important;
+    color: #444950 !important;
+}
+
+[data-theme='dark'] .DocSearch-Button-Key {
+    background: linear-gradient(-26.5deg,#565872,#31355b) !important;
+    box-shadow: inset 0 -2px 0 0 #282d55,inset 0 0 1px 1px #51577d,0 2px 2px 0 rgba(3,4,9,.3) !important;
+    color: #f5f6f7 !important;
+}
+
 /* --- 10. GITHUB STAR (ENHANCED) --- */
 .gh-star-badge {
     display: flex !important;
@@ -378,7 +474,8 @@ main.nf-main-grid::before {
     gap: 6px !important;
     background: linear-gradient(135deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.06)) !important;
     border: 1.5px solid rgba(0, 0, 0, 0.12) !important;
-    padding: 4px 8px !important;
+    padding: 0 8px !important;
+    height: 32px !important;
     border-radius: 6px !important;
     transition: all 0.3s ease !important;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
