@@ -87,11 +87,11 @@ const REMARK_MAPPINGS = [
     { from: '@openzitidocs', to: `${docsBase}openziti`},
     { from: '@zrokdocs', to: `${docsBase}zrok`},
     { from: '@static', to: docsBase},
-    { from: '/openziti/', to: `${docsBase}/openziti/` },
-    { from: '/frontdoor/', to: `${docsBase}/frontdoor/` },
-    { from: '/selfhosted/', to: `${docsBase}/selfhosted/` },
-    { from: '/zrok/', to: `${docsBase}/zrok/` },
-    { from: '/zlan/', to: `${docsBase}/zlan/` },
+    { from: '/openziti/',   to: `${docsBase}${routeBase('openziti')}/`   },
+    { from: '/frontdoor/',  to: `${docsBase}${routeBase('frontdoor')}/`  },
+    { from: '/selfhosted/', to: `${docsBase}${routeBase('selfhosted')}/` },
+    { from: '/zrok/',       to: `${docsBase}${routeBase('zrok')}/`       },
+    { from: '/zlan/',       to: `${docsBase}${routeBase('zlan')}/`       },
 ];
 
 console.log("CANONICAL URL          : " + cfg.docusaurus.url);
