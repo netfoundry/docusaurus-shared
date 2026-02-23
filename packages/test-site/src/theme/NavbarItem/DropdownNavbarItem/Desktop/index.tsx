@@ -20,7 +20,7 @@ import NavbarItemOrig from '@theme/NavbarItem';
 const NavbarNavLink = NavbarNavLinkOrig as React.ComponentType<any>;
 const NavbarItem = NavbarItemOrig as React.ComponentType<any>;
 
-const HIDE_DELAY_MS = 200;
+const HIDE_DELAY_MS = 100;
 
 export default function DropdownNavbarItemDesktop({
   items,
@@ -62,10 +62,26 @@ export default function DropdownNavbarItemDesktop({
     }
   }, []);
 
+  // Sync state across all megamenu instances to prevent overlaps
+  useEffect(() => {
+    const handleOtherOpen = (e: any) => {
+      if (e.detail.label !== props.label) {
+        setShowDropdown(false);
+        cancelHide();
+      }
+    };
+    window.addEventListener('nf-megamenu:open', handleOtherOpen);
+    return () => window.removeEventListener('nf-megamenu:open', handleOtherOpen);
+  }, [props.label, cancelHide]);
+
   const handleMouseEnter = useCallback(() => {
     cancelHide();
+    // Signal other dropdowns to close immediately
+    window.dispatchEvent(new CustomEvent('nf-megamenu:open', { 
+      detail: { label: props.label } 
+    }));
     setShowDropdown(true);
-  }, [cancelHide]);
+  }, [cancelHide, props.label]);
 
   const handleMouseLeave = useCallback(() => {
     hideTimerRef.current = setTimeout(() => {

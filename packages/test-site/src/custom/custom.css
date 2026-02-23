@@ -415,8 +415,14 @@ main.nf-main-grid::before {
 
 /* --- 8. MEGA MENU --- */
 .dropdown__menu:has(.mega-menu-content) { position: fixed !important; top: 3.75rem !important; left: 50% !important; transform: translateX(-50%) !important; width: 85vw !important; max-width: 1000px !important; padding: 1.5rem 2rem !important; border-radius: 12px !important; border: 1px solid rgba(0, 118, 255, 0.12) !important; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15) !important; background: var(--ifm-card-background-color) !important; z-index: 1000 !important; }
+/* Narrower width for the 2-column resources menu */
+.dropdown__menu:has(.mega-menu-resources) { max-width: 700px !important; }
+
 .dropdown--show > .dropdown__menu, .dropdown:hover > .dropdown__menu { display: block !important; visibility: visible !important; opacity: 1 !important; }
 .mega-menu-content { display: grid !important; grid-template-columns: 1fr 1fr 1fr !important; gap: 2rem !important; }
+/* Force 2 columns for Resources */
+.mega-menu-resources { grid-template-columns: 1fr 1fr !important; }
+
 .mega-header { font-size: 0.7rem !important; font-weight: 900 !important; color: #94a3b8 !important; text-transform: uppercase !important; letter-spacing: 0.1em !important; border-bottom: 2px solid rgba(148, 163, 184, 0.2) !important; display: block !important; padding-bottom: 0.5rem !important; margin-bottom: 0.75rem !important; }
 .mega-header--managed { color: #22d3ee !important; border-bottom-color: rgba(34, 211, 238, 0.3) !important; }
 .mega-header--opensource { color: #22c55e !important; border-bottom-color: rgba(34, 197, 94, 0.3) !important; }
