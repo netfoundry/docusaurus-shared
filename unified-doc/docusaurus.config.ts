@@ -357,6 +357,62 @@ const config: Config = {
         build(BUILD_FLAGS.SELFHOSTED) && onpremRedirects(routeBase('selfhosted')),
     ].filter(Boolean),
     themeConfig: {
+        netfoundry: {
+            productPickerColumns: [
+                {
+                    header: 'Managed Cloud',
+                    links: [
+                        {
+                            label: 'NetFoundry Console',
+                            to: '#',
+                            logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
+                            description: 'Cloud-managed orchestration and global fabric control.',
+                        },
+                        {
+                            label: 'Frontdoor',
+                            to: '/frontdoor/intro',
+                            logo: 'https://netfoundry.io/docs/img/frontdoor-sm-logo.svg',
+                            description: 'Secure application access gateway.',
+                        },
+                    ],
+                },
+                {
+                    header: 'Open Source',
+                    links: [
+                        {
+                            label: 'OpenZiti',
+                            to: '/openziti/learn/introduction',
+                            logo: 'https://netfoundry.io/docs/img/openziti-sm-logo.svg',
+                            description: 'Programmable zero-trust mesh infrastructure.',
+                        },
+                        {
+                            label: 'zrok',
+                            to: '/zrok',
+                            logo: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-purple.svg',
+                            logoDark: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-green.svg',
+                            description: 'Secure peer-to-peer sharing built on OpenZiti.',
+                        },
+                    ],
+                },
+                {
+                    header: 'Your own infrastructure',
+                    links: [
+                        {
+                            label: 'Self-Hosted',
+                            to: '/selfhosted/intro',
+                            logo: 'https://netfoundry.io/docs/img/onprem-sm-logo.svg',
+                            description: 'Deploy the full stack in your own environment.',
+                        },
+                        {
+                            label: 'zLAN',
+                            to: '/zlan/intro',
+                            logo: 'https://netfoundry.io/docs/img/zlan-logo.svg',
+                            description: 'Zero-trust access for OT networks.',
+                        },
+                    ],
+                },
+            ],
+        },
         docs: {
             sidebar: {
                 hideable: false,
@@ -380,32 +436,6 @@ const config: Config = {
                     type: 'custom-productPicker',
                     position: 'left',
                     label: 'Products',
-                    columns: [
-                        {
-                            header: 'Managed Cloud',
-                            headerClass: 'picker-header--nf-primary',
-                            links: [
-                                { label: 'NetFoundry Console', to: '#', logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg', description: 'Cloud-managed orchestration and global fabric control.' },
-                                { label: 'Frontdoor', to: '/frontdoor/intro', logo: 'https://netfoundry.io/docs/img/frontdoor-sm-logo.svg', description: 'Secure application access gateway.' },
-                            ],
-                        },
-                        {
-                            header: 'Open Source',
-                            headerClass: 'picker-header--nf-secondary',
-                            links: [
-                                { label: 'OpenZiti', to: '/openziti/learn/introduction', logo: 'https://netfoundry.io/docs/img/openziti-sm-logo.svg', description: 'Programmable zero-trust mesh infrastructure.' },
-                                { label: 'zrok', to: '/zrok', logo: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-purple.svg', logoDark: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-green.svg', description: 'Secure peer-to-peer sharing built on OpenZiti.' },
-                            ],
-                        },
-                        {
-                            header: 'Your own infrastructure',
-                            headerClass: 'picker-header--nf-tertiary',
-                            links: [
-                                { label: 'Self-Hosted', to: '/selfhosted/intro', logo: 'https://netfoundry.io/docs/img/onprem-sm-logo.svg', description: 'Deploy the full stack in your own environment.' },
-                                { label: 'zLAN', to: '/zlan', logo: 'https://netfoundry.io/docs/img/zlan-logo.svg', description: 'Zero-trust access for OT networks.' },
-                            ],
-                        },
-                    ],
                 },
             ],
         },

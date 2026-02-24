@@ -21,7 +21,6 @@
 /* ── Dropdown trigger button in the navbar ──────────────────────────────── */
 .nf-picker-trigger,
 .nf-resources-dropdown {
-    font-weight: 600;
     color: var(--ifm-font-color-base);
     position: relative;
     padding-right: 1.2rem;

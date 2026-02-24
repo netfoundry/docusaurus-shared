@@ -2,7 +2,7 @@ import React, {JSX} from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import clsx from 'clsx';
-import styles from './landing.module.css';
+import styles from './index.module.css';
 
 const CYAN  = '#22d3ee';
 const GREEN = '#22c55e';

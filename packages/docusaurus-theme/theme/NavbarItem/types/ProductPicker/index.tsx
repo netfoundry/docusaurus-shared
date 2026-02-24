@@ -21,7 +21,6 @@ export type PickerColumn = {
 type Props = {
   label?: string;
   position?: 'left' | 'right';
-  columns?: PickerColumn[];
   className?: string;
 };
 
@@ -55,14 +54,14 @@ const buildDefaultColumns = (img: string, consoleLogo: string): PickerColumn[] =
   },
 ];
 
-export default function ProductPicker({label = 'Products', columns, className}: Props) {
+export default function ProductPicker({label = 'Products', className}: Props) {
   const {siteConfig} = useDocusaurusContext();
   const themeConfig = useThemeConfig() as any;
   const consoleLogo = themeConfig?.netfoundry?.consoleLogo ?? NF_LOGO_DEFAULT;
   const img = `${siteConfig.url}${siteConfig.baseUrl}img`;
-  const configColumns: PickerColumn[] | undefined = themeConfig?.netfoundry?.productPickerColumns
-    ?.map((col: any, i: number) => ({...col, headerClass: HEADER_CLASSES[i] ?? ''}));
-  columns ??= configColumns ?? buildDefaultColumns(img, consoleLogo);
+  const columns: PickerColumn[] = (themeConfig?.netfoundry?.productPickerColumns ?? [])
+    .map((col: any, i: number) => ({...col, headerClass: HEADER_CLASSES[i] ?? ''}));
+  const resolvedColumns = columns.length ? columns : buildDefaultColumns(img, consoleLogo);
   const wrapRef       = useRef<HTMLDivElement>(null);
   const hasEnteredPanel = useRef(false);
   const [open, setOpen] = useState(false);
@@ -114,15 +113,15 @@ export default function ProductPicker({label = 'Products', columns, className}: 
   return (
     <div
       ref={wrapRef}
-      className={clsx('navbar__item', {'nf-picker--open': open})}
-      onMouseEnter={handleTriggerEnter}
-      onMouseLeave={handleTriggerLeave}>
+      className={clsx('navbar__item', {'nf-picker--open': open})}>
       <a
         role="button"
         href="#"
         aria-haspopup="true"
         aria-expanded={open}
         className={clsx('navbar__link', 'nf-picker-trigger', className)}
+        onMouseEnter={handleTriggerEnter}
+        onMouseLeave={handleTriggerLeave}
         onClick={e => { e.preventDefault(); setOpen(o => !o); }}
         onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); setOpen(o => !o); } }}>
         {label}
@@ -134,7 +133,7 @@ export default function ProductPicker({label = 'Products', columns, className}: 
           onMouseEnter={handlePanelEnter}
           onMouseLeave={handlePanelLeave}>
           <div className="picker-content">
-            {columns.map((col, i) => (
+            {resolvedColumns.map((col, i) => (
               <div key={i} className="picker-column">
                 <span className={clsx('picker-header', col.headerClass)}>{col.header}</span>
                 {col.links.map((link, j) => (
