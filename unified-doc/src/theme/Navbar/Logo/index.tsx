@@ -21,8 +21,8 @@ const mapTitle = (p: string) => {
         includeNFLogo: false,
         to: '/',
         alt:'NetFoundry',
-        logoLight: `/img/netfoundry-name-and-logo.svg`,
-        logoDark: `/img/netfoundry-name-and-logo-dark.svg`
+        logoLight: '',
+        logoDark: ''
     };
 };
 
@@ -53,17 +53,22 @@ export default function NavbarLogo(): JSX.Element {
                 }}
             />
         </Link>
+        {console.log('[NavbarLogo] title:', JSON.stringify(title))}
+        {(title.logoLight || title.text) && (
         <Link className="navbar__brand" to={title.to}>
+            {title.logoLight && (
             <ThemedImage
                 className="navbar__logo"
-                alt={title.alt}
+                alt={title.alt} attr="blah"
                 sources={{
                     light: logoLight,
                     dark:  logoDark,
                 }}
             />
-            <span className="navbar__title">{title.text}</span>
+            )}
+            {title.text && <span className="navbar__title">{title.text}</span>}
         </Link>
+        )}
         </>
     );
 }

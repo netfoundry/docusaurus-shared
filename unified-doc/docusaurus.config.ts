@@ -426,11 +426,7 @@ const config: Config = {
         image: 'https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg',
         navbar: {
             hideOnScroll: false,
-            title: 'NetFoundry Documentation',
-            logo: {
-                alt: 'NetFoundry Logo',
-                src: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
-            },
+            title: '',
             items: [
                 {
                     type: 'custom-productPicker',
