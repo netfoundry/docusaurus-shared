@@ -17,6 +17,38 @@ type Item = any;
 // change to '' if you don't use /docs
 const DOCS_PREFIX = '/docs';
 
+const productPicker: Item = {
+    type: 'custom-productPicker',
+    position: 'left',
+    label: 'Products',
+    columns: [
+        {
+            header: 'Managed Cloud',
+            headerClass: 'picker-header--managed',
+            links: [
+                { label: 'NetFoundry Console', to: '#', logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg', description: 'Cloud-managed orchestration and global fabric control.' },
+                { label: 'Frontdoor', to: `${DOCS_PREFIX}/frontdoor/intro`, logo: '/docs/img/frontdoor-sm-logo.svg', description: 'Secure application access gateway.' },
+            ],
+        },
+        {
+            header: 'Open Source',
+            headerClass: 'picker-header--opensource',
+            links: [
+                { label: 'OpenZiti', to: `${DOCS_PREFIX}/openziti/learn/introduction`, logo: '/docs/img/openziti-sm-logo.svg', description: 'Programmable zero-trust mesh infrastructure.' },
+                { label: 'zrok', to: `${DOCS_PREFIX}/zrok/getting-started`, logo: '/docs/img/zrok-1.0.0-rocket-purple.svg', logoDark: '/docs/img/zrok-1.0.0-rocket-green.svg', description: 'Secure peer-to-peer sharing built on OpenZiti.' },
+            ],
+        },
+        {
+            header: 'Your own infrastructure',
+            headerClass: 'picker-header--infra',
+            links: [
+                { label: 'Self-Hosted', to: `${DOCS_PREFIX}/selfhosted/intro`, logo: '/docs/img/onprem-sm-logo.svg', description: 'Deploy the full stack in your own environment.' },
+                { label: 'zLAN', to: `${DOCS_PREFIX}/zlan/intro`, logo: '/docs/img/zlan-logo.svg', description: 'Zero-trust access for OT networks.' },
+            ],
+        },
+    ],
+};
+
 const defaultItems: Item[] = [
     // {label: 'NetFoundry', to: '/', position: 'left'},
     // {label: 'Downloads', to: '/downloads', position: 'left'},
@@ -117,12 +149,14 @@ const zrokNav: Item[] = [
 ];
 
 const mapNavbar = (p: string): Item[] => {
-    if (p.startsWith(`${DOCS_PREFIX}/frontdoor`)) return frontdoorNav;
-    if (p.startsWith(`${DOCS_PREFIX}/selfhosted`)) return onpremNav;
-    if (p.startsWith(`${DOCS_PREFIX}/openziti`))  return openZitiNav;
-    if (p.startsWith(`${DOCS_PREFIX}/zlan`))  return zlanNav;
-    if (p.startsWith(`${DOCS_PREFIX}/zrok`))  return zrokNav;
-    return defaultItems;
+    let items: Item[] = [];
+    if (p.startsWith(`${DOCS_PREFIX}/frontdoor`)) items = frontdoorNav;
+    else if (p.startsWith(`${DOCS_PREFIX}/selfhosted`)) items = onpremNav;
+    else if (p.startsWith(`${DOCS_PREFIX}/openziti`))  items = openZitiNav;
+    else if (p.startsWith(`${DOCS_PREFIX}/zlan`))  items = zlanNav;
+    else if (p.startsWith(`${DOCS_PREFIX}/zrok`))  items = zrokNav;
+    else items = defaultItems;
+    return [productPicker, ...items];
 };
 
 export default function NavbarContent(props: Props): JSX.Element {
