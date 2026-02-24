@@ -25,12 +25,13 @@ type Props = {
   className?: string;
 };
 
+const HEADER_CLASSES = ['picker-header--nf-primary', 'picker-header--nf-secondary', 'picker-header--nf-tertiary'];
 const NF_LOGO_DEFAULT = 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg';
 
 const buildDefaultColumns = (img: string, consoleLogo: string): PickerColumn[] => [
   {
     header: 'Managed Cloud',
-    headerClass: 'picker-header--nf-primary',
+    headerClass: HEADER_CLASSES[0],
     links: [
       { label: 'NetFoundry Console', to: '#',                  logo: consoleLogo,                          description: 'Cloud-managed orchestration and global fabric control.' },
       { label: 'Frontdoor',          to: '/docs/frontdoor',    logo: `${img}/frontdoor-sm-logo.svg`,       description: 'Secure application access gateway.' },
@@ -38,7 +39,7 @@ const buildDefaultColumns = (img: string, consoleLogo: string): PickerColumn[] =
   },
   {
     header: 'Open Source',
-    headerClass: 'picker-header--nf-secondary',
+    headerClass: HEADER_CLASSES[1],
     links: [
       { label: 'OpenZiti', to: '/docs/openziti', logo: `${img}/openziti-sm-logo.svg`,                                                          description: 'Programmable zero-trust mesh infrastructure.' },
       { label: 'zrok',     to: '/docs/zrok',     logo: `${img}/zrok-1.0.0-rocket-purple.svg`, logoDark: `${img}/zrok-1.0.0-rocket-green.svg`, description: 'Secure peer-to-peer sharing built on OpenZiti.' },
@@ -46,7 +47,7 @@ const buildDefaultColumns = (img: string, consoleLogo: string): PickerColumn[] =
   },
   {
     header: 'Your own infrastructure',
-    headerClass: 'picker-header--nf-tertiary',
+    headerClass: HEADER_CLASSES[2],
     links: [
       { label: 'Self-Hosted', to: '/docs/selfhosted', logo: `${img}/onprem-sm-logo.svg`, description: 'Deploy the full stack in your own environment.' },
       { label: 'zLAN',        to: '/docs/zlan',        logo: `${img}/zlan-logo.svg`,     description: 'Zero-trust access for OT networks.' },
@@ -59,7 +60,9 @@ export default function ProductPicker({label = 'Products', columns, className}: 
   const themeConfig = useThemeConfig() as any;
   const consoleLogo = themeConfig?.netfoundry?.consoleLogo ?? NF_LOGO_DEFAULT;
   const img = `${siteConfig.url}${siteConfig.baseUrl}img`;
-  columns ??= buildDefaultColumns(img, consoleLogo);
+  const configColumns: PickerColumn[] | undefined = themeConfig?.netfoundry?.productPickerColumns
+    ?.map((col: any, i: number) => ({...col, headerClass: HEADER_CLASSES[i] ?? ''}));
+  columns ??= configColumns ?? buildDefaultColumns(img, consoleLogo);
   const wrapRef       = useRef<HTMLDivElement>(null);
   const hasEnteredPanel = useRef(false);
   const [open, setOpen] = useState(false);

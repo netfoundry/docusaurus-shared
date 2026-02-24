@@ -1,152 +1,81 @@
-// src/pages/index.tsx
-import type {ReactNode} from 'react';
+import React, {JSX} from 'react';
+import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
-import useBaseUrl from '@docusaurus/useBaseUrl';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import {
-    defaultNetFoundryFooterProps,
-    NetFoundryHorizontalSection,
-    NetFoundryLayout,
-} from '@netfoundry/docusaurus-theme/ui';
-import styles from "./index.module.css";
+import clsx from 'clsx';
+import styles from './landing.module.css';
 
-export default function Home(): ReactNode {
-    const {siteConfig} = useDocusaurusContext();
-    const fp = defaultNetFoundryFooterProps();
-    fp.description = 'NetFoundry documentation for open source projects and products';
+const CYAN  = '#22d3ee';
+const GREEN = '#22c55e';
+const IMG   = 'https://netfoundry.io/docs/img';
+const NF_LOGO = 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg';
 
-    return (
-        <NetFoundryLayout
-            footerProps={fp}
-            title={`NetFoundry Docs Portal`}
-            description="Find product and open-source docs fast"
-        >
-            <main>
-                <NetFoundryHorizontalSection >
-                    <div className="container">
-                        <h1 className="hero__title" style={{marginBottom: 8}}>NetFoundry Docs</h1>
-                        <p className="hero__subtitle" style={{marginBottom: 24}}>
-                            Guides, references, and how-tos for NetFoundry products and OpenZiti.
-                        </p>
-                        <div className="buttons">
-                            <Link className="button button--secondary button--lg" to="https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides">NetFoundry SaaS Docs</Link>
-                            <span style={{margin: '0 8px'}} />
-                            <Link className="button button--secondary button--lg" to={useBaseUrl('/docs/selfhosted/intro')}>Self-Hosted Docs</Link>
-                            <span style={{margin: '0 8px'}} />
-                            <Link className="button button--secondary button--lg" to={useBaseUrl('/docs/frontdoor/intro')}>Frontdoor Docs</Link>
-                            <span style={{margin: '0 8px'}} />
-                            <Link className="button button--secondary button--lg" to={useBaseUrl('/docs/openziti/learn/introduction')}>OpenZiti Docs</Link>
-                            <span style={{margin: '0 8px'}} />
-                            <Link className="button button--secondary button--lg" to={useBaseUrl('/docs/zlan/intro')}>zLAN Docs</Link>
-                        </div>
-                    </div>
-                </NetFoundryHorizontalSection>
+const products = [
+  { id: 'console',    title: 'NetFoundry Console',     logo: NF_LOGO,                               tag: 'Managed',     accent: CYAN,  link: '#',              features: ['Fully managed SaaS', 'Global edge fabric', 'No infra to operate', 'Policy-based access'],                                               description: "The cloud-managed control plane for NetFoundry's global zero-trust fabric. Orchestrate identities, policies, and edge routers — no infrastructure to run." },
+  { id: 'openziti',   title: 'OpenZiti',               logo: `${IMG}/openziti-sm-logo.svg`,         tag: 'Open Source', accent: GREEN, link: '/docs/openziti',  description: 'The open-source zero-trust networking framework at the heart of the NetFoundry platform. Embed dark, app-native security directly in your code — no VPN, no perimeter.' },
+  { id: 'frontdoor',  title: 'Frontdoor',              logo: `${IMG}/frontdoor-sm-logo.svg`,        tag: 'Managed',     accent: CYAN,  link: '/docs/frontdoor', features: ['No agent or VPN required', 'Zero firewall rules', 'Identity-based access', 'Any app, any browser'],                                description: 'Secure, clientless access to any application — without a VPN or firewall rule. Expose nothing to the internet while giving authorized users instant access.' },
+  { id: 'zrok',       title: 'zrok',                   logo: `${IMG}/zrok-1.0.0-rocket-purple.svg`, tag: 'Open Source', accent: GREEN, link: '/docs/zrok',      description: 'Geo-scale secure sharing built on the OpenZiti mesh. Share services, files, or HTTP endpoints peer-to-peer — no open ports, no NAT traversal tricks.' },
+  { id: 'selfhosted', title: 'NetFoundry Self-Hosted', logo: `${IMG}/onprem-sm-logo.svg`,           tag: 'Self-Hosted', accent: CYAN,  link: '/docs/onprem',    features: ['Full infrastructure control', 'Air-gap compatible', 'On-prem or any cloud', 'Enterprise SLA'],                                      description: 'Deploy the full NetFoundry control plane and fabric in your own environment. Full sovereignty over your zero-trust infrastructure — on-prem, air-gapped, or any cloud.' },
+  { id: 'zlan',       title: 'zLAN',                   logo: `${IMG}/zlan-logo.svg`,                tag: 'OT Security', accent: CYAN,  link: '/docs/zlan',      features: ['Deep OT/IT traffic visibility', 'Identity-aware micro-segmentation', 'Centralized zero-trust policy', 'Built on NetFoundry Self-Hosted'], description: 'Identity-aware micro-segmentation firewall for operational technology networks. Deep traffic visibility, centralized policy, and zero-trust access control for OT environments.' },
+];
 
-                <NetFoundryHorizontalSection style={{paddingBottom: "5em" }}>
-                    <div className="container">
-                        <div className="row">
-                            <div className="col col--4">
-                                <div className={styles.idxcard}>
-                                    <div className="card__header"><h3>NetFoundry SaaS</h3></div>
-                                    <div className="card__body">
-                                        Enterprise cloud-hosted platform for OpenZiti overlays.
-                                    </div>
-                                    <div className="card__footer">
-                                        <Link className="button button--primary button--block" to="https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides">Go to NetFoundry SaaS</Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col col--4">
-                                <div className={styles.idxcard}>
-                                    <div className="card__header"><h3>NetFoundry Self-Hosted</h3></div>
-                                    <div className="card__body">
-                                        Enterprise self-hosted platform for OpenZiti overlays.
-                                    </div>
-                                    <div className="card__footer">
-                                        <Link className="button button--primary button--block" to={useBaseUrl('/docs/selfhosted/intro')}>Go to NetFoundry Self-Hosted</Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col col--4">
-                                <div className={styles.idxcard}>
-                                    <div className="card__header"><h3>NetFoundry Frontdoor</h3></div>
-                                    <div className="card__body">
-                                        Zero-trust inbound access to private apps and services.
-                                    </div>
-                                    <div className="card__footer">
-                                        <Link className="button button--primary button--block" to={useBaseUrl('/docs/frontdoor/intro')}>Go to NetFoundry Frontdoor</Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col col--4">
-                                <div className={styles.idxcard}>
-                                    <div className="card__header"><h3>OpenZiti</h3></div>
-                                    <div className="card__body">
-                                        Open-source zero-trust networking project and SDKs.
-                                    </div>
-                                    <div className="card__footer">
-                                        <Link className="button button--primary button--block" to={useBaseUrl('/docs/openziti/learn/introduction')}>Go to OpenZiti</Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col col--4">
-                                <div className={styles.idxcard}>
-                                    <div className="card__header"><h3>zLAN</h3></div>
-                                    <div className="card__body">
-                                        Built on the robust foundation of NetFoundy OpenZiti, NetFoundry zLAN combines advanced firewall capabilities with the power of zero trust and secure network overlay
-                                    </div>
-                                    <div className="card__footer">
-                                        <Link className="button button--primary button--block" to={useBaseUrl('/docs/zlan/intro')}>Go to zLAN</Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col col--4">
-                                <div className={styles.idxcard}>
-                                    <div className="card__header"><h3>zrok</h3></div>
-                                    <div className="card__body">
-                                        zrok is an open-source, self-hostable sharing platform that simplifies shielding and sharing network services or files.
-                                    </div>
-                                    <div className="card__footer">
-                                        <Link className="button button--primary button--block" to={useBaseUrl('/docs/zrok/getting-started')}>Go to zrok</Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+type Product = (typeof products)[number];
+const byId = Object.fromEntries(products.map(p => [p.id, p])) as Record<string, Product>;
 
-                        <div className="margin-top--lg row">
-                            <div className="col col--6">
-                                <div className={styles.idxcard}>
-                                    <div className="card__header"><h3>Quick Links</h3></div>
-                                    <div className="card__body">
-                                        <ul>
-                                            <li><Link to={useBaseUrl('/docs/selfhosted/support/troubleshooting')}>NetFoundry Troubleshooting</Link></li>
-                                            <li><Link to={useBaseUrl('/docs/selfhosted/intro')}>Self-Hosted Deployment</Link></li>
-                                            <li><Link to={useBaseUrl('/docs/frontdoor/intro')}>Frontdoor Getting Started</Link></li>
-                                            <li><Link to={useBaseUrl('/docs/openziti/reference/command-line/login')}>OpenZiti CLI Reference</Link></li>
-                                            <li><Link to={useBaseUrl('/docs/zlan/intro')}>zLAN FAQ</Link></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col col--6">
-                                <div className={styles.idxcard}>
-                                    <div className="card__header"><h3>Support</h3></div>
-                                    <div className="card__body">
-                                        <ul>
-                                            <li><Link to={useBaseUrl('/docs/selfhosted/support/troubleshooting')}>NetFoundry Troubleshooting</Link></li>
-                                            <li><Link to={useBaseUrl('/docs/selfhosted/support/troubleshooting')}>Self-Hosted Troubleshooting</Link></li>
-                                            <li><Link to={useBaseUrl('/docs/frontdoor/learn/health-checks')}>Frontdoor Troubleshooting</Link></li>
-                                            <li><Link to={useBaseUrl('/docs/openziti/learn/identity-providers')}>OpenZiti FAQ</Link></li>
-                                            <li><Link to={useBaseUrl('/docs/zlan/intro')}>zLAN FAQ</Link></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+function BentoCard({product, featured = false}: {product: Product; featured?: boolean}): JSX.Element {
+  const accentMod = product.accent === CYAN ? styles['nf-bento-card--accent-cyan'] : styles['nf-bento-card--accent-green'];
+  return (
+    <div className={styles['nf-bento-wrap']}>
+      <Link to={product.link} className={clsx(styles['nf-bento-card'], featured && styles['nf-bento-card--featured'], accentMod)} style={{borderTopColor: product.accent}}>
+        <span className={styles['nf-card-badge']}>{product.tag}</span>
+        <div className={styles['nf-card-header']}>
+          {product.logo && <img src={product.logo} alt={product.title} className={styles['nf-card-logo']} />}
+          <h3>{product.title}</h3>
+        </div>
+        <p>{product.description}</p>
+        {product.features && (
+          <ul className={styles['nf-bento-features']}>
+            {product.features.map(f => <li key={f}>{f}</li>)}
+          </ul>
+        )}
+        <div className={styles['nf-card-link']}>Explore →</div>
+      </Link>
+    </div>
+  );
+}
 
-                    </div>
-                </NetFoundryHorizontalSection>
-            </main>
-        </NetFoundryLayout>
-    );
+export default function Home(): JSX.Element {
+  return (
+    <Layout title="NetFoundry Docs">
+      <header className={styles['nf-hero-stage']}>
+        <div className={clsx('container', styles['nf-hero-content'])}>
+          <h1 className={styles['nf-hero-title']}>NetFoundry <span className={styles['nf-green-text']}>Docs</span></h1>
+          <p className={styles['nf-hero-subtext']}>Secure, high-performance networking for the modern era.</p>
+          <div className={styles['nf-hero-ctas']}>
+            <Link className={styles['nf-btn-primary']} to="/docs/frontdoor">Get Started</Link>
+            <a className={styles['nf-btn-ghost']} href="https://netfoundry.io/lets-talk/">Request Demo</a>
+          </div>
+        </div>
+      </header>
+      <section className={styles['nf-features-section']} style={{marginTop: '-80px', position: 'relative', zIndex: 3}}>
+        <div className="container">
+          <div className={styles['nf-bento-grid']}>
+            <div className={clsx(styles['nf-bento-divider'], styles['nf-divider--managed'], styles['nf-divider--top'])}>Managed Cloud</div>
+            <div className={styles['nf-pair']}>
+              <BentoCard product={byId['console']} featured />
+              <div className={styles['nf-pair-connector']}>open-source counterpart</div>
+              <BentoCard product={byId['openziti']} />
+            </div>
+            <div className={styles['nf-pair']}>
+              <BentoCard product={byId['frontdoor']} featured />
+              <div className={styles['nf-pair-connector']}>open-source counterpart</div>
+              <BentoCard product={byId['zrok']} />
+            </div>
+            <div className={styles['nf-bento-divider']}>Run on your own infrastructure</div>
+            <BentoCard product={byId['selfhosted']} />
+            <BentoCard product={byId['zlan']} />
+          </div>
+        </div>
+      </section>
+    </Layout>
+  );
 }

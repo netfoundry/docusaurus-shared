@@ -36,6 +36,34 @@ export interface StarBannerConfig {
   repoUrl: string;
   /** Label text for the star button */
   label: string;
+  /** Only show banner when the current path starts with this prefix (e.g. '/docs/openziti') */
+  pathPrefix?: string;
+}
+
+/**
+ * A single link entry in the product picker
+ */
+export interface ProductPickerLink {
+  /** Display name */
+  label: string;
+  /** Route or URL */
+  to: string;
+  /** Logo shown in light mode (and dark mode if logoDark is absent) */
+  logo?: string;
+  /** Logo shown only in dark mode */
+  logoDark?: string;
+  /** Short description shown beneath the label */
+  description?: string;
+}
+
+/**
+ * A column in the product picker dropdown.
+ * Header color is assigned automatically by column index (primary → secondary → tertiary).
+ */
+export interface ProductPickerColumn {
+  /** Column heading text */
+  header: string;
+  links: ProductPickerLink[];
 }
 
 /**
@@ -80,10 +108,10 @@ export interface NetFoundryThemeOptions {
 export interface NetFoundryThemeConfig {
   /** Footer configuration */
   footer?: FooterConfig;
-  /** Star banner configuration */
-  starBanner?: StarBannerConfig;
-  /** Whether to show the star banner (default: false) */
-  showStarBanner?: boolean;
+  /** Path-aware star banners — each entry shows only when the current path starts with pathPrefix (omit pathPrefix to show everywhere) */
+  starBanners?: StarBannerConfig[];
+  /** Product picker columns. If omitted, the theme falls back to built-in NetFoundry defaults. */
+  productPickerColumns?: ProductPickerColumn[];
   /** Logo URL for the NetFoundry Console link in the product picker (overrides the default NetFoundry branding icon) */
   consoleLogo?: string;
 }

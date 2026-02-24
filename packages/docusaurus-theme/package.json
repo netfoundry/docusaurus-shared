@@ -37,7 +37,11 @@
       "types": "./dist/src/node.d.ts",
       "default": "./dist/src/node.js"
     },
-    "./css/*": "./css/*"
+    "./css/*": "./css/*",
+    "./theme/NavbarItem/types/ProductPicker": {
+      "types": "./theme/NavbarItem/types/ProductPicker/index.tsx",
+      "default": "./theme/NavbarItem/types/ProductPicker/index.tsx"
+    }
   },
   "peerDependencies": {
     "@docusaurus/core": "^3",
