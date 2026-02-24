@@ -148,15 +148,17 @@ const zrokNav: Item[] = [
     },
 ];
 
+const sectionLabel = (p: string): string => {
+    if (p.startsWith(`${DOCS_PREFIX}/frontdoor`))  return 'Frontdoor';
+    if (p.startsWith(`${DOCS_PREFIX}/selfhosted`)) return 'Self-Hosted';
+    if (p.startsWith(`${DOCS_PREFIX}/openziti`))   return 'OpenZiti';
+    if (p.startsWith(`${DOCS_PREFIX}/zlan`))        return 'zLAN';
+    if (p.startsWith(`${DOCS_PREFIX}/zrok`))        return 'zrok';
+    return 'Products';
+};
+
 const mapNavbar = (p: string): Item[] => {
-    let items: Item[] = [];
-    if (p.startsWith(`${DOCS_PREFIX}/frontdoor`)) items = frontdoorNav;
-    else if (p.startsWith(`${DOCS_PREFIX}/selfhosted`)) items = onpremNav;
-    else if (p.startsWith(`${DOCS_PREFIX}/openziti`))  items = openZitiNav;
-    else if (p.startsWith(`${DOCS_PREFIX}/zlan`))  items = zlanNav;
-    else if (p.startsWith(`${DOCS_PREFIX}/zrok`))  items = zrokNav;
-    else items = defaultItems;
-    return [productPicker, ...items];
+    return [{...productPicker, label: sectionLabel(p)}];
 };
 
 export default function NavbarContent(props: Props): JSX.Element {
