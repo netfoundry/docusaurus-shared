@@ -114,7 +114,7 @@ export default {
             theme: {
                 customCss: [
                     require.resolve('./src/custom/custom.css'),
-                    require.resolve('../docusaurus-theme/css/mega-menu.css'),
+                    require.resolve('../docusaurus-theme/css/product-picker.css'),
                 ],
             }
         }
@@ -150,13 +150,13 @@ export default {
             },
             items: [
                 {
-                    type: 'custom-productsMegaMenu',
+                    type: 'custom-productPicker',
                     position: 'left',
                     label: 'Products',
                     columns: [
                         {
                             header: 'Managed Cloud',
-                            headerClass: 'mega-header--managed',
+                            headerClass: 'picker-header--managed',
                             links: [
                                 { label: 'NetFoundry Console', to: '#', logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg', description: 'Cloud-managed orchestration and global fabric control.' },
                                 { label: 'Frontdoor', to: '/docs/frontdoor', logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg', description: 'Secure application access gateway.' },
@@ -164,7 +164,7 @@ export default {
                         },
                         {
                             header: 'Open Source',
-                            headerClass: 'mega-header--opensource',
+                            headerClass: 'picker-header--opensource',
                             links: [
                                 { label: 'OpenZiti', to: '/docs/openziti', description: 'Programmable zero-trust mesh infrastructure.' },
                                 { label: 'zrok', to: '/docs/zrok', description: 'Secure peer-to-peer sharing built on OpenZiti.' },
@@ -172,7 +172,7 @@ export default {
                         },
                         {
                             header: 'Your own infrastructure',
-                            headerClass: 'mega-header--infra',
+                            headerClass: 'picker-header--infra',
                             links: [
                                 { label: 'Self-Hosted', to: '/docs/onprem', description: 'Deploy the full stack in your own environment.' },
                                 { label: 'zLAN', to: '/docs/zlan', description: 'Zero-trust access for OT networks.' },

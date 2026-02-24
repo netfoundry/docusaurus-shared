@@ -2,27 +2,27 @@ import React, {useState, useRef, useEffect, useCallback} from 'react';
 import Link from '@docusaurus/Link';
 import clsx from 'clsx';
 
-export type MegaMenuLink = {
+export type PickerLink = {
   label: string;
   to: string;
   logo?: string;
   description?: string;
 };
 
-export type MegaMenuColumn = {
+export type PickerColumn = {
   header: string;
   headerClass?: string;
-  links: MegaMenuLink[];
+  links: PickerLink[];
 };
 
 type Props = {
   label?: string;
   position?: 'left' | 'right';
-  columns: MegaMenuColumn[];
+  columns: PickerColumn[];
   className?: string;
 };
 
-export default function ProductsMegaMenu({label = 'Products', columns, className}: Props) {
+export default function ProductPicker({label = 'Products', columns, className}: Props) {
   const wrapRef       = useRef<HTMLDivElement>(null);
   const hasEnteredPanel = useRef(false);
   const [open, setOpen] = useState(false);
@@ -45,18 +45,18 @@ export default function ProductsMegaMenu({label = 'Products', columns, className
     };
   }, [close]);
 
-  // Sync: close when another megamenu opens
+  // Sync: close when another product picker opens
   useEffect(() => {
     const onOtherOpen = (e: any) => {
       if (e.detail.label !== label) close();
     };
-    window.addEventListener('nf-megamenu:open', onOtherOpen);
-    return () => window.removeEventListener('nf-megamenu:open', onOtherOpen);
+    window.addEventListener('nf-picker:open', onOtherOpen);
+    return () => window.removeEventListener('nf-picker:open', onOtherOpen);
   }, [label, close]);
 
   const handleTriggerEnter = useCallback(() => {
     hasEnteredPanel.current = false;
-    window.dispatchEvent(new CustomEvent('nf-megamenu:open', {detail: {label}}));
+    window.dispatchEvent(new CustomEvent('nf-picker:open', {detail: {label}}));
     setOpen(true);
   }, [label]);
 
@@ -74,7 +74,7 @@ export default function ProductsMegaMenu({label = 'Products', columns, className
   return (
     <div
       ref={wrapRef}
-      className={clsx('navbar__item', {'nf-products-menu--open': open})}
+      className={clsx('navbar__item', {'nf-picker--open': open})}
       onMouseEnter={handleTriggerEnter}
       onMouseLeave={handleTriggerLeave}>
       <a
@@ -82,25 +82,25 @@ export default function ProductsMegaMenu({label = 'Products', columns, className
         href="#"
         aria-haspopup="true"
         aria-expanded={open}
-        className={clsx('navbar__link', 'nf-mega-dropdown', className)}
+        className={clsx('navbar__link', 'nf-picker-trigger', className)}
         onClick={e => { e.preventDefault(); setOpen(o => !o); }}
         onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); setOpen(o => !o); } }}>
         {label}
       </a>
       {open && (
         <div
-          className="nf-mega-panel"
+          className="nf-picker-panel"
           onMouseEnter={handlePanelEnter}
           onMouseLeave={handlePanelLeave}
           onClick={close}>
-          <div className="mega-menu-content">
+          <div className="picker-content">
             {columns.map((col, i) => (
-              <div key={i} className="mega-column">
-                <span className={clsx('mega-header', col.headerClass)}>{col.header}</span>
+              <div key={i} className="picker-column">
+                <span className={clsx('picker-header', col.headerClass)}>{col.header}</span>
                 {col.links.map((link, j) => (
-                  <Link key={j} to={link.to} className="mega-link">
-                    {link.logo && <img src={link.logo} className="mega-logo" alt="" />}
-                    <div className="mega-text">
+                  <Link key={j} to={link.to} className="picker-link">
+                    {link.logo && <img src={link.logo} className="picker-logo" alt="" />}
+                    <div className="picker-text">
                       <strong>{link.label}</strong>
                       {link.description && <span>{link.description}</span>}
                     </div>

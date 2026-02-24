@@ -1,4 +1,4 @@
-import ProductsMegaMenu from './types/ProductsMegaMenu';
+import ProductPicker from './types/ProductPicker';
 
 // @theme-original resolves to OUR OWN file in a plugin theme (Docusaurus sets
 // both @theme and @theme-original to the plugin file). @theme-init resolves to
@@ -10,5 +10,5 @@ const ComponentTypesOrig = require('@theme-init/NavbarItem/ComponentTypes').defa
 
 export default {
   ...ComponentTypesOrig,
-  'custom-productsMegaMenu': ProductsMegaMenu,
+  'custom-productPicker': ProductPicker,
 };

@@ -49,36 +49,36 @@ export default function DropdownNavbarItemDesktop({
         hasEnteredPanel.current = false;
       }
     };
-    window.addEventListener('nf-megamenu:open', onOtherOpen);
-    return () => window.removeEventListener('nf-megamenu:open', onOtherOpen);
+    window.addEventListener('nf-picker:open', onOtherOpen);
+    return () => window.removeEventListener('nf-picker:open', onOtherOpen);
   }, [props.label]);
 
   // Open on hover — reset entry state each time
   const handleMouseEnter = useCallback(() => {
     hasEnteredPanel.current = false;
-    window.dispatchEvent(new CustomEvent('nf-megamenu:open', {detail: {label: props.label}}));
+    window.dispatchEvent(new CustomEvent('nf-picker:open', {detail: {label: props.label}}));
     setShowDropdown(true);
-    console.log('[mega-menu] popped open:', props.label);
+    console.log('[product-picker] popped open:', props.label);
   }, [props.label]);
 
   // Leaving the trigger: do nothing — the panel stays open until the user
   // either enters it (then leaves) or clicks outside.
   const handleTriggerLeave = useCallback(() => {
-    console.log('[mega-menu] trigger leave — hasEnteredPanel:', hasEnteredPanel.current);
+    console.log('[product-picker] trigger leave — hasEnteredPanel:', hasEnteredPanel.current);
   }, []);
 
   // Once the cursor enters the panel, normal leave/blur can close it
   const handlePanelEnter = useCallback(() => {
     hasEnteredPanel.current = true;
-    console.log('[mega-menu] panel focus obtained');
+    console.log('[product-picker] panel focus obtained');
   }, []);
 
   const handlePanelLeave = useCallback(() => {
-    console.log('[mega-menu] panel focus lost — hasEnteredPanel:', hasEnteredPanel.current);
+    console.log('[product-picker] panel focus lost — hasEnteredPanel:', hasEnteredPanel.current);
     if (hasEnteredPanel.current) {
       setShowDropdown(false);
       hasEnteredPanel.current = false;
-      console.log('[mega-menu] closing — cursor left panel');
+      console.log('[product-picker] closing — cursor left panel');
     }
   }, []);
 
