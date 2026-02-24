@@ -84,6 +84,8 @@ export interface NetFoundryThemeConfig {
   starBanner?: StarBannerConfig;
   /** Whether to show the star banner (default: false) */
   showStarBanner?: boolean;
+  /** Logo URL for the NetFoundry Console link in the product picker (overrides the default NetFoundry branding icon) */
+  consoleLogo?: string;
 }
 
 /**

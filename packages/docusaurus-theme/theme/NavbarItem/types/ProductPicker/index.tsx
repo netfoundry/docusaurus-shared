@@ -1,6 +1,8 @@
 import React, {useState, useRef, useEffect, useCallback} from 'react';
 import Link from '@docusaurus/Link';
 import clsx from 'clsx';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import {useThemeConfig} from '@docusaurus/theme-common';
 
 export type PickerLink = {
   label: string;
@@ -19,11 +21,45 @@ export type PickerColumn = {
 type Props = {
   label?: string;
   position?: 'left' | 'right';
-  columns: PickerColumn[];
+  columns?: PickerColumn[];
   className?: string;
 };
 
+const NF_LOGO_DEFAULT = 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg';
+
+const buildDefaultColumns = (img: string, consoleLogo: string): PickerColumn[] => [
+  {
+    header: 'Managed Cloud',
+    headerClass: 'picker-header--nf-primary',
+    links: [
+      { label: 'NetFoundry Console', to: '#',                  logo: consoleLogo,                          description: 'Cloud-managed orchestration and global fabric control.' },
+      { label: 'Frontdoor',          to: '/docs/frontdoor',    logo: `${img}/frontdoor-sm-logo.svg`,       description: 'Secure application access gateway.' },
+    ],
+  },
+  {
+    header: 'Open Source',
+    headerClass: 'picker-header--nf-secondary',
+    links: [
+      { label: 'OpenZiti', to: '/docs/openziti', logo: `${img}/openziti-sm-logo.svg`,                                                          description: 'Programmable zero-trust mesh infrastructure.' },
+      { label: 'zrok',     to: '/docs/zrok',     logo: `${img}/zrok-1.0.0-rocket-purple.svg`, logoDark: `${img}/zrok-1.0.0-rocket-green.svg`, description: 'Secure peer-to-peer sharing built on OpenZiti.' },
+    ],
+  },
+  {
+    header: 'Your own infrastructure',
+    headerClass: 'picker-header--nf-tertiary',
+    links: [
+      { label: 'Self-Hosted', to: '/docs/selfhosted', logo: `${img}/onprem-sm-logo.svg`, description: 'Deploy the full stack in your own environment.' },
+      { label: 'zLAN',        to: '/docs/zlan',        logo: `${img}/zlan-logo.svg`,     description: 'Zero-trust access for OT networks.' },
+    ],
+  },
+];
+
 export default function ProductPicker({label = 'Products', columns, className}: Props) {
+  const {siteConfig} = useDocusaurusContext();
+  const themeConfig = useThemeConfig() as any;
+  const consoleLogo = themeConfig?.netfoundry?.consoleLogo ?? NF_LOGO_DEFAULT;
+  const img = `${siteConfig.url}${siteConfig.baseUrl}img`;
+  columns ??= buildDefaultColumns(img, consoleLogo);
   const wrapRef       = useRef<HTMLDivElement>(null);
   const hasEnteredPanel = useRef(false);
   const [open, setOpen] = useState(false);
@@ -91,9 +127,9 @@ export default function ProductPicker({label = 'Products', columns, className}: 
       {open && (
         <div
           className="nf-picker-panel"
+          onMouseDown={e => e.stopPropagation()}
           onMouseEnter={handlePanelEnter}
-          onMouseLeave={handlePanelLeave}
-          onClick={close}>
+          onMouseLeave={handlePanelLeave}>
           <div className="picker-content">
             {columns.map((col, i) => (
               <div key={i} className="picker-column">
