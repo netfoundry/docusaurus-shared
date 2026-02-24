@@ -150,31 +150,33 @@ export default {
             },
             items: [
                 {
-                    type: 'dropdown',
-                    label: 'Products',
+                    type: 'custom-productsMegaMenu',
                     position: 'left',
-                    className: 'nf-mega-dropdown',
-                    items: [
+                    label: 'Products',
+                    columns: [
                         {
-                            type: 'html',
-                            value: `
-                              <div class="mega-menu-content">
-                                <div class="mega-column">
-                                  <span class="mega-header mega-header--managed">Managed Cloud</span>
-                                  <a class="mega-link" href="#"><img src="https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg" class="mega-logo"><div class="mega-text"><strong>NetFoundry Console</strong><span>Cloud-managed orchestration and global fabric control.</span></div></a>
-                                  <a class="mega-link" href="/docs/frontdoor"><img src="https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg" class="mega-logo"><div class="mega-text"><strong>Frontdoor</strong><span>Secure application access gateway.</span></div></a>
-                                </div>
-                                <div class="mega-column">
-                                  <span class="mega-header mega-header--opensource">Open Source</span>
-                                  <a class="mega-link" href="/docs/openziti"><div class="mega-text"><strong>OpenZiti</strong><span>Programmable zero-trust mesh infrastructure.</span></div></a>
-                                  <a class="mega-link" href="/docs/zrok"><div class="mega-text"><strong>zrok</strong><span>Secure peer-to-peer sharing built on OpenZiti.</span></div></a>
-                                </div>
-                                <div class="mega-column">
-                                  <span class="mega-header mega-header--infra">Your own infrastructure</span>
-                                  <a class="mega-link" href="/docs/onprem"><div class="mega-text"><strong>Self-Hosted</strong><span>Deploy the full stack in your own environment.</span></div></a>
-                                  <a class="mega-link" href="/docs/zlan"><div class="mega-text"><strong>zLAN</strong><span>Zero-trust access for OT networks.</span></div></a>
-                                </div>
-                              </div>`,
+                            header: 'Managed Cloud',
+                            headerClass: 'mega-header--managed',
+                            links: [
+                                { label: 'NetFoundry Console', to: '#', logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg', description: 'Cloud-managed orchestration and global fabric control.' },
+                                { label: 'Frontdoor', to: '/docs/frontdoor', logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg', description: 'Secure application access gateway.' },
+                            ],
+                        },
+                        {
+                            header: 'Open Source',
+                            headerClass: 'mega-header--opensource',
+                            links: [
+                                { label: 'OpenZiti', to: '/docs/openziti', description: 'Programmable zero-trust mesh infrastructure.' },
+                                { label: 'zrok', to: '/docs/zrok', description: 'Secure peer-to-peer sharing built on OpenZiti.' },
+                            ],
+                        },
+                        {
+                            header: 'Your own infrastructure',
+                            headerClass: 'mega-header--infra',
+                            links: [
+                                { label: 'Self-Hosted', to: '/docs/onprem', description: 'Deploy the full stack in your own environment.' },
+                                { label: 'zLAN', to: '/docs/zlan', description: 'Zero-trust access for OT networks.' },
+                            ],
                         },
                     ],
                 },

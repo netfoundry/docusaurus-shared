@@ -70,7 +70,34 @@
     color: #22d3ee !important;
 }
 
-/* ── Mega-menu panel (fixed dropdown) ───────────────────────────────────── */
+/* ── ProductsMegaMenu panel (custom navbar item) ────────────────────────── */
+.nf-mega-panel {
+    position: fixed;
+    top: 3.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85vw;
+    max-width: 1000px;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 118, 255, 0.12);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    background: var(--ifm-card-background-color);
+    z-index: 1000;
+}
+
+/* CSS bridge: transparent strip above the panel eats the gap */
+.nf-mega-panel::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+    height: 20px;
+}
+
+/* ── Mega-menu panel (legacy html-type dropdown) ─────────────────────────── */
 
 /*
  * CSS bridge: an invisible pseudo-element that extends the panel's hit area
