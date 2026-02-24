@@ -10,6 +10,11 @@
 .picker-logo { width: 32px; height: 32px; object-fit: contain; flex-shrink: 0; margin-right: 0.8rem; }
 .picker-icon { width: 20px; height: 20px; margin-right: 0.8rem; background-color: var(--ifm-color-primary); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; display: inline-block; }
 
+/* Light/dark logo switching */
+.picker-logo--dark              { display: none; }
+[data-theme='dark'] .picker-logo--light { display: none; }
+[data-theme='dark'] .picker-logo--dark  { display: block; }
+
 /* zrok logo needs a subtle shadow in light mode (white logo on white bg) */
 [data-theme='light'] img[src*="zrok-logo"] { filter: drop-shadow(0 0 1.5px rgba(0, 0, 0, 0.55)); }
 

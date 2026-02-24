@@ -6,6 +6,7 @@ export type PickerLink = {
   label: string;
   to: string;
   logo?: string;
+  logoDark?: string;
   description?: string;
 };
 
@@ -99,7 +100,8 @@ export default function ProductPicker({label = 'Products', columns, className}: 
                 <span className={clsx('picker-header', col.headerClass)}>{col.header}</span>
                 {col.links.map((link, j) => (
                   <Link key={j} to={link.to} className="picker-link">
-                    {link.logo && <img src={link.logo} className="picker-logo" alt="" />}
+                    {link.logo && <img src={link.logo} className={clsx('picker-logo', link.logoDark && 'picker-logo--light')} alt="" />}
+                    {link.logoDark && <img src={link.logoDark} className="picker-logo picker-logo--dark" alt="" />}
                     <div className="picker-text">
                       <strong>{link.label}</strong>
                       {link.description && <span>{link.description}</span>}

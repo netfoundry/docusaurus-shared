@@ -159,23 +159,23 @@ export default {
                             headerClass: 'picker-header--managed',
                             links: [
                                 { label: 'NetFoundry Console', to: '#', logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg', description: 'Cloud-managed orchestration and global fabric control.' },
-                                { label: 'Frontdoor', to: '/docs/frontdoor', logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg', description: 'Secure application access gateway.' },
+                                { label: 'Frontdoor', to: '/docs/frontdoor', logo: 'https://netfoundry.io/docs/img/frontdoor-sm-logo.svg', description: 'Secure application access gateway.' },
                             ],
                         },
                         {
                             header: 'Open Source',
                             headerClass: 'picker-header--opensource',
                             links: [
-                                { label: 'OpenZiti', to: '/docs/openziti', description: 'Programmable zero-trust mesh infrastructure.' },
-                                { label: 'zrok', to: '/docs/zrok', description: 'Secure peer-to-peer sharing built on OpenZiti.' },
+                                { label: 'OpenZiti', to: '/docs/openziti', logo: 'https://netfoundry.io/docs/img/openziti-sm-logo.svg', description: 'Programmable zero-trust mesh infrastructure.' },
+                                { label: 'zrok', to: '/docs/zrok', logo: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-purple.svg', logoDark: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-green.svg', description: 'Secure peer-to-peer sharing built on OpenZiti.' },
                             ],
                         },
                         {
                             header: 'Your own infrastructure',
                             headerClass: 'picker-header--infra',
                             links: [
-                                { label: 'Self-Hosted', to: '/docs/onprem', description: 'Deploy the full stack in your own environment.' },
-                                { label: 'zLAN', to: '/docs/zlan', description: 'Zero-trust access for OT networks.' },
+                                { label: 'Self-Hosted', to: '/docs/onprem', logo: 'https://netfoundry.io/docs/img/onprem-sm-logo.svg', description: 'Deploy the full stack in your own environment.' },
+                                { label: 'zLAN', to: '/docs/zlan', logo: 'https://netfoundry.io/docs/img/zlan-logo.svg', description: 'Zero-trust access for OT networks.' },
                             ],
                         },
                     ],
