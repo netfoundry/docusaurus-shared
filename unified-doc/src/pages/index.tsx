@@ -10,12 +10,65 @@ const IMG   = 'https://netfoundry.io/docs/img';
 const NF_LOGO = 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg';
 
 const products = [
-  { id: 'console',    title: 'NetFoundry Console',     logo: NF_LOGO,                               tag: 'Managed',     accent: CYAN,  link: '#',              features: ['Fully managed SaaS', 'Global edge fabric', 'No infra to operate', 'Policy-based access'],                                               description: "The cloud-managed control plane for NetFoundry's global zero-trust fabric. Orchestrate identities, policies, and edge routers — no infrastructure to run." },
-  { id: 'openziti',   title: 'OpenZiti',               logo: `${IMG}/openziti-sm-logo.svg`,         tag: 'Open Source', accent: GREEN, link: '/docs/openziti',  description: 'The open-source zero-trust networking framework at the heart of the NetFoundry platform. Embed dark, app-native security directly in your code — no VPN, no perimeter.' },
-  { id: 'frontdoor',  title: 'Frontdoor',              logo: `${IMG}/frontdoor-sm-logo.svg`,        tag: 'Managed',     accent: CYAN,  link: '/docs/frontdoor', features: ['No agent or VPN required', 'Zero firewall rules', 'Identity-based access', 'Any app, any browser'],                                description: 'Secure, clientless access to any application — without a VPN or firewall rule. Expose nothing to the internet while giving authorized users instant access.' },
-  { id: 'zrok',       title: 'zrok',                   logo: `${IMG}/zrok-1.0.0-rocket-purple.svg`, tag: 'Open Source', accent: GREEN, link: '/docs/zrok',      description: 'Geo-scale secure sharing built on the OpenZiti mesh. Share services, files, or HTTP endpoints peer-to-peer — no open ports, no NAT traversal tricks.' },
-  { id: 'selfhosted', title: 'NetFoundry Self-Hosted', logo: `${IMG}/onprem-sm-logo.svg`,           tag: 'Self-Hosted', accent: CYAN,  link: '/docs/onprem',    features: ['Full infrastructure control', 'Air-gap compatible', 'On-prem or any cloud', 'Enterprise SLA'],                                      description: 'Deploy the full NetFoundry control plane and fabric in your own environment. Full sovereignty over your zero-trust infrastructure — on-prem, air-gapped, or any cloud.' },
-  { id: 'zlan',       title: 'zLAN',                   logo: `${IMG}/zlan-logo.svg`,                tag: 'OT Security', accent: CYAN,  link: '/docs/zlan',      features: ['Deep OT/IT traffic visibility', 'Identity-aware micro-segmentation', 'Centralized zero-trust policy', 'Built on NetFoundry Self-Hosted'], description: 'Identity-aware micro-segmentation firewall for operational technology networks. Deep traffic visibility, centralized policy, and zero-trust access control for OT environments.' },
+  {
+    id: 'console',
+    title: 'NetFoundry Console',
+    logo: NF_LOGO,
+    tag: 'Managed',
+    accent: CYAN,
+    link: '#',
+    features: ['Fully managed SaaS', 'Global edge fabric', 'No infra to operate', 'Policy-based access'],
+    description: "The cloud-managed control plane for NetFoundry's global zero-trust fabric. Orchestrate identities, policies, and edge routers — no infrastructure to run."
+  },
+  {
+    id: 'openziti',
+    title: 'OpenZiti',
+    logo: `${IMG}/openziti-sm-logo.svg`,
+    tag: 'Open Source',
+    accent: GREEN,
+    link: '/openziti/learn/introduction',
+    description: 'The open-source zero-trust networking framework at the heart of the NetFoundry platform. Embed dark, app-native security directly in your code — no VPN, no perimeter.'
+  },
+  {
+    id: 'frontdoor',
+    title: 'Frontdoor',
+    logo: `${IMG}/frontdoor-sm-logo.svg`,
+    tag: 'Managed',
+    accent: CYAN,
+    link: '/frontdoor/intro',
+    features: ['No agent or VPN required', 'Zero firewall rules', 'Identity-based access', 'Any app, any browser'],
+    description: 'Secure, clientless access to any application — without a VPN or firewall rule. Expose nothing to the internet while giving authorized users instant access.'
+  },
+  {
+    id: 'zrok',
+    title: 'zrok',
+    logo: `${IMG}/zrok-1.0.0-rocket-purple.svg`,
+    tag: 'Open Source',
+    accent: GREEN,
+    link: '/zrok',
+    description: 'Geo-scale secure sharing built on the OpenZiti mesh. Share services, files, or HTTP endpoints peer-to-peer — no open ports, no NAT traversal tricks.'
+  },
+  {
+    id:
+    'selfhosted',
+    title: 'NetFoundry Self-Hosted',
+    logo: `${IMG}/onprem-sm-logo.svg`,
+    tag: 'Self-Hosted',
+    accent: CYAN,
+    link: '/selfhosted/intro',
+    features: ['Full infrastructure control', 'Air-gap compatible', 'On-prem or any cloud', 'Enterprise SLA'],
+    description: 'Deploy the full NetFoundry control plane and fabric in your own environment. Full sovereignty over your zero-trust infrastructure — on-prem, air-gapped, or any cloud.'
+  },
+  {
+    id: 'zlan',
+    title: 'zLAN',
+    logo: `${IMG}/zlan-logo.svg`,
+    tag: 'OT Security',
+    accent: CYAN,
+    link: '/zlan/intro',
+    features: ['Deep OT/IT traffic visibility', 'Identity-aware micro-segmentation', 'Centralized zero-trust policy', 'Built on NetFoundry Self-Hosted'],
+    description: 'Identity-aware micro-segmentation firewall for operational technology networks. Deep traffic visibility, centralized policy, and zero-trust access control for OT environments.'
+  },
 ];
 
 type Product = (typeof products)[number];
@@ -51,7 +104,7 @@ export default function Home(): JSX.Element {
           <h1 className={styles['nf-hero-title']}>NetFoundry <span className={styles['nf-green-text']}>Docs</span></h1>
           <p className={styles['nf-hero-subtext']}>Secure, high-performance networking for the modern era.</p>
           <div className={styles['nf-hero-ctas']}>
-            <Link className={styles['nf-btn-primary']} to="/docs/frontdoor">Get Started</Link>
+            <Link className={styles['nf-btn-primary']} to="/frontdoor/intro">Get Started</Link>
             <a className={styles['nf-btn-ghost']} href="https://netfoundry.io/lets-talk/">Request Demo</a>
           </div>
         </div>
