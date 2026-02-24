@@ -12,6 +12,7 @@
   "scripts": {
     "clean": "node scripts/clean.mjs",
     "build": "yarn clean && tsc && yarn build:css",
+    "watch": "tsc --watch",
     "build:css": "node scripts/build-css.mjs",
     "test": "jest",
     "prepublishOnly": "yarn build && yarn test"
