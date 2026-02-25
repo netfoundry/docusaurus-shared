@@ -1976,6 +1976,11 @@ code {
     border-color: var(--ziti-code-block-border-color);
 }
 
+pre code {
+    /* Protect fenced code block indentation from bare `code { white-space: nowrap }` overrides. */
+    white-space: pre;
+}
+
 code p {
 }
 
