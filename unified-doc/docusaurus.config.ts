@@ -385,7 +385,7 @@ const config: Config = {
                         },
                         {
                             label: 'Frontdoor',
-                            to: '/frontdoor/intro',
+                            to: '/docs/frontdoor/intro',
                             logo: 'https://netfoundry.io/docs/img/frontdoor-sm-logo.svg',
                             description: 'Secure application access gateway.',
                         },
@@ -396,13 +396,13 @@ const config: Config = {
                     links: [
                         {
                             label: 'OpenZiti',
-                            to: '/openziti/learn/introduction',
+                            to: '/docs/openziti/learn/introduction',
                             logo: 'https://netfoundry.io/docs/img/openziti-sm-logo.svg',
                             description: 'Programmable zero-trust mesh infrastructure.',
                         },
                         {
                             label: 'zrok',
-                            to: '/zrok',
+                            to: '/docs/zrok/getting-started',
                             logo: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-purple.svg',
                             logoDark: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-green.svg',
                             description: 'Secure peer-to-peer sharing built on OpenZiti.',
@@ -414,13 +414,13 @@ const config: Config = {
                     links: [
                         {
                             label: 'Self-Hosted',
-                            to: '/selfhosted/intro',
+                            to: '/docs/selfhosted/intro',
                             logo: 'https://netfoundry.io/docs/img/onprem-sm-logo.svg',
                             description: 'Deploy the full stack in your own environment.',
                         },
                         {
                             label: 'zLAN',
-                            to: '/zlan/intro',
+                            to: '/docs/zlan/intro',
                             logo: 'https://netfoundry.io/docs/img/zlan-logo.svg',
                             description: 'Zero-trust access for OT networks.',
                         },
