@@ -1974,10 +1974,11 @@ code {
     background: var(--ziti-code-block-background-color);
     color: var(--ziti-code-block-font-color);
     border-color: var(--ziti-code-block-border-color);
+    white-space: nowrap;
 }
 
 pre code {
-    /* Protect fenced code block indentation from bare `code { white-space: nowrap }` overrides. */
+    /* Fenced code blocks must preserve indentation — override the nowrap above. */
     white-space: pre;
 }
 
