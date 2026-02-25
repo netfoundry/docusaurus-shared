@@ -12,11 +12,11 @@ const mapTitle = (p: string) => {
     const rootSegment = segments[1] === 'docs' ? segments[2] : segments[1];
     const checkPath = (segment: string) => rootSegment === segment;
 
-    if (checkPath('frontdoor')) return {includeNFLogo: true, to: '/frontdoor', alt:'Frontdoor', logoLight: `/img/frontdoor-sm-logo.svg`, logoDark: `/img/frontdoor-sm-logo.svg`};
-    if (checkPath('selfhosted')) return {includeNFLogo: true, to: '/selfhosted',alt:'Self-Hosted', logoLight: `/img/onprem-sm-logo.svg`, logoDark: `/img/onprem-sm-logo.svg`};
-    if (checkPath('openziti')) return {includeNFLogo: true, to: '/openziti',alt:'OpenZiti', logoLight: `/img/openziti-sm-logo.svg`, logoDark: `/img/openziti-sm-logo.svg`};
-    if (checkPath('zlan')) return {includeNFLogo: true, to: '/zlan', alt:'zlan', logoLight: `/img/zlan-logo.svg`, logoDark: `/img/zlan-logo.svg`};
-    if (checkPath('zrok')) return {text: '', includeNFLogo: true, to: '/zrok', alt:'zrok', logoLight: `/img/zrok-1.0.0-rocket-purple.svg`, logoDark: `/img/zrok-1.0.0-rocket-green.svg`};
+    if (checkPath('frontdoor')) return {includeNFLogo: true, to: '/docs/frontdoor', alt:'Frontdoor', logoLight: `/img/frontdoor-sm-logo.svg`, logoDark: `/img/frontdoor-sm-logo.svg`};
+    if (checkPath('selfhosted')) return {includeNFLogo: true, to: '/docs/selfhosted',alt:'Self-Hosted', logoLight: `/img/onprem-sm-logo.svg`, logoDark: `/img/onprem-sm-logo.svg`};
+    if (checkPath('openziti')) return {includeNFLogo: true, to: '/docs/openziti',alt:'OpenZiti', logoLight: `/img/openziti-sm-logo.svg`, logoDark: `/img/openziti-sm-logo.svg`};
+    if (checkPath('zlan')) return {includeNFLogo: true, to: '/docs/zlan', alt:'zlan', logoLight: `/img/zlan-logo.svg`, logoDark: `/img/zlan-logo.svg`};
+    if (checkPath('zrok')) return {text: '', includeNFLogo: true, to: '/docs/zrok', alt:'zrok', logoLight: `/img/zrok-1.0.0-rocket-purple.svg`, logoDark: `/img/zrok-1.0.0-rocket-green.svg`};
     return {
         includeNFLogo: false,
         to: '/',
