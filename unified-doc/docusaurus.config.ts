@@ -227,6 +227,21 @@ const config: Config = {
         '@docusaurus/theme-search-algolia',
     ],
     plugins: [
+        function emitDocsBase() {
+            return {
+                name: 'emit-docs-base',
+                async loadContent() {
+                    const fs = require('fs');
+                    const dir = path.resolve(__dirname, 'src/generated');
+                    if (!fs.existsSync(dir)) fs.mkdirSync(dir, {recursive: true});
+                    const outPath = path.resolve(dir, 'docsBase.ts');
+                    const docsLinkBase = `${docsBase}${isVercel ? 'docs/' : ''}`;
+                    const content = `// auto-generated — do not commit\nexport const DOCS_BASE = '${docsLinkBase}';\n`;
+                    fs.writeFileSync(outPath, content);
+                    console.log(`\n✅  [emit-docs-base] wrote DOCS_BASE='${docsLinkBase}' → ${outPath}\n`);
+                },
+            };
+        },
         '@docusaurus/plugin-debug',
         function webpackAliases() {
             return {

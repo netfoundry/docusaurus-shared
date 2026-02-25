@@ -1,8 +1,8 @@
 import React, {JSX} from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
-import useBaseUrl from '@docusaurus/useBaseUrl';
 import clsx from 'clsx';
+import {DOCS_BASE} from '../generated/docsBase';
 import styles from './index.module.css';
 
 const CYAN  = '#22d3ee';
@@ -27,7 +27,7 @@ const products = [
     logo: `${IMG}/openziti-sm-logo.svg`,
     tag: 'Open Source',
     accent: GREEN,
-    link: '/openziti/learn/introduction',
+    link: `${DOCS_BASE}openziti/learn/introduction`,
     description: 'The open-source zero-trust networking framework at the heart of the NetFoundry platform. Embed dark, app-native security directly in your code — no VPN, no perimeter.'
   },
   {
@@ -36,7 +36,7 @@ const products = [
     logo: `${IMG}/frontdoor-sm-logo.svg`,
     tag: 'Managed',
     accent: CYAN,
-    link: '/frontdoor/intro',
+    link: `${DOCS_BASE}frontdoor/intro`,
     features: ['No agent or VPN required', 'Zero firewall rules', 'Identity-based access', 'Any app, any browser'],
     description: 'Secure, clientless access to any application — without a VPN or firewall rule. Expose nothing to the internet while giving authorized users instant access.'
   },
@@ -46,7 +46,7 @@ const products = [
     logo: `${IMG}/zrok-1.0.0-rocket-purple.svg`,
     tag: 'Open Source',
     accent: GREEN,
-    link: '/zrok',
+    link: `${DOCS_BASE}zrok/getting-started`,
     description: 'Geo-scale secure sharing built on the OpenZiti mesh. Share services, files, or HTTP endpoints peer-to-peer — no open ports, no NAT traversal tricks.'
   },
   {
@@ -56,7 +56,7 @@ const products = [
     logo: `${IMG}/onprem-sm-logo.svg`,
     tag: 'Self-Hosted',
     accent: CYAN,
-    link: '/selfhosted/intro',
+    link: `${DOCS_BASE}selfhosted/intro`,
     features: ['Full infrastructure control', 'Air-gap compatible', 'On-prem or any cloud', 'Enterprise SLA'],
     description: 'Deploy the full NetFoundry control plane and fabric in your own environment. Full sovereignty over your zero-trust infrastructure — on-prem, air-gapped, or any cloud.'
   },
@@ -66,7 +66,7 @@ const products = [
     logo: `${IMG}/zlan-logo.svg`,
     tag: 'OT Security',
     accent: CYAN,
-    link: '/zlan/intro',
+    link: `${DOCS_BASE}zlan/intro`,
     features: ['Deep OT/IT traffic visibility', 'Identity-aware micro-segmentation', 'Centralized zero-trust policy', 'Built on NetFoundry Self-Hosted'],
     description: 'Identity-aware micro-segmentation firewall for operational technology networks. Deep traffic visibility, centralized policy, and zero-trust access control for OT environments.'
   },
@@ -77,10 +77,9 @@ const byId = Object.fromEntries(products.map(p => [p.id, p])) as Record<string, 
 
 function BentoCard({product, featured = false}: {product: Product; featured?: boolean}): JSX.Element {
   const accentMod = product.accent === CYAN ? styles['nf-bento-card--accent-cyan'] : styles['nf-bento-card--accent-green'];
-  const link = useBaseUrl(product.link);
   return (
     <div className={styles['nf-bento-wrap']}>
-      <Link to={link} className={clsx(styles['nf-bento-card'], featured && styles['nf-bento-card--featured'], accentMod)} style={{borderTopColor: product.accent}}>
+      <Link to={product.link} className={clsx(styles['nf-bento-card'], featured && styles['nf-bento-card--featured'], accentMod)} style={{borderTopColor: product.accent}}>
         <span className={styles['nf-card-badge']}>{product.tag}</span>
         <div className={styles['nf-card-header']}>
           {product.logo && <img src={product.logo} alt={product.title} className={styles['nf-card-logo']} />}
@@ -99,7 +98,6 @@ function BentoCard({product, featured = false}: {product: Product; featured?: bo
 }
 
 export default function Home(): JSX.Element {
-  const getStartedUrl = useBaseUrl('/frontdoor/intro');
   return (
     <Layout title="NetFoundry Docs">
       <header className={styles['nf-hero-stage']}>
@@ -107,7 +105,7 @@ export default function Home(): JSX.Element {
           <h1 className={styles['nf-hero-title']}>NetFoundry <span className={styles['nf-green-text']}>Docs</span></h1>
           <p className={styles['nf-hero-subtext']}>Secure, high-performance networking for the modern era.</p>
           <div className={styles['nf-hero-ctas']}>
-            <Link className={styles['nf-btn-primary']} to={getStartedUrl}>Get Started</Link>
+            <Link className={styles['nf-btn-primary']} to={`${DOCS_BASE}frontdoor/intro`}>Get Started</Link>
             <a className={styles['nf-btn-ghost']} href="https://netfoundry.io/lets-talk/">Request Demo</a>
           </div>
         </div>
