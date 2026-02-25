@@ -1974,11 +1974,7 @@ code {
     background: var(--ziti-code-block-background-color);
     color: var(--ziti-code-block-font-color);
     border-color: var(--ziti-code-block-border-color);
-<<<<<<< HEAD
     white-space: pre;
-=======
-    white-space: nowrap;
->>>>>>> main
 }
 
 code p {
