@@ -43,32 +43,31 @@ export default function NavbarLogo(): JSX.Element {
 
     return (
         <>
-        <Link className="navbar__brand" to="https://netfoundry.io">
-            <ThemedImage
-                className="navbar__logo_nf"
-                alt={title.alt}
-                sources={{
-                    light: nfLogoLight,
-                    dark:  nfLogoDark,
-                }}
-            />
-        </Link>
-        {console.log('[NavbarLogo] title:', JSON.stringify(title))}
-        {(title.logoLight || title.text) && (
-        <Link className="navbar__brand" to={title.to}>
-            {title.logoLight && (
-            <ThemedImage
-                className="navbar__logo"
-                alt={title.alt} attr="blah"
-                sources={{
-                    light: logoLight,
-                    dark:  logoDark,
-                }}
-            />
+            <Link className="navbar__brand" to="https://netfoundry.io">
+                <ThemedImage
+                    className="navbar__logo_nf"
+                    alt={title.alt}
+                    sources={{
+                        light: nfLogoLight,
+                        dark:  nfLogoDark,
+                    }}
+                />
+            </Link>
+            {(title.logoLight || title.text) && (
+                <Link className="navbar__brand" to={title.to}>
+                    {title.logoLight && (
+                        <ThemedImage
+                            className="navbar__logo"
+                            alt={title.alt}
+                            sources={{
+                                light: logoLight,
+                                dark:  logoDark,
+                            }}
+                        />
+                    )}
+                    {title.text && <span className="navbar__title">{title.text}</span>}
+                </Link>
             )}
-            {title.text && <span className="navbar__title">{title.text}</span>}
-        </Link>
-        )}
         </>
     );
 }
