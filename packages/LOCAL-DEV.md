@@ -38,22 +38,44 @@ lives in `remotes/` with its own `docusaurus.config.ts` (for standalone use) and
 
 ## Step 1: Develop with test-site
 
-The test-site references the theme via local path — React component changes reflect
-instantly with hot reload:
+The test-site references the theme via local path. Start the dev server:
 
 ```bash
 cd packages/test-site
 yarn start
 ```
 
-Edit files in `packages/docusaurus-theme/src/*` — HMR works automatically.
+### What needs a rebuild
 
-**No build step needed** for component/JS changes.
+| What you changed | What to do |
+|---|---|
+| `src/` components (React/TS) | Nothing — webpack HMR picks them up instantly |
+| `theme/` component overrides | Rebuild needed — see watch mode below |
+| `css/` stylesheets | Rebuild needed — see below |
 
-### CSS changes require a theme build
+### Watching `theme/` changes during development
 
-Theme CSS files (in `packages/docusaurus-theme/css/`) are loaded from the built
-package, not watched by the dev server. After editing CSS:
+`theme/` overrides (e.g. swizzled Docusaurus components) are compiled to `dist/theme/`
+and served from there. Run the TypeScript compiler in watch mode in a second terminal
+so changes are recompiled automatically:
+
+```bash
+# Terminal 1 — theme watcher
+cd packages/docusaurus-theme
+yarn watch
+
+# Terminal 2 — test site dev server
+cd packages/test-site
+yarn start
+```
+
+On every save in `theme/`, `tsc --watch` recompiles in ~1 second and Docusaurus
+hot-reloads the result.
+
+### CSS changes
+
+Theme CSS files (`packages/docusaurus-theme/css/`) are not watched automatically.
+After editing CSS run a full build:
 
 ```bash
 cd packages/docusaurus-theme
@@ -156,7 +178,8 @@ yarn build
 
 | Stage | Theme build? | Command |
 |-------|-------------|---------|
-| Dev with test-site (JS/React) | No | `cd packages/test-site && yarn start` |
+| Dev with test-site (`src/` components) | No | `cd packages/test-site && yarn start` |
+| Dev with test-site (`theme/` overrides) | Watch mode | `cd packages/docusaurus-theme && yarn watch` |
 | Dev with test-site (CSS) | Yes | `cd packages/docusaurus-theme && yarn build` |
 | Test with file: | Yes | `yarn build` then remote `yarn install --force` |
 | Publish | Yes | `npm version patch && npm publish` |

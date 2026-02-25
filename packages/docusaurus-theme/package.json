@@ -1,6 +1,6 @@
 {
   "name": "@netfoundry/docusaurus-theme",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "NetFoundry Docusaurus theme with shared layout, footer, and styling",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -12,6 +12,7 @@
   "scripts": {
     "clean": "node scripts/clean.mjs",
     "build": "yarn clean && tsc && yarn build:css",
+    "watch": "tsc --watch",
     "build:css": "node scripts/build-css.mjs",
     "test": "jest",
     "prepublishOnly": "yarn build && yarn test"
@@ -36,7 +37,11 @@
       "types": "./dist/src/node.d.ts",
       "default": "./dist/src/node.js"
     },
-    "./css/*": "./css/*"
+    "./css/*": "./css/*",
+    "./theme/NavbarItem/types/ProductPicker": {
+      "types": "./theme/NavbarItem/types/ProductPicker/index.tsx",
+      "default": "./theme/NavbarItem/types/ProductPicker/index.tsx"
+    }
   },
   "peerDependencies": {
     "@docusaurus/core": "^3",

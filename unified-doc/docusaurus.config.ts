@@ -87,11 +87,11 @@ const REMARK_MAPPINGS = [
     { from: '@openzitidocs', to: `${docsBase}openziti`},
     { from: '@zrokdocs', to: `${docsBase}zrok`},
     { from: '@static', to: docsBase},
-    { from: '/openziti/',   to: `${docsBase}${routeBase('openziti')}/`   },
-    { from: '/frontdoor/',  to: `${docsBase}${routeBase('frontdoor')}/`  },
-    { from: '/selfhosted/', to: `${docsBase}${routeBase('selfhosted')}/` },
-    { from: '/zrok/',       to: `${docsBase}${routeBase('zrok')}/`       },
-    { from: '/zlan/',       to: `${docsBase}${routeBase('zlan')}/`       },
+    { from: '/openziti',   to: `${docsBase}${routeBase('openziti')}`   },
+    { from: '/frontdoor',  to: `${docsBase}${routeBase('frontdoor')}`  },
+    { from: '/selfhosted', to: `${docsBase}${routeBase('selfhosted')}` },
+    { from: '/zrok',       to: `${docsBase}${routeBase('zrok')}`       },
+    { from: '/zlan',       to: `${docsBase}${routeBase('zlan')}`       },
 ];
 
 console.log("CANONICAL URL          : " + cfg.docusaurus.url);
@@ -217,12 +217,31 @@ const config: Config = {
     },
     themes: [
         ['@docusaurus/theme-classic', {
-            customCss: require.resolve('./src/css/custom.css'),
+            customCss: [
+                require.resolve('./src/css/custom.css'),
+                require.resolve('@netfoundry/docusaurus-theme/css/product-picker.css'),
+            ],
         }],
+        '@netfoundry/docusaurus-theme',
         '@docusaurus/theme-mermaid',
         '@docusaurus/theme-search-algolia',
     ],
     plugins: [
+        function emitDocsBase() {
+            return {
+                name: 'emit-docs-base',
+                async loadContent() {
+                    const fs = require('fs');
+                    const dir = path.resolve(__dirname, 'src/generated');
+                    if (!fs.existsSync(dir)) fs.mkdirSync(dir, {recursive: true});
+                    const outPath = path.resolve(dir, 'docsBase.ts');
+                    const docsLinkBase = `${docsBase}${isVercel ? 'docs/' : ''}`;
+                    const content = `// auto-generated — do not commit\nexport const DOCS_BASE = '${docsLinkBase}';\n`;
+                    fs.writeFileSync(outPath, content);
+                    console.log(`\n✅  [emit-docs-base] wrote DOCS_BASE='${docsLinkBase}' → ${outPath}\n`);
+                },
+            };
+        },
         '@docusaurus/plugin-debug',
         function webpackAliases() {
             return {
@@ -254,11 +273,11 @@ const config: Config = {
         },
 
         ['@docusaurus/plugin-content-pages',{path: 'src/pages',routeBasePath: '/'}],
-        build(BUILD_FLAGS.FRONTDOOR) && ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: '/frontdoor'}],
-        build(BUILD_FLAGS.SELFHOSTED) && ['@docusaurus/plugin-content-pages',{id: `selfhosted-pages`, path: `${selfhosted}/docusaurus/src/pages`, routeBasePath: '/selfhosted'}],
-        build(BUILD_FLAGS.OPENZITI) && ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: '/openziti'}],
-        build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: '/zlan'}],
-        build(BUILD_FLAGS.ZROK) && ['@docusaurus/plugin-content-pages',{id: `zrok-pages`, path: `${zrokRoot}/src/pages`, routeBasePath: '/zrok'}],
+        build(BUILD_FLAGS.FRONTDOOR) && ['@docusaurus/plugin-content-pages',{id: `frontdoor-pages`, path: `${frontdoor}/docusaurus/src/pages`, routeBasePath: `/${routeBase('frontdoor')}`}],
+        build(BUILD_FLAGS.SELFHOSTED) && ['@docusaurus/plugin-content-pages',{id: `selfhosted-pages`, path: `${selfhosted}/docusaurus/src/pages`, routeBasePath: `/${routeBase('selfhosted')}`}],
+        build(BUILD_FLAGS.OPENZITI) && ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: `/${routeBase('openziti')}`}],
+        build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: `/${routeBase('zlan')}`}],
+        build(BUILD_FLAGS.ZROK) && ['@docusaurus/plugin-content-pages',{id: `zrok-pages`, path: `${zrokRoot}/src/pages`, routeBasePath: `/${routeBase('zrok')}`}],
         build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, routeBase('zrok'))),
         build(BUILD_FLAGS.SELFHOSTED) && [
             '@docusaurus/plugin-content-docs',
@@ -353,6 +372,62 @@ const config: Config = {
         build(BUILD_FLAGS.SELFHOSTED) && onpremRedirects(routeBase('selfhosted')),
     ].filter(Boolean),
     themeConfig: {
+        netfoundry: {
+            productPickerColumns: [
+                {
+                    header: 'Managed Cloud',
+                    links: [
+                        {
+                            label: 'NetFoundry Console',
+                            to: '#',
+                            logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
+                            description: 'Cloud-managed orchestration and global fabric control.',
+                        },
+                        {
+                            label: 'Frontdoor',
+                            to: '/docs/frontdoor/intro',
+                            logo: 'https://netfoundry.io/docs/img/frontdoor-sm-logo.svg',
+                            description: 'Secure application access gateway.',
+                        },
+                    ],
+                },
+                {
+                    header: 'Open Source',
+                    links: [
+                        {
+                            label: 'OpenZiti',
+                            to: '/docs/openziti/learn/introduction',
+                            logo: 'https://netfoundry.io/docs/img/openziti-sm-logo.svg',
+                            description: 'Programmable zero-trust mesh infrastructure.',
+                        },
+                        {
+                            label: 'zrok',
+                            to: '/docs/zrok/getting-started',
+                            logo: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-purple.svg',
+                            logoDark: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-green.svg',
+                            description: 'Secure peer-to-peer sharing built on OpenZiti.',
+                        },
+                    ],
+                },
+                {
+                    header: 'Your own infrastructure',
+                    links: [
+                        {
+                            label: 'Self-Hosted',
+                            to: '/docs/selfhosted/intro',
+                            logo: 'https://netfoundry.io/docs/img/onprem-sm-logo.svg',
+                            description: 'Deploy the full stack in your own environment.',
+                        },
+                        {
+                            label: 'zLAN',
+                            to: '/docs/zlan/intro',
+                            logo: 'https://netfoundry.io/docs/img/zlan-logo.svg',
+                            description: 'Zero-trust access for OT networks.',
+                        },
+                    ],
+                },
+            ],
+        },
         docs: {
             sidebar: {
                 hideable: false,
@@ -366,20 +441,12 @@ const config: Config = {
         image: 'https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg',
         navbar: {
             hideOnScroll: false,
-            title: 'NetFoundry Documentation',
-            logo: {
-                alt: 'NetFoundry Logo',
-                src: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
-            },
+            title: '',
             items: [
                 {
-                    label: 'Docs',
+                    type: 'custom-productPicker',
                     position: 'left',
-                    items: [
-                        { to: '/selfhosted/intro', label: 'Self-Hosted' },
-                        { to: '/frontdoor/intro', label: 'Frontdoor' },
-                        { to: '/openziti/learn/introduction', label: 'OpenZiti' },
-                    ],
+                    label: 'Products',
                 },
             ],
         },

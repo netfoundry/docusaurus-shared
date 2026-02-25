@@ -14,115 +14,21 @@ import {useNavbarMobileSidebar} from "@docusaurus/theme-common/internal";
 type Props = React.ComponentProps<typeof OriginalNavbarContent>;
 type Item = any;
 
-// change to '' if you don't use /docs
 const DOCS_PREFIX = '/docs';
 
-const defaultItems: Item[] = [
-    // {label: 'NetFoundry', to: '/', position: 'left'},
-    // {label: 'Downloads', to: '/downloads', position: 'left'},
-    // {label: 'Blog', to: '/blog', position: 'left'},
-];
+const productPicker: Item = { type: 'custom-productPicker', position: 'left' };
 
-const netfoundryDocs = {to: `https://support.netfoundry.io/hc/en-us/categories/360000991011-Docs-Guides`, label: 'NetFoundry SaaS'};
-const nfFrontDoorDocs = {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor'};
-const onPremDocs = {to: `${DOCS_PREFIX}/selfhosted/intro`, label: 'Self-Hosted'};
-const zlanDocs = {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLAN'};
-const ozDocs =  {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'};
-const zrokDocs = {to: `${DOCS_PREFIX}/zrok/getting-started`, label: 'zrok'};
-
-const openZitiNav: Item[] = [
-    {
-        label: 'OpenZiti Docs',
-        to: `${DOCS_PREFIX}/openziti/learn/introduction`,
-        position: 'left',
-        type: 'dropdown',
-        items: [
-            netfoundryDocs,
-            nfFrontDoorDocs,
-            onPremDocs,
-            zlanDocs,
-            zrokDocs,
-        ],
-    }
-];
-
-const onpremNav: Item[] = [
-    {
-        label: 'Self-Hosted Docs',
-        to: `${DOCS_PREFIX}/selfhosted/intro`,
-        position: 'left',
-        type: 'dropdown',
-        items: [
-            netfoundryDocs,
-            nfFrontDoorDocs,
-            ozDocs,
-            zlanDocs,
-            zrokDocs,
-        ],
-    },
-];
-
-const frontdoorNav: Item[] = [
-    {
-        label: 'Frontdoor Docs',
-        to: `${DOCS_PREFIX}/frontdoor/intro`,
-        position: 'left',
-        type: 'dropdown',
-        items: [
-            netfoundryDocs,
-            onPremDocs,
-            ozDocs,
-            zlanDocs,
-            zrokDocs,
-        ],
-    },
-];
-
-const zlanNav: Item[] = [
-    {
-        label: 'zLAN Docs',
-        to: `${DOCS_PREFIX}/zlan/intro`,
-        position: 'left',
-        type: 'dropdown',
-        items: [
-            netfoundryDocs,
-            nfFrontDoorDocs,
-            onPremDocs,
-            ozDocs,
-            zrokDocs,
-        ],
-    },
-];
-
-const zrokNav: Item[] = [
-    {
-        label: 'zrok Docs',
-        to: `${DOCS_PREFIX}/zrok/getting-started`,
-        position: 'left',
-        type: 'dropdown',
-        items: [
-            netfoundryDocs,
-            nfFrontDoorDocs,
-            onPremDocs,
-            ozDocs,
-            zlanDocs,
-        ],
-    },
-    {
-        type: 'docsVersionDropdown',
-        docsPluginId: 'zrok',
-        dropdownItemsBefore: [],
-        dropdownItemsAfter: [],
-    },
-];
+const sectionLabel = (p: string): string => {
+    if (p.startsWith(`${DOCS_PREFIX}/frontdoor`))  return 'Frontdoor';
+    if (p.startsWith(`${DOCS_PREFIX}/selfhosted`)) return 'Self-Hosted';
+    if (p.startsWith(`${DOCS_PREFIX}/openziti`))   return 'OpenZiti';
+    if (p.startsWith(`${DOCS_PREFIX}/zlan`))        return 'zLAN';
+    if (p.startsWith(`${DOCS_PREFIX}/zrok`))        return 'zrok';
+    return 'Products';
+};
 
 const mapNavbar = (p: string): Item[] => {
-    if (p.startsWith(`${DOCS_PREFIX}/frontdoor`)) return frontdoorNav;
-    if (p.startsWith(`${DOCS_PREFIX}/selfhosted`)) return onpremNav;
-    if (p.startsWith(`${DOCS_PREFIX}/openziti`))  return openZitiNav;
-    if (p.startsWith(`${DOCS_PREFIX}/zlan`))  return zlanNav;
-    if (p.startsWith(`${DOCS_PREFIX}/zrok`))  return zrokNav;
-    return defaultItems;
+    return [{...productPicker, label: sectionLabel(p)}];
 };
 
 export default function NavbarContent(props: Props): JSX.Element {
@@ -136,9 +42,7 @@ export default function NavbarContent(props: Props): JSX.Element {
     const left = items.filter((i) => i.position !== 'right');
     const right = items.filter((i) => i.position === 'right');
 
-
     const mobileSidebar = useNavbarMobileSidebar();
-
 
     return (
         <div className="navbar__inner">
