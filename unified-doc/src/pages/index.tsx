@@ -1,6 +1,7 @@
 import React, {JSX} from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import clsx from 'clsx';
 import styles from './index.module.css';
 
@@ -76,9 +77,10 @@ const byId = Object.fromEntries(products.map(p => [p.id, p])) as Record<string, 
 
 function BentoCard({product, featured = false}: {product: Product; featured?: boolean}): JSX.Element {
   const accentMod = product.accent === CYAN ? styles['nf-bento-card--accent-cyan'] : styles['nf-bento-card--accent-green'];
+  const link = useBaseUrl(product.link);
   return (
     <div className={styles['nf-bento-wrap']}>
-      <Link to={product.link} className={clsx(styles['nf-bento-card'], featured && styles['nf-bento-card--featured'], accentMod)} style={{borderTopColor: product.accent}}>
+      <Link to={link} className={clsx(styles['nf-bento-card'], featured && styles['nf-bento-card--featured'], accentMod)} style={{borderTopColor: product.accent}}>
         <span className={styles['nf-card-badge']}>{product.tag}</span>
         <div className={styles['nf-card-header']}>
           {product.logo && <img src={product.logo} alt={product.title} className={styles['nf-card-logo']} />}
@@ -97,6 +99,7 @@ function BentoCard({product, featured = false}: {product: Product; featured?: bo
 }
 
 export default function Home(): JSX.Element {
+  const getStartedUrl = useBaseUrl('/frontdoor/intro');
   return (
     <Layout title="NetFoundry Docs">
       <header className={styles['nf-hero-stage']}>
@@ -104,7 +107,7 @@ export default function Home(): JSX.Element {
           <h1 className={styles['nf-hero-title']}>NetFoundry <span className={styles['nf-green-text']}>Docs</span></h1>
           <p className={styles['nf-hero-subtext']}>Secure, high-performance networking for the modern era.</p>
           <div className={styles['nf-hero-ctas']}>
-            <Link className={styles['nf-btn-primary']} to="/frontdoor/intro">Get Started</Link>
+            <Link className={styles['nf-btn-primary']} to={getStartedUrl}>Get Started</Link>
             <a className={styles['nf-btn-ghost']} href="https://netfoundry.io/lets-talk/">Request Demo</a>
           </div>
         </div>
