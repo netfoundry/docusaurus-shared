@@ -7,8 +7,10 @@ import type {DocusaurusConfig} from "@docusaurus/types/src/config";
 import ThemedImage from "@theme/ThemedImage";
 
 const mapTitle = (p: string) => {
-    // pathname may or may not include baseUrl prefix, so check for both /docs/X and /X patterns
-    const checkPath = (segment: string) => p.includes(`/${segment}`);
+    // Extract the root project segment, skipping optional /docs/ prefix
+    const segments = p.split('/');
+    const rootSegment = segments[1] === 'docs' ? segments[2] : segments[1];
+    const checkPath = (segment: string) => rootSegment === segment;
 
     if (checkPath('frontdoor')) return {includeNFLogo: true, to: '/frontdoor', alt:'Frontdoor', logoLight: `/img/frontdoor-sm-logo.svg`, logoDark: `/img/frontdoor-sm-logo.svg`};
     if (checkPath('selfhosted')) return {includeNFLogo: true, to: '/selfhosted',alt:'Self-Hosted', logoLight: `/img/onprem-sm-logo.svg`, logoDark: `/img/onprem-sm-logo.svg`};

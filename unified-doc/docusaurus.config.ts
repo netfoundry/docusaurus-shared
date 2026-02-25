@@ -13,6 +13,7 @@ import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-di
 import {pluginHotjar} from "@netfoundry/docusaurus-theme/node";
 import {PublishConfig} from 'src/components/docusaurus'
 import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
+import {onpremRedirects} from "./_remotes/selfhosted/docusaurus/docusaurus-plugin-onprem-docs.ts";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
@@ -86,11 +87,11 @@ const REMARK_MAPPINGS = [
     { from: '@openzitidocs', to: `${docsBase}openziti`},
     { from: '@zrokdocs', to: `${docsBase}zrok`},
     { from: '@static', to: docsBase},
-    { from: '/openziti/', to: `${docsBase}/openziti/` },
-    { from: '/frontdoor/', to: `${docsBase}/frontdoor/` },
-    { from: '/selfhosted/', to: `${docsBase}/selfhosted/` },
-    { from: '/zrok/', to: `${docsBase}/zrok/` },
-    { from: '/zlan/', to: `${docsBase}/zlan/` },
+    { from: '/openziti/',   to: `${docsBase}${routeBase('openziti')}/`   },
+    { from: '/frontdoor/',  to: `${docsBase}${routeBase('frontdoor')}/`  },
+    { from: '/selfhosted/', to: `${docsBase}${routeBase('selfhosted')}/` },
+    { from: '/zrok/',       to: `${docsBase}${routeBase('zrok')}/`       },
+    { from: '/zlan/',       to: `${docsBase}${routeBase('zlan')}/`       },
 ];
 
 console.log("CANONICAL URL          : " + cfg.docusaurus.url);
@@ -349,6 +350,7 @@ const config: Config = {
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
         [pluginHotjar, {}],
         ['@docusaurus/plugin-google-tag-manager', {id: `openziti-gtm`, containerId: cfg.google.tag}],
+        build(BUILD_FLAGS.SELFHOSTED) && onpremRedirects(routeBase('selfhosted')),
     ].filter(Boolean),
     themeConfig: {
         docs: {

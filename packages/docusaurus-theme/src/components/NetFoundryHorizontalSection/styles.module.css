@@ -3,7 +3,7 @@
   flex-grow: 1;
   flex-direction: column;
   align-items: center;
-  background-color: var(--ifm-background-color);
+  background-color: var(--nf-section-bg, var(--ifm-background-color));
   max-width: var(--ziti-max-width);
   width: 100%;
 }

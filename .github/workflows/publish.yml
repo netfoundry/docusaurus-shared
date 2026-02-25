@@ -99,6 +99,12 @@ jobs:
           DOCUSAURUS_URL: 'https://netfoundry.io'
         run: unified-doc/publish-unified-doc.sh -ds
 
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docusaurus-build-site
+          path: unified-doc/build-site/
+
 #  check-links:
 #    if: github.ref_name == 'main'
 #    needs: publish-docs-from-container

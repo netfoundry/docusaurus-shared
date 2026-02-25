@@ -285,7 +285,7 @@ if [ "${CLEAN:-0}" -eq 1 ]; then
 fi
 
 clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor  develop
-clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" selfhosted full-rename
+clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" selfhosted main
 clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti   main
 clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan       main
 clone_or_update "https://github.com/openziti/zrok.git"                           zrok       main
@@ -296,16 +296,16 @@ echo "========================================"
 echo "bd Directories in _remotes:"
 ls -la "$script_dir/_remotes" 2>/dev/null || echo "  (none)"
 echo "----------------------------------------"
-echo "bd Looking for build/ and .docusaurus/ dirs in remotes:"
-find "$script_dir/_remotes" -type d \( -name "build" -o -name ".docusaurus" \) 2>/dev/null || echo "  (none found)"
+echo "bd Looking for docusaurus build/ and .docusaurus/ dirs in remotes:"
+find "$script_dir/_remotes" -type d \( -path "*/docusaurus/build" -o -path "*/docusaurus/.docusaurus" -o -path "*/website/build" -o -path "*/website/.docusaurus" \) 2>/dev/null || echo "  (none found)"
 echo "bd Cleaning stale build artifacts from remotes..."
-find "$script_dir/_remotes" -type d \( -name "build" -o -name ".docusaurus" \) -exec rm -rf {} + 2>/dev/null || true
+find "$script_dir/_remotes" -type d \( -path "*/docusaurus/build" -o -path "*/docusaurus/.docusaurus" -o -path "*/website/build" -o -path "*/website/.docusaurus" \) -exec rm -rf {} + 2>/dev/null || true
 echo "========================================"
 
 echo "copying versionable docs locally..."
 "${script_dir}/sync-versioned-remote.sh" zrok
 
-# --- STEP 1: LINT ---
+# --- LINT DOCS ---
 lint_docs
 
 if [ "$LINT_ONLY" -eq 1 ]; then
@@ -313,7 +313,7 @@ if [ "$LINT_ONLY" -eq 1 ]; then
     exit 0
 fi
 
-# --- STEP 2: BUILD SDKs ---
+# --- BUILD OPENZITI SDK REFERENCE DOCS ---
 export SDK_ROOT_TARGET="${script_dir}/static/openziti/reference/developer/sdk"
 echo "creating openziti SDK target if necessary at: ${SDK_ROOT_TARGET}"
 mkdir -p "${SDK_ROOT_TARGET}"
@@ -321,7 +321,7 @@ mkdir -p "${SDK_ROOT_TARGET}"
 # -d = skip docusaurus build (unified-doc does its own build)
 "${script_dir}/_remotes/openziti/gendoc.sh" -d "${OTHER_FLAGS[@]}"
 
-# --- STEP 3: DOCUSAURUS BUILD ---
+# --- DOCUSAURUS BUILD ---
 pushd "${script_dir}" >/dev/null
 yarn install
 
@@ -341,7 +341,8 @@ echo "bd   output dir: build${BUILD_QUALIFIER}"
 echo "========================================"
 
 now=$(date)
-echo "$now" > "${script_dir}/static/build-time.txt"
+commit=$(git -C "${script_dir}" rev-parse --short HEAD 2>/dev/null || echo "unknown")
+printf "%s\n%s\n" "$now" "$commit" > "${script_dir}/static/build-time.txt"
 echo "BUILDING docs into: build${BUILD_QUALIFIER} at $now"
 
 MINIFY_FLAG=""
