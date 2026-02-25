@@ -321,10 +321,6 @@ mkdir -p "${SDK_ROOT_TARGET}"
 # -d = skip docusaurus build (unified-doc does its own build)
 "${script_dir}/_remotes/openziti/gendoc.sh" -d "${OTHER_FLAGS[@]}"
 
-# --- GENERATE SELFHOSTED CHANGELOG ---
-echo "Generating selfhosted changelog from CHANGELOG file..."
-node "${script_dir}/_remotes/selfhosted/docusaurus/scripts/generate-changelog.mjs"
-
 # --- DOCUSAURUS BUILD ---
 pushd "${script_dir}" >/dev/null
 yarn install
