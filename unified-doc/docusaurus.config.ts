@@ -25,51 +25,6 @@ const zlan = `./_remotes/zlan`;
 const isVercel = process.env.IS_VERCEL === 'true';
 const docsBase = isVercel ? '/' : '/docs/';
 
-// Redirect paths are relative to baseUrl. isVercel changes the prefix needed.
-// Production (baseUrl='/docs/'): /zrok/... | Vercel (baseUrl='/'): /docs/zrok/...
-const zrokBase = isVercel ? '/docs/zrok' : '/zrok';
-const zrokRedirects = [
-    // getting-started → get-started
-    { to: '/get-started/', from: ['/getting-started'] },
-    // category/guides → category/how-to-guides
-    { to: '/category/how-to-guides', from: ['/category/guides'] },
-    // guides/* → how-tos/*
-    { to: '/how-tos/agent/', from: ['/guides/agent/'] },
-    { to: '/how-tos/agent/http-healthcheck', from: ['/guides/agent/http-healthcheck'] },
-    { to: '/how-tos/agent/linux-service', from: ['/guides/agent/linux-service'] },
-    { to: '/how-tos/agent/remoting', from: ['/guides/agent/remoting'] },
-    { to: '/how-tos/agent/windows-service/', from: ['/guides/agent/windows-service/'] },
-    { to: '/how-tos/docker-share/', from: ['/guides/docker-share/'] },
-    { to: '/how-tos/docker-share/private-share', from: ['/guides/docker-share/docker_private_share_guide'] },
-    { to: '/how-tos/docker-share/public-share', from: ['/guides/docker-share/docker_public_share_guide'] },
-    { to: '/how-tos/drives', from: ['/guides/drives'] },
-    { to: '/how-tos/frontdoor', from: ['/guides/frontdoor'] },
-    { to: '/how-tos/install/', from: ['/guides/install/'] },
-    { to: '/how-tos/install/linux', from: ['/guides/install/linux'] },
-    { to: '/how-tos/install/macos', from: ['/guides/install/macos'] },
-    { to: '/how-tos/install/windows', from: ['/guides/install/windows'] },
-    { to: '/how-tos/permission-modes', from: ['/guides/permission-modes'] },
-    { to: '/how-tos/v2-migration-guide', from: ['/guides/v2-migration-guide'] },
-    { to: '/how-tos/vpn', from: ['/guides/vpn'] },
-    // guides/self-hosting/* → self-hosting/*
-    { to: '/self-hosting/docker', from: ['/guides/self-hosting/docker'] },
-    { to: '/self-hosting/dynamic-proxy', from: ['/guides/self-hosting/dynamicProxy'] },
-    { to: '/self-hosting/error-pages', from: ['/guides/self-hosting/error-pages'] },
-    { to: '/self-hosting/instance-configuration', from: ['/guides/self-hosting/instance-configuration'] },
-    { to: '/self-hosting/interstitial-page', from: ['/guides/self-hosting/interstitial-page'] },
-    { to: '/self-hosting/kubernetes', from: ['/guides/self-hosting/kubernetes'] },
-    { to: '/self-hosting/linux/', from: ['/guides/self-hosting/self_hosting_guide', '/guides/self-hosting/linux'] },
-    { to: '/self-hosting/linux/nginx', from: ['/guides/self-hosting/nginx_tls_guide/', '/guides/self-hosting/linux/nginx'] },
-    { to: '/self-hosting/metrics-and-limits/configuring-limits', from: ['/guides/metrics-and-limits/configuring-limits', '/guides/self-hosting/metrics-and-limits/configuring-limits'] },
-    { to: '/self-hosting/metrics-and-limits/configuring-metrics', from: ['/guides/metrics-and-limits/configuring-metrics', '/guides/self-hosting/metrics-and-limits/configuring-metrics'] },
-    { to: '/self-hosting/oauth/configuring-oauth', from: ['/guides/self-hosting/oauth/configuring-oauth'] },
-    { to: '/self-hosting/oauth/integrations/github', from: ['/guides/self-hosting/oauth/integrations/github'] },
-    { to: '/self-hosting/oauth/integrations/google', from: ['/guides/self-hosting/oauth/integrations/google'] },
-    { to: '/self-hosting/oauth/integrations/oidc', from: ['/guides/self-hosting/oauth/integrations/oidc'] },
-    { to: '/self-hosting/organizations', from: ['/guides/self-hosting/organizations'] },
-    { to: '/self-hosting/personalized-frontend', from: ['/guides/self-hosting/personalized-frontend'] },
-    { to: '/self-hosting/self-service-invite', from: ['/guides/self-hosting/self-service-invite'] },
-].map(({ to, from }) => ({ to: `${zrokBase}${to}`, from: from.map(f => `${zrokBase}${f}`) }));
 
 // On Vercel previews, the baseUrl needs to be '/', routes need a 'docs/' prefix to match hardcoded /docs/ links in remote content.
 // On default non-Vercel-preview builds baseUrl is '/docs/'
