@@ -12,7 +12,7 @@ import {
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import {pluginHotjar} from "@netfoundry/docusaurus-theme/node";
 import {PublishConfig} from 'src/components/docusaurus'
-import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
+import {zrokDocsPluginConfig, zrokRedirects} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 import {onpremRedirects} from "./_remotes/selfhosted/docusaurus/docusaurus-plugin-onprem-docs.ts";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
@@ -351,6 +351,7 @@ const config: Config = {
         [pluginHotjar, {}],
         ['@docusaurus/plugin-google-tag-manager', {id: `openziti-gtm`, containerId: cfg.google.tag}],
         build(BUILD_FLAGS.SELFHOSTED) && onpremRedirects(routeBase('selfhosted')),
+        build(BUILD_FLAGS.ZROK) && zrokRedirects(routeBase('zrok')),
     ].filter(Boolean),
     themeConfig: {
         docs: {
