@@ -12,7 +12,7 @@ import {
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import {pluginHotjar} from "@netfoundry/docusaurus-theme/node";
 import {PublishConfig} from 'src/components/docusaurus'
-import {zrokDocsPluginConfig} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
+import {zrokDocsPluginConfig, zrokRedirects} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 import {onpremRedirects} from "./_remotes/selfhosted/docusaurus/docusaurus-plugin-onprem-docs.ts";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
@@ -24,6 +24,7 @@ const zlan = `./_remotes/zlan`;
 
 const isVercel = process.env.IS_VERCEL === 'true';
 const docsBase = isVercel ? '/' : '/docs/';
+
 
 // On Vercel previews, the baseUrl needs to be '/', routes need a 'docs/' prefix to match hardcoded /docs/ links in remote content.
 // On default non-Vercel-preview builds baseUrl is '/docs/'
@@ -351,6 +352,7 @@ const config: Config = {
         [pluginHotjar, {}],
         ['@docusaurus/plugin-google-tag-manager', {id: `openziti-gtm`, containerId: cfg.google.tag}],
         build(BUILD_FLAGS.SELFHOSTED) && onpremRedirects(routeBase('selfhosted')),
+        build(BUILD_FLAGS.ZROK) && zrokRedirects(routeBase('zrok')),
     ].filter(Boolean),
     themeConfig: {
         docs: {
