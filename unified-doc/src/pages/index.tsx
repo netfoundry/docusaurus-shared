@@ -107,7 +107,7 @@ export default function Home(): ReactNode {
                                         zrok is an open-source, self-hostable sharing platform that simplifies shielding and sharing network services or files.
                                     </div>
                                     <div className="card__footer">
-                                        <Link className="button button--primary button--block" to={useBaseUrl('/docs/zrok/getting-started')}>Go to zrok</Link>
+                                        <Link className="button button--primary button--block" to={useBaseUrl('/docs/zrok/intro')}>Go to zrok</Link>
                                     </div>
                                 </div>
                             </div>

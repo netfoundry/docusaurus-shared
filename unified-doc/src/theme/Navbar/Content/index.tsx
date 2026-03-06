@@ -28,7 +28,7 @@ const nfFrontDoorDocs = {to: `${DOCS_PREFIX}/frontdoor/intro`, label: 'Frontdoor
 const onPremDocs = {to: `${DOCS_PREFIX}/selfhosted/intro`, label: 'Self-Hosted'};
 const zlanDocs = {to: `${DOCS_PREFIX}/zlan/intro`, label: 'zLAN'};
 const ozDocs =  {to: `${DOCS_PREFIX}/openziti/learn/introduction`, label: 'OpenZiti'};
-const zrokDocs = {to: `${DOCS_PREFIX}/zrok/getting-started`, label: 'zrok'};
+const zrokDocs = {to: `${DOCS_PREFIX}/zrok/intro`, label: 'zrok'};
 
 const openZitiNav: Item[] = [
     {
@@ -97,7 +97,7 @@ const zlanNav: Item[] = [
 const zrokNav: Item[] = [
     {
         label: 'zrok Docs',
-        to: `${DOCS_PREFIX}/zrok/getting-started`,
+        to: `${DOCS_PREFIX}/zrok/intro`,
         position: 'left',
         type: 'dropdown',
         items: [
