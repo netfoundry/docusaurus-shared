@@ -2313,3 +2313,7 @@ aside nav {
     }
 }
 
+li .theme-admonition { /* mar-03-2026. Admonitions inside lists didn't have any padding/margin */
+    margin-top: 1em;
+    margin-bottom: 1em;
+}  
