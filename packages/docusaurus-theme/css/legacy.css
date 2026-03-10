@@ -2311,6 +2311,9 @@ aside nav {
     .margin-top--md {
         margin-top: 0 !important;
     }
+    .main-wrapper article {
+        padding-bottom: 2em;
+    }
 }
 
 li .theme-admonition { /* mar-03-2026. Admonitions inside lists didn't have any padding/margin */
