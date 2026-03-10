@@ -17,6 +17,4 @@ html {
     max-width: var(--ziti-max-width);
 }
 
-.main-wrapper article {
-    padding-bottom: 2em;
-}
+
