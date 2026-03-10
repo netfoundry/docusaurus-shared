@@ -1,5 +1,6 @@
 
 @import '@netfoundry/docusaurus-theme/css/tabs-v8-float.css';
+@import '@netfoundry/docusaurus-theme/css/layout.css';
 
 :root {
     --ifm-navbar-height: 60px;
