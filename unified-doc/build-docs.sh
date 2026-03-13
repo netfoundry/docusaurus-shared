@@ -1,4 +1,45 @@
 #!/usr/bin/env bash
+# =============================================================================
+# build-docs.sh — Build the unified NetFoundry documentation site.
+#
+# Clones (or updates) all product doc repos into _remotes/, runs lint checks,
+# builds SDK reference docs via ziti-doc's gendoc.sh, then runs a Docusaurus
+# production build.
+#
+# USAGE
+#   build-docs.sh [OPTIONS]
+#
+# OPTIONS
+#   --ziti-doc-branch=BRANCH     Branch for openziti/ziti-doc                    (default: main)
+#   --zrok-branch=BRANCH         Branch for openziti/zrok                         (default: main)
+#   --frontdoor-branch=BRANCH    Branch for netfoundry/zrok-connector             (default: develop)
+#   --selfhosted-branch=BRANCH   Branch for netfoundry/k8s-on-prem-installations  (default: main)
+#   --zlan-branch=BRANCH         Branch for netfoundry/zlan                       (default: main)
+#   --clean                      Wipe _remotes and .docusaurus cache before building
+#   --lint-only                  Run lint checks only; skip build
+#   --qualifier=VALUE            Append VALUE to output dir (e.g. --qualifier=-preview -> build-preview)
+#   -l                           (gendoc) Skip linked doc generation (doxygen/wget)
+#   -g                           (gendoc) Skip git clones inside gendoc
+#   -c                           (gendoc) Skip clean steps inside gendoc
+#   -h, --help                   Show this help and exit
+#
+# ENVIRONMENT VARIABLES
+#   GH_ZITI_CI_REPO_ACCESS_PAT   GitHub PAT for ziti-doc and zlan (falls back to SSH)
+#   BB_REPO_TOKEN_FRONTDOOR      Bitbucket token for zrok-connector (falls back to SSH)
+#   BB_REPO_TOKEN_ONPREM         Bitbucket token for k8s-on-prem-installations (falls back to SSH)
+#   BB_USERNAME                  Bitbucket username (default: x-token-auth)
+#   DOCUSAURUS_BUILD_MASK        Hex bitmask: 0x1=openziti 0x2=frontdoor 0x4=selfhosted
+#                                             0x8=zrok 0x10=zlan 0xFF=all (default: 0xFF)
+#   DOCUSAURUS_PUBLISH_ENV       Set to 'prod' to use production Algolia index
+#   NO_MINIFY                    Set to any value to pass --no-minify to Docusaurus
+#   IS_VERCEL                    Set to 'true' on Vercel preview deployments
+#
+# EXAMPLES
+#   ./build-docs.sh --ziti-doc-branch=my.branch.name
+#   DOCUSAURUS_BUILD_MASK=0x1 ./build-docs.sh --ziti-doc-branch=my.branch.name
+#   ./build-docs.sh --clean --lint-only
+#   ./build-docs.sh --qualifier=-preview -l
+# =============================================================================
 set -euo pipefail
 
 # --- ARGUMENT PARSING ---
@@ -9,10 +50,31 @@ QUALIFIER_FLAG=()
 OTHER_FLAGS=()
 EXTRA_ARGS=()
 
+BRANCH_ZITI_DOC="main"
+BRANCH_ZROK="main"
+BRANCH_FRONTDOOR="develop"
+BRANCH_SELFHOSTED="main"
+BRANCH_ZLAN="main"
+
+usage() {
+  sed -n '/^# USAGE/,/^# =====/{ /^# =====/d; s/^# \{0,1\}//; p }' "$0"
+}
+
 while [[ $# -gt 0 ]]; do
   case $1 in
+    --ziti-doc-branch=*)    BRANCH_ZITI_DOC="${1#*=}";    shift ;;
+    --zrok-branch=*)        BRANCH_ZROK="${1#*=}";        shift ;;
+    --frontdoor-branch=*)   BRANCH_FRONTDOOR="${1#*=}";   shift ;;
+    --selfhosted-branch=*)  BRANCH_SELFHOSTED="${1#*=}";  shift ;;
+    --zlan-branch=*)        BRANCH_ZLAN="${1#*=}";        shift ;;
+    --ziti-doc-branch)      BRANCH_ZITI_DOC="${2:?--ziti-doc-branch requires a value}";     shift 2 ;;
+    --zrok-branch)          BRANCH_ZROK="${2:?--zrok-branch requires a value}";             shift 2 ;;
+    --frontdoor-branch)     BRANCH_FRONTDOOR="${2:?--frontdoor-branch requires a value}";   shift 2 ;;
+    --selfhosted-branch)    BRANCH_SELFHOSTED="${2:?--selfhosted-branch requires a value}"; shift 2 ;;
+    --zlan-branch)          BRANCH_ZLAN="${2:?--zlan-branch requires a value}";             shift 2 ;;
     --clean) CLEAN=1; shift ;;
     --lint-only) LINT_ONLY=1; shift ;;
+    -h|--help) usage; exit 0 ;;
     --qualifier=*) BUILD_QUALIFIER="${1#*=}"; QUALIFIER_FLAG=("$1"); shift ;;
     --qualifier)
       if [[ -n "${2:-}" && ! "$2" =~ ^- ]]; then
@@ -35,6 +97,11 @@ echo "bd BUILD_QUALIFIER='$BUILD_QUALIFIER'"
 echo "bd QUALIFIER_FLAG: ${QUALIFIER_FLAG[*]:-}"
 echo "bd OTHER_FLAGS: ${OTHER_FLAGS[*]:-}"
 echo "bd EXTRA_ARGS: ${EXTRA_ARGS[*]:-}"
+echo "bd BRANCH_ZITI_DOC='$BRANCH_ZITI_DOC'"
+echo "bd BRANCH_ZROK='$BRANCH_ZROK'"
+echo "bd BRANCH_FRONTDOOR='$BRANCH_FRONTDOOR'"
+echo "bd BRANCH_SELFHOSTED='$BRANCH_SELFHOSTED'"
+echo "bd BRANCH_ZLAN='$BRANCH_ZLAN'"
 echo "----------------------------------------"
 echo "bd ENV VARS:"
 echo "bd   IS_VERCEL='${IS_VERCEL:-}'"
@@ -284,11 +351,11 @@ if [ "${CLEAN:-0}" -eq 1 ]; then
   find "$script_dir/_remotes" -mindepth 1 -maxdepth 1 ! -name 'package.json' -exec rm -rf {} +
 fi
 
-clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor  develop
-clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" selfhosted main
-clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti   main
-clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan       main
-clone_or_update "https://github.com/openziti/zrok.git"                           zrok       main
+clone_or_update "https://bitbucket.org/netfoundry/zrok-connector.git"            frontdoor  "$BRANCH_FRONTDOOR"
+clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git" selfhosted "$BRANCH_SELFHOSTED"
+clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti   "$BRANCH_ZITI_DOC"
+clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan       "$BRANCH_ZLAN"
+clone_or_update "https://github.com/openziti/zrok.git"                           zrok       "$BRANCH_ZROK"
 
 echo "========================================"
 echo "bd POST-CLONE DEBUG"
