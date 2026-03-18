@@ -25,7 +25,6 @@ jobs:
     name: Publish NF Docs
     if: github.repository_owner == 'netfoundry' && contains(github.event.head_commit.message, 'ci skip') == false
     runs-on: ubuntu-latest
-    retention-days: 7
     env:
       DOCUSAURUS_PUBLISH_ENV: 'prod'
       GIT_BRANCH: ${{ github.event.inputs.branch || github.ref_name }}
