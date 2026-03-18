@@ -13,6 +13,7 @@ jobs:
       run:
         working-directory: lib/packages/docusaurus-shared
     runs-on: ubuntu-latest
+    retention-days: 7
     steps:
       - uses: actions/checkout@v4
 

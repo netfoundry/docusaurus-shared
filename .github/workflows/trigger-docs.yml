@@ -18,6 +18,7 @@ on:
 jobs:
   trigger:
     runs-on: ubuntu-latest
+    retention-days: 7
     steps:
       - name: Checkout trigger-docs.sh
         uses: actions/checkout@v4
