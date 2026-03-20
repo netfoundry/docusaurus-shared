@@ -108,7 +108,7 @@ export default function HeroBackground(): React.ReactElement {
     // 1 in 4 connections carries a visible data packet.
     const packetConns = conns.filter((_, i) => i % 4 === 0);
 
-    // ── Step 4: Geometric intersection nodes ──────────────────────────────
+    // ── Step 4: Geometric intersection nodes (capped at 25) ───────────────
     const intersectionNodes: Vec2[] = [];
     outer: for (let i = 0; i < conns.length; i++) {
       for (let j = i + 1; j < conns.length; j++) {
@@ -117,27 +117,47 @@ export default function HeroBackground(): React.ReactElement {
         if (rawNodes.some(n => (n.x - pt.x) ** 2 + (n.y - pt.y) ** 2 < 144)) continue;
         if (intersectionNodes.some(n => (n.x - pt.x) ** 2 + (n.y - pt.y) ** 2 < 64)) continue;
         intersectionNodes.push(pt);
-        if (intersectionNodes.length >= 200) break outer;
+        if (intersectionNodes.length >= 25) break outer;
       }
     }
 
     return {nodes, connections: conns, packetConns, intersectionNodes};
   }, []);
 
-  // ── Global mouse listener ─────────────────────────────────────────────────
+  // ── Global mouse listener (rAF-throttled) ────────────────────────────────
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
+    let rafId: number | null = null;
     const onMove = (e: MouseEvent) => {
-      const r = el.getBoundingClientRect();
-      const x = e.clientX - r.left;
-      const y = e.clientY - r.top;
-      const inside = x >= 0 && x <= r.width && y >= 0 && y <= r.height;
-      el.style.setProperty('--mx', inside ? `${x}px` : '-400px');
-      el.style.setProperty('--my', inside ? `${y}px` : '-400px');
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        const r = el.getBoundingClientRect();
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+        const inside = x >= 0 && x <= r.width && y >= 0 && y <= r.height;
+        el.style.setProperty('--mx', inside ? `${x}px` : '-400px');
+        el.style.setProperty('--my', inside ? `${y}px` : '-400px');
+      });
     };
     document.addEventListener('mousemove', onMove, {passive: true});
-    return () => document.removeEventListener('mousemove', onMove);
+    return () => {
+      document.removeEventListener('mousemove', onMove);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, []);
+
+  // ── IntersectionObserver — pause animations when off-screen ──────────────
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => el.classList.toggle('paused', !entry.isIntersecting),
+      {threshold: 0},
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
   }, []);
 
   return (
@@ -156,22 +176,14 @@ export default function HeroBackground(): React.ReactElement {
       aria-hidden="true"
     >
       {/* ── LAYER 1: BLUEPRINT ──────────────────────────────────────────── */}
+      {/* Filters removed — nodes are rendered at group opacity 0.15 and    */}
+      {/* are invisible at that opacity; no filter defs needed.             */}
       <svg
         width="100%" height="100%"
         viewBox={`0 0 ${W} ${H}`}
         preserveAspectRatio="xMidYMid slice"
         style={{position: 'absolute', inset: 0, display: 'block', pointerEvents: 'none'}}
       >
-        <defs>
-          <filter id="bp-hub" x="-150%" y="-150%" width="400%" height="400%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b" />
-            <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-          </filter>
-          <filter id="bp-node" x="-80%" y="-80%" width="260%" height="260%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="b" />
-            <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-          </filter>
-        </defs>
         <g opacity="0.15">
           {connections.map(c => (
             <line key={c.id} x1={c.from.x} y1={c.from.y} x2={c.to.x} y2={c.to.y}
@@ -179,8 +191,7 @@ export default function HeroBackground(): React.ReactElement {
           ))}
           {nodes.map(n => (
             <circle key={n.id} cx={n.x} cy={n.y} r={n.size}
-              fill={n.isHub ? CYAN : INDIGO}
-              filter={n.isHub ? 'url(#bp-hub)' : 'url(#bp-node)'} />
+              fill={n.isHub ? CYAN : INDIGO} />
           ))}
           {intersectionNodes.map((n, i) => (
             <circle key={`ix-${i}`} cx={n.x} cy={n.y} r="0.9" fill={CYAN} />
@@ -228,41 +239,51 @@ export default function HeroBackground(): React.ReactElement {
             </circle>
           ))}
 
+          {/* Packet arrival rings — CSS animation replaces SMIL <animate r> */}
           {packetConns.map(c => {
-            const arrivalBegin = `${c.pktBegin + c.pktDur}s`;
-            const period       = `${c.pktDur}s`;
+            // Arrival fires after one full transit from the staggered start.
+            // pktBegin is negative (e.g. -1.2s) meaning the packet is mid-flight
+            // at t=0. The ring should fire at t = pktDur + pktBegin (which can be
+            // negative — CSS handles negative delays correctly as an offset into
+            // the animation cycle).
+            const delay = `${c.pktDur + c.pktBegin}s`;
             return (
               <circle key={`ring-${c.id}`} cx={c.to.x} cy={c.to.y}
-                r="2" fill="none" stroke={GREEN} strokeWidth="1.2">
-                <animate attributeName="r" values="2;18;18" keyTimes="0;0.7;1"
-                  dur={period} begin={arrivalBegin} repeatCount="indefinite"
-                  calcMode="spline" keySplines="0.1 0.8 0.2 1; 0 0 0 0" />
-                <animate attributeName="stroke-opacity" values="0.8;0;0" keyTimes="0;0.7;1"
-                  dur={period} begin={arrivalBegin} repeatCount="indefinite"
-                  calcMode="spline" keySplines="0.15 0.8 0.2 1; 0 0 0 0" />
-              </circle>
+                r="18" fill="none" stroke={GREEN} strokeWidth="1.2"
+                style={{
+                  transformBox: 'fill-box',
+                  transformOrigin: 'center',
+                  animation: `pkt-ring ${c.pktDur}s ${delay} infinite`,
+                }} />
             );
           })}
 
-          {nodes.map(n => (
-            <circle key={n.id} cx={n.x} cy={n.y} r={n.size}
-              fill={n.isHub ? CYAN : INDIGO}
-              filter={n.isHub ? 'url(#rv-hub)' : 'url(#rv-node)'} />
-          ))}
+          {/* Hub nodes — filter applied to group, one paint per group */}
+          <g filter="url(#rv-hub)">
+            {nodes.filter(n => n.isHub).map(n => (
+              <circle key={n.id} cx={n.x} cy={n.y} r={n.size} fill={CYAN} />
+            ))}
+          </g>
 
+          {/* Regular nodes — filter applied to group */}
+          <g filter="url(#rv-node)">
+            {nodes.filter(n => !n.isHub).map(n => (
+              <circle key={n.id} cx={n.x} cy={n.y} r={n.size} fill={INDIGO} />
+            ))}
+          </g>
+
+          {/* Intersection node pulses — CSS animation replaces SMIL <animate r> */}
           {intersectionNodes.map((n, i) => {
-            const pulseBegin = `${(i * 0.41) % 3}s`;
+            const delay = `${(i * 0.41) % 3}s`;
             return (
               <React.Fragment key={`ix-${i}`}>
                 <circle cx={n.x} cy={n.y} r="0.9" fill={CYAN} opacity="0.7" />
-                <circle cx={n.x} cy={n.y} r="0.9" fill="none" stroke={GREEN} strokeWidth="0.8">
-                  <animate attributeName="r" values="0.9;14;14" keyTimes="0;0.7;1"
-                    dur="3s" begin={pulseBegin} repeatCount="indefinite"
-                    calcMode="spline" keySplines="0.1 0.8 0.2 1; 0 0 0 0" />
-                  <animate attributeName="stroke-opacity" values="0.6;0;0" keyTimes="0;0.7;1"
-                    dur="3s" begin={pulseBegin} repeatCount="indefinite"
-                    calcMode="spline" keySplines="0.15 0.8 0.2 1; 0 0 0 0" />
-                </circle>
+                <circle cx={n.x} cy={n.y} r="14" fill="none" stroke={GREEN} strokeWidth="0.8"
+                  style={{
+                    transformBox: 'fill-box',
+                    transformOrigin: 'center',
+                    animation: `ix-pulse 3s ${delay} infinite`,
+                  }} />
               </React.Fragment>
             );
           })}
