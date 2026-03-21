@@ -18,3 +18,34 @@
 
 /* Legacy design system variables and comprehensive styling */
 @import "./legacy.css";
+
+/* ── Footer social link hover ───────────────────────────────────────────── */
+a[class*="footerSocialLink"] {
+    transition: all 0.2s ease !important;
+}
+
+[data-theme='dark'] a[class*="footerSocialLink"] {
+    background-color: #1a2640 !important;
+    color: #64748b !important;
+    border: 1px solid rgba(148, 163, 184, 0.1) !important;
+}
+[data-theme='dark'] a[class*="footerSocialLink"]:hover {
+    background-color: #22d3ee !important;
+    color: #020617 !important;
+    border-color: transparent !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 6px 16px rgba(34, 211, 238, 0.35) !important;
+}
+
+[data-theme='light'] a[class*="footerSocialLink"] {
+    background-color: #e2e8f0 !important;
+    color: #475569 !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+[data-theme='light'] a[class*="footerSocialLink"]:hover {
+    background-color: #0891b2 !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 6px 16px rgba(8, 145, 178, 0.3) !important;
+}

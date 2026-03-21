@@ -68,10 +68,10 @@ export default function ResourcesPicker({label = 'Resources', className}: Props)
   const columns = [
     {
       header: 'Learn & Engage',
-      headerClass: 'picker-header--nf-primary',
+      headerClass: 'picker-header--nf-tertiary',
       links: [
         { label: 'NetFoundry Blog', description: 'Latest news, updates, and insights from NetFoundry.', href: 'https://netfoundry.io/blog/',  logoSrc: consoleLogo },
-        { label: 'OpenZiti Blog',   description: 'Technical articles and community updates.',            href: 'https://blog.openziti.io/',    logoSrc: openzitiLogo },
+        { label: 'OpenZiti Tech Blog', description: 'Technical articles and community updates.',        href: 'https://blog.openziti.io/',    logoSrc: openzitiLogo },
       ],
     },
     {
