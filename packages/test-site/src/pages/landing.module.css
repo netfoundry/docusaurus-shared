@@ -34,22 +34,22 @@
 .nf-hero-ctas { display: flex; gap: 1rem; justify-content: center; }
 .nf-btn-primary {
     display: inline-flex; align-items: center; padding: 0.65rem 1.75rem;
-    background: #0076FF; color: #ffffff; border-radius: 8px; font-weight: 700;
+    background: #0076FF; color: #ffffff !important; border-radius: 8px; font-weight: 700;
     font-size: 0.95rem; text-decoration: none; transition: all 0.25s ease; border: 2px solid #0076FF;
 }
 .nf-btn-primary:hover {
     background: #005ce6; border-color: #005ce6; transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 118, 255, 0.4); color: #ffffff; text-decoration: none;
+    box-shadow: 0 8px 24px rgba(0, 118, 255, 0.4); color: #ffffff !important; text-decoration: none;
 }
 .nf-btn-ghost {
     display: inline-flex; align-items: center; padding: 0.65rem 1.75rem;
-    background: transparent; color: #ffffff; border-radius: 8px; font-weight: 700;
+    background: transparent; color: #ffffff !important; border-radius: 8px; font-weight: 700;
     font-size: 0.95rem; text-decoration: none; transition: all 0.25s ease;
     border: 2px solid rgba(255, 255, 255, 0.25);
 }
 .nf-btn-ghost:hover {
     background: rgba(255, 255, 255, 0.06); border-color: rgba(34, 211, 238, 0.5);
-    transform: translateY(-2px); color: #ffffff; text-decoration: none;
+    transform: translateY(-2px); color: #ffffff !important; text-decoration: none;
 }
 
 .nf-features-section { width: 100%; background: #0f172a; padding: 5rem 0 2.5rem; }
