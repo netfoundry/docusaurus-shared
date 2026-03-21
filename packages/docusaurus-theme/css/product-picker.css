@@ -25,12 +25,14 @@
     position: relative;
     padding-right: 1.2rem;
     transition: color 0.3s ease;
+    font-weight: 700;
 }
 
 .nf-picker-trigger:hover,
 .nf-resources-dropdown:hover,
 .navbar__item.dropdown--show .nf-picker-trigger,
-.navbar__item.dropdown--show .nf-resources-dropdown {
+.navbar__item.dropdown--show .nf-resources-dropdown,
+.navbar__item.nf-picker--open .nf-picker-trigger {
     color: var(--ifm-color-primary);
     text-decoration: none;
 }
@@ -59,17 +61,17 @@
     opacity: 1;
 }
 
-/* Open: chevron rotates 180° */
+/* Open: chevron holds the hover drop position */
 .nf-picker--open .nf-picker-trigger::after,
 .navbar__item.dropdown--show .nf-resources-dropdown::after {
-    transform: translateY(-50%) rotate(180deg);
+    transform: translateY(-20%);
     opacity: 1;
 }
 
 /* Dark mode: cyan accent on hover */
 [data-theme='dark'] .nf-picker-trigger:hover,
 [data-theme='dark'] .nf-resources-dropdown:hover,
-[data-theme='dark'] .nf-picker--open .nf-picker-trigger,
+[data-theme='dark'] .navbar__item.nf-picker--open .nf-picker-trigger,
 [data-theme='dark'] .navbar__item.dropdown--show .nf-resources-dropdown {
     color: #22d3ee;
 }
@@ -138,6 +140,7 @@
 
 /* Narrower panel for the 2-column Resources menu */
 .dropdown__menu:has(.picker-resources) { max-width: 700px; }
+.nf-picker-panel--narrow { max-width: 680px; }
 
 /* Ensure visibility when open */
 .dropdown--show > .dropdown__menu,
@@ -179,9 +182,9 @@
     transition: all 0.2s ease;
     border-radius: 8px;
 }
-.picker-link:hover  { background: rgba(0, 118, 255, 0.06); transform: translateX(3px); }
-.picker-link strong { color: var(--ifm-font-color-base); font-size: 0.95rem; font-weight: 900; letter-spacing: -0.02em; display: block; }
-.picker-link span   { color: #64748b; font-size: 0.82rem; display: block; margin-top: 2px; line-height: 1.35; }
+.picker-link:hover  { background: rgba(0, 118, 255, 0.06); transform: translateX(3px); text-decoration: none; }
+.picker-link strong { color: var(--ifm-font-color-base); font-size: 0.95rem; font-weight: 900; letter-spacing: -0.02em; display: block; text-decoration: none; }
+.picker-link span   { color: #64748b; font-size: 0.82rem; display: block; margin-top: 2px; line-height: 1.35; text-decoration: none; }
 
 /* ── Mobile (<= 996 px) ─────────────────────────────────────────────────── */
 @media (max-width: 996px) {

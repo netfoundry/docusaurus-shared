@@ -1,8 +1,10 @@
 import React, {JSX} from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import clsx from 'clsx';
 import styles from './landing.module.css';
+import HeroBackground from '../../../docusaurus-theme/src/components/HeroBackground';
 
 const CYAN  = '#22d3ee';
 const GREEN = '#22c55e';
@@ -15,7 +17,7 @@ const products = [
   { id: 'frontdoor',  title: 'Frontdoor',              logo: `${IMG}/frontdoor-sm-logo.svg`,        tag: 'Managed',     accent: CYAN,  link: '/docs/frontdoor', features: ['No agent or VPN required', 'Zero firewall rules', 'Identity-based access', 'Any app, any browser'],                                description: 'Secure, clientless access to any application — without a VPN or firewall rule. Expose nothing to the internet while giving authorized users instant access.' },
   { id: 'zrok',       title: 'zrok',                   logo: `${IMG}/zrok-1.0.0-rocket-purple.svg`, tag: 'Open Source', accent: GREEN, link: '/docs/zrok',      description: 'Geo-scale secure sharing built on the OpenZiti mesh. Share services, files, or HTTP endpoints peer-to-peer — no open ports, no NAT traversal tricks.' },
   { id: 'selfhosted', title: 'NetFoundry Self-Hosted', logo: `${IMG}/onprem-sm-logo.svg`,           tag: 'Self-Hosted', accent: CYAN,  link: '/docs/onprem',    features: ['Full infrastructure control', 'Air-gap compatible', 'On-prem or any cloud', 'Enterprise SLA'],                                      description: 'Deploy the full NetFoundry control plane and fabric in your own environment. Full sovereignty over your zero-trust infrastructure — on-prem, air-gapped, or any cloud.' },
-  { id: 'zlan',       title: 'zLAN',                   logo: `${IMG}/zlan-logo.svg`,                tag: 'OT Security', accent: CYAN,  link: '/docs/zlan',      features: ['Deep OT/IT traffic visibility', 'Identity-aware micro-segmentation', 'Centralized zero-trust policy', 'Built on NetFoundry Self-Hosted'], description: 'Identity-aware micro-segmentation firewall for operational technology networks. Deep traffic visibility, centralized policy, and zero-trust access control for OT environments.' },
+  { id: 'zlan',       title: 'zLAN',                   logo: '',                                    tag: 'OT Security', accent: CYAN,  link: '/docs/zlan',      features: ['Deep OT/IT traffic visibility', 'Identity-aware micro-segmentation', 'Centralized zero-trust policy', 'Built on NetFoundry Self-Hosted'], description: 'Identity-aware micro-segmentation firewall for operational technology networks. Deep traffic visibility, centralized policy, and zero-trust access control for OT environments.' },
 ];
 
 type Product = (typeof products)[number];
@@ -44,9 +46,14 @@ function BentoCard({product, featured = false}: {product: Product; featured?: bo
 }
 
 export default function Home(): JSX.Element {
+  const zlanLogo = useBaseUrl('/img/zlan-logo.svg');
+  const resolved = Object.fromEntries(
+    products.map(p => [p.id, p.id === 'zlan' ? {...p, logo: zlanLogo} : p])
+  ) as Record<string, Product>;
   return (
     <Layout title="NetFoundry Docs">
       <header className={styles['nf-hero-stage']}>
+        <HeroBackground />
         <div className={clsx('container', styles['nf-hero-content'])}>
           <h1 className={styles['nf-hero-title']}>NetFoundry <span className={styles['nf-green-text']}>Docs</span></h1>
           <p className={styles['nf-hero-subtext']}>Secure, high-performance networking for the modern era.</p>
@@ -61,18 +68,18 @@ export default function Home(): JSX.Element {
           <div className={styles['nf-bento-grid']}>
             <div className={clsx(styles['nf-bento-divider'], styles['nf-divider--managed'], styles['nf-divider--top'])}>Managed Cloud</div>
             <div className={styles['nf-pair']}>
-              <BentoCard product={byId['console']} featured />
+              <BentoCard product={resolved['console']} featured />
               <div className={styles['nf-pair-connector']}>open-source counterpart</div>
-              <BentoCard product={byId['openziti']} />
+              <BentoCard product={resolved['openziti']} />
             </div>
             <div className={styles['nf-pair']}>
-              <BentoCard product={byId['frontdoor']} featured />
+              <BentoCard product={resolved['frontdoor']} featured />
               <div className={styles['nf-pair-connector']}>open-source counterpart</div>
-              <BentoCard product={byId['zrok']} />
+              <BentoCard product={resolved['zrok']} />
             </div>
             <div className={styles['nf-bento-divider']}>Run on your own infrastructure</div>
-            <BentoCard product={byId['selfhosted']} />
-            <BentoCard product={byId['zlan']} />
+            <BentoCard product={resolved['selfhosted']} />
+            <BentoCard product={resolved['zlan']} />
           </div>
         </div>
       </section>

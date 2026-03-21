@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect, useCallback} from 'react';
 import Link from '@docusaurus/Link';
 import clsx from 'clsx';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import {useThemeConfig} from '@docusaurus/theme-common';
 
 export type PickerLink = {
@@ -59,9 +60,14 @@ export default function ProductPicker({label = 'Products', className}: Props) {
   const themeConfig = useThemeConfig() as any;
   const consoleLogo = themeConfig?.netfoundry?.consoleLogo ?? NF_LOGO_DEFAULT;
   const img = `${siteConfig.url}${siteConfig.baseUrl}img`;
+  const zlanLogoLocal = useBaseUrl('/img/zlan-logo.svg');
   const columns: PickerColumn[] = (themeConfig?.netfoundry?.productPickerColumns ?? [])
     .map((col: any, i: number) => ({...col, headerClass: HEADER_CLASSES[i] ?? ''}));
-  const resolvedColumns = columns.length ? columns : buildDefaultColumns(img, consoleLogo);
+  const defaultColumns = buildDefaultColumns(img, consoleLogo).map(col => ({
+    ...col,
+    links: col.links.map(l => l.label === 'zLAN' ? {...l, logo: zlanLogoLocal} : l),
+  }));
+  const resolvedColumns = columns.length ? columns : defaultColumns;
   const wrapRef       = useRef<HTMLDivElement>(null);
   const hasEnteredPanel = useRef(false);
   const [open, setOpen] = useState(false);

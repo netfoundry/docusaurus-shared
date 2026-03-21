@@ -176,7 +176,7 @@ export default {
                         {
                             label: 'zLAN',
                             to: '/docs/zlan',
-                            logo: 'https://netfoundry.io/docs/img/zlan-logo.svg',
+                            logo: '/img/zlan-logo.svg',
                             description: 'Zero-trust access for OT networks.',
                         },
                     ],
@@ -196,18 +196,14 @@ export default {
         image: 'https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg',
         navbar: {
             hideOnScroll: false,
-            title: 'NetFoundry Documentation',
+            title: 'NetFoundry Docs',
             logo: {
                 alt: 'NetFoundry Logo',
                 src: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
             },
             items: [
-                { type: 'custom-productPicker', position: 'left' },
-                {
-                    to: '/docs',
-                    label: 'Main Docs',
-                    position: 'left',
-                },
+                { type: 'custom-productPicker',   position: 'left' },
+                { type: 'custom-resourcesPicker', position: 'left' },
             ],
         },
         prism: {
