@@ -53,7 +53,7 @@
     "@docusaurus/theme-mermaid": "^3.9.2",
     "@hotjar/browser": "^1.0.9",
     "@mdx-js/react": "^3.0.0",
-    "@netfoundry/docusaurus-theme": "0.8.0",
+    "@netfoundry/docusaurus-theme": "^0.8.1",
     "algoliasearch": "^5.36.0",
     "asciinema-player": "^3.10.0",
     "clsx": "^2.0.0",
@@ -78,8 +78,8 @@
     "@docusaurus/tsconfig": "^3.9.2",
     "@docusaurus/types": "^3.9.2",
     "backstopjs": "^6.3.25",
-    "typescript": "~5.6.2",
     "cross-env": "^7.0.3",
+    "typescript": "~5.6.2",
     "yaml-loader": "^0.8.1"
   },
   "browserslist": {
