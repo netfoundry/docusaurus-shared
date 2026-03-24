@@ -1,4 +1,5 @@
 import ProductPicker from './types/ProductPicker';
+import ResourcesPicker from './types/ResourcesPicker';
 
 // @theme-original resolves to OUR OWN file in a plugin theme (Docusaurus sets
 // both @theme and @theme-original to the plugin file). @theme-init resolves to
@@ -11,4 +12,5 @@ const ComponentTypesOrig = require('@theme-init/NavbarItem/ComponentTypes').defa
 export default {
   ...ComponentTypesOrig,
   'custom-productPicker': ProductPicker,
+  'custom-resourcesPicker': ResourcesPicker,
 };

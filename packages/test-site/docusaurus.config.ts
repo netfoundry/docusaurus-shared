@@ -183,31 +183,43 @@ export default {
                 },
             ],
             footer: {
-                description: 'This is just a test site for the NetFoundry Docusaurus theme.',
+                description: 'Secure, high-performance networking for the modern era.',
+                copyright: `Copyright © 2026 NetFoundry Inc.`,
                 socialProps: {
                     githubUrl: 'https://github.com/netfoundry/',
                     youtubeUrl: 'https://youtube.com/netfoundry/',
                     linkedInUrl: 'https://www.linkedin.com/company/netfoundry/',
-                    twitterUrl: 'https://twitter.com/netfoundry/',
+                    twitterUrl: 'https://x.com/netfoundry/',
                 },
+                documentationLinks: [
+                    {href: '/docs/learn/quickstarts/services/ztha', label: 'Get started'},
+                    {href: '/docs/reference/developer/api/', label: 'API reference'},
+                    {href: '/docs/reference/developer/sdk/', label: 'SDK integration'},
+                ],
+                communityLinks: [
+                    {href: 'https://github.com/openziti/ziti', label: 'GitHub'},
+                    {href: 'https://openziti.discourse.group/', label: 'OpenZiti Discourse'},
+                    {href: '/docs/openziti/policies/CONTRIBUTING', label: 'Contribute'},
+                ],
+                resourceLinks: [
+                    {href: 'https://netfoundry.io/', label: 'NetFoundry'},
+                    {href: 'https://netfoundry.io/blog/', label: 'NetFoundry Tech Blog'},
+                    {href: 'https://blog.openziti.io', label: 'OpenZiti Tech Blog'},
+                ],
             },
         },
         // Replace with your project's social card
         image: 'https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg',
         navbar: {
             hideOnScroll: false,
-            title: 'NetFoundry Documentation',
+            title: 'NetFoundry Docs',
             logo: {
                 alt: 'NetFoundry Logo',
                 src: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
             },
             items: [
-                { type: 'custom-productPicker', position: 'left' },
-                {
-                    to: '/docs',
-                    label: 'Main Docs',
-                    position: 'left',
-                },
+                { type: 'custom-productPicker',   position: 'left' },
+                { type: 'custom-resourcesPicker', position: 'left' },
             ],
         },
         prism: {

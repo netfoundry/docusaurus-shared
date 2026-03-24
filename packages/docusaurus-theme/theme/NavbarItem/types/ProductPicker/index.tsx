@@ -24,7 +24,7 @@ type Props = {
   className?: string;
 };
 
-const HEADER_CLASSES = ['picker-header--nf-primary', 'picker-header--nf-secondary', 'picker-header--nf-tertiary'];
+const HEADER_CLASSES = ['picker-header--nf-tertiary', 'picker-header--nf-secondary', 'picker-header--nf-primary'];
 const NF_LOGO_DEFAULT = 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg';
 
 const buildDefaultColumns = (img: string, consoleLogo: string): PickerColumn[] => [

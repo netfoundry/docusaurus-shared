@@ -3,6 +3,7 @@ import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import clsx from 'clsx';
 import styles from './landing.module.css';
+import {HeroBackground} from '@netfoundry/docusaurus-theme/ui';
 
 const CYAN  = '#22d3ee';
 const GREEN = '#22c55e';
@@ -47,12 +48,13 @@ export default function Home(): JSX.Element {
   return (
     <Layout title="NetFoundry Docs">
       <header className={styles['nf-hero-stage']}>
+        <HeroBackground />
         <div className={clsx('container', styles['nf-hero-content'])}>
           <h1 className={styles['nf-hero-title']}>NetFoundry <span className={styles['nf-green-text']}>Docs</span></h1>
-          <p className={styles['nf-hero-subtext']}>Secure, high-performance networking for the modern era.</p>
+          <p className={styles['nf-hero-subtext']}>Secure your workloads with Identity-First Connectivity™</p>
           <div className={styles['nf-hero-ctas']}>
             <Link className={styles['nf-btn-primary']} to="/docs/frontdoor">Get Started</Link>
-            <a className={styles['nf-btn-ghost']} href="https://netfoundry.io/lets-talk/">Request Demo</a>
+            <a className={styles['nf-btn-ghost']} href="https://netfoundry.io/lets-talk/" target="_blank" rel="noopener noreferrer">Request Demo</a>
           </div>
         </div>
       </header>

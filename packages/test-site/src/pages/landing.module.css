@@ -20,12 +20,12 @@
 .nf-hero-title {
     font-size: 4rem; font-weight: 900; color: #ffffff; margin-bottom: 0.75rem;
     letter-spacing: -0.02em; line-height: 1.05;
-    text-shadow: 0 0 20px rgba(34, 211, 238, 0.8), 0 2px 12px rgba(0, 0, 0, 0.9);
+    text-shadow: 0 0 20px rgba(34, 211, 238, 0.75), 0 2px 12px rgba(0, 0, 0, 0.9);
 }
 .nf-green-text {
-    background: linear-gradient(to right, #22c55e 0%, #86efac 100%);
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent; display: inline-block;
+    color: #22c55e;
+    font-family: inherit; font-weight: inherit; font-size: inherit;
+    text-shadow: 0 0 20px rgba(34, 197, 94, 0.75), 0 2px 12px rgba(0, 0, 0, 0.9);
 }
 .nf-hero-subtext {
     color: rgba(203, 213, 225, 0.95); font-size: 1.15rem; max-width: 560px;
@@ -39,7 +39,7 @@
 }
 .nf-btn-primary:hover {
     background: #005ce6; border-color: #005ce6; transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 118, 255, 0.4); color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 118, 255, 0.4); color: #ffffff; text-decoration: none;
 }
 .nf-btn-ghost {
     display: inline-flex; align-items: center; padding: 0.65rem 1.75rem;
@@ -49,8 +49,13 @@
 }
 .nf-btn-ghost:hover {
     background: rgba(255, 255, 255, 0.06); border-color: rgba(34, 211, 238, 0.5);
-    transform: translateY(-2px); color: #ffffff;
+    transform: translateY(-2px); color: #ffffff; text-decoration: none;
 }
+
+:global([data-theme='dark']) .nf-btn-primary,
+:global([data-theme='dark']) .nf-btn-primary:hover,
+:global([data-theme='dark']) .nf-btn-ghost,
+:global([data-theme='dark']) .nf-btn-ghost:hover { color: #ffffff; }
 
 .nf-features-section { width: 100%; background: #0f172a; padding: 5rem 0 2.5rem; }
 :global([data-theme='light']) .nf-features-section {
@@ -106,10 +111,11 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-top-color 0.2s ease;
 }
 .nf-bento-card:hover {
-    transform: translateY(-4px); border-top-color: #22c55e;
+    transform: translateY(-4px); border-top-color: #22c55e; text-decoration: none;
     box-shadow: 0 2px 6px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.45),
         0 24px 60px rgba(0,0,0,0.25), 0 0 0 1px rgba(34,197,94,0.12);
 }
+.nf-bento-card:hover * { text-decoration: none; }
 :global([data-theme='light']) .nf-bento-card {
     background: #edf3f8; border-color: rgba(0,0,0,0.08);
     box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 14px rgba(0,0,0,0.05);

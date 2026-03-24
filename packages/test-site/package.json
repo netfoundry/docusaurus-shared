@@ -18,6 +18,7 @@
     "@docusaurus/preset-classic": "3.9.2",
     "@docusaurus/theme-common": "3.9.2",
     "@docusaurus/theme-mermaid": "^3.9.2",
+    "@docusaurus/theme-search-algolia": "3.9.2",
     "@docusaurus/utils": "3.9.2",
     "@mdx-js/react": "^3.0.0",
     "@netfoundry/docusaurus-theme": "^0.1.2",
