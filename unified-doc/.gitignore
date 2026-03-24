@@ -35,5 +35,4 @@ backstop_data/bitmaps_*
 backstop_data/html_report*
 backstop_data/ci_report*
 
-
-
+src/generated/

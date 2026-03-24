@@ -1,5 +1,6 @@
 import React, { type ReactNode } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import {useLocation} from 'react-router-dom';
 import {
   NetFoundryLayout,
   defaultNetFoundryFooterProps,
@@ -32,6 +33,7 @@ export default function Layout({
   description,
 }: LayoutProps): ReactNode {
   const { siteConfig } = useDocusaurusContext();
+  const {pathname} = useLocation();
   const themeConfig = siteConfig.themeConfig as ThemeConfigWithNetFoundry;
   const nfConfig = themeConfig.netfoundry ?? {};
 
@@ -47,14 +49,13 @@ export default function Layout({
         },
       };
 
-  // Build star props if enabled
-  const starProps =
-    nfConfig.showStarBanner && nfConfig.starBanner
-      ? {
-          repoUrl: nfConfig.starBanner.repoUrl,
-          label: nfConfig.starBanner.label,
-        }
-      : undefined;
+  // Pick the first banner whose pathPrefix matches (or has no prefix)
+  const matchedBanner = nfConfig.starBanners?.find(b =>
+    !b.pathPrefix || pathname.startsWith(b.pathPrefix)
+  );
+  const starProps = matchedBanner
+    ? {repoUrl: matchedBanner.repoUrl, label: matchedBanner.label}
+    : undefined;
 
   return (
     <NetFoundryLayout

@@ -1,0 +1,210 @@
+/* =========================================================================
+   PRODUCT PICKER
+   Styles for the Products product-picker dropdown in the navbar.
+
+   Import in docusaurus.config.ts customCss:
+     require.resolve('@netfoundry/docusaurus-theme/css/product-picker.css')
+   ========================================================================= */
+
+/* ── Product / resource icons inside the picker ─────────────────────────── */
+.picker-logo { width: 32px; height: 32px; object-fit: contain; flex-shrink: 0; margin-right: 0.8rem; }
+.picker-icon { width: 20px; height: 20px; margin-right: 0.8rem; background-color: var(--ifm-color-primary); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; display: inline-block; }
+
+/* Light/dark logo switching */
+.picker-logo--dark              { display: none; }
+[data-theme='dark'] .picker-logo--light { display: none; }
+[data-theme='dark'] .picker-logo--dark  { display: block; }
+
+/* zrok logo needs a subtle shadow in light mode (white logo on white bg) */
+[data-theme='light'] img[src*="zrok-logo"] { filter: drop-shadow(0 0 1.5px rgba(0, 0, 0, 0.55)); }
+
+/* ── Dropdown trigger button in the navbar ──────────────────────────────── */
+.nf-picker-trigger,
+.nf-resources-dropdown {
+    color: var(--ifm-font-color-base);
+    position: relative;
+    padding-right: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.nf-picker-trigger:hover,
+.nf-resources-dropdown:hover,
+.navbar__item.dropdown--show .nf-picker-trigger,
+.navbar__item.dropdown--show .nf-resources-dropdown {
+    color: var(--ifm-color-primary);
+    text-decoration: none;
+}
+
+/* Animated chevron */
+.nf-picker-trigger::after,
+.nf-resources-dropdown::after {
+    content: '';
+    position: absolute;
+    right: 0.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid currentColor;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+}
+
+/* Hover: chevron drops slightly */
+.navbar__link.nf-picker-trigger:hover::after,
+.navbar__link.nf-resources-dropdown:hover::after {
+    transform: translateY(-20%);
+    opacity: 1;
+}
+
+/* Open: chevron rotates 180° */
+.nf-picker--open .nf-picker-trigger::after,
+.navbar__item.dropdown--show .nf-resources-dropdown::after {
+    transform: translateY(-50%) rotate(180deg);
+    opacity: 1;
+}
+
+/* Dark mode: cyan accent on hover */
+[data-theme='dark'] .nf-picker-trigger:hover,
+[data-theme='dark'] .nf-resources-dropdown:hover,
+[data-theme='dark'] .nf-picker--open .nf-picker-trigger,
+[data-theme='dark'] .navbar__item.dropdown--show .nf-resources-dropdown {
+    color: #22d3ee;
+}
+
+/* ── ProductPicker panel (custom navbar item) ───────────────────────────── */
+.nf-picker-panel {
+    position: fixed;
+    top: 3.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85vw;
+    max-width: 1000px;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 118, 255, 0.12);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    background: var(--ifm-card-background-color);
+    z-index: 1000;
+}
+
+/* CSS bridge: transparent strip above the panel eats the gap */
+.nf-picker-panel::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+    height: 20px;
+}
+
+/* ── Legacy html-type dropdown panel ────────────────────────────────────── */
+
+/*
+ * CSS bridge: an invisible pseudo-element that extends the panel's hit area
+ * upward by 20 px.  When the cursor moves from the trigger button down into
+ * this transparent strip, mouseenter fires on the panel (ul) immediately —
+ * cancelling the hide timer before it expires — so the menu never flickers
+ * during diagonal movement across the gap between navbar and panel.
+ */
+.dropdown__menu:has(.picker-content)::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+    height: 20px;
+}
+
+/* :has() raises specificity above plain .dropdown__menu — no !important needed */
+.dropdown__menu:has(.picker-content) {
+    position: fixed;
+    top: 3.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85vw;
+    max-width: 1000px;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 118, 255, 0.12);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    background: var(--ifm-card-background-color);
+    z-index: 1000;
+}
+
+/* Narrower panel for the 2-column Resources menu */
+.dropdown__menu:has(.picker-resources) { max-width: 700px; }
+
+/* Ensure visibility when open */
+.dropdown--show > .dropdown__menu,
+.dropdown:hover > .dropdown__menu {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+}
+
+/* ── Grid layout ────────────────────────────────────────────────────────── */
+.picker-content { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; }
+.picker-resources { grid-template-columns: 1fr 1fr; }
+
+/* ── Column headers ─────────────────────────────────────────────────────── */
+.picker-header {
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 2px solid rgba(148, 163, 184, 0.2);
+    display: block;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+.picker-header--nf-primary   { color: var(--nf-primary);   border-bottom-color: rgba(var(--nf-color-primary),   0.3); }
+.picker-header--nf-secondary { color: var(--nf-secondary); border-bottom-color: rgba(var(--nf-color-secondary), 0.3); }
+.picker-header--nf-tertiary  { color: var(--nf-tertiary);  border-bottom-color: rgba(var(--nf-color-tertiary),  0.3); }
+[data-theme='light'] .picker-header { filter: brightness(0.6); }
+[data-theme='dark']  .picker-header--nf-tertiary { filter: brightness(1.6); }
+
+/* ── Product / resource links ───────────────────────────────────────────── */
+.picker-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.55rem 0.65rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+}
+.picker-link:hover  { background: rgba(0, 118, 255, 0.06); transform: translateX(3px); }
+.picker-link strong { color: var(--ifm-font-color-base); font-size: 0.95rem; font-weight: 900; letter-spacing: -0.02em; display: block; }
+.picker-link span   { color: #64748b; font-size: 0.82rem; display: block; margin-top: 2px; line-height: 1.35; }
+
+/* ── Mobile (<= 996 px) ─────────────────────────────────────────────────── */
+@media (max-width: 996px) {
+    /* Fixed grid makes no sense in the narrow sidebar — hide the raw HTML blob */
+    .menu__list .menu__list-item:has(> .picker-content) { display: none; }
+
+    /* Docusaurus already renders a chevron; hide ours to avoid doubles */
+    .nf-picker-trigger::after,
+    .nf-resources-dropdown::after { display: none; }
+
+    .nf-picker-trigger,
+    .nf-resources-dropdown { padding-right: 0.5rem; }
+}
+
+/* ── Desktop (>= 997 px) ────────────────────────────────────────────────── */
+@media (min-width: 997px) {
+    /* Hide mobile-only fallback links when product picker is active */
+    .dropdown__menu .mobile-nav-link { display: none; }
+
+    /* Force panel visible when JS sets dropdown--show (swizzled component) */
+    .navbar__item.dropdown--show .dropdown__menu:has(.picker-content) {
+        display: block;
+        visibility: visible;
+        opacity: 1;
+    }
+}

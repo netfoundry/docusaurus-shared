@@ -16,6 +16,27 @@ yarn start
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
+### Developing the theme locally
+
+To test local changes to `packages/docusaurus-theme` without publishing:
+
+```bash
+# Link the local theme (run once)
+./dev-link.sh
+
+# Terminal 1 — recompile theme on change
+cd ../packages/docusaurus-theme && yarn watch
+
+# Terminal 2 — run the site
+yarn start
+```
+
+To restore the published npm version:
+
+```bash
+./dev-link.sh unlink
+```
+
 ## Build
 
 ```bash

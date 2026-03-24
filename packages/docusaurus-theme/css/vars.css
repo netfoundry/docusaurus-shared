@@ -1,6 +1,14 @@
 :root {
     --ifm-navbar-height: 50px;
     --nf-docs-max-width: 1400px;
+
+    --nf-color-primary:   119, 194, 252;
+    --nf-color-secondary: 78, 219, 63;
+    --nf-color-tertiary:  3, 92, 230;
+
+    --nf-primary:   rgb(var(--nf-color-primary));
+    --nf-secondary: rgb(var(--nf-color-secondary));
+    --nf-tertiary:  rgb(var(--nf-color-tertiary));
     /*--nf-docs-main-color: purple;*/
     .container {
         /*background: sandybrown;*/
