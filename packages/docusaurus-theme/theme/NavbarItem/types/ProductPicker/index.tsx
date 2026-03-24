@@ -49,7 +49,7 @@ const buildDefaultColumns = (img: string, consoleLogo: string): PickerColumn[] =
     headerClass: HEADER_CLASSES[2],
     links: [
       { label: 'Self-Hosted', to: '/docs/selfhosted', logo: `${img}/onprem-sm-logo.svg`, description: 'Deploy the full stack in your own environment.' },
-      { label: 'zLAN',        to: '/docs/zlan',        logo: `${img}/zlan-logo.svg`,     description: 'Zero-trust access for OT networks.' },
+      { label: 'zLAN',        to: '/docs/zlan',        logo: `${img}/zlan/zlan-logo.svg`,     description: 'Zero-trust access for OT networks.' },
     ],
   },
 ];
