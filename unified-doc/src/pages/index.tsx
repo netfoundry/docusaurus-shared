@@ -63,7 +63,7 @@ const products = [
   {
     id: 'zlan',
     title: 'zLAN',
-    logo: `${IMG}/zlan-logo.svg`,
+    logo: `${IMG}/zlan/zlan-logo.svg`,
     tag: 'OT Security',
     accent: CYAN,
     link: `${DOCS_BASE}zlan/intro`,
