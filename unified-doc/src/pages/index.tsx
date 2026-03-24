@@ -46,7 +46,7 @@ const products = [
     logo: `${IMG}/zrok-1.0.0-rocket-purple.svg`,
     tag: 'Open Source',
     accent: GREEN,
-    link: `${DOCS_BASE}zrok/getting-started`,
+    link: `${DOCS_BASE}zrok`,
     description: 'Geo-scale secure sharing built on the OpenZiti mesh. Share services, files, or HTTP endpoints peer-to-peer — no open ports, no NAT traversal tricks.'
   },
   {

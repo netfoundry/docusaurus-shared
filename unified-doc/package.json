@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "start": "NODE_OPTIONS='--max-old-space-size=4096' docusaurus start",
-    "build": "NODE_OPTIONS='--max-old-space-size=4096' docusaurus build",
+    "start": "cross-env NODE_OPTIONS='--max-old-space-size=4096' docusaurus start",
+    "build": "cross-env NODE_OPTIONS='--max-old-space-size=4096' docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -79,6 +79,7 @@
     "@docusaurus/types": "^3.9.2",
     "backstopjs": "^6.3.25",
     "typescript": "~5.6.2",
+    "cross-env": "^7.0.3",
     "yaml-loader": "^0.8.1"
   },
   "browserslist": {

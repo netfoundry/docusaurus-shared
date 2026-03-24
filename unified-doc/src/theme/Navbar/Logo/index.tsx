@@ -70,4 +70,5 @@ export default function NavbarLogo(): JSX.Element {
             )}
         </>
     );
+
 }

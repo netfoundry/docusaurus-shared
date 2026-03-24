@@ -104,6 +104,7 @@ jobs:
         with:
           name: docusaurus-build-site
           path: unified-doc/build-site/
+          retention-days: 7
 
 #  check-links:
 #    if: github.ref_name == 'main'
