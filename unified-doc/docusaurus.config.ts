@@ -388,7 +388,7 @@ const config: Config = {
                         },
                         {
                             label: 'zrok',
-                            to: '/docs/zrok/getting-started',
+                            to: '/docs/zrok/get-started',
                             logo: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-purple.svg',
                             logoDark: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-green.svg',
                             description: 'Secure peer-to-peer sharing built on OpenZiti.',
