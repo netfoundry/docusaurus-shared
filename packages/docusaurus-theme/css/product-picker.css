@@ -75,6 +75,8 @@
 }
 
 /* ── ProductPicker panel (custom navbar item) ───────────────────────────── */
+.nf-picker-panel--hidden { display: none; }
+
 .nf-picker-panel {
     position: fixed;
     top: 3.75rem;

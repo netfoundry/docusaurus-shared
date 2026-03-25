@@ -126,13 +126,12 @@ export default function ProductPicker({label = 'Products', className}: Props) {
         onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); setOpen(o => !o); } }}>
         {label}
       </a>
-      {open && (
-        <div
-          className="nf-picker-panel"
-          onMouseDown={e => e.stopPropagation()}
-          onMouseEnter={handlePanelEnter}
-          onMouseLeave={handlePanelLeave}>
-          <div className="picker-content">
+      <div
+        className={clsx('nf-picker-panel', {'nf-picker-panel--hidden': !open})}
+        onMouseDown={e => e.stopPropagation()}
+        onMouseEnter={handlePanelEnter}
+        onMouseLeave={handlePanelLeave}>
+        <div className="picker-content">
             {resolvedColumns.map((col, i) => (
               <div key={i} className="picker-column">
                 <span className={clsx('picker-header', col.headerClass)}>{col.header}</span>
@@ -149,8 +148,7 @@ export default function ProductPicker({label = 'Products', className}: Props) {
               </div>
             ))}
           </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 }
