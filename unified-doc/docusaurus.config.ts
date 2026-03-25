@@ -365,7 +365,7 @@ const config: Config = {
                     links: [
                         {
                             label: 'NetFoundry Console',
-                            to: '#',
+                            to: 'https://support.netfoundry.io/',
                             logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
                             description: 'Cloud-managed orchestration and global fabric control.',
                         },
