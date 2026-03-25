@@ -407,7 +407,7 @@ const config: Config = {
                         {
                             label: 'zLAN',
                             to: '/docs/zlan/intro',
-                            logo: 'https://netfoundry.io/docs/img/zlan-logo.svg',
+                            logo: 'https://netfoundry.io/docs/img/zlan/zlan-logo.svg',
                             description: 'Zero-trust access for OT networks.',
                         },
                     ],
