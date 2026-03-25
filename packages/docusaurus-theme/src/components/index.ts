@@ -1,6 +1,7 @@
 export * from './Alert'
 export * from './CodeBlock';
 export * from './Common';
+export * from './DownloadCard';
 export * from './NetFoundry'
 export * from './NetFoundryFooter';
 export * from './NetFoundryHighlight';
