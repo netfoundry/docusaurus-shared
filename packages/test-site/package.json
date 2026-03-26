@@ -20,13 +20,14 @@
     "@docusaurus/theme-mermaid": "^3.9.2",
     "@docusaurus/utils": "3.9.2",
     "@mdx-js/react": "^3.0.0",
-    "@netfoundry/docusaurus-theme": "^0.1.2",
+    "@netfoundry/docusaurus-theme": "file:../docusaurus-theme",
     "clsx": "^2.0.0",
     "lucide-react": "^0.525.0",
     "prism-react-renderer": "^2.3.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "redocusaurus": "^2.5.0"
+    "redocusaurus": "^2.5.0",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@docusaurus/core": "3.9.2",
