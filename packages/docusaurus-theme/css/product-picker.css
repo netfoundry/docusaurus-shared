@@ -186,6 +186,29 @@
 .picker-link strong { color: var(--ifm-font-color-base); font-size: 0.95rem; font-weight: 900; letter-spacing: -0.02em; display: block; text-decoration: none; }
 .picker-link span   { color: #64748b; font-size: 0.82rem; display: block; margin-top: 2px; line-height: 1.35; text-decoration: none; }
 
+/* ── Navbar icon links (GitHub, Discourse) ──────────────────────────────── */
+.nf-icon-links {
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+}
+
+.nf-icon-link,
+.nf-icon-link:visited {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    color: var(--ifm-navbar-link-color);
+    text-decoration: none;
+}
+
+.nf-icon-link:hover {
+    color: var(--ifm-color-primary);
+    text-decoration: none;
+}
+
 /* ── Mobile (<= 996 px) ─────────────────────────────────────────────────── */
 @media (max-width: 996px) {
     /* Fixed grid makes no sense in the narrow sidebar — hide the raw HTML blob */

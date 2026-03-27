@@ -1,0 +1,57 @@
+.bg {
+    position: absolute;
+    inset: 0;
+    background-color: #020617;
+    background-image:
+        repeating-linear-gradient(0deg,  transparent, transparent 59px, rgba(34, 211, 238, 0.04) 59px, rgba(34, 211, 238, 0.04) 60px),
+        repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(34, 211, 238, 0.04) 59px, rgba(34, 211, 238, 0.04) 60px);
+    overflow: hidden;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+}
+
+.orb1 {
+    width: 55%;
+    height: 75%;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.35) 0%, transparent 70%);
+    top: -15%;
+    left: -10%;
+    animation: drift1 14s ease-in-out infinite alternate;
+}
+
+.orb2 {
+    width: 45%;
+    height: 65%;
+    background: radial-gradient(circle, rgba(0, 104, 249, 0.28) 0%, transparent 70%);
+    top: 20%;
+    right: -10%;
+    animation: drift2 18s ease-in-out infinite alternate;
+}
+
+.orb3 {
+    width: 40%;
+    height: 55%;
+    background: radial-gradient(circle, rgba(34, 197, 94, 0.18) 0%, transparent 70%);
+    bottom: -15%;
+    left: 25%;
+    animation: drift3 16s ease-in-out infinite alternate;
+}
+
+@keyframes drift1 {
+    from { transform: translate(0, 0); }
+    to   { transform: translate(18%, 22%); }
+}
+
+@keyframes drift2 {
+    from { transform: translate(0, 0); }
+    to   { transform: translate(-22%, 18%); }
+}
+
+@keyframes drift3 {
+    from { transform: translate(0, 0); }
+    to   { transform: translate(12%, -28%); }
+}
