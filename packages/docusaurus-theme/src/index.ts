@@ -22,6 +22,7 @@ export default function themeNetFoundry(
     // Automatically inject CSS
     getClientModules() {
       const modules: string[] = [
+        require.resolve('@docsearch/css'),
         require.resolve('../css/theme.css'),
       ];
 

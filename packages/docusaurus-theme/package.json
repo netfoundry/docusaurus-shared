@@ -51,6 +51,7 @@
     "react-dom": "^18 || ^19"
   },
   "dependencies": {
+    "@docsearch/css": "^3",
     "@docsearch/react": "^3",
     "algoliasearch": "^5",
     "clsx": "^2.0.0",

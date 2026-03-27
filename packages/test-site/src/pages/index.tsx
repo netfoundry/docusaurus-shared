@@ -3,6 +3,7 @@ import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import clsx from 'clsx';
 import styles from './landing.module.css';
+import {HeroBackground} from '@netfoundry/docusaurus-theme/ui';
 
 const CYAN  = '#22d3ee';
 const GREEN = '#22c55e';
@@ -15,7 +16,7 @@ const products = [
   { id: 'frontdoor',  title: 'Frontdoor',              logo: `${IMG}/frontdoor-sm-logo.svg`,        tag: 'Managed',     accent: CYAN,  link: '/docs/frontdoor', features: ['No agent or VPN required', 'Zero firewall rules', 'Identity-based access', 'Any app, any browser'],                                description: 'Secure, clientless access to any application — without a VPN or firewall rule. Expose nothing to the internet while giving authorized users instant access.' },
   { id: 'zrok',       title: 'zrok',                   logo: `${IMG}/zrok-1.0.0-rocket-purple.svg`, tag: 'Open Source', accent: GREEN, link: '/docs/zrok',      description: 'Geo-scale secure sharing built on the OpenZiti mesh. Share services, files, or HTTP endpoints peer-to-peer — no open ports, no NAT traversal tricks.' },
   { id: 'selfhosted', title: 'NetFoundry Self-Hosted', logo: `${IMG}/onprem-sm-logo.svg`,           tag: 'Self-Hosted', accent: CYAN,  link: '/docs/onprem',    features: ['Full infrastructure control', 'Air-gap compatible', 'On-prem or any cloud', 'Enterprise SLA'],                                      description: 'Deploy the full NetFoundry control plane and fabric in your own environment. Full sovereignty over your zero-trust infrastructure — on-prem, air-gapped, or any cloud.' },
-  { id: 'zlan',       title: 'zLAN',                   logo: `${IMG}/zlan-logo.svg`,                tag: 'OT Security', accent: CYAN,  link: '/docs/zlan',      features: ['Deep OT/IT traffic visibility', 'Identity-aware micro-segmentation', 'Centralized zero-trust policy', 'Built on NetFoundry Self-Hosted'], description: 'Identity-aware micro-segmentation firewall for operational technology networks. Deep traffic visibility, centralized policy, and zero-trust access control for OT environments.' },
+  { id: 'zlan',       title: 'zLAN',                   logo: `${IMG}/zlan/zlan-logo.svg`,                tag: 'OT Security', accent: CYAN,  link: '/docs/zlan',      features: ['Deep OT/IT traffic visibility', 'Identity-aware micro-segmentation', 'Centralized zero-trust policy', 'Built on NetFoundry Self-Hosted'], description: 'Identity-aware micro-segmentation firewall for operational technology networks. Deep traffic visibility, centralized policy, and zero-trust access control for OT environments.' },
 ];
 
 type Product = (typeof products)[number];
@@ -47,12 +48,13 @@ export default function Home(): JSX.Element {
   return (
     <Layout title="NetFoundry Docs">
       <header className={styles['nf-hero-stage']}>
+        <HeroBackground />
         <div className={clsx('container', styles['nf-hero-content'])}>
           <h1 className={styles['nf-hero-title']}>NetFoundry <span className={styles['nf-green-text']}>Docs</span></h1>
-          <p className={styles['nf-hero-subtext']}>Secure, high-performance networking for the modern era.</p>
+          <p className={styles['nf-hero-subtext']}>Secure your workloads with Identity-First Connectivity™</p>
           <div className={styles['nf-hero-ctas']}>
             <Link className={styles['nf-btn-primary']} to="/docs/frontdoor">Get Started</Link>
-            <a className={styles['nf-btn-ghost']} href="https://netfoundry.io/lets-talk/">Request Demo</a>
+            <a className={styles['nf-btn-ghost']} href="https://netfoundry.io/lets-talk/" target="_blank" rel="noopener noreferrer">Request Demo</a>
           </div>
         </div>
       </header>

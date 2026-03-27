@@ -24,7 +24,7 @@ type Props = {
   className?: string;
 };
 
-const HEADER_CLASSES = ['picker-header--nf-primary', 'picker-header--nf-secondary', 'picker-header--nf-tertiary'];
+const HEADER_CLASSES = ['picker-header--nf-tertiary', 'picker-header--nf-secondary', 'picker-header--nf-primary'];
 const NF_LOGO_DEFAULT = 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg';
 
 const buildDefaultColumns = (img: string, consoleLogo: string): PickerColumn[] => [
@@ -126,12 +126,13 @@ export default function ProductPicker({label = 'Products', className}: Props) {
         onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); setOpen(o => !o); } }}>
         {label}
       </a>
-      <div
-        className={clsx('nf-picker-panel', {'nf-picker-panel--hidden': !open})}
-        onMouseDown={e => e.stopPropagation()}
-        onMouseEnter={handlePanelEnter}
-        onMouseLeave={handlePanelLeave}>
-        <div className="picker-content">
+      {open && (
+        <div
+          className="nf-picker-panel"
+          onMouseDown={e => e.stopPropagation()}
+          onMouseEnter={handlePanelEnter}
+          onMouseLeave={handlePanelLeave}>
+          <div className="picker-content">
             {resolvedColumns.map((col, i) => (
               <div key={i} className="picker-column">
                 <span className={clsx('picker-header', col.headerClass)}>{col.header}</span>
@@ -148,7 +149,8 @@ export default function ProductPicker({label = 'Products', className}: Props) {
               </div>
             ))}
           </div>
-      </div>
+        </div>
+      )}
     </div>
   );
 }
