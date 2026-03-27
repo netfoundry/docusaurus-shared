@@ -12,6 +12,7 @@
     position: absolute;
     border-radius: 50%;
     filter: blur(80px);
+    will-change: transform;
 }
 
 .orb1 {
