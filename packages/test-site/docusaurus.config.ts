@@ -176,7 +176,7 @@ export default {
                         {
                             label: 'zLAN',
                             to: '/docs/zlan',
-                            logo: '/img/zlan-logo.svg',
+                            logo: 'https://netfoundry.io/docs/img/zlan/zlan-logo.svg',
                             description: 'Zero-trust access for OT networks.',
                         },
                     ],

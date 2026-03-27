@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect, useCallback} from 'react';
 import Link from '@docusaurus/Link';
-import useBaseUrl from '@docusaurus/useBaseUrl';
 import {useThemeConfig} from '@docusaurus/theme-common';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import clsx from 'clsx';
 
 const NF_LOGO_DEFAULT = 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg';
@@ -17,8 +17,10 @@ type Props = {
 
 export default function ResourcesPicker({label = 'Resources', className}: Props) {
   const themeConfig = useThemeConfig() as any;
+  const {siteConfig} = useDocusaurusContext();
+  const img = `${siteConfig.url}${siteConfig.baseUrl}img`;
   const consoleLogo = themeConfig?.netfoundry?.consoleLogo ?? NF_LOGO_DEFAULT;
-  const openzitiLogo = useBaseUrl('/img/openziti-sm-logo.svg');
+  const openzitiLogo = `${img}/openziti-sm-logo.svg`;
 
   const wrapRef       = useRef<HTMLDivElement>(null);
   const hasEnteredPanel = useRef(false);
