@@ -11,6 +11,18 @@ html {
     scrollbar-gutter: stable;
 }
 
+/* Separator between navbar logo and nav items */
+.navbar__brand::after {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 1.2em;
+    background: currentColor;
+    opacity: 0.2;
+    margin-left: 1rem;
+    vertical-align: middle;
+}
+
 .main-wrapper > div {
     /* work around issue from docusaurus doc grow/shrinking based on content */
     width: 100%;

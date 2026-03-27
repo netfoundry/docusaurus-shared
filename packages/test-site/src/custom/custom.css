@@ -17,18 +17,6 @@ body,
     flex-direction: column;
 }
 
-/* Separator between navbar logo and nav items */
-.navbar__brand::after {
-    content: '';
-    display: inline-block;
-    width: 1px;
-    height: 1.2em;
-    background: currentColor;
-    opacity: 0.2;
-    margin-left: 1rem;
-    vertical-align: middle;
-}
-
 /* Docusaurus-specific utility class */
 :global(.docusaurus-mt-lg) {
     margin-top: 3rem;
@@ -70,9 +58,6 @@ body,
     display: flex;
     flex-direction: column;
 
-    article {
-        padding-bottom: 2em;
-    }
     > div {
         max-width: var(--ziti-landing-max-width);
         width: 100%;
