@@ -1643,7 +1643,7 @@
   resolved "https://registry.yarnpkg.com/@docsearch/core/-/core-4.5.3.tgz#b64b7855348882ba4789e6a28a51764abb1ff9a1"
   integrity sha512-x/P5+HVzv9ALtbuJIfpkF8Eyc5RE8YCsFcOgLrrtWa9Ui+53ggZA5seIAanCRORbS4+m982lu7rZmebSiuMIcw==
 
-"@docsearch/css@3.9.0":
+"@docsearch/css@3.9.0", "@docsearch/css@^3":
   version "3.9.0"
   resolved "https://registry.yarnpkg.com/@docsearch/css/-/css-3.9.0.tgz#3bc29c96bf024350d73b0cfb7c2a7b71bf251cd5"
   integrity sha512-cQbnVbq0rrBwNAKegIac/t6a8nWoUAn8frnkLFW6YARaRmAQr5/Eoe6Ln2fqkUCZ40KpdrKbpSAmgrkviOxuWA==
@@ -2756,15 +2756,6 @@
     "@emnapi/core" "^1.4.3"
     "@emnapi/runtime" "^1.4.3"
     "@tybys/wasm-util" "^0.10.0"
-
-"@netfoundry/docusaurus-theme@^0.1.2":
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/@netfoundry/docusaurus-theme/-/docusaurus-theme-0.1.9.tgz#8327b43847b35a4b25c780e7c7132adf1fba7aa6"
-  integrity sha512-5Rpj6CYGtjBVDrwxdPn3R/q22iRzEQqZDeb39Ca8Fl2/7tvliOFp/Lf73Mz2uFQchsb90qBAvZPHvQpvhKyQtg==
-  dependencies:
-    clsx "^2.0.0"
-    react-device-detect "^2.2.3"
-    react-github-btn "^1.4.0"
 
 "@noble/hashes@1.4.0":
   version "1.4.0"

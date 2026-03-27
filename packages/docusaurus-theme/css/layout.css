@@ -11,6 +11,27 @@ html {
     scrollbar-gutter: stable;
 }
 
+/* Resources picker: sit after the color mode toggle, before search */
+.navbar__items--right > div:has(.nf-picker-trigger)  { order: 2; display: flex; align-items: center; }
+.navbar__items--right > div:has(.DocSearch-Button)   { order: 3; }
+
+/* Separator between color mode toggle and resources picker */
+.navbar__items--right > div:has(.nf-picker-trigger)::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 1.2em;
+    background: currentColor;
+    opacity: 0.2;
+    margin-right: 0.75rem;
+}
+
+/* Discourse navbar icon — multicolor brand logo */
+.nf-icon-link--discourse:hover {
+    opacity: 0.8;
+    color: inherit;
+}
+
 /* Separator between navbar logo and nav items */
 .navbar__brand::after {
     content: '';

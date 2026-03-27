@@ -139,8 +139,9 @@
 }
 
 /* Narrower panel for the 2-column Resources menu */
-.dropdown__menu:has(.picker-resources) { max-width: 700px; }
-.nf-picker-panel--narrow { max-width: 680px; }
+.dropdown__menu:has(.picker-resources) { max-width: 400px; }
+.nf-picker-panel--narrow { max-width: 400px; }
+
 
 /* Ensure visibility when open */
 .dropdown--show > .dropdown__menu,
