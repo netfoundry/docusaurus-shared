@@ -365,7 +365,7 @@ const config: Config = {
                     links: [
                         {
                             label: 'NetFoundry Console',
-                            to: '#',
+                            to: 'https://support.netfoundry.io/',
                             logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
                             description: 'Cloud-managed orchestration and global fabric control.',
                         },
@@ -388,7 +388,7 @@ const config: Config = {
                         },
                         {
                             label: 'zrok',
-                            to: '/docs/zrok/getting-started',
+                            to: '/docs/zrok/get-started',
                             logo: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-purple.svg',
                             logoDark: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-green.svg',
                             description: 'Secure peer-to-peer sharing built on OpenZiti.',
@@ -407,7 +407,7 @@ const config: Config = {
                         {
                             label: 'zLAN',
                             to: '/docs/zlan/intro',
-                            logo: 'https://netfoundry.io/docs/img/zlan-logo.svg',
+                            logo: 'https://netfoundry.io/docs/img/zlan/zlan-logo.svg',
                             description: 'Zero-trust access for OT networks.',
                         },
                     ],

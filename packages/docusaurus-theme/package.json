@@ -1,6 +1,6 @@
 {
   "name": "@netfoundry/docusaurus-theme",
-  "version": "0.8.0",
+  "version": "0.8.2",
   "description": "NetFoundry Docusaurus theme with shared layout, footer, and styling",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -12,7 +12,7 @@
   "scripts": {
     "clean": "node scripts/clean.mjs",
     "build": "yarn clean && tsc && yarn build:css",
-    "watch": "tsc --watch",
+    "watch": "node scripts/watch.mjs",
     "build:css": "node scripts/build-css.mjs",
     "test": "jest",
     "prepublishOnly": "yarn build && yarn test"

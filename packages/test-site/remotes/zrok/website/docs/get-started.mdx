@@ -1,0 +1,36 @@
+---
+title: Get Started
+sidebar_position: 1
+---
+
+import { DownloadSection } from '@netfoundry/docusaurus-theme/ui';
+
+# Get Started with zrok
+
+Download the binary for your platform, then run `zrok enable` with your account token.
+
+<DownloadSection
+  windows={{ links: [
+    { arch: 'x86_64', url: 'https://github.com/openziti/zrok/releases/latest/download/zrok_windows_amd64.zip' },
+    { arch: 'ARM64',  url: 'https://github.com/openziti/zrok/releases/latest/download/zrok_windows_arm64.zip' },
+  ]}}
+  macos={{ links: [
+    { arch: 'x86_64', url: 'https://github.com/openziti/zrok/releases/latest/download/zrok_darwin_amd64.tar.gz' },
+    { arch: 'ARM64',  url: 'https://github.com/openziti/zrok/releases/latest/download/zrok_darwin_arm64.tar.gz' },
+  ]}}
+  linux={{ links: [
+    { arch: 'x86_64', url: 'https://github.com/openziti/zrok/releases/latest/download/zrok_linux_amd64.tar.gz' },
+    { arch: 'ARM64',  url: 'https://github.com/openziti/zrok/releases/latest/download/zrok_linux_arm64.tar.gz' },
+    { arch: 'ARM',    url: 'https://github.com/openziti/zrok/releases/latest/download/zrok_linux_armv7.tar.gz' },
+  ]}}
+/>
+
+## Next steps
+
+Once installed, verify with:
+
+```bash
+zrok version
+```
+
+Then head to [zrok.io](https://zrok.io) to create your account and grab your token.

@@ -1,0 +1,122 @@
+:root {
+  --card-accent: #e53935;
+  --card-accent-hover: #6448d8;
+  --card-accent-soft: #e53935;
+  --card-border: 1px solid #e0d9fb;
+  --card-shadow: 0 2px 12px rgba(124, 95, 245, 0.10);
+  --card-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+  --card-accent: #8b6ff7;
+  --card-accent-hover: #a48df9;
+  --card-accent-soft: #2a1f56;
+  --card-border: 1px solid #3a2e6e;
+  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  --card-bg: #1e1b2e;
+}
+
+.downloadContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 16px;
+  padding: 24px 0;
+}
+
+.downloadCard {
+  width: 30%;
+  box-sizing: border-box;
+  background-color: var(--card-bg);
+  border: var(--card-border);
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  text-align: center;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.downloadCard:hover {
+  box-shadow: 0 6px 24px rgba(124, 95, 245, 0.18);
+  transform: translateY(-2px);
+}
+
+.downloadCard .imgContainer {
+  background-color: var(--card-accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px 16px;
+  border-bottom: var(--card-border);
+}
+
+.downloadCard .imgContainer img {
+  width: auto;
+  max-height: 56px;
+  display: block;
+}
+
+.downloadCard h3 {
+  margin: 16px 0 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.downloadCard ul {
+  list-style: none;
+  padding: 0 16px;
+  margin: 0 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.downloadButtons {
+  display: inline-block;
+  padding: 6px 14px;
+  background-color: var(--card-accent);
+  border-radius: 20px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.downloadButtons:hover,
+.downloadButtons:focus {
+  background-color: var(--card-accent-hover);
+  transform: scale(1.04);
+  outline: none;
+}
+
+.downloadLinks,
+.downloadLinks:hover,
+.downloadLinks:focus {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.cardFooter {
+  background-color: var(--card-accent-soft);
+  border-top: var(--card-border);
+  padding: 12px 16px;
+  margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .downloadContainer {
+    flex-direction: column;
+  }
+
+  .downloadCard {
+    width: auto;
+    max-width: none;
+  }
+}

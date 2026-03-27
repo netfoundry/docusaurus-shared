@@ -7,8 +7,8 @@ How to develop and test the theme locally before publishing to npm.
 ```
 ┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
 │   test-site/    │     │  file: protocol  │     │    npm install  │
-│  (local path)   │ --> │  (simulates npm) │ --> │   (production)  │
-│   instant HMR   │     │   needs build    │     │   needs publish │
+│  (yarn link)    │ --> │  (simulates npm) │ --> │   (production)  │
+│  needs watch    │     │   needs build    │     │   needs publish │
 └─────────────────┘     └──────────────────┘     └─────────────────┘
 ```
 
@@ -36,9 +36,27 @@ multiple standalone sub-projects via `plugin-content-docs` instances. Each sub-p
 lives in `remotes/` with its own `docusaurus.config.ts` (for standalone use) and a
 `docusaurus-plugin-*-docs.ts` (for aggregation).
 
-## Step 1: Develop with test-site
+## Step 1: One-time local link setup
 
-The test-site references the theme via local path. Start the dev server:
+The test-site uses `yarn link` so it always resolves `@netfoundry/docusaurus-theme`
+directly from your local `packages/docusaurus-theme` directory. Run these once after
+cloning:
+
+```bash
+# Register the theme as a linkable package
+yarn --cwd packages/docusaurus-theme link
+
+# Point the test-site at the local copy
+yarn --cwd packages/test-site link "@netfoundry/docusaurus-theme"
+```
+
+After this, `packages/test-site/node_modules/@netfoundry/docusaurus-theme` is a symlink
+to `packages/docusaurus-theme`. Rebuilding the theme is immediately visible to the dev
+server — no reinstall needed.
+
+## Step 2: Develop with test-site
+
+Start the dev server:
 
 ```bash
 cd packages/test-site
@@ -49,18 +67,17 @@ yarn start
 
 | What you changed | What to do |
 |---|---|
-| `src/` components (React/TS) | Nothing — webpack HMR picks them up instantly |
-| `theme/` component overrides | Rebuild needed — see watch mode below |
-| `css/` stylesheets | Rebuild needed — see below |
+| `src/` components (React/TS) | Nothing extra — `yarn watch` recompiles automatically |
+| `theme/` component overrides | Nothing extra — `yarn watch` recompiles automatically |
+| `css/` stylesheets | Nothing extra — `yarn watch` copies CSS automatically |
 
-### Watching `theme/` changes during development
+### Watching theme changes during development
 
-`theme/` overrides (e.g. swizzled Docusaurus components) are compiled to `dist/theme/`
-and served from there. Run the TypeScript compiler in watch mode in a second terminal
-so changes are recompiled automatically:
+`yarn watch` runs `tsc --watch` and a CSS file watcher together. Run it in a second
+terminal:
 
 ```bash
-# Terminal 1 — theme watcher
+# Terminal 1 — theme watcher (TS + CSS)
 cd packages/docusaurus-theme
 yarn watch
 
@@ -69,22 +86,9 @@ cd packages/test-site
 yarn start
 ```
 
-On every save in `theme/`, `tsc --watch` recompiles in ~1 second and Docusaurus
-hot-reloads the result.
+On every save, changes compile in ~1 second and Docusaurus hot-reloads the result.
 
-### CSS changes
-
-Theme CSS files (`packages/docusaurus-theme/css/`) are not watched automatically.
-After editing CSS run a full build:
-
-```bash
-cd packages/docusaurus-theme
-yarn build
-```
-
-The dev server will pick up the rebuilt CSS on next page load.
-
-## Step 2: Build the theme
+## Step 3: Build the theme
 
 Before testing with remote sites or publishing:
 
@@ -95,11 +99,11 @@ yarn build
 
 This compiles TypeScript to CommonJS in `dist/`.
 
-## Step 3: Test with remote site (file: protocol)
+## Step 4: Test with remote site (file: protocol)
 
 This simulates exactly what npm publish will deliver.
 
-### 3a. Update the remote's package.json
+### 4a. Update the remote's package.json
 
 ```json
 {
@@ -111,7 +115,7 @@ This simulates exactly what npm publish will deliver.
 
 Adjust the path based on your remote's location relative to the theme package.
 
-### 3b. Install and test
+### 4b. Install and test
 
 ```bash
 cd unified-doc/_remotes/frontdoor/docusaurus
@@ -121,7 +125,7 @@ yarn build   # production build
 yarn start   # dev server
 ```
 
-### 3c. Iterating on changes
+### 4c. Iterating on changes
 
 After making theme changes:
 
@@ -141,7 +145,7 @@ rm -rf .docusaurus node_modules/.cache
 yarn build
 ```
 
-## Step 4: Publish to npm
+## Step 5: Publish to npm
 
 Once satisfied with local testing:
 
@@ -153,7 +157,7 @@ npm version patch   # or minor/major
 npm publish
 ```
 
-## Step 5: Verify from npm
+## Step 6: Verify from npm
 
 Change the remote's package.json back to a version number:
 
@@ -178,9 +182,8 @@ yarn build
 
 | Stage | Theme build? | Command |
 |-------|-------------|---------|
-| Dev with test-site (`src/` components) | No | `cd packages/test-site && yarn start` |
-| Dev with test-site (`theme/` overrides) | Watch mode | `cd packages/docusaurus-theme && yarn watch` |
-| Dev with test-site (CSS) | Yes | `cd packages/docusaurus-theme && yarn build` |
+| One-time link setup | No | see Step 1 |
+| Dev with test-site (any change) | Yes (watch) | `yarn watch` in `packages/docusaurus-theme` |
 | Test with file: | Yes | `yarn build` then remote `yarn install --force` |
 | Publish | Yes | `npm version patch && npm publish` |
 | Verify from npm | N/A | remote `yarn install && yarn build` |
@@ -217,9 +220,8 @@ All sub-projects route under `/docs/$projectname`.
 ### "Cannot find module" errors
 
 ```bash
-# Clear all caches
+# Clear Docusaurus and webpack caches
 rm -rf .docusaurus node_modules/.cache
-yarn install --force
 ```
 
 ### Changes not reflecting
