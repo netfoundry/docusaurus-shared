@@ -56,7 +56,11 @@ export default function ResourcesPicker({label = 'Resources', className}: Props)
     hasEnteredPanel.current = false;
     if (wrapRef.current) {
       const rect = wrapRef.current.getBoundingClientRect();
-      setPanelRight(rect.left);
+      const PANEL_MAX_WIDTH = 430;
+      const MARGIN = 16;
+      const rightEdge = rect.left + PANEL_MAX_WIDTH;
+      const overflow = rightEdge - (window.innerWidth - MARGIN);
+      setPanelRight(overflow > 0 ? rect.left - overflow : rect.left);
     }
     window.dispatchEvent(new CustomEvent('nf-picker:open', {detail: {label}}));
     setOpen(true);
@@ -76,22 +80,36 @@ export default function ResourcesPicker({label = 'Resources', className}: Props)
   ];
 
   const communityLinks = [
-    { label: 'NetFoundry YouTube', description: 'Video tutorials, demos, and technical deep dives.',   href: 'https://www.youtube.com/c/NetFoundry', svgIcon: YOUTUBE_ICON },
-    { label: 'OpenZiti Discourse', description: 'Ask questions and connect with the community.',       href: 'https://openziti.discourse.group/',     svgIcon: DISCOURSE_ICON },
+    { label: 'NetFoundry YouTube', description: 'Video tutorials, demos, and technical deep dives.',   href: 'https://www.youtube.com/c/NetFoundry',  logoSrc: consoleLogo,   logoBadge: YOUTUBE_ICON },
+    { label: 'OpenZiti YouTube',   description: 'OpenZiti community videos and project updates.',      href: 'https://www.youtube.com/openziti',       logoSrc: openzitiLogo, logoBadge: YOUTUBE_ICON },
+    { label: 'OpenZiti Discourse', description: 'Ask questions and connect with the community.',       href: 'https://openziti.discourse.group/',      svgIcon: DISCOURSE_ICON },
   ];
 
-  const renderLink = (link: typeof learnLinks[0] | typeof communityLinks[0], i: number) => (
-    <Link key={i} to={link.href} className="picker-link" target="_blank" rel="noopener noreferrer">
-      {'logoSrc' in link
-        ? <img src={link.logoSrc} className="picker-logo" alt="" />
-        : <span className="picker-logo" dangerouslySetInnerHTML={{__html: (link as any).svgIcon}} />
-      }
-      <div className="picker-text">
-        <strong>{link.label}</strong>
-        <span>{link.description}</span>
-      </div>
-    </Link>
-  );
+  const renderLink = (link: typeof learnLinks[0] | typeof communityLinks[0], i: number) => {
+    const hasLogo = 'logoSrc' in link;
+    const hasBadge = 'logoBadge' in link && (link as any).logoBadge;
+    return (
+      <Link key={i} to={link.href} className="picker-link" target="_blank" rel="noopener noreferrer">
+        {hasLogo ? (
+          <span style={{position: 'relative', display: 'inline-flex', flexShrink: 0, marginRight: '0.8rem', width: 32, height: 32}}>
+            <img src={(link as any).logoSrc} style={{width: 32, height: 32, objectFit: 'contain'}} alt="" />
+            {hasBadge && (
+              <span
+                style={{position: 'absolute', bottom: -2, right: -4, width: 14, height: 14, display: 'block'}}
+                dangerouslySetInnerHTML={{__html: (link as any).logoBadge}}
+              />
+            )}
+          </span>
+        ) : (
+          <span className="picker-logo" dangerouslySetInnerHTML={{__html: (link as any).svgIcon}} />
+        )}
+        <div className="picker-text">
+          <strong>{link.label}</strong>
+          <span>{link.description}</span>
+        </div>
+      </Link>
+    );
+  };
 
   return (
     <div

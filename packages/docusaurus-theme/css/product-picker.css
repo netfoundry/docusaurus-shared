@@ -140,7 +140,7 @@
 
 /* Narrower panel for the 2-column Resources menu */
 .dropdown__menu:has(.picker-resources) { max-width: 400px; }
-.nf-picker-panel--narrow { max-width: 400px; }
+.nf-picker-panel--narrow { max-width: 430px; padding: 0.85rem 1.25rem; }
 
 
 /* Ensure visibility when open */
@@ -186,6 +186,7 @@
 .picker-link:hover  { background: rgba(0, 118, 255, 0.06); transform: translateX(3px); text-decoration: none; }
 .picker-link strong { color: var(--ifm-font-color-base); font-size: 0.95rem; font-weight: 900; letter-spacing: -0.02em; display: block; text-decoration: none; }
 .picker-link span   { color: #64748b; font-size: 0.82rem; display: block; margin-top: 2px; line-height: 1.35; text-decoration: none; }
+.nf-picker-panel--narrow .picker-link span { white-space: nowrap; }
 
 /* ── Navbar icon links (GitHub, Discourse) ──────────────────────────────── */
 .nf-icon-links {
