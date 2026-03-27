@@ -184,7 +184,7 @@ export default {
             ],
             footer: {
                 description: 'Secure, high-performance networking for the modern era.',
-                copyright: `Copyright © 2026 NetFoundry Inc.`,
+                copyright: `Copyright © ${new Date().getFullYear()} NetFoundry Inc.`,
                 socialProps: {
                     githubUrl: 'https://github.com/netfoundry/',
                     youtubeUrl: 'https://youtube.com/netfoundry/',
