@@ -24,7 +24,6 @@ export default function themeNetFoundry(
       const modules: string[] = [
         require.resolve('@docsearch/css'),
         require.resolve('../css/theme.css'),
-        require.resolve('../css/hero-background.css'),
       ];
 
       // Add custom CSS if specified in options
