@@ -1,62 +1,3 @@
-.nf-hero-stage {
-    position: relative; width: 100%; min-height: 370px;
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden; text-align: center; background: #020617; z-index: 4;
-}
-.nf-hero-stage::after {
-    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-    height: 220px; background: linear-gradient(to bottom, transparent 0%, #0f172a 100%);
-    pointer-events: none; z-index: 1;
-}
-:global([data-theme='light']) .nf-hero-stage::after {
-    height: 80px;
-    background: linear-gradient(to bottom, transparent 0%, #020617 100%);
-}
-.nf-hero-overlay { display: none; }
-.nf-hero-content {
-    position: relative; z-index: 2; padding: 2.5rem 3.5rem;
-    background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none;
-}
-.nf-hero-title {
-    font-size: 4rem; font-weight: 900; color: #ffffff; margin-bottom: 0.75rem;
-    letter-spacing: -0.02em; line-height: 1.05;
-    text-shadow: 0 0 20px rgba(34, 211, 238, 0.75), 0 2px 12px rgba(0, 0, 0, 0.9);
-}
-.nf-green-text {
-    color: #22c55e;
-    font-family: inherit; font-weight: inherit; font-size: inherit;
-    text-shadow: 0 0 20px rgba(34, 197, 94, 0.75), 0 2px 12px rgba(0, 0, 0, 0.9);
-}
-.nf-hero-subtext {
-    color: rgba(203, 213, 225, 0.95); font-size: 1.15rem; max-width: 560px;
-    margin: 0 auto 2rem; line-height: 1.65; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.95);
-}
-.nf-hero-ctas { display: flex; gap: 1rem; justify-content: center; }
-.nf-btn-primary {
-    display: inline-flex; align-items: center; padding: 0.65rem 1.75rem;
-    background: #0076FF; color: #ffffff; border-radius: 8px; font-weight: 700;
-    font-size: 0.95rem; text-decoration: none; transition: all 0.25s ease; border: 2px solid #0076FF;
-}
-.nf-btn-primary:hover {
-    background: #005ce6; border-color: #005ce6; transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 118, 255, 0.4); color: #ffffff; text-decoration: none;
-}
-.nf-btn-ghost {
-    display: inline-flex; align-items: center; padding: 0.65rem 1.75rem;
-    background: transparent; color: #ffffff; border-radius: 8px; font-weight: 700;
-    font-size: 0.95rem; text-decoration: none; transition: all 0.25s ease;
-    border: 2px solid rgba(255, 255, 255, 0.25);
-}
-.nf-btn-ghost:hover {
-    background: rgba(255, 255, 255, 0.06); border-color: rgba(34, 211, 238, 0.5);
-    transform: translateY(-2px); color: #ffffff; text-decoration: none;
-}
-
-:global([data-theme='dark']) .nf-btn-primary,
-:global([data-theme='dark']) .nf-btn-primary:hover,
-:global([data-theme='dark']) .nf-btn-ghost,
-:global([data-theme='dark']) .nf-btn-ghost:hover { color: #ffffff; }
-
 .nf-features-section { width: 100%; background: #0f172a; padding: 5rem 0 2.5rem; }
 :global([data-theme='light']) .nf-features-section {
     background: linear-gradient(to bottom,
@@ -155,12 +96,6 @@
 :global([data-theme='light']) .nf-card-link { color: #0284c7; }
 .nf-card-logo { width: 40px; height: 40px; object-fit: contain; flex-shrink: 0; }
 
-@media (max-width: 996px) {
-    .nf-hero-title { font-size: 2.2rem; }
-    .nf-hero-content { padding: 2rem 1.25rem; }
-    .nf-hero-ctas { flex-wrap: wrap; }
-    .nf-btn-primary, .nf-btn-ghost { padding: 0.55rem 1.25rem; font-size: 0.9rem; }
-}
 @media (max-width: 640px) {
     .nf-bento-grid { grid-template-columns: 1fr; }
 }
