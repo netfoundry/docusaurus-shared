@@ -1,5 +1,6 @@
 :root {
     --ifm-navbar-height: 50px;
+    --ifm-navbar-padding-vertical: 0;
     --nf-docs-max-width: 1400px;
 
     --nf-color-primary:   119, 194, 252;

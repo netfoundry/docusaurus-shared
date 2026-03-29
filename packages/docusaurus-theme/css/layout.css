@@ -32,6 +32,10 @@ html {
     color: inherit;
 }
 
+/* Navbar wordmark logo — taller than the Docusaurus default 2rem */
+.navbar__logo { height: var(--ifm-navbar-height); }
+.navbar__logo img { height: 100%; width: auto; }
+
 /* Separator between navbar logo and nav items */
 .navbar__brand::after {
     content: '';

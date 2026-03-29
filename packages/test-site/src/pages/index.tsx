@@ -46,7 +46,17 @@ function BentoCard({product, featured = false}: {product: Product; featured?: bo
 export default function Home(): JSX.Element {
   return (
     <Layout title="NetFoundry Docs">
-      <section className={styles['nf-features-section']}>
+      <header className={styles['nf-hero-stage']}>
+        <div className={clsx('container', styles['nf-hero-content'])}>
+          <h1 className={styles['nf-hero-title']}>NetFoundry <span className={styles['nf-green-text']}>Docs</span></h1>
+          <p className={styles['nf-hero-subtext']}>Secure your workloads with Identity-First Connectivity™</p>
+          <div className={styles['nf-hero-ctas']}>
+            <Link className={styles['nf-btn-primary']} to="/docs/frontdoor">Get Started</Link>
+            <a className={styles['nf-btn-ghost']} href="https://netfoundry.io/lets-talk/" target="_blank" rel="noopener noreferrer">Request Demo</a>
+          </div>
+        </div>
+      </header>
+      <section className={styles['nf-features-section']} style={{marginTop: '-80px', position: 'relative', zIndex: 3}}>
         <div className="container">
           <div className={styles['nf-bento-grid']}>
             <div className={clsx(styles['nf-bento-divider'], styles['nf-divider--managed'], styles['nf-divider--top'])}>Managed Cloud</div>
