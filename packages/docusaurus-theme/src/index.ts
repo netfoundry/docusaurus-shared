@@ -22,7 +22,11 @@ export default function themeNetFoundry(
     // Automatically inject CSS
     getClientModules() {
       const modules: string[] = [
-        require.resolve('@docsearch/css'),
+        // @docsearch/css is intentionally NOT listed here.
+        // It is injected by @docusaurus/theme-search-algolia, which all
+        // consuming sites are expected to register. Adding it here would
+        // double-load it on sites with Algolia and load it unnecessarily
+        // on sites without search.
         require.resolve('../css/theme.css'),
       ];
 
