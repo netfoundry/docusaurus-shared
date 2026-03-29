@@ -2,7 +2,7 @@ import React from 'react';
 import Link from '@docusaurus/Link';
 import {useThemeConfig} from '@docusaurus/theme-common';
 import NavbarPicker from '../../NavbarPicker';
-import {DiscourseIcon, YouTubeIcon} from '../../../../src/components/icons';
+import {DiscourseIcon, YouTubeIcon} from '@netfoundry/docusaurus-theme/ui';
 
 const NF_LOGO_DEFAULT      = 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg';
 const OPENZITI_LOGO_DEFAULT = 'https://netfoundry.io/docs/img/openziti-sm-logo.svg';

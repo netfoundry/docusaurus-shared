@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {DiscourseIcon, GitHubIcon} from '../../../../src/components/icons';
+import {DiscourseIcon, GitHubIcon} from '@netfoundry/docusaurus-theme/ui';
 
 const GITHUB_ROUTES: Record<string, string> = {
   '/docs/openziti': 'https://github.com/openziti/ziti',
