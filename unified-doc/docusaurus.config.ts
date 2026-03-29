@@ -359,6 +359,55 @@ const config: Config = {
     ].filter(Boolean),
     themeConfig: {
         netfoundry: {
+            resourcesPickerSections: [
+                {
+                    header: 'Learn & Engage',
+                    links: [
+                        {
+                            label: 'NetFoundry Blog',
+                            description: 'Latest news, updates, and insights from NetFoundry.',
+                            href: 'https://netfoundry.io/blog/',
+                            logoUrl: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
+                        },
+                        {
+                            label: 'OpenZiti Tech Blog',
+                            description: 'Technical articles and community updates.',
+                            href: 'https://blog.openziti.io/',
+                            logoUrl: 'https://netfoundry.io/docs/img/openziti-sm-logo.svg',
+                        },
+                    ],
+                },
+                {
+                    header: 'Community & Support',
+                    links: [
+                        {
+                            label: 'NetFoundry YouTube',
+                            description: 'Video tutorials, demos, and technical deep dives.',
+                            href: 'https://www.youtube.com/c/NetFoundry',
+                            logoUrl: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
+                            badge: 'youtube',
+                        },
+                        {
+                            label: 'OpenZiti YouTube',
+                            description: 'OpenZiti community videos and project updates.',
+                            href: 'https://www.youtube.com/openziti',
+                            logoUrl: 'https://netfoundry.io/docs/img/openziti-sm-logo.svg',
+                            badge: 'youtube',
+                        },
+                        {
+                            label: 'OpenZiti Discourse',
+                            description: 'Ask questions and connect with the community.',
+                            href: 'https://openziti.discourse.group/',
+                            iconName: 'discourse',
+                        },
+                    ],
+                },
+            ],
+            navbarIconLinks: [
+                { href: 'https://github.com/openziti/ziti', title: 'GitHub', iconName: 'github', pathPrefixes: ['/docs/openziti'] },
+                { href: 'https://github.com/openziti/zrok', title: 'GitHub', iconName: 'github', pathPrefixes: ['/docs/zrok']     },
+                { href: 'https://openziti.discourse.group/', title: 'Discourse', iconName: 'discourse' },
+            ],
             productPickerColumns: [
                 {
                     header: 'Managed Cloud',
@@ -414,27 +463,17 @@ const config: Config = {
                 },
             ],
         },
-        docs: {
-            sidebar: {
-                hideable: false,
-                autoCollapseCategories: true
-            }
-        },
-        mermaid: {
-            theme: {light: 'neutral', dark: 'forest'},
-        },
-        // Replace with your project's social card
-        image: 'https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg',
         navbar: {
             hideOnScroll: false,
             title: '',
             items: [
-                {
-                    type: 'custom-productPicker',
-                    position: 'left',
-                    label: 'Products',
-                },
+                { type: 'custom-productPicker',   position: 'left',  label: 'Products' },
+                { type: 'custom-iconLinks',        position: 'right' },
+                { type: 'custom-resourcesPicker',  position: 'right' },
             ],
+        },
+        mermaid: {
+            theme: {light: 'neutral', dark: 'forest'},
         },
         prism: {
             theme: prismThemes.github,

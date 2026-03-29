@@ -182,30 +182,63 @@ export default {
                     ],
                 },
             ],
+            resourcesPickerSections: [
+                {
+                    header: 'Learn & Engage',
+                    links: [
+                        {
+                            label: 'NetFoundry Blog',
+                            description: 'Latest news, updates, and insights from NetFoundry.',
+                            href: 'https://netfoundry.io/blog/',
+                            logoUrl: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
+                        },
+                        {
+                            label: 'OpenZiti Tech Blog',
+                            description: 'Technical articles and community updates.',
+                            href: 'https://blog.openziti.io/',
+                            logoUrl: 'https://netfoundry.io/docs/img/openziti-sm-logo.svg',
+                        },
+                    ],
+                },
+                {
+                    header: 'Community & Support',
+                    links: [
+                        {
+                            label: 'NetFoundry YouTube',
+                            description: 'Video tutorials, demos, and technical deep dives.',
+                            href: 'https://www.youtube.com/c/NetFoundry',
+                            logoUrl: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
+                            badge: 'youtube',
+                        },
+                        {
+                            label: 'OpenZiti YouTube',
+                            description: 'OpenZiti community videos and project updates.',
+                            href: 'https://www.youtube.com/openziti',
+                            logoUrl: 'https://netfoundry.io/docs/img/openziti-sm-logo.svg',
+                            badge: 'youtube',
+                        },
+                        {
+                            label: 'OpenZiti Discourse',
+                            description: 'Ask questions and connect with the community.',
+                            href: 'https://openziti.discourse.group/',
+                            iconName: 'discourse',
+                        },
+                    ],
+                },
+            ],
+            navbarIconLinks: [
+                { href: 'https://github.com/openziti/ziti', title: 'GitHub', iconName: 'github', pathPrefixes: ['/docs/openziti'] },
+                { href: 'https://github.com/openziti/zrok', title: 'GitHub', iconName: 'github', pathPrefixes: ['/docs/zrok']     },
+                { href: 'https://openziti.discourse.group/', title: 'Discourse', iconName: 'discourse' },
+            ],
             footer: {
-                description: 'Secure, high-performance networking for the modern era.',
-                copyright: `Copyright © ${new Date().getFullYear()} NetFoundry Inc.`,
+                description: 'This is just a test site for the NetFoundry Docusaurus theme.',
                 socialProps: {
                     githubUrl: 'https://github.com/netfoundry/',
                     youtubeUrl: 'https://youtube.com/netfoundry/',
                     linkedInUrl: 'https://www.linkedin.com/company/netfoundry/',
-                    twitterUrl: 'https://x.com/netfoundry/',
+                    twitterUrl: 'https://twitter.com/netfoundry/',
                 },
-                documentationLinks: [
-                    {href: '/docs/learn/quickstarts/services/ztha', label: 'Get started'},
-                    {href: '/docs/reference/developer/api/', label: 'API reference'},
-                    {href: '/docs/reference/developer/sdk/', label: 'SDK integration'},
-                ],
-                communityLinks: [
-                    {href: 'https://github.com/openziti/ziti', label: 'GitHub'},
-                    {href: 'https://openziti.discourse.group/', label: 'OpenZiti Discourse'},
-                    {href: '/docs/openziti/policies/CONTRIBUTING', label: 'Contribute'},
-                ],
-                resourceLinks: [
-                    {href: 'https://netfoundry.io/', label: 'NetFoundry'},
-                    {href: 'https://netfoundry.io/blog/', label: 'NetFoundry Tech Blog'},
-                    {href: 'https://blog.openziti.io', label: 'OpenZiti Tech Blog'},
-                ],
             },
         },
         // Replace with your project's social card
@@ -220,7 +253,7 @@ export default {
             items: [
                 { type: 'custom-productPicker',   position: 'left' },
                 { type: 'custom-iconLinks',        position: 'right' },
-                { type: 'custom-resourcesPicker', position: 'right' },
+                { type: 'custom-resourcesPicker',  position: 'right' },
             ],
         },
         prism: {

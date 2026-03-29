@@ -44,7 +44,14 @@ export default function themeNetFoundry(
 }
 
 // Re-export types for consumers (types are safe to export at config time)
-export type { NetFoundryThemeOptions, NetFoundryThemeConfig } from './options';
+export type {
+  NetFoundryThemeOptions,
+  NetFoundryThemeConfig,
+  ResourcesPickerSection,
+  ResourcesPickerLink,
+  NavbarIconLink,
+  NavbarIconName,
+} from './options';
 
 // NOTE: UI components (defaultNetFoundryFooterProps, defaultSocialProps, etc.)
 // should be imported directly from '@netfoundry/docusaurus-shared/ui' in client code,

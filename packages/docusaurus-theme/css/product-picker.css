@@ -194,7 +194,8 @@
 .nf-icon-links {
     display: flex;
     align-items: center;
-    gap: 0.1rem;
+    gap: var(--nf-icon-links-gap, 0.25rem);
+    padding: var(--nf-icon-links-padding, 0 0.5rem);
 }
 
 .nf-icon-link,
@@ -202,8 +203,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
+    width: var(--nf-icon-link-size, 2rem);
+    height: var(--nf-icon-link-size, 2rem);
     color: var(--ifm-navbar-link-color);
     text-decoration: none;
 }

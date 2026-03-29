@@ -1,35 +1,39 @@
-import React, {useState, useEffect} from 'react';
-import {DiscourseIcon, GitHubIcon} from '@netfoundry/docusaurus-theme/ui';
+import React from 'react';
+import {useThemeConfig} from '@docusaurus/theme-common';
+import {useLocation} from 'react-router-dom';
+import {DiscourseIcon, GitHubIcon, YouTubeIcon} from '@netfoundry/docusaurus-theme/ui';
+import type {NavbarIconLink} from '@netfoundry/docusaurus-theme';
 
-const GITHUB_ROUTES: Record<string, string> = {
-  '/docs/openziti': 'https://github.com/openziti/ziti',
-  '/docs/zrok':     'https://github.com/openziti/zrok',
-};
+const DEFAULT_ICON_LINKS: NavbarIconLink[] = [
+  {href: 'https://openziti.discourse.group/', title: 'Discourse', iconName: 'discourse'},
+  {href: 'https://github.com/openziti/ziti',  title: 'GitHub',    iconName: 'github', pathPrefixes: ['/docs/openziti']},
+  {href: 'https://github.com/openziti/zrok',  title: 'GitHub',    iconName: 'github', pathPrefixes: ['/docs/zrok']},
+];
+
+function resolveIcon(name: string): React.ReactElement {
+  if (name === 'discourse') return <DiscourseIcon />;
+  if (name === 'github')    return <GitHubIcon />;
+  if (name === 'youtube')   return <YouTubeIcon />;
+  return <></>;
+}
 
 export default function IconLinks(_props: {position?: 'left' | 'right'}) {
-  const [githubUrl, setGithubUrl] = useState<string | null>(null);
+  const themeConfig = useThemeConfig() as any;
+  const links: NavbarIconLink[] = themeConfig?.netfoundry?.navbarIconLinks ?? DEFAULT_ICON_LINKS;
+  const {pathname} = useLocation();
 
-  useEffect(() => {
-    const check = () => {
-      const {pathname} = window.location;
-      const entry = Object.entries(GITHUB_ROUTES).find(([p]) => pathname.startsWith(p));
-      setGithubUrl(entry ? entry[1] : null);
-    };
-    check();
-    window.addEventListener('popstate', check);
-    return () => window.removeEventListener('popstate', check);
-  }, []);
+  const visible = links.filter(link =>
+    !link.pathPrefixes || link.pathPrefixes.some((p: string) => pathname.startsWith(p))
+  );
 
   return (
     <div className="nf-icon-links">
-      {githubUrl && (
-        <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="nf-icon-link" title="GitHub">
-          <GitHubIcon />
+      {visible.map((link, i) => (
+        <a key={i} href={link.href} target="_blank" rel="noopener noreferrer"
+           className={`nf-icon-link nf-icon-link--${link.iconName}`} title={link.title}>
+          {resolveIcon(link.iconName)}
         </a>
-      )}
-      <a href="https://openziti.discourse.group/" target="_blank" rel="noopener noreferrer" className="nf-icon-link nf-icon-link--discourse" title="Discourse">
-        <DiscourseIcon />
-      </a>
+      ))}
     </div>
   );
 }
