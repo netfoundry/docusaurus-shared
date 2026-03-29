@@ -167,7 +167,7 @@ export function NetFoundryFooter(props: NetFoundryFooterProps) {
                 </div>
 
                 <div className={styles.footerCopyright}>
-                    <p>© 2026 NetFoundry Inc. OpenZiti is an open source project sponsored by NetFoundry. All rights reserved.</p>
+                    <p>© {new Date().getFullYear()} NetFoundry Inc. OpenZiti is an open source project sponsored by NetFoundry. All rights reserved.</p>
                 </div>
             </NetFoundryHorizontalSection>
         </footer>
