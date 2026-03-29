@@ -43,7 +43,7 @@ export interface StarBannerConfig {
 /**
  * A named icon supported in navbar items (resources picker links, icon links, etc.)
  */
-export type NavbarIconName = 'discourse' | 'github' | 'youtube';
+export type NavbarIconName = 'discourse' | 'github' | 'reddit' | 'x' | 'youtube';
 
 /**
  * A link inside a resources picker section
@@ -77,6 +77,8 @@ export interface NavbarIconLink {
   iconName: NavbarIconName;
   /** Only show when the current path starts with one of these prefixes */
   pathPrefixes?: string[];
+  /** Show the icon in full brand colors. Defaults to true for discourse/reddit, false for others. */
+  colored?: boolean;
 }
 
 /**

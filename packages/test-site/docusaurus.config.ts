@@ -227,7 +227,10 @@ export default {
                 },
             ],
             navbarIconLinks: [
-                { href: 'https://github.com/openziti/ziti', title: 'GitHub', iconName: 'github', pathPrefixes: ['/docs/openziti'] },
+                { href: 'https://reddit.com/r/openziti',    title: 'Reddit',  iconName: 'reddit',  pathPrefixes: ['/docs/openziti'] },
+                { href: 'https://x.com/openziti',           title: 'X',       iconName: 'x',       pathPrefixes: ['/docs/openziti'] },
+                { href: 'https://www.youtube.com/openziti', title: 'YouTube', iconName: 'youtube', pathPrefixes: ['/docs/openziti'] },
+                { href: 'https://github.com/openziti/ziti', title: 'GitHub',  iconName: 'github',  pathPrefixes: ['/docs/openziti'] },
                 { href: 'https://github.com/openziti/zrok', title: 'GitHub', iconName: 'github', pathPrefixes: ['/docs/zrok']     },
                 { href: 'https://openziti.discourse.group/', title: 'Discourse', iconName: 'discourse' },
             ],

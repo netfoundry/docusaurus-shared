@@ -3,11 +3,13 @@
     --ifm-navbar-padding-vertical: 0;
     --nf-docs-max-width: 1400px;
 
-    --nf-icon-links-gap: 0.25rem;
-    --nf-icon-links-padding: 0 0.5rem;
-    --nf-icon-link-size: 2rem;
+    --nf-icon-link-size: 1.5rem;
+    --nf-icon-link-gap: 0.5rem;
+    --nf-icon-link-border: 2px;
+    --nf-icon-link-border-color: transparent;
+    --nf-icon-link-border-color-hover: #333;
 
-    --nf-color-primary:   119, 194, 252;
+--nf-color-primary:   119, 194, 252;
     --nf-color-secondary: 78, 219, 63;
     --nf-color-tertiary:  3, 92, 230;
 

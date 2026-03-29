@@ -191,11 +191,14 @@
 .nf-picker-panel--narrow .picker-link span { white-space: nowrap; }
 
 /* ── Navbar icon links (GitHub, Discourse) ──────────────────────────────── */
+/* DEBUG: green border on circle icons */
+.nf-icon-link[data-border] { box-shadow: 0 0 0 var(--nf-icon-link-border) var(--nf-icon-link-border-color); transition: box-shadow 0.15s ease; }
+.nf-icon-link[data-border]:hover { box-shadow: 0 0 0 var(--nf-icon-link-border) var(--nf-icon-link-border-color-hover, #333); }
 .nf-icon-links {
     display: flex;
     align-items: center;
-    gap: var(--nf-icon-links-gap, 0.25rem);
-    padding: var(--nf-icon-links-padding, 0 0.5rem);
+    gap: var(--nf-icon-link-gap, 0.5rem);
+    padding: 0 var(--nf-icon-link-gap, 0.5rem);
 }
 
 .nf-icon-link,
@@ -205,7 +208,7 @@
     justify-content: center;
     width: var(--nf-icon-link-size, 2rem);
     height: var(--nf-icon-link-size, 2rem);
-    color: var(--ifm-navbar-link-color);
+    color: var(--nf-icon-link-color, var(--ifm-navbar-link-color));
     text-decoration: none;
 }
 
@@ -213,6 +216,56 @@
     color: var(--ifm-color-primary);
     text-decoration: none;
 }
+
+/* Circle icons: uniform element size */
+.nf-icon-link[data-circle],
+.nf-icon-link[data-circle]:visited { width: 1.5rem; height: 1.5rem; border-radius: 50%; }
+.nf-icon-link[data-circle]:not(.nf-icon-link--discourse),
+.nf-icon-link[data-circle]:not(.nf-icon-link--discourse):visited { overflow: hidden; }
+
+/* CSS-drawn circle: for icons whose SVG doesn't include its own circle */
+.nf-icon-link[data-css-circle],
+.nf-icon-link[data-css-circle]:visited {
+    background: var(--nf-icon-link-circle-bg, var(--nf-icon-link-color, var(--ifm-navbar-link-color)));
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* Uninvert on hover: dark circle at rest, transparent + primary color on hover */
+.nf-icon-link[data-uninvert] {
+    background: var(--nf-icon-link-invert-bg, #24292e);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+.nf-icon-link[data-uninvert]:hover {
+    background: transparent;
+    color: var(--nf-icon-link-color, var(--ifm-navbar-link-color));
+}
+
+/* Invert on hover: background-color directly on element, color flips white */
+.nf-icon-link[data-invert] {
+    border: none;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+.nf-icon-link[data-invert]:hover {
+    background: var(--nf-icon-link-invert-bg, #24292e);
+    color: #fff;
+}
+
+/* Cross-fade: mono at rest → colored on hover (for icons with __mono/__colored spans) */
+.nf-icon-link { position: relative; }
+.nf-icon-link .nf-icon-link__mono    { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; transition: opacity 0.15s ease; }
+.nf-icon-link .nf-icon-link__colored { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.15s ease; }
+.nf-icon-link:hover .nf-icon-link__mono    { opacity: 0; }
+.nf-icon-link:hover .nf-icon-link__colored { opacity: 1; }
 
 /* ── Mobile (<= 996 px) ─────────────────────────────────────────────────── */
 @media (max-width: 996px) {

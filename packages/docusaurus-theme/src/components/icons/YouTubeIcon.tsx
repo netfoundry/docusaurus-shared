@@ -1,12 +1,29 @@
 import React from 'react';
 
-type Props = { width?: number; height?: number; className?: string };
+type Props = { width?: number; height?: number; className?: string; colored?: boolean };
 
-export default function YouTubeIcon({width = 24, height = 24, className}: Props) {
+const VIEWBOX = '-3.5 -6.5 36 33';
+const RECT    = 'M14.4848 20C14.4848 20 23.5695 20 25.8229 19.4C27.0917 19.06 28.0459 18.08 28.3808 16.87C29 14.65 29 9.98 29 9.98C29 9.98 29 5.34 28.3808 3.14C28.0459 1.9 27.0917 0.94 25.8229 0.61C23.5695 0 14.4848 0 14.4848 0C14.4848 0 5.42037 0 3.17711 0.61C1.9286 0.94 0.954148 1.9 0.59888 3.14C0 5.34 0 9.98 0 9.98C0 9.98 0 14.65 0.59888 16.87C0.954148 18.08 1.9286 19.06 3.17711 19.4C5.42037 20 14.4848 20 14.4848 20Z';
+const PLAY    = 'M19 10L11.5 5.75V14.25L19 10Z';
+
+export default function YouTubeIcon({width = 18, height = 18, className, colored = false}: Props) {
+  if (colored) {
+    return (
+      <svg viewBox={VIEWBOX} xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" className={className}>
+        <path d={RECT} fill="#FF0033"/>
+        <path d={PLAY} fill="white"/>
+      </svg>
+    );
+  }
   return (
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width={width} height={height} className={className}>
-      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" fill="#ff0000"/>
-      <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/>
+    <svg viewBox={VIEWBOX} xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" className={className}>
+      <defs>
+        <mask id="yt-mask">
+          <rect x="0" y="-4.5" width="29" height="29" fill="white"/>
+          <path d={PLAY} fill="black"/>
+        </mask>
+      </defs>
+      <path d={RECT} fill="currentColor" mask="url(#yt-mask)"/>
     </svg>
   );
 }
