@@ -1,4 +1,5 @@
 export * from './Alert'
+export * from './icons';
 export * from './CodeBlock';
 export * from './Common';
 export * from './DownloadCard';

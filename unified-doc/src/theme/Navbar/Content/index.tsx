@@ -16,7 +16,9 @@ type Item = any;
 
 const DOCS_PREFIX = '/docs';
 
-const productPicker: Item = { type: 'custom-productPicker', position: 'left' };
+const productPicker:   Item = { type: 'custom-productPicker',   position: 'left'  };
+const iconLinks:       Item = { type: 'custom-iconLinks',        position: 'right' };
+const resourcesPicker: Item = { type: 'custom-resourcesPicker', position: 'right' };
 
 const sectionLabel = (p: string): string => {
     if (p.startsWith(`${DOCS_PREFIX}/frontdoor`))  return 'Frontdoor';
@@ -28,7 +30,11 @@ const sectionLabel = (p: string): string => {
 };
 
 const mapNavbar = (p: string): Item[] => {
-    return [{...productPicker, label: sectionLabel(p)}];
+    return [
+        {...productPicker, label: sectionLabel(p)},
+        iconLinks,
+        resourcesPicker,
+    ];
 };
 
 export default function NavbarContent(props: Props): JSX.Element {
@@ -60,7 +66,7 @@ export default function NavbarContent(props: Props): JSX.Element {
                 {right.map((item, i) => (
                     <NavbarItem {...item} key={`r-${i}`} />
                 ))}
-                <SearchBar />
+                <div><SearchBar /></div>
             </div>
         </div>
     );

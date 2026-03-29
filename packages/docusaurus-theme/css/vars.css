@@ -1,6 +1,11 @@
 :root {
     --ifm-navbar-height: 50px;
+    --ifm-navbar-padding-vertical: 0;
     --nf-docs-max-width: 1400px;
+
+    --nf-icon-links-gap: 0.25rem;
+    --nf-icon-links-padding: 0 0.5rem;
+    --nf-icon-link-size: 2rem;
 
     --nf-color-primary:   119, 194, 252;
     --nf-color-secondary: 78, 219, 63;
