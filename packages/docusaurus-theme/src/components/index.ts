@@ -1,4 +1,5 @@
 export * from './Alert'
+export * from './icons';
 export * from './CodeBlock';
 export * from './Common';
 export * from './DownloadCard';
@@ -9,4 +10,5 @@ export * from './NetFoundryHorizontalSection';
 export * from './NetFoundryLayout';
 export * from './NetFoundryNavbarItems';
 export * from './OsTabs';
-export * from './StarUs';
+export * from './StarUs'
+export * from './ProductSearch';

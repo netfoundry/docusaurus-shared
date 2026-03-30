@@ -11,6 +11,41 @@ html {
     scrollbar-gutter: stable;
 }
 
+/* Right navbar order: icons → toggle → resources → search */
+.navbar__items--right > div:has(button.clean-btn),
+.navbar__items--right > button.clean-btn              { order: 10; }
+.navbar__items--right > div:has(.nf-picker-trigger)  { order: 20; display: flex; align-items: center; }
+.navbar__items--right > div:has(.DocSearch-Button)   { order: 30; }
+
+/* Separator between color mode toggle and resources picker */
+.navbar__items--right > div:has(.nf-picker-trigger)::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 1.2em;
+    background: currentColor;
+    opacity: 0.2;
+    margin-right: 0.75rem;
+}
+
+/* Discourse navbar icon — multicolor brand logo */
+.nf-icon-link--discourse:hover {
+    opacity: 0.8;
+    color: inherit;
+}
+
+/* Separator between navbar logo and nav items */
+.navbar__brand::after {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 1.2em;
+    background: currentColor;
+    opacity: 0.2;
+    margin-left: 1rem;
+    vertical-align: middle;
+}
+
 .main-wrapper > div {
     /* work around issue from docusaurus doc grow/shrinking based on content */
     width: 100%;

@@ -1,7 +1,7 @@
 import React from "react";
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from "@theme/Layout";
-import ProductSearch from "../components/ProductSearch";
+import { ProductSearch } from '@netfoundry/docusaurus-theme/ui';
 
 
 export default function NewSearchPage() {

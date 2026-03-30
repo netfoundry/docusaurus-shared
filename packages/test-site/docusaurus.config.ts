@@ -59,10 +59,23 @@ export default {
     title: 'Test Site - Unified Doc Structure',
     url: 'https://netfoundry.io',
     baseUrl: '/',
+    customFields: {
+        ALGOLIA_APPID:    cfg.algolia.appId,
+        ALGOLIA_APIKEY:   cfg.algolia.apiKey,
+        ALGOLIA_INDEXNAME: cfg.algolia.indexName,
+    },
 
     // Register the NetFoundry theme (local path for development)
     themes: [
+        ['@docusaurus/theme-classic', {
+            customCss: [
+                require.resolve('./src/custom/custom.css'),
+                require.resolve('../docusaurus-theme/css/product-picker.css'),
+            ],
+        }],
         path.resolve(__dirname, '../docusaurus-theme'),
+        '@docusaurus/theme-mermaid',
+        '@docusaurus/theme-search-algolia',
     ],
 
     staticDirectories: [
@@ -75,6 +88,11 @@ export default {
     ],
 
     plugins: [
+        ['@docusaurus/plugin-content-docs', {
+            routeBasePath: '/docs',
+            sidebarPath: './sidebars.ts',
+        }],
+        ['@docusaurus/plugin-content-pages', {}],
         // Webpack aliases for sub-project imports (mirrors unified-doc)
         function webpackAliases() {
             return {
@@ -104,22 +122,7 @@ export default {
         zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, 'docs/zrok'),
     ].filter(Boolean) as PluginConfig[],
 
-    presets: [
-        ['classic', {
-            docs: {
-                routeBasePath: '/docs',
-                sidebarPath: './sidebars.ts'
-            },
-            blog: false,
-            theme: {
-                customCss: [
-                    require.resolve('./src/custom/custom.css'),
-                    require.resolve('../docusaurus-theme/css/product-picker.css'),
-                ],
-            }
-        }
-    ]
-    ],
+    presets: [],
 
     themeConfig: {
         // NetFoundry theme configuration
@@ -176,11 +179,63 @@ export default {
                         {
                             label: 'zLAN',
                             to: '/docs/zlan',
-                            logo: 'https://netfoundry.io/docs/img/zlan-logo.svg',
+                            logo: 'https://netfoundry.io/docs/img/zlan/zlan-logo.svg',
                             description: 'Zero-trust access for OT networks.',
                         },
                     ],
                 },
+            ],
+            resourcesPickerSections: [
+                {
+                    header: 'Learn & Engage',
+                    links: [
+                        {
+                            label: 'NetFoundry Blog',
+                            description: 'Latest news, updates, and insights from NetFoundry.',
+                            href: 'https://netfoundry.io/blog/',
+                            logoUrl: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
+                        },
+                        {
+                            label: 'OpenZiti Tech Blog',
+                            description: 'Technical articles and community updates.',
+                            href: 'https://blog.openziti.io/',
+                            logoUrl: 'https://netfoundry.io/docs/img/openziti-sm-logo.svg',
+                        },
+                    ],
+                },
+                {
+                    header: 'Community & Support',
+                    links: [
+                        {
+                            label: 'NetFoundry YouTube',
+                            description: 'Video tutorials, demos, and technical deep dives.',
+                            href: 'https://www.youtube.com/c/NetFoundry',
+                            logoUrl: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
+                            badge: 'youtube',
+                        },
+                        {
+                            label: 'OpenZiti YouTube',
+                            description: 'OpenZiti community videos and project updates.',
+                            href: 'https://www.youtube.com/openziti',
+                            logoUrl: 'https://netfoundry.io/docs/img/openziti-sm-logo.svg',
+                            badge: 'youtube',
+                        },
+                        {
+                            label: 'OpenZiti Discourse',
+                            description: 'Ask questions and connect with the community.',
+                            href: 'https://openziti.discourse.group/',
+                            iconName: 'discourse',
+                        },
+                    ],
+                },
+            ],
+            navbarIconLinks: [
+                { href: 'https://reddit.com/r/openziti',    title: 'Reddit',  iconName: 'reddit',  pathPrefixes: ['/docs/openziti'] },
+                { href: 'https://x.com/openziti',           title: 'X',       iconName: 'x',       pathPrefixes: ['/docs/openziti'] },
+                { href: 'https://www.youtube.com/openziti', title: 'YouTube', iconName: 'youtube', pathPrefixes: ['/docs/openziti'] },
+                { href: 'https://github.com/openziti/ziti', title: 'GitHub',  iconName: 'github',  pathPrefixes: ['/docs/openziti'] },
+                { href: 'https://github.com/openziti/zrok', title: 'GitHub', iconName: 'github', pathPrefixes: ['/docs/zrok']     },
+                { href: 'https://openziti.discourse.group/', title: 'Discourse', iconName: 'discourse' },
             ],
             footer: {
                 description: 'This is just a test site for the NetFoundry Docusaurus theme.',
@@ -196,18 +251,15 @@ export default {
         image: 'https://netfoundry.io/wp-content/uploads/2024/07/netfoundry-logo-tag-color-stacked-1.svg',
         navbar: {
             hideOnScroll: false,
-            title: 'NetFoundry Documentation',
+            title: '',
             logo: {
                 alt: 'NetFoundry Logo',
-                src: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
+                src: 'https://netfoundry.io/docs/img/netfoundry-name-and-logo.svg',
             },
             items: [
-                { type: 'custom-productPicker', position: 'left' },
-                {
-                    to: '/docs',
-                    label: 'Main Docs',
-                    position: 'left',
-                },
+                { type: 'custom-productPicker',   position: 'left' },
+                { type: 'custom-iconLinks',        position: 'right' },
+                { type: 'custom-resourcesPicker',  position: 'right' },
             ],
         },
         prism: {

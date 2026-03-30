@@ -22,6 +22,11 @@ export default function themeNetFoundry(
     // Automatically inject CSS
     getClientModules() {
       const modules: string[] = [
+        // @docsearch/css is intentionally NOT listed here.
+        // It is injected by @docusaurus/theme-search-algolia, which all
+        // consuming sites are expected to register. Adding it here would
+        // double-load it on sites with Algolia and load it unnecessarily
+        // on sites without search.
         require.resolve('../css/theme.css'),
       ];
 
@@ -39,7 +44,14 @@ export default function themeNetFoundry(
 }
 
 // Re-export types for consumers (types are safe to export at config time)
-export type { NetFoundryThemeOptions, NetFoundryThemeConfig } from './options';
+export type {
+  NetFoundryThemeOptions,
+  NetFoundryThemeConfig,
+  ResourcesPickerSection,
+  ResourcesPickerLink,
+  NavbarIconLink,
+  NavbarIconName,
+} from './options';
 
 // NOTE: UI components (defaultNetFoundryFooterProps, defaultSocialProps, etc.)
 // should be imported directly from '@netfoundry/docusaurus-shared/ui' in client code,

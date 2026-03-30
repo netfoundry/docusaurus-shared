@@ -41,6 +41,47 @@ export interface StarBannerConfig {
 }
 
 /**
+ * A named icon supported in navbar items (resources picker links, icon links, etc.)
+ */
+export type NavbarIconName = 'discourse' | 'github' | 'reddit' | 'x' | 'youtube';
+
+/**
+ * A link inside a resources picker section
+ */
+export interface ResourcesPickerLink {
+  label: string;
+  description: string;
+  href: string;
+  /** Image URL for the link logo */
+  logoUrl?: string;
+  /** Named icon to use instead of an image */
+  iconName?: NavbarIconName;
+  /** Show a small badge icon over the logo */
+  badge?: 'youtube';
+}
+
+/**
+ * A section (header + links) in the resources picker dropdown
+ */
+export interface ResourcesPickerSection {
+  header: string;
+  links: ResourcesPickerLink[];
+}
+
+/**
+ * A single icon link in the navbar icon row
+ */
+export interface NavbarIconLink {
+  href: string;
+  title: string;
+  iconName: NavbarIconName;
+  /** Only show when the current path starts with one of these prefixes */
+  pathPrefixes?: string[];
+  /** Show the icon in full brand colors. Defaults to true for discourse/reddit, false for others. */
+  colored?: boolean;
+}
+
+/**
  * A single link entry in the product picker
  */
 export interface ProductPickerLink {
@@ -114,6 +155,10 @@ export interface NetFoundryThemeConfig {
   productPickerColumns?: ProductPickerColumn[];
   /** Logo URL for the NetFoundry Console link in the product picker (overrides the default NetFoundry branding icon) */
   consoleLogo?: string;
+  /** Resources picker sections. If omitted, the theme falls back to built-in NetFoundry defaults. */
+  resourcesPickerSections?: ResourcesPickerSection[];
+  /** Navbar icon links. If omitted, the theme falls back to built-in NetFoundry defaults. */
+  navbarIconLinks?: NavbarIconLink[];
 }
 
 /**
