@@ -94,17 +94,6 @@
     z-index: 1000;
 }
 
-/* CSS bridge: transparent strip above the panel eats the gap */
-.nf-picker-panel::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: -20px;
-    left: 0;
-    right: 0;
-    height: 20px;
-}
-
 /* ── Legacy html-type dropdown panel ────────────────────────────────────── */
 
 /*

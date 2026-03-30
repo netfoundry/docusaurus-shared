@@ -2758,7 +2758,7 @@
     "@tybys/wasm-util" "^0.10.0"
 
 "@netfoundry/docusaurus-theme@file:packages/docusaurus-theme":
-  version "0.10.3"
+  version "0.10.8"
   dependencies:
     "@docsearch/react" "^3"
     algoliasearch "^5"

@@ -6,21 +6,17 @@ type Props = {
   className?: string;
   panelClassName?: string;
   /** Compute left offset via getBoundingClientRect so the panel stays on-screen.
-   *  Use this for right-side navbar items where CSS positioning would clip. */
+   *  Use this for navbar items where CSS positioning would clip. */
   autoPosition?: boolean;
   children: ReactNode;
 };
 
 export default function NavbarPicker({label, className, panelClassName, autoPosition = false, children}: Props) {
   const wrapRef         = useRef<HTMLDivElement>(null);
-  const hasEnteredPanel = useRef(false);
   const [open, setOpen] = useState(false);
   const [panelLeft, setPanelLeft] = useState<number | undefined>(undefined);
 
-  const close = useCallback(() => {
-    setOpen(false);
-    hasEnteredPanel.current = false;
-  }, []);
+  const close = useCallback(() => { setOpen(false); }, []);
 
   // Close on outside click/touch
   useEffect(() => {
@@ -44,22 +40,22 @@ export default function NavbarPicker({label, className, panelClassName, autoPosi
     return () => window.removeEventListener('nf-picker:open', onOtherOpen);
   }, [label, close]);
 
-  const handleTriggerEnter = useCallback(() => {
-    hasEnteredPanel.current = false;
-    if (autoPosition && wrapRef.current) {
-      const rect = wrapRef.current.getBoundingClientRect();
-      const PANEL_MAX_WIDTH = 430;
-      const MARGIN = 16;
-      const rightEdge = rect.left + PANEL_MAX_WIDTH;
-      const overflow = rightEdge - (window.innerWidth - MARGIN);
-      setPanelLeft(overflow > 0 ? rect.left - overflow : rect.left);
+  const handleClick = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    const opening = !open;
+    if (opening) {
+      if (autoPosition && wrapRef.current) {
+        const rect = wrapRef.current.getBoundingClientRect();
+        const PANEL_MAX_WIDTH = 430;
+        const MARGIN = 16;
+        const rightEdge = rect.left + PANEL_MAX_WIDTH;
+        const overflow = rightEdge - (window.innerWidth - MARGIN);
+        setPanelLeft(overflow > 0 ? rect.left - overflow : rect.left);
+      }
+      window.dispatchEvent(new CustomEvent('nf-picker:open', {detail: {label}}));
     }
-    window.dispatchEvent(new CustomEvent('nf-picker:open', {detail: {label}}));
-    setOpen(true);
-  }, [label, autoPosition]);
-
-  const handlePanelEnter = useCallback(() => { hasEnteredPanel.current = true; }, []);
-  const handlePanelLeave = useCallback(() => { if (hasEnteredPanel.current) close(); }, [close]);
+    setOpen(o => !o);
+  }, [open, label, autoPosition]);
 
   const panelStyle = autoPosition && panelLeft !== undefined
     ? {left: panelLeft, right: 'auto', transform: 'none'} as React.CSSProperties
@@ -73,9 +69,7 @@ export default function NavbarPicker({label, className, panelClassName, autoPosi
         aria-haspopup="true"
         aria-expanded={open}
         className={clsx('navbar__link', 'nf-picker-trigger', className)}
-        onMouseEnter={handleTriggerEnter}
-        onMouseLeave={() => {}}
-        onClick={e => { e.preventDefault(); setOpen(o => !o); }}
+        onClick={handleClick}
         onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); setOpen(o => !o); } }}>
         {label}
       </a>
@@ -83,9 +77,7 @@ export default function NavbarPicker({label, className, panelClassName, autoPosi
         <div
           className={clsx('nf-picker-panel', panelClassName)}
           style={panelStyle}
-          onMouseDown={e => e.stopPropagation()}
-          onMouseEnter={handlePanelEnter}
-          onMouseLeave={handlePanelLeave}>
+          onMouseDown={e => e.stopPropagation()}>
           {children}
         </div>
       )}
