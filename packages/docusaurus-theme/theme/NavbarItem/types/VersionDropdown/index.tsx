@@ -13,5 +13,5 @@ type Props = {
 export default function VersionDropdown({pathPrefix, docsPluginId, position}: Props) {
   const {pathname} = useLocation();
   if (!pathname.startsWith(pathPrefix)) return null;
-  return <NavbarItem type="docsVersionDropdown" docsPluginId={docsPluginId} position={position} dropdownItemsBefore={[]} dropdownItemsAfter={[]} />;
+  return <NavbarItem type="docsVersionDropdown" docsPluginId={docsPluginId} position={position} dropdownItemsBefore={[]} dropdownItemsAfter={[]} className="nf-picker-trigger" />;
 }
