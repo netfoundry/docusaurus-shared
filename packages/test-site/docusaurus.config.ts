@@ -259,6 +259,7 @@ export default {
             items: [
                 { type: 'custom-productPicker',   position: 'left' },
                 { type: 'custom-resourcesPicker', position: 'left' },
+                { type: 'custom-versionDropdown', position: 'left', docsPluginId: 'zrok', pathPrefix: '/docs/zrok' },
                 { type: 'custom-iconLinks',        position: 'right' },
             ],
         },
