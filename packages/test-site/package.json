@@ -20,7 +20,7 @@
     "@docusaurus/theme-mermaid": "^3.9.2",
     "@docusaurus/utils": "3.9.2",
     "@mdx-js/react": "^3.0.0",
-    "@netfoundry/docusaurus-theme": "file:../docusaurus-theme",
+    "@netfoundry/docusaurus-theme": "^0.10.15",
     "clsx": "^2.0.0",
     "lucide-react": "^0.525.0",
     "prism-react-renderer": "^2.3.0",

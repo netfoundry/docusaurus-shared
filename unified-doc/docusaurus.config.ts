@@ -10,7 +10,7 @@ import {
     remarkYouTube
 } from "@netfoundry/docusaurus-theme/plugins";
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
-import {pluginHotjar} from "@netfoundry/docusaurus-theme/node";
+import {pluginHotjar, pluginReo} from "@netfoundry/docusaurus-theme/node";
 import {PublishConfig} from 'src/components/docusaurus'
 import {zrokDocsPluginConfig, zrokRedirects} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 import {onpremRedirects} from "./_remotes/selfhosted/docusaurus/docusaurus-plugin-onprem-docs.ts";
@@ -61,7 +61,10 @@ const staging: PublishConfig = {
     },
     google: {
         tag: 'GTM-5SF399H3'
-    }
+    },
+    reo: {
+        clientId: '3bcf34995ffda6d'
+    },
 }
 
 const prod: PublishConfig = {
@@ -78,7 +81,10 @@ const prod: PublishConfig = {
     },
     google: {
         tag: 'GTM-NHX4DX56'
-    }
+    },
+    reo: {
+        clientId: '3bcf34995ffda6d'
+    },
 }
 
 const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod : staging;
@@ -353,6 +359,7 @@ const config: Config = {
         ],
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
         [pluginHotjar, {}],
+        [pluginReo, {}],
         ['@docusaurus/plugin-google-tag-manager', {id: `openziti-gtm`, containerId: cfg.google.tag}],
         build(BUILD_FLAGS.SELFHOSTED) && onpremRedirects(routeBase('selfhosted')),
         build(BUILD_FLAGS.ZROK) && zrokRedirects(routeBase('zrok')),
@@ -467,9 +474,10 @@ const config: Config = {
             hideOnScroll: false,
             title: '',
             items: [
-                { type: 'custom-productPicker',   position: 'left',  label: 'Products' },
+                { type: 'custom-productPicker',   position: 'left', label: 'Products' },
+                { type: 'custom-versionDropdown',  position: 'left', docsPluginId: 'zrok', pathPrefix: '/docs/zrok' },
+                { type: 'custom-resourcesPicker', position: 'left' },
                 { type: 'custom-iconLinks',        position: 'right' },
-                { type: 'custom-resourcesPicker',  position: 'right' },
             ],
         },
         mermaid: {
@@ -495,6 +503,9 @@ const config: Config = {
         },
         hotjar: {
             applicationId: cfg.hotjar.id
+        },
+        reo: {
+            clientId: cfg.reo.clientId
         },
     } satisfies Preset.ThemeConfig,
     presets: [

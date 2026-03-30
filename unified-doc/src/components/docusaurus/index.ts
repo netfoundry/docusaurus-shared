@@ -19,9 +19,14 @@ export interface GoogleConfig {
     tag: string;
 }
 
+export interface ReoConfig {
+    clientId: string;
+}
+
 export interface PublishConfig {
     docusaurus: DocusaurusConfig;
     algolia: AlgoliaConfig;
     hotjar: HotjarConfig;
     google: GoogleConfig;
+    reo: ReoConfig;
 }

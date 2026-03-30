@@ -3,6 +3,7 @@ import Link from '@docusaurus/Link';
 import clsx from 'clsx';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {useThemeConfig} from '@docusaurus/theme-common';
+import {useLocation} from 'react-router-dom';
 import NavbarPicker from '../../NavbarPicker';
 
 export type PickerLink = {
@@ -55,17 +56,32 @@ const buildDefaultColumns = (img: string, consoleLogo: string): PickerColumn[] =
   },
 ];
 
+function pathLabel(pathname: string, columns: PickerColumn[], fallback: string): string {
+  for (const col of columns) {
+    for (const link of col.links) {
+      const parts = link.to.replace(/^https?:\/\/[^/]+/, '').split('/').filter(Boolean);
+      if (parts.length >= 2) {
+        const prefix = '/' + parts.slice(0, 2).join('/');
+        if (pathname.startsWith(prefix)) return link.label;
+      }
+    }
+  }
+  return fallback;
+}
+
 export default function ProductPicker({label = 'Products', className}: Props) {
   const {siteConfig} = useDocusaurusContext();
   const themeConfig = useThemeConfig() as any;
+  const {pathname} = useLocation();
   const consoleLogo = themeConfig?.netfoundry?.consoleLogo ?? NF_LOGO_DEFAULT;
   const img = `${siteConfig.url}${siteConfig.baseUrl}img`;
   const columns: PickerColumn[] = (themeConfig?.netfoundry?.productPickerColumns ?? [])
     .map((col: any, i: number) => ({...col, headerClass: HEADER_CLASSES[i] ?? ''}));
   const resolvedColumns = columns.length ? columns : buildDefaultColumns(img, consoleLogo);
+  const resolvedLabel = pathLabel(pathname, resolvedColumns, label);
 
   return (
-    <NavbarPicker label={label} className={className}>
+    <NavbarPicker label={resolvedLabel} className={className}>
       <div className="picker-content">
         {resolvedColumns.map((col, i) => (
           <div key={i} className="picker-column">

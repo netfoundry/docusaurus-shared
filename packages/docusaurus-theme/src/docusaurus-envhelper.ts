@@ -50,6 +50,52 @@ export function addDocsRedir(base: string, redirectsArr: { to: string; from: str
 
 
 
+interface ReoThemeConfig {
+    clientId: string;
+}
+
+export function pluginReo(context: LoadContext): Plugin {
+    const { siteConfig } = context;
+    const { themeConfig } = siteConfig;
+    const { reo } = themeConfig as { reo?: ReoThemeConfig };
+
+    if (!reo) {
+        throw new Error(
+            `You need to specify a 'reo' object in 'themeConfig' with a 'clientId' field to use pluginReo`,
+        );
+    }
+
+    const { clientId } = reo;
+
+    if (!clientId) {
+        throw new Error(
+            `You specified the 'reo' object in 'themeConfig' but the 'clientId' field was missing.`,
+        );
+    }
+
+    const isProd = process.env.NODE_ENV === 'production';
+
+    return {
+        name: 'docusaurus-plugin-reo',
+
+        injectHtmlTags() {
+            console.log(`[reo] clientId = ${clientId} isProd = ${isProd}`);
+            if (!isProd) {
+                return {};
+            }
+
+            return {
+                headTags: [
+                    {
+                        tagName: 'script',
+                        innerHTML: `!function(){var e,t,n;e="${clientId}",t=function(){Reo.init({clientID:"${clientId}"})};(n=document.createElement("script")).src="https://static.reo.dev/"+e+"/reo.js",n.defer=true,n.onload=t,document.head.appendChild(n)}();`,
+                    },
+                ],
+            };
+        },
+    };
+}
+
 interface HotjarThemeConfig {
     applicationId: string;
 }

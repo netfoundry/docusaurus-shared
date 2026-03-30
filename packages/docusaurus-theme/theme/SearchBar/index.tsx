@@ -1,7 +1,8 @@
 // theme/SearchBar/index.tsx
 import React, {useEffect, useState} from "react";
 import ReactDOM from "react-dom";
-import {DocSearchButton} from "@docsearch/react";
+import {DocSearchButton as DocSearchButtonOrig} from "@docsearch/react";
+const DocSearchButton = DocSearchButtonOrig as React.ComponentType<{onClick: () => void}>;
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 import {ProductSearch} from "../../src/components/ProductSearch";

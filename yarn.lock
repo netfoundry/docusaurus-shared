@@ -2757,17 +2757,6 @@
     "@emnapi/runtime" "^1.4.3"
     "@tybys/wasm-util" "^0.10.0"
 
-"@netfoundry/docusaurus-theme@file:packages/docusaurus-theme":
-  version "0.10.3"
-  dependencies:
-    "@docsearch/react" "^3"
-    algoliasearch "^5"
-    clsx "^2.0.0"
-    instantsearch.js "^4"
-    react-device-detect "^2.2.3"
-    react-github-btn "^1.4.0"
-    react-instantsearch "^7"
-
 "@noble/hashes@1.4.0":
   version "1.4.0"
   resolved "https://registry.npmjs.org/@noble/hashes/-/hashes-1.4.0.tgz"
