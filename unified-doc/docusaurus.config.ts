@@ -476,6 +476,7 @@ const config: Config = {
             items: [
                 { type: 'custom-productPicker',   position: 'left', label: 'Products' },
                 { type: 'custom-resourcesPicker', position: 'left' },
+                { type: 'docsVersionDropdown',     position: 'left',  docsPluginId: 'zrok' },
                 { type: 'custom-iconLinks',        position: 'right' },
             ],
         },
