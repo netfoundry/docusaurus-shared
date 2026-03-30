@@ -2599,10 +2599,10 @@
     hls.js "~1.6.6"
     mux-embed "^5.8.3"
 
-"@netfoundry/docusaurus-theme@^0.10.5":
-  version "0.10.5"
-  resolved "https://registry.yarnpkg.com/@netfoundry/docusaurus-theme/-/docusaurus-theme-0.10.5.tgz#8ea1dfbb27131a7a401bca07a64bf91f652fb8d5"
-  integrity sha512-ghs13x+EnteFNzX/U6Kxrc2G6/JaxU4PdRjcd2l74nHckmFEmygLfjH4byPM3aLnRbkIH6kUcQNC0SaAXO0u6Q==
+"@netfoundry/docusaurus-theme@^0.10.6":
+  version "0.10.6"
+  resolved "https://registry.yarnpkg.com/@netfoundry/docusaurus-theme/-/docusaurus-theme-0.10.6.tgz#200df6a694cc236e03a8c80983e9c4b3d9c25e65"
+  integrity sha512-ODxr7TzcF3U/6ZotI9SJma41mzvHgT9tvMM4U0Twpzjg2FY+BvNm+GRUSdpw78JNNw8fDnDCNsYh+M+9Q/0d+A==
   dependencies:
     "@docsearch/react" "^3"
     algoliasearch "^5"
