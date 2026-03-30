@@ -62,7 +62,15 @@ export default {
 
     // Register the NetFoundry theme (local path for development)
     themes: [
+        ['@docusaurus/theme-classic', {
+            customCss: [
+                require.resolve('./src/custom/custom.css'),
+                require.resolve('../docusaurus-theme/css/product-picker.css'),
+            ],
+        }],
         path.resolve(__dirname, '../docusaurus-theme'),
+        '@docusaurus/theme-mermaid',
+        '@docusaurus/theme-search-algolia',
     ],
 
     staticDirectories: [
@@ -75,6 +83,11 @@ export default {
     ],
 
     plugins: [
+        ['@docusaurus/plugin-content-docs', {
+            routeBasePath: '/docs',
+            sidebarPath: './sidebars.ts',
+        }],
+        ['@docusaurus/plugin-content-pages', {}],
         // Webpack aliases for sub-project imports (mirrors unified-doc)
         function webpackAliases() {
             return {
@@ -104,22 +117,7 @@ export default {
         zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, 'docs/zrok'),
     ].filter(Boolean) as PluginConfig[],
 
-    presets: [
-        ['classic', {
-            docs: {
-                routeBasePath: '/docs',
-                sidebarPath: './sidebars.ts'
-            },
-            blog: false,
-            theme: {
-                customCss: [
-                    require.resolve('./src/custom/custom.css'),
-                    require.resolve('../docusaurus-theme/css/product-picker.css'),
-                ],
-            }
-        }
-    ]
-    ],
+    presets: [],
 
     themeConfig: {
         // NetFoundry theme configuration
