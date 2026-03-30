@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import {DocSearchButton} from "@docsearch/react";
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
-import ProductSearch from "@site/src/components/ProductSearch";
+import { ProductSearch } from '@netfoundry/docusaurus-theme/ui';
 import styles from "./SearchBar.module.css";
 import clsx from "clsx";
 

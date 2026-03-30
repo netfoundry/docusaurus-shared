@@ -249,6 +249,7 @@ export function ProductSearch({
                         "product",
                         "content",
                         "title",
+                        "docusaurus_tag",
                     ]}
                     attributesToHighlight={[
                         "title",

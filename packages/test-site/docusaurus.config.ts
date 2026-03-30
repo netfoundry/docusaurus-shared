@@ -59,6 +59,11 @@ export default {
     title: 'Test Site - Unified Doc Structure',
     url: 'https://netfoundry.io',
     baseUrl: '/',
+    customFields: {
+        ALGOLIA_APPID:    cfg.algolia.appId,
+        ALGOLIA_APIKEY:   cfg.algolia.apiKey,
+        ALGOLIA_INDEXNAME: cfg.algolia.indexName,
+    },
 
     // Register the NetFoundry theme (local path for development)
     themes: [
