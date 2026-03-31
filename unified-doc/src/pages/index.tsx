@@ -105,7 +105,7 @@ export default function Home(): JSX.Element {
           <h1 className={styles['nf-hero-title']}>NetFoundry <span className={styles['nf-green-text']}>Docs</span></h1>
           <p className={styles['nf-hero-subtext']}>Secure Your Workloads with Identity-First Connectivity™</p>
           <div className={styles['nf-hero-ctas']}>
-            <Link className={styles['nf-btn-primary']} to={`${DOCS_BASE}frontdoor/intro`}>Get Started</Link>
+            <a className={styles['nf-btn-primary']} href="https://netfoundry.io/products/netfoundry-cloud-30-day-free-trial/">Get Started</a>
             <a className={styles['nf-btn-ghost']} href="https://netfoundry.io/lets-talk/">Request Demo</a>
           </div>
         </div>
