@@ -133,20 +133,24 @@ function urlToScenario(url) {
     label,
     url: localUrl,
     referenceUrl: url,
-    delay: 2000,
+    delay: 500,
     misMatchThreshold: 0.5,
     requireSameDimensions: false
   };
 }
 
-function generateBackstopConfig(scenarios, product) {
+function generateBackstopConfig(scenarios, product, { desktopOnly = false } = {}) {
+  const viewports = desktopOnly
+    ? [{ label: 'desktop', width: 1920, height: 1080 }]
+    : [
+        { label: 'desktop', width: 1920, height: 1080 },
+        { label: 'tablet', width: 768, height: 1024 },
+        { label: 'mobile', width: 375, height: 812 }
+      ];
+
   return {
     id: `netfoundry-docs-${product}`,
-    viewports: [
-      { label: 'desktop', width: 1920, height: 1080 },
-      { label: 'tablet', width: 768, height: 1024 },
-      { label: 'mobile', width: 375, height: 812 }
-    ],
+    viewports,
     onBeforeScript: 'puppet/onBefore.js',
     onReadyScript: 'puppet/onReady.js',
     scenarios,
@@ -157,13 +161,13 @@ function generateBackstopConfig(scenarios, product) {
       html_report: `backstop_data/html_report_${product}`,
       ci_report: `backstop_data/ci_report_${product}`
     },
-    report: ['browser', 'CI'],
+    report: ['CI'],
     engine: 'playwright',
     engineOptions: {
       browser: 'chromium',
       args: ['--no-sandbox']
     },
-    asyncCaptureLimit: 10,
+    asyncCaptureLimit: 20,
     asyncCompareLimit: 50,
     debug: false,
     debugWindow: false,
@@ -178,7 +182,25 @@ function generateBackstopConfig(scenarios, product) {
 }
 
 async function main() {
-  const product = process.argv[2] || 'all';
+  const args = process.argv.slice(2);
+  const product = args.find(a => !a.startsWith('--')) || 'all';
+
+  // --filter=openziti,nf,frontdoor  — keep only URLs whose path contains one of these substrings
+  const filterArg = args.find(a => a.startsWith('--filter='));
+  const urlFilters = filterArg
+    ? filterArg.replace('--filter=', '').split(',').map(s => s.trim()).filter(Boolean)
+    : [];
+
+  const desktopOnly = args.includes('--desktop-only');
+
+  if (urlFilters.length > 0) {
+    console.log(`URL filters active: ${urlFilters.join(', ')}`);
+  }
+
+  function applyUrlFilters(urls) {
+    if (urlFilters.length === 0) return urls;
+    return urls.filter(url => urlFilters.some(f => url.includes(f)));
+  }
 
   if (product !== 'all' && !PRODUCTS[product]) {
     console.error(`Unknown product: ${product}`);
@@ -206,17 +228,23 @@ async function main() {
       for (const [prod, urls] of Object.entries(categorized)) {
         if (urls.length === 0 || prod === 'other') continue;
 
-        const scenarios = urls.map(urlToScenario);
-        const config = generateBackstopConfig(scenarios, prod);
+        const filtered = applyUrlFilters(urls);
+        if (filtered.length === 0) {
+          console.log(`\nSkipping ${prod} — no URLs match filter`);
+          continue;
+        }
+
+        const scenarios = filtered.map(urlToScenario);
+        const config = generateBackstopConfig(scenarios, prod, { desktopOnly });
         const outputPath = join(ROOT_DIR, `backstop.${prod}.json`);
         writeFileSync(outputPath, JSON.stringify(config, null, 2));
         console.log(`\nGenerated ${outputPath} with ${scenarios.length} scenarios`);
       }
     } else {
       // Generate config for single product
-      const urls = categorized[product] || [];
+      const urls = applyUrlFilters(categorized[product] || []);
       if (urls.length === 0) {
-        console.error(`No URLs found for product: ${product}`);
+        console.error(`No URLs found for product: ${product}${urlFilters.length ? ` (with filter: ${urlFilters.join(', ')})` : ''}`);
         process.exit(1);
       }
 

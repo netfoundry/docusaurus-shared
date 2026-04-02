@@ -173,43 +173,29 @@ clone_or_update() {
 
   echo "bd clone_or_update effective_url='${url//:*@/://[REDACTED]@}'"
 
-  echo "bd precheck target_exists=$([ -d "$target" ] && echo 1 || echo 0) git_dir_exists=$([ -d "$target/.git" ] && echo 1 || echo 0)"
-  if [ -d "$target" ]; then
-    echo "bd precheck target_listing:"
-    ls -la "$target" 2>&1 || true
-  fi
-
-  echo "bd attempting clone: branch='$branch' depth=1 -> '$target'"
-  if ! git clone --single-branch --branch "$branch" --depth 1 "$url" "$target" 2>&1; then
-    echo "bd clone failed; inspecting existing target..."
-    echo "bd postclone target_exists=$([ -d "$target" ] && echo 1 || echo 0) git_dir_exists=$([ -d "$target/.git" ] && echo 1 || echo 0)"
-
-    if [ -d "$target" ]; then
-      if [ -d "$target/.git" ]; then
-        echo "bd existing repo detected; setting origin url and fetching branch '$branch'"
-        git -C "$target" remote set-url origin "$url" 2>&1 || git -C "$target" remote add origin "$url" 2>&1 || true
-        echo "bd remotes:"
-        git -C "$target" remote -v 2>&1 || true
-        echo "bd fetch+reset..."
-        if ! git -C "$target" fetch --depth 1 origin "$branch" 2>&1 \
-              || ! git -C "$target" reset --hard FETCH_HEAD 2>&1; then
-          echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
-          echo "👉 Available branches:"
-          git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||'
-          exit 1
-        fi
-      else
-        echo "❌ ${target} exists but is not a git repo."
-        echo "bd target top-level listing:"
-        ls -la "$target" 2>&1 || true
-        exit 1
-      fi
-    else
+  if [ -d "$target/.git" ]; then
+    echo "bd existing repo detected; fetching branch '$branch'"
+    git -C "$target" remote set-url origin "$url" 2>&1 || git -C "$target" remote add origin "$url" 2>&1 || true
+    if ! git -C "$target" fetch --depth 1 origin "$branch" 2>&1 \
+          || ! git -C "$target" reset --hard FETCH_HEAD 2>&1; then
       echo "❌ Branch '$branch' not found in ${url//:*@/://[REDACTED]@}"
       echo "👉 Available branches:"
       git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||'
       exit 1
     fi
+    echo "bd fetch+reset succeeded"
+  elif [ -d "$target" ]; then
+    echo "❌ ${target} exists but is not a git repo."
+    ls -la "$target" 2>&1 || true
+    exit 1
+  else
+    echo "bd cloning branch '$branch' -> '$target'"
+    if ! git clone --single-branch --branch "$branch" --depth 1 "$url" "$target" 2>&1; then
+      echo "❌ Clone failed. Available branches in ${url//:*@/://[REDACTED]@}:"
+      git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||'
+      exit 1
+    fi
+    echo "bd clone succeeded"
   fi
 }
 
