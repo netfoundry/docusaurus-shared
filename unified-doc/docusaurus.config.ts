@@ -14,6 +14,7 @@ import {pluginHotjar, pluginReo} from "@netfoundry/docusaurus-theme/node";
 import {PublishConfig} from 'src/components/docusaurus'
 import {zrokDocsPluginConfig, zrokRedirects} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 import {onpremRedirects} from "./_remotes/selfhosted/docusaurus/docusaurus-plugin-onprem-docs.ts";
+import {platformDocsPluginConfig} from "./_remotes/platform/docusaurus/docusaurus-plugin-platform-docs.ts";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
@@ -21,6 +22,7 @@ const selfhosted = `./_remotes/selfhosted`;
 const openziti = `./_remotes/openziti`;
 const zrokRoot = `./_remotes/zrok/website`;
 const zlan = `./_remotes/zlan`;
+const platform = `./_remotes/platform`;
 
 const isVercel = process.env.IS_VERCEL === 'true';
 const docsBase = isVercel ? '/' : '/docs/';
@@ -41,6 +43,7 @@ const BUILD_FLAGS = {
     SELFHOSTED: 0x4,
     ZROK:      0x8,
     ZLAN:      0x10,
+    PLATFORM:  0x20,
 };
 
 function build(flag: number) {
@@ -95,12 +98,14 @@ const REMARK_MAPPINGS = [
     { from: '@zrokdocs', to: `${docsBase}zrok`},
     { from: '@frontdoordocs', to: `${docsBase}frontdoor`},
     { from: '@zlandocs', to: `${docsBase}zlan`},
+    { from: '@platformdocs', to: `${docsBase}platform`},
     { from: '@static', to: docsBase},
     { from: '/openziti',   to: `${docsBase}${routeBase('openziti')}`   },
     { from: '/frontdoor',  to: `${docsBase}${routeBase('frontdoor')}`  },
     { from: '/selfhosted', to: `${docsBase}${routeBase('selfhosted')}` },
     { from: '/zrok',       to: `${docsBase}${routeBase('zrok')}`       },
     { from: '/zlan',       to: `${docsBase}${routeBase('zlan')}`       },
+    { from: '/platform',   to: `${docsBase}${routeBase('platform')}`   },
 ];
 
 console.log("CANONICAL URL          : " + cfg.docusaurus.url);
@@ -212,6 +217,7 @@ const config: Config = {
         '_remotes/selfhosted/docusaurus/static/',
         '_remotes/openziti/docusaurus/static/',
         '_remotes/zlan/docusaurus/static/',
+        '_remotes/platform/docusaurus/static/',
         `${zrokRoot}/static/`,
         `${zrokRoot}/docs/images`
     ],
@@ -266,6 +272,7 @@ const config: Config = {
                                 '@zrok': path.resolve(__dirname, `${zrokRoot}`),
                                 '@zrokroot': path.resolve(__dirname, `${zrokRoot}`),
                                 '@staticdir': path.resolve(__dirname, `docusaurus/static`),
+                                '@platform': path.resolve(__dirname, `${platform}/docusaurus`),
                             },
                         },
                         module: {
@@ -287,6 +294,7 @@ const config: Config = {
         build(BUILD_FLAGS.OPENZITI) && ['@docusaurus/plugin-content-pages',{id: `openziti-pages`, path: `${openziti}/docusaurus/src/pages`, routeBasePath: `/${routeBase('openziti')}`}],
         build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: `/${routeBase('zlan')}`}],
         build(BUILD_FLAGS.ZROK) && ['@docusaurus/plugin-content-pages',{id: `zrok-pages`, path: `${zrokRoot}/src/pages`, routeBasePath: `/${routeBase('zrok')}`}],
+        build(BUILD_FLAGS.PLATFORM) && ['@docusaurus/plugin-content-pages',{id: `platform-pages`, path: `${platform}/docusaurus/src/pages`, routeBasePath: `/${routeBase('platform')}`}],
         build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, routeBase('zrok'))),
         build(BUILD_FLAGS.SELFHOSTED) && [
             '@docusaurus/plugin-content-docs',
@@ -357,6 +365,11 @@ const config: Config = {
                 ],
             },
         ],
+        build(BUILD_FLAGS.PLATFORM) && platformDocsPluginConfig(
+            platform,
+            REMARK_MAPPINGS,
+            routeBase('platform'),
+        ),
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
         [pluginHotjar, {}],
         [pluginReo, {}],
@@ -421,7 +434,7 @@ const config: Config = {
                     links: [
                         {
                             label: 'NetFoundry Console',
-                            to: 'https://support.netfoundry.io/',
+                            to: '/docs/platform/intro',
                             logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
                             description: 'Cloud-managed orchestration and global fabric control.',
                         },
