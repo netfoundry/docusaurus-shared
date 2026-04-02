@@ -100,19 +100,6 @@ function Invoke-CloneOrUpdate {
     $redactedUrl = $Url -replace '://[^@]+@', '://[REDACTED]@'
     Write-Host "bd clone_or_update: dest='$Dest' branch='$Branch' url='$redactedUrl'"
 
-    if (Test-Path $target) {
-        Write-Host "bd precheck: target exists"
-    }
-
-    Write-Host "bd attempting clone: branch='$Branch' depth=1 -> '$target'"
-    git clone --single-branch --branch $Branch --depth 1 $Url $target
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "bd clone succeeded"
-        return
-    }
-
-    Write-Host "bd clone failed ($LASTEXITCODE); inspecting existing target..."
-
     if (Test-Path (Join-Path $target ".git")) {
         Write-Host "bd existing repo detected; fetching branch '$Branch'"
         git -C $target remote set-url origin $Url 2>&1 | Out-Null
@@ -133,17 +120,22 @@ function Invoke-CloneOrUpdate {
             Write-Error "Failed to reset '$target' to FETCH_HEAD"
         }
         Write-Host "bd fetch+reset succeeded"
+        return
     } elseif (Test-Path $target) {
         Write-Host "ERROR: $target exists but is not a git repo"
         Get-ChildItem $target | Format-List Name
         exit 1
     } else {
-        Write-Host "ERROR: Clone failed and target does not exist."
-        Write-Host "Available branches in $redactedUrl :"
-        git ls-remote --heads $Url | ForEach-Object {
-            ($_ -split '\s+')[1] -replace 'refs/heads/', ''
+        Write-Host "bd cloning branch '$Branch' -> '$target'"
+        git clone --single-branch --branch $Branch --depth 1 $Url $target
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "ERROR: Clone failed. Available branches in $redactedUrl :"
+            git ls-remote --heads $Url | ForEach-Object {
+                ($_ -split '\s+')[1] -replace 'refs/heads/', ''
+            }
+            exit 1
         }
-        exit 1
+        Write-Host "bd clone succeeded"
     }
 }
 
