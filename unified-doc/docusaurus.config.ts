@@ -366,7 +366,7 @@ const config: Config = {
             },
         ],
         build(BUILD_FLAGS.PLATFORM) && platformDocsPluginConfig(
-            platform,
+            `${platform}/docusaurus`,
             REMARK_MAPPINGS,
             routeBase('platform'),
         ),
