@@ -15,6 +15,7 @@
 #   --frontdoor-branch=BRANCH    Branch for netfoundry/zrok-connector             (default: develop)
 #   --selfhosted-branch=BRANCH   Branch for netfoundry/k8s-on-prem-installations  (default: main)
 #   --zlan-branch=BRANCH         Branch for netfoundry/zlan                       (default: main)
+#   --platform-branch=BRANCH     Branch for netfoundry/platform-doc               (default: main)
 #   --clean                      Wipe _remotes and .docusaurus cache before building
 #   --lint-only                  Run lint checks only; skip build
 #   --qualifier=VALUE            Append VALUE to output dir (e.g. --qualifier=-preview -> build-preview)
@@ -27,9 +28,10 @@
 #   GH_ZITI_CI_REPO_ACCESS_PAT   GitHub PAT for ziti-doc and zlan (falls back to SSH)
 #   BB_REPO_TOKEN_FRONTDOOR      Bitbucket token for zrok-connector (falls back to SSH)
 #   BB_REPO_TOKEN_ONPREM         Bitbucket token for k8s-on-prem-installations (falls back to SSH)
+#   BB_REPO_TOKEN_PLATFORM_DOC       Bitbucket token for platform-doc (falls back to SSH)
 #   BB_USERNAME                  Bitbucket username (default: x-token-auth)
 #   DOCUSAURUS_BUILD_MASK        Hex bitmask: 0x1=openziti 0x2=frontdoor 0x4=selfhosted
-#                                             0x8=zrok 0x10=zlan 0xFF=all (default: 0xFF)
+#                                             0x8=zrok 0x10=zlan 0x20=platform 0xFF=all (default: 0xFF)
 #   DOCUSAURUS_PUBLISH_ENV       Set to 'prod' to use production Algolia index
 #   NO_MINIFY                    Set to any value to pass --no-minify to Docusaurus
 #   IS_VERCEL                    Set to 'true' on Vercel preview deployments
@@ -55,6 +57,7 @@ BRANCH_ZROK="main"
 BRANCH_FRONTDOOR="develop"
 BRANCH_SELFHOSTED="main"
 BRANCH_ZLAN="main"
+BRANCH_PLATFORM="main"
 
 usage() {
   sed -n '/^# USAGE/,/^# =====/{ /^# =====/d; s/^# \{0,1\}//; p }' "$0"
@@ -67,11 +70,13 @@ while [[ $# -gt 0 ]]; do
     --frontdoor-branch=*)   BRANCH_FRONTDOOR="${1#*=}";   shift ;;
     --selfhosted-branch=*)  BRANCH_SELFHOSTED="${1#*=}";  shift ;;
     --zlan-branch=*)        BRANCH_ZLAN="${1#*=}";        shift ;;
+    --platform-branch=*)    BRANCH_PLATFORM="${1#*=}";   shift ;;
     --ziti-doc-branch)      BRANCH_ZITI_DOC="${2:?--ziti-doc-branch requires a value}";     shift 2 ;;
     --zrok-branch)          BRANCH_ZROK="${2:?--zrok-branch requires a value}";             shift 2 ;;
     --frontdoor-branch)     BRANCH_FRONTDOOR="${2:?--frontdoor-branch requires a value}";   shift 2 ;;
     --selfhosted-branch)    BRANCH_SELFHOSTED="${2:?--selfhosted-branch requires a value}"; shift 2 ;;
     --zlan-branch)          BRANCH_ZLAN="${2:?--zlan-branch requires a value}";             shift 2 ;;
+    --platform-branch)      BRANCH_PLATFORM="${2:?--platform-branch requires a value}";     shift 2 ;;
     --clean) CLEAN=1; shift ;;
     --lint-only) LINT_ONLY=1; shift ;;
     -h|--help) usage; exit 0 ;;
@@ -102,6 +107,7 @@ echo "bd BRANCH_ZROK='$BRANCH_ZROK'"
 echo "bd BRANCH_FRONTDOOR='$BRANCH_FRONTDOOR'"
 echo "bd BRANCH_SELFHOSTED='$BRANCH_SELFHOSTED'"
 echo "bd BRANCH_ZLAN='$BRANCH_ZLAN'"
+echo "bd BRANCH_PLATFORM='$BRANCH_PLATFORM'"
 echo "----------------------------------------"
 echo "bd ENV VARS:"
 echo "bd   IS_VERCEL='${IS_VERCEL:-}'"
@@ -169,6 +175,16 @@ clone_or_update() {
         echo "🔑 Using SSH for ziti-doc" >&2
       fi
       ;;
+    *platform-doc*)
+      if [ -n "${BB_REPO_TOKEN_PLATFORM_DOC:-}" ]; then
+        local bb_user="${BB_USERNAME:-x-token-auth}"
+        url="https://${bb_user}:${BB_REPO_TOKEN_PLATFORM_DOC}@bitbucket.org/netfoundry/platform-doc.git"
+        echo "🔑 Using BB_REPO_TOKEN_PLATFORM_DOC token" >&2
+      else
+        url="git@bitbucket.org:netfoundry/platform-doc.git"
+        echo "🔑 Using SSH for platform-doc" >&2
+      fi
+      ;;
   esac
 
   echo "bd clone_or_update effective_url='${url//:*@/://[REDACTED]@}'"
@@ -209,6 +225,7 @@ lint_docs() {
         "${script_dir}/_remotes/zrok/website/docs"
         "${script_dir}/_remotes/selfhosted/docusaurus/docs"
         "${script_dir}/_remotes/openziti/docusaurus/docs"
+        "${script_dir}/_remotes/platform/docusaurus/docs"
     )
 
     # 2. VERIFY FOLDERS
@@ -342,6 +359,7 @@ clone_or_update "https://bitbucket.org/netfoundry/k8s-on-prem-installations.git"
 clone_or_update "https://github.com/openziti/ziti-doc.git"                       openziti   "$BRANCH_ZITI_DOC"
 clone_or_update "https://github.com/netfoundry/zlan.git"                         zlan       "$BRANCH_ZLAN"
 clone_or_update "https://github.com/openziti/zrok.git"                           zrok       "$BRANCH_ZROK"
+clone_or_update "https://bitbucket.org/netfoundry/platform-doc.git"              platform   "$BRANCH_PLATFORM"
 
 echo "========================================"
 echo "bd POST-CLONE DEBUG"
