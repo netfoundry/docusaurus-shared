@@ -70,13 +70,13 @@ while [[ $# -gt 0 ]]; do
     --frontdoor-branch=*)   BRANCH_FRONTDOOR="${1#*=}";   shift ;;
     --selfhosted-branch=*)  BRANCH_SELFHOSTED="${1#*=}";  shift ;;
     --zlan-branch=*)        BRANCH_ZLAN="${1#*=}";        shift ;;
-    --platform-branch=*)   BRANCH_PLATFORM="${1#*=}";   shift ;;
+    --platform-branch=*)    BRANCH_PLATFORM="${1#*=}";   shift ;;
     --ziti-doc-branch)      BRANCH_ZITI_DOC="${2:?--ziti-doc-branch requires a value}";     shift 2 ;;
     --zrok-branch)          BRANCH_ZROK="${2:?--zrok-branch requires a value}";             shift 2 ;;
     --frontdoor-branch)     BRANCH_FRONTDOOR="${2:?--frontdoor-branch requires a value}";   shift 2 ;;
     --selfhosted-branch)    BRANCH_SELFHOSTED="${2:?--selfhosted-branch requires a value}"; shift 2 ;;
     --zlan-branch)          BRANCH_ZLAN="${2:?--zlan-branch requires a value}";             shift 2 ;;
-    --platform-branch)     BRANCH_PLATFORM="${2:?--platform-branch requires a value}";     shift 2 ;;
+    --platform-branch)      BRANCH_PLATFORM="${2:?--platform-branch requires a value}";     shift 2 ;;
     --clean) CLEAN=1; shift ;;
     --lint-only) LINT_ONLY=1; shift ;;
     -h|--help) usage; exit 0 ;;
