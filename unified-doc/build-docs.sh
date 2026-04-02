@@ -28,6 +28,7 @@
 #   GH_ZITI_CI_REPO_ACCESS_PAT   GitHub PAT for ziti-doc and zlan (falls back to SSH)
 #   BB_REPO_TOKEN_FRONTDOOR      Bitbucket token for zrok-connector (falls back to SSH)
 #   BB_REPO_TOKEN_ONPREM         Bitbucket token for k8s-on-prem-installations (falls back to SSH)
+#   BB_REPO_TOKEN_PLATFORM_DOC       Bitbucket token for platform-doc (falls back to SSH)
 #   BB_USERNAME                  Bitbucket username (default: x-token-auth)
 #   DOCUSAURUS_BUILD_MASK        Hex bitmask: 0x1=openziti 0x2=frontdoor 0x4=selfhosted
 #                                             0x8=zrok 0x10=zlan 0x20=platform 0xFF=all (default: 0xFF)
@@ -175,10 +176,10 @@ clone_or_update() {
       fi
       ;;
     *platform-doc*)
-      if [ -n "${BB_REPO_TOKEN_FRONTDOOR:-}" ]; then
+      if [ -n "${BB_REPO_TOKEN_PLATFORM_DOC:-}" ]; then
         local bb_user="${BB_USERNAME:-x-token-auth}"
-        url="https://${bb_user}:${BB_REPO_TOKEN_FRONTDOOR}@bitbucket.org/netfoundry/platform-doc.git"
-        echo "🔑 Using BB_REPO_TOKEN_FRONTDOOR token for platform-doc" >&2
+        url="https://${bb_user}:${BB_REPO_TOKEN_PLATFORM_DOC}@bitbucket.org/netfoundry/platform-doc.git"
+        echo "🔑 Using BB_REPO_TOKEN_PLATFORM_DOC token" >&2
       else
         url="git@bitbucket.org:netfoundry/platform-doc.git"
         echo "🔑 Using SSH for platform-doc" >&2
