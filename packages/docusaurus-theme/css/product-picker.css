@@ -134,12 +134,34 @@
 .nf-picker-panel--narrow { max-width: 430px; padding: 0.85rem 1.25rem; }
 
 
-/* Ensure visibility when open */
-.dropdown--show > .dropdown__menu,
-.dropdown:hover > .dropdown__menu {
+/*
+ * Click-only dropdowns — how this works:
+ *
+ * Infima (Docusaurus's base CSS) shows .dropdown__menu on :hover by default.
+ * Our swizzled DropdownNavbarItem/Desktop uses JS click to toggle the
+ * `dropdown--show` class instead. We need CSS to respect that.
+ *
+ * The trick: both rules below have the same specificity (0,3,0). The hide
+ * rule kills Infima's hover behaviour; the show rule comes *later* in the
+ * file, so it wins the cascade when `dropdown--show` is present — even while
+ * the user is hovering.
+ *
+ * To verify: hover over any navbar dropdown → menu stays closed.
+ *            Click the trigger → menu opens and stays open while hovering.
+ *            Click a menu item or anywhere outside → menu closes.
+ */
+.navbar__item.dropdown:hover .dropdown__menu,
+.navbar__item.dropdown:hover > .dropdown__menu {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+.navbar__item.dropdown.dropdown--show .dropdown__menu {
     display: block;
     visibility: visible;
     opacity: 1;
+    pointer-events: auto;
 }
 
 /* ── Grid layout ────────────────────────────────────────────────────────── */
