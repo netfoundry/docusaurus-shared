@@ -17,7 +17,7 @@ const products = [
     logo: NF_LOGO,
     tag: 'Managed',
     accent: CYAN,
-    link: '#',
+    link: `${DOCS_BASE}platform/intro`,
     features: ['Fully managed SaaS', 'Global edge fabric', 'No infra to operate', 'Policy-based access'],
     description: "The cloud-managed control plane for NetFoundry's global zero-trust fabric. Orchestrate identities, policies, and edge routers — no infrastructure to run."
   },
