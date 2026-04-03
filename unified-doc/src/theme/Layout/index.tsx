@@ -7,6 +7,7 @@ import {onpremFooter} from "@selfhosted/src/components/footer";
 import {zlanFooter} from "@zlan/src/components/footer";
 import {openZitiFooter} from "@openziti/src/components/footer";
 import {zrokFooter} from "@zrok/src/components/footer";
+import {platformFooter} from "@platform/src/components/footer";
 
 const matchPath = (p: string, segment: string) =>
     p.startsWith(`/${segment}`) || p.startsWith(`/docs/${segment}`);
@@ -17,6 +18,7 @@ const mapFooter = (p: string) => {
     if (matchPath(p, 'openziti')) return openZitiFooter;
     if (matchPath(p, 'zlan')) return zlanFooter;
     if (matchPath(p, 'zrok')) return zrokFooter;
+    if (matchPath(p, 'platform')) return platformFooter;
     return unifiedFooter;
 };
 
