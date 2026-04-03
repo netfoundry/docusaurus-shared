@@ -93,34 +93,19 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-# --- DEBUG CONFIG ---
 echo "========================================"
-echo "bd BUILD ENVIRONMENT DEBUG"
+echo "BUILD CONFIGURATION"
 echo "========================================"
-echo "bd CLEAN=$CLEAN"
-echo "bd BUILD_QUALIFIER='$BUILD_QUALIFIER'"
-echo "bd QUALIFIER_FLAG: ${QUALIFIER_FLAG[*]:-}"
-echo "bd OTHER_FLAGS: ${OTHER_FLAGS[*]:-}"
-echo "bd EXTRA_ARGS: ${EXTRA_ARGS[*]:-}"
-echo "bd BRANCH_ZITI_DOC='$BRANCH_ZITI_DOC'"
-echo "bd BRANCH_ZROK='$BRANCH_ZROK'"
-echo "bd BRANCH_FRONTDOOR='$BRANCH_FRONTDOOR'"
-echo "bd BRANCH_SELFHOSTED='$BRANCH_SELFHOSTED'"
-echo "bd BRANCH_ZLAN='$BRANCH_ZLAN'"
-echo "bd BRANCH_PLATFORM='$BRANCH_PLATFORM'"
-echo "----------------------------------------"
-echo "bd ENV VARS:"
-echo "bd   IS_VERCEL='${IS_VERCEL:-}'"
-echo "bd   VERCEL='${VERCEL:-}'"
-echo "bd   VERCEL_ENV='${VERCEL_ENV:-}'"
-echo "bd   CI='${CI:-}'"
-echo "bd   NODE_ENV='${NODE_ENV:-}'"
-echo "bd   PWD='$(pwd)'"
-echo "----------------------------------------"
-echo "bd VERSIONS:"
-echo "bd   node: $(node --version 2>/dev/null || echo 'not found')"
-echo "bd   yarn: $(yarn --version 2>/dev/null || echo 'not found')"
-echo "bd   npm: $(npm --version 2>/dev/null || echo 'not found')"
+echo "  BRANCH_ZITI_DOC='$BRANCH_ZITI_DOC'"
+echo "  BRANCH_ZROK='$BRANCH_ZROK'"
+echo "  BRANCH_FRONTDOOR='$BRANCH_FRONTDOOR'"
+echo "  BRANCH_SELFHOSTED='$BRANCH_SELFHOSTED'"
+echo "  BRANCH_ZLAN='$BRANCH_ZLAN'"
+echo "  BRANCH_PLATFORM='$BRANCH_PLATFORM'"
+echo "  CLEAN=$CLEAN"
+echo "  IS_VERCEL='${IS_VERCEL:-}'"
+echo "  node: $(node --version 2>/dev/null || echo 'not found')"
+echo "  yarn: $(yarn --version 2>/dev/null || echo 'not found')"
 echo "========================================"
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
@@ -133,7 +118,6 @@ clone_or_update() {
   local url="$1" dest="$2" branch="${3:-main}"
   local target="$script_dir/_remotes/$dest"
 
-  echo "bd clone_or_update url='$url' dest='$dest' branch='$branch' target='$target' CLEAN='${CLEAN:-0}'"
 
   # --- AUTHENTICATION LOGIC ---
   case "$url" in
@@ -187,10 +171,8 @@ clone_or_update() {
       ;;
   esac
 
-  echo "bd clone_or_update effective_url='${url//:*@/://[REDACTED]@}'"
-
   if [ -d "$target/.git" ]; then
-    echo "bd existing repo detected; fetching branch '$branch'"
+    echo "Updating '$dest' @ '$branch'..."
     git -C "$target" remote set-url origin "$url" 2>&1 || git -C "$target" remote add origin "$url" 2>&1 || true
     if ! git -C "$target" fetch --depth 1 origin "$branch" 2>&1 \
           || ! git -C "$target" reset --hard FETCH_HEAD 2>&1; then
@@ -199,19 +181,17 @@ clone_or_update() {
       git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||'
       exit 1
     fi
-    echo "bd fetch+reset succeeded"
   elif [ -d "$target" ]; then
     echo "❌ ${target} exists but is not a git repo."
     ls -la "$target" 2>&1 || true
     exit 1
   else
-    echo "bd cloning branch '$branch' -> '$target'"
+    echo "Cloning '$dest' @ '$branch'..."
     if ! git clone --single-branch --branch "$branch" --depth 1 "$url" "$target" 2>&1; then
       echo "❌ Clone failed. Available branches in ${url//:*@/://[REDACTED]@}:"
       git ls-remote --heads "$url" | awk '{print $2}' | sed 's|refs/heads/||'
       exit 1
     fi
-    echo "bd clone succeeded"
   fi
 }
 
@@ -345,12 +325,8 @@ lint_docs() {
 # =============================================================================
 # MAIN EXECUTION
 # =============================================================================
-echo "bd DEBUG: scanning for git dirs under _remotes"
-find "$script_dir/_remotes" -name .git -type d 2>&1 || true
-
-
 if [ "${CLEAN:-0}" -eq 1 ]; then
-  echo "bd CLEAN=1 removing contents of _remotes (preserving package.json)"
+  echo "CLEAN: removing _remotes contents (preserving package.json)"
   find "$script_dir/_remotes" -mindepth 1 -maxdepth 1 ! -name 'package.json' -exec rm -rf {} +
 fi
 
@@ -361,17 +337,8 @@ clone_or_update "https://github.com/netfoundry/zlan.git"                        
 clone_or_update "https://github.com/openziti/zrok.git"                           zrok       "$BRANCH_ZROK"
 clone_or_update "https://bitbucket.org/netfoundry/platform-doc.git"              platform   "$BRANCH_PLATFORM"
 
-echo "========================================"
-echo "bd POST-CLONE DEBUG"
-echo "========================================"
-echo "bd Directories in _remotes:"
-ls -la "$script_dir/_remotes" 2>/dev/null || echo "  (none)"
-echo "----------------------------------------"
-echo "bd Looking for docusaurus build/ and .docusaurus/ dirs in remotes:"
-find "$script_dir/_remotes" -type d \( -path "*/docusaurus/build" -o -path "*/docusaurus/.docusaurus" -o -path "*/website/build" -o -path "*/website/.docusaurus" \) 2>/dev/null || echo "  (none found)"
-echo "bd Cleaning stale build artifacts from remotes..."
+echo "Cleaning stale build artifacts from remotes..."
 find "$script_dir/_remotes" -type d \( -path "*/docusaurus/build" -o -path "*/docusaurus/.docusaurus" -o -path "*/website/build" -o -path "*/website/.docusaurus" \) -exec rm -rf {} + 2>/dev/null || true
-echo "========================================"
 
 echo "copying versionable docs locally..."
 "${script_dir}/sync-versioned-remote.sh" zrok
@@ -397,30 +364,26 @@ pushd "${script_dir}" >/dev/null
 yarn install
 
 if [ "${CLEAN:-0}" -eq 1 ]; then
-  echo "bd CLEAN=1: running yarn clear to remove .docusaurus cache"
+  echo "CLEAN: clearing Docusaurus cache"
   yarn clear
 fi
-
-echo "========================================"
-echo "bd PRE-BUILD DEBUG"
-echo "========================================"
-echo "bd   IS_VERCEL='${IS_VERCEL:-}'"
-echo "bd   VERCEL='${VERCEL:-}'"
-echo "bd   script_dir='${script_dir}'"
-echo "bd   BUILD_QUALIFIER='${BUILD_QUALIFIER}'"
-echo "bd   output dir: build${BUILD_QUALIFIER}"
-echo "========================================"
 
 now=$(date)
 commit=$(git -C "${script_dir}" rev-parse --short HEAD 2>/dev/null || echo "unknown")
 printf "%s\n%s\n" "$now" "$commit" > "${script_dir}/static/build-time.txt"
-echo "BUILDING docs into: build${BUILD_QUALIFIER} at $now"
 
 MINIFY_FLAG=""
 if [ -n "${NO_MINIFY:-}" ]; then
   MINIFY_FLAG="--no-minify"
 fi
-echo "NO_MINIFY flag: $MINIFY_FLAG"
+
+echo "========================================"
+echo "DOCUSAURUS BUILD"
+echo "========================================"
+echo "  Output dir: build${BUILD_QUALIFIER}"
+echo "  Build mask: ${DOCUSAURUS_BUILD_MASK:-0xFF}"
+echo "  No-minify:  ${NO_MINIFY:-false}"
+echo "========================================"
 
 yarn build $MINIFY_FLAG --out-dir "build${BUILD_QUALIFIER}" 2>&1
 popd >/dev/null

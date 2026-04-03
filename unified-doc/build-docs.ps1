@@ -29,6 +29,7 @@ param(
     [string]$FrontdoorBranch  = "develop",
     [string]$SelfhostedBranch = "main",
     [string]$ZlanBranch       = "main",
+    [string]$PlatformBranch   = "main",
 
     # Remove all _remotes content and .docusaurus cache before building
     [switch]$Clean,
@@ -46,7 +47,7 @@ param(
     [string]$Qualifier = "",
 
     # Docusaurus build mask (hex). 0x1=openziti, 0x2=frontdoor, 0x4=selfhosted,
-    # 0x8=zrok, 0x10=zlan, 0xFF=all
+    # 0x8=zrok, 0x10=zlan, 0x20=platform, 0xFF=all
     [string]$BuildMask = "0xFF"
 )
 
@@ -98,10 +99,9 @@ function Invoke-CloneOrUpdate {
 
     $target = Join-Path $remotesDir $Dest
     $redactedUrl = $Url -replace '://[^@]+@', '://[REDACTED]@'
-    Write-Host "bd clone_or_update: dest='$Dest' branch='$Branch' url='$redactedUrl'"
 
     if (Test-Path (Join-Path $target ".git")) {
-        Write-Host "bd existing repo detected; fetching branch '$Branch'"
+        Write-Host "Updating '$Dest' @ '$Branch'..."
         git -C $target remote set-url origin $Url 2>&1 | Out-Null
         if ($LASTEXITCODE -ne 0) {
             git -C $target remote add origin $Url 2>&1 | Out-Null
@@ -119,14 +119,13 @@ function Invoke-CloneOrUpdate {
         if ($LASTEXITCODE -ne 0) {
             Write-Error "Failed to reset '$target' to FETCH_HEAD"
         }
-        Write-Host "bd fetch+reset succeeded"
         return
     } elseif (Test-Path $target) {
         Write-Host "ERROR: $target exists but is not a git repo"
         Get-ChildItem $target | Format-List Name
         exit 1
     } else {
-        Write-Host "bd cloning branch '$Branch' -> '$target'"
+        Write-Host "Cloning '$Dest' @ '$Branch'..."
         git clone --single-branch --branch $Branch --depth 1 $Url $target
         if ($LASTEXITCODE -ne 0) {
             Write-Host "ERROR: Clone failed. Available branches in $redactedUrl :"
@@ -135,7 +134,6 @@ function Invoke-CloneOrUpdate {
             }
             exit 1
         }
-        Write-Host "bd clone succeeded"
     }
 }
 
@@ -166,7 +164,8 @@ function Invoke-LintDocs {
         (Join-Path $remotesDir "frontdoor\docusaurus\docs"),
         (Join-Path $remotesDir "zrok\website\docs"),
         (Join-Path $remotesDir "selfhosted\docusaurus\docs"),
-        (Join-Path $remotesDir "openziti\docusaurus\docs")
+        (Join-Path $remotesDir "openziti\docusaurus\docs"),
+        (Join-Path $remotesDir "platform\docusaurus\docs")
     )
     $targets = $potentialTargets | Where-Object { Test-Path $_ }
 
@@ -224,6 +223,7 @@ Write-Host "  ZrokBranch:       $ZrokBranch"
 Write-Host "  FrontdoorBranch:  $FrontdoorBranch"
 Write-Host "  SelfhostedBranch: $SelfhostedBranch"
 Write-Host "  ZlanBranch:       $ZlanBranch"
+Write-Host "  PlatformBranch:   $PlatformBranch"
 Write-Host "  Clean:            $Clean"
 Write-Host "  LintOnly:         $LintOnly"
 Write-Host "  SkipLinkedDoc:    $SkipLinkedDoc"
@@ -231,6 +231,8 @@ Write-Host "  NoMinify:         $NoMinify"
 Write-Host "  Qualifier:        '$Qualifier'"
 Write-Host "  BuildMask:        $BuildMask"
 Write-Host "  IS_VERCEL:        $($env:IS_VERCEL)"
+Write-Host "  node:             $(node --version 2>$null)"
+Write-Host "  yarn:             $(yarn --version 2>$null)"
 
 if ($Clean) {
     Write-Host "CLEAN: removing _remotes contents (preserving package.json)"
@@ -264,6 +266,12 @@ $urlSelfhosted = Get-RepoUrl `
 
 $urlZrok = "https://github.com/openziti/zrok.git"   # public; no auth needed
 
+$urlPlatform = Get-RepoUrl `
+    -DefaultHttpsUrl "https://bitbucket.org/netfoundry/platform-doc.git" `
+    -TokenEnvVar     "BB_REPO_TOKEN_PLATFORM_DOC" `
+    -SshUrl          "git@bitbucket.org:netfoundry/platform-doc.git" `
+    -UsernameEnvVar  "BB_USERNAME"
+
 # ─── CLONE / UPDATE REMOTES ───────────────────────────────────────────────────
 
 Invoke-CloneOrUpdate $urlFrontdoor   "frontdoor"  $FrontdoorBranch
@@ -271,6 +279,7 @@ Invoke-CloneOrUpdate $urlSelfhosted  "selfhosted" $SelfhostedBranch
 Invoke-CloneOrUpdate $urlZitiDoc     "openziti"   $ZitiDocBranch
 Invoke-CloneOrUpdate $urlZlan        "zlan"       $ZlanBranch
 Invoke-CloneOrUpdate $urlZrok        "zrok"       $ZrokBranch
+Invoke-CloneOrUpdate $urlPlatform    "platform"   $PlatformBranch
 
 # Remove stale Docusaurus caches and build outputs from inside the cloned remotes.
 # A leftover .docusaurus/ or build/ from a prior run can confuse the unified-doc build.

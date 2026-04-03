@@ -54,10 +54,11 @@ export default function DropdownNavbarItemDesktop({
         aria-haspopup="true"
         aria-expanded={showDropdown}
         role="button"
-        href={props.to ? undefined : '#'}
+        href="#"
         className={clsx('navbar__link', className)}
         {...props}
-        onClick={props.to ? undefined : handleClick}
+        to={undefined}
+        onClick={handleClick}
         onKeyDown={(e: React.KeyboardEvent) => {
           if (e.key === 'Enter') {
             e.preventDefault();
@@ -66,7 +67,7 @@ export default function DropdownNavbarItemDesktop({
         }}>
         {props.children ?? props.label}
       </NavbarNavLink>
-      <ul className="dropdown__menu">
+      <ul className="dropdown__menu" onClick={() => setShowDropdown(false)}>
         {items.map((childItemProps: any, i: number) => (
           <NavbarItem
             isDropdownItem
