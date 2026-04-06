@@ -7,6 +7,14 @@ Check merged PRs in a product's source repo(s) for customer-facing changes. For 
 directory to assess whether coverage already exists, is stale, or is missing entirely. Produce an actionable report,
 then optionally generate a doc draft.
 
+## Setup
+
+Before using this skill, configure it for your organization:
+
+1. **Update the product registry** below with your products, source repos, auth method, and local doc paths.
+2. **Set auth environment variables** as needed (see Auth section below).
+3. **Update the style guide reference** in step 7 to point to your own documentation style guide.
+
 ## Invocation
 
 ```
@@ -18,22 +26,20 @@ then optionally generate a doc draft.
 
 - `status` — show a summary table of all products and their last scan results, then exit. Does not fetch any PRs or
   update state. Regenerates `STATUS.md` from existing output files.
-- `<product>` is one of: `zrok`, `ziti-doc`, `zlan`, `k8s-on-prem-installations`, `platform-doc`, `zrok-connector`
+- `<product>` is a product name defined in your registry below
 - `--since` overrides the last-checked date from state
-- `--draft <owner/repo#PR>` skips the scan and generates a doc draft for a specific PR (e.g., `--draft openziti/ziti#4821`)
+- `--draft <owner/repo#PR>` skips the scan and generates a doc draft for a specific PR
 
 ## Product registry
 
 Each product has one or more **source repos** (scanned for PRs) and one **local doc path** (searched for coverage).
+Replace the example rows below with your own products.
 
-| Product                   | Source repos                                          | Auth              | Local doc path                                          |
-|---------------------------|-------------------------------------------------------|-------------------|---------------------------------------------------------|
-| zrok                      | openziti/zrok                                         | gh CLI (public)   | /root/nf-docs/zrok/website/docs                         |
-| ziti-doc                  | openziti/ziti, openziti/ziti-console                  | gh CLI (public)   | /root/nf-docs/ziti-doc/docusaurus/docs                  |
-| zlan                      | netfoundry/zlan                                       | gh CLI (private)  | /root/nf-docs/zlan/docusaurus/docs                      |
-| k8s-on-prem-installations | netfoundry/k8s-on-prem-installations                  | BB_EMAIL+BB_TOKEN | /root/nf-docs/k8s-on-prem-installations/docusaurus/docs |
-| platform-doc              | netfoundry/netfoundry-ui, netfoundry/core-management, netfoundry/gateway, netfoundry/customer-connect *(in dev)*, netfoundry/integrations, netfoundry/network-auth | BB_EMAIL+BB_TOKEN | /root/nf-docs/platform-doc/docusaurus/docs |
-| zrok-connector            | netfoundry/zrok-connector                             | BB_EMAIL+BB_TOKEN | /root/nf-docs/zrok-connector/docusaurus/docs            |
+| Product    | Source repos          | Auth         | Local doc path                        |
+|------------|-----------------------|--------------|---------------------------------------|
+| product-a  | your-org/repo-a       | gh CLI       | /path/to/product-a/docs               |
+| product-b  | your-org/repo-b       | GH_TOKEN     | /path/to/product-b/docs               |
+| product-c  | your-org/repo-c       | BB_EMAIL+BB_TOKEN | /path/to/product-c/docs          |
 
 **Note on source repos vs. doc repos**: The source repos are the *product code* repositories — that's where
 customer-facing changes originate. The local doc path is a separate, locally cloned *documentation* repository used
@@ -45,7 +51,8 @@ Use with `BB_EMAIL` (the account's email address) as basic auth credentials.
 
 **GitHub auth**: Use the `gh` CLI. Run `gh auth status` to confirm it's authenticated before running a scan.
 If `gh` is not available or the user explicitly requests token-based fallback, use a personal access token via
-`-H "Authorization: token $GH_TOKEN"` in curl — but prefer `gh`.
+`GH_TOKEN` env variable in curl — but prefer `gh`. For private repos that require a specific token, set the
+token variable name in the Auth column of your registry and use `GH_TOKEN=<your-token-variable>` when calling `gh`.
 
 ## State file
 
@@ -53,8 +60,8 @@ State is stored at `~/.claude/doc-check-state.json`. One entry per **product** (
 
 ```json
 {
-  "zrok": { "last_checked": "2026-03-20T15:00:00Z" },
-  "ziti-doc": { "last_checked": "2026-03-25T17:00:00Z" }
+  "product-a": { "last_checked": "2026-03-20T15:00:00Z" },
+  "product-b": { "last_checked": "2026-03-25T17:00:00Z" }
 }
 ```
 
@@ -103,30 +110,21 @@ Filter results in Python to PRs where `mergedAt` is after the since date (when d
 ```bash
 # Date-based:
 curl -s -u "$BB_EMAIL:$BB_TOKEN" \
-  "https://api.bitbucket.org/2.0/repositories/netfoundry/<slug>/pullrequests?state=MERGED&sort=-updated_on&pagelen=50"
+  "https://api.bitbucket.org/2.0/repositories/<your-org>/<slug>/pullrequests?state=MERGED&sort=-updated_on&pagelen=50"
 
 # First run: fetch last 5 only
 curl -s -u "$BB_EMAIL:$BB_TOKEN" \
-  "https://api.bitbucket.org/2.0/repositories/netfoundry/<slug>/pullrequests?state=MERGED&sort=-updated_on&pagelen=5"
+  "https://api.bitbucket.org/2.0/repositories/<your-org>/<slug>/pullrequests?state=MERGED&sort=-updated_on&pagelen=5"
 ```
 
 Filter to PRs where `updated_on` is after the since date (when date-based).
 
 **When a product has multiple source repos**, collect all results into one list, then apply the 10-PR hard cap to the
 combined total (most recent first across repos). In the report, prefix each PR with its source repo:
-`openziti/ziti#4821`, `openziti/ziti-console#512`, etc.
+`your-org/repo-a#42`, `your-org/repo-b#17`, etc.
 
-**Special case — `netfoundry/netfoundry-ui`**: This is a monorepo hosting both the NF Console UI (V7/V8) and the
-Frontdoor UI. When scanning it, read the PR title, description, and diff to determine which product it belongs to
-before assessing doc coverage:
-
-- PRs touching Frontdoor UI code → cross-reference against `zrok-connector/docusaurus/docs`
-- PRs touching NF Console UI code → cross-reference against `platform-doc/docusaurus/docs`
-- PRs touching shared infrastructure (build tooling, design system, auth scaffolding) → mark as **internal**
-
-When running `/doc-check platform-doc`, skip any `netfoundry-ui` PRs that are clearly Frontdoor-only — note them in
-the report as "Skipped (Frontdoor — run `/doc-check zrok-connector`)". When running `/doc-check zrok-connector`,
-apply the same logic in reverse.
+**Monorepos**: If a source repo hosts multiple products, read the PR title, description, and diff to determine which
+product it belongs to before assessing doc coverage. Mark PRs for other products as skipped with a note.
 
 ### 3. Assess each PR: customer-facing or internal?
 
@@ -145,7 +143,7 @@ response (fields `source.commit.hash` and `destination.commit.hash`) and constru
 
 ```bash
 curl -s -u "$BB_EMAIL:$BB_TOKEN" \
-  "https://api.bitbucket.org/2.0/repositories/netfoundry/<slug>/diff/netfoundry/<slug>:<src_hash>%0D<dst_hash>?from_pullrequest_id=<id>&topic=true"
+  "https://api.bitbucket.org/2.0/repositories/<your-org>/<slug>/diff/<your-org>/<slug>:<src_hash>%0D<dst_hash>?from_pullrequest_id=<id>&topic=true"
 ```
 
 Mark as **customer-facing** (proceed to step 4) if the diff contains:
@@ -190,30 +188,30 @@ Dismiss **covered** PRs from the flagged list entirely (move them to a "no actio
 ### 5. Output the report
 
 ```
-## doc-check: ziti-doc (since 2026-03-18)
+## doc-check: product-a (since 2026-03-18)
 
-Sources: openziti/ziti (6 PRs), openziti/ziti-console (4 PRs) — 10 total · 2 need doc work · 1 already covered · 7 skipped (internal)
+Sources: your-org/repo-a (6 PRs), your-org/repo-b (4 PRs) — 10 total · 2 need doc work · 1 already covered · 7 skipped (internal)
 
 ### Needs doc work
 
-**openziti/ziti#4821 — Add --output flag to ziti edge list** (merged 2026-03-20) · MISSING
-- New `--output json|yaml|table` flag on all `ziti edge list` subcommands
+**your-org/repo-a#42 — Add --output flag to CLI** (merged 2026-03-20) · MISSING
+- New `--output json|yaml|table` flag on all list subcommands
 - No existing doc found for output formatting options
 - Suggested location: reference/cli section
-- `/doc-check ziti-doc --draft openziti/ziti#4821` to generate a draft
+- `/doc-check product-a --draft your-org/repo-a#42` to generate a draft
 
-**openziti/ziti-console#512 — Dark mode toggle** (merged 2026-03-19) · STALE
-- New dark/light mode toggle in ZAC settings panel
-- Existing doc: `reference/zac-overview.md` — covers UI layout but not appearance settings
-- `/doc-check ziti-doc --draft openziti/ziti-console#512` to generate a draft
+**your-org/repo-b#17 — Dark mode toggle** (merged 2026-03-19) · STALE
+- New dark/light mode toggle in settings panel
+- Existing doc: `reference/ui-overview.md` — covers UI layout but not appearance settings
+- `/doc-check product-a --draft your-org/repo-b#17` to generate a draft
 
 ### Already covered
-- openziti/ziti#4815 — TLS cert rotation: `operations/certificates.md` covers this area and appears current
+- your-org/repo-a#38 — TLS cert rotation: `operations/certificates.md` covers this area and appears current
 
 ### Skipped (internal)
-- openziti/ziti#4818 — Fix race condition in router reconnect (internal bug fix)
-- openziti/ziti#4816 — Go 1.22 bump (build tooling)
-- openziti/ziti-console#509 — Cypress test updates (tests only)
+- your-org/repo-a#40 — Fix race condition in reconnect logic (internal bug fix)
+- your-org/repo-a#39 — Go 1.22 bump (build tooling)
+- your-org/repo-b#15 — Cypress test updates (tests only)
 ```
 
 ### 6. Offer to draft
@@ -230,11 +228,10 @@ When `--draft <owner/repo#PR>` is passed:
 3. If the status was **missing**, write a new file from scratch
 4. Identify what changed from a user perspective
 5. Determine the appropriate doc type (how-to, reference, concept explanation) using Diátaxis
-6. Write the draft following the NetFoundry style guide:
+6. Write the draft following your organization's documentation style guide:
    - Sentence-style headers; imperative verb phrases for how-to titles
-   - Active voice, "you/your", no "please"
+   - Active voice, second person ("you/your")
    - Backticks for CLI flags, commands, config keys, code tokens
-   - Short descriptive alt text for images (no underscores, no filenames as alt text)
    - 120-character line length limit
 7. Present the full draft inline in the terminal, followed by the suggested file path, then prompt the user with these
    options:
@@ -249,13 +246,13 @@ When `--draft <owner/repo#PR>` is passed:
 
 #### Drafts folder
 
-Drafts are saved to `output/<product>/drafts/` under the doc-check output directory:
+Drafts are saved to `output/<product>/drafts/` under the doc-check skill folder:
 
 ```
-/root/nf-docs/.claude/skills/doc-check/output/<product>/drafts/<repo>-<PR>-<slug>.md
+<skills-dir>/doc-check/output/<product>/drafts/<repo>-<PR>-<slug>.md
 ```
 
-Example: `output/platform-doc/drafts/netfoundry-ui-2479-download-usage-report.md`
+Example: `output/product-a/drafts/repo-a-42-add-output-flag.md`
 
 Each draft file includes a frontmatter block for traceability:
 
@@ -275,7 +272,7 @@ for the product that was checked (one entry per product, shared across all its s
 ### 9. Save output
 
 After completing a scan (not `--draft` mode), save the full report to a dated file in a per-product subdirectory
-under `/root/nf-docs/.claude/skills/doc-check/output/<product>/`. Create the directory if it doesn't exist.
+under `<skills-dir>/doc-check/output/<product>/`. Create the directory if it doesn't exist.
 
 Filename format: `YYYY-MM-DD.md` (use today's date). If a file with that name already exists, append a counter:
 `YYYY-MM-DD-2.md`, etc.
@@ -288,10 +285,10 @@ Write the report in the same markdown format shown in step 5, with a one-line he
 
 ### 10. Update STATUS.md
 
-After saving the report, regenerate `STATUS.md` at the root of the skills/doc-check folder:
+After saving the report, regenerate `STATUS.md` at the root of the doc-check skill folder:
 
 ```
-/root/nf-docs/.claude/skills/doc-check/STATUS.md
+<skills-dir>/doc-check/STATUS.md
 ```
 
 To build it, scan the output directory for all products. For each product subdirectory, find the most recent dated
@@ -303,21 +300,18 @@ report file and parse it for:
 - **Skipped**: count of PRs in the "Skipped (internal)" section
 
 Produce a table sorted by last-checked date descending (most recently checked first), followed by any products in the
-registry that have no output yet (listed as "Never run"):
+registry that have no output yet (listed as "never"):
 
 ```markdown
 # Doc coverage status
 
 Last updated: YYYY-MM-DD
 
-| Product                   | Last checked | Needs work | Covered | Skipped |
-|:--------------------------|:-------------|:-----------|:--------|:--------|
-| zrok                      | 2026-04-06   | 2          | 1       | 5       |
-| platform-doc              | 2026-04-01   | 0          | 3       | 8       |
-| ziti-doc                  | 2026-03-25   | 1          | 2       | 6       |
-| zlan                      | never        | —          | —       | —       |
-| k8s-on-prem-installations | never        | —          | —       | —       |
-| zrok-connector            | never        | —          | —       | —       |
+| Product   | Last checked | Needs work | Covered | Skipped |
+|:----------|:-------------|:-----------|:--------|:--------|
+| product-a | 2026-04-06   | 2          | 1       | 5       |
+| product-b | 2026-04-01   | 0          | 3       | 8       |
+| product-c | never        | —          | —       | —       |
 ```
 
 Overwrite `STATUS.md` completely on each run — it is always regenerated from the output files, never manually edited.
