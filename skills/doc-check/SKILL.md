@@ -10,11 +10,14 @@ then optionally generate a doc draft.
 ## Invocation
 
 ```
+/doc-check status
 /doc-check <product>
 /doc-check <product> --since YYYY-MM-DD
 /doc-check <product> --draft <owner/repo#PR>
 ```
 
+- `status` — show a summary table of all products and their last scan results, then exit. Does not fetch any PRs or
+  update state. Regenerates `STATUS.md` from existing output files.
 - `<product>` is one of: `zrok`, `ziti-doc`, `zlan`, `k8s-on-prem-installations`, `platform-doc`, `zrok-connector`
 - `--since` overrides the last-checked date from state
 - `--draft <owner/repo#PR>` skips the scan and generates a doc draft for a specific PR (e.g., `--draft openziti/ziti#4821`)
