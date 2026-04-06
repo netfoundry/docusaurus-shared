@@ -282,3 +282,39 @@ Write the report in the same markdown format shown in step 5, with a one-line he
 ```
 # doc-check: <product> — YYYY-MM-DD
 ```
+
+### 10. Update STATUS.md
+
+After saving the report, regenerate `STATUS.md` at the root of the skills/doc-check folder:
+
+```
+/root/nf-docs/.claude/skills/doc-check/STATUS.md
+```
+
+To build it, scan the output directory for all products. For each product subdirectory, find the most recent dated
+report file and parse it for:
+
+- **Last checked**: the date from the filename (`YYYY-MM-DD`)
+- **Needs work**: count of PRs in the "Needs doc work" section
+- **Covered**: count of PRs in the "Already covered" section
+- **Skipped**: count of PRs in the "Skipped (internal)" section
+
+Produce a table sorted by last-checked date descending (most recently checked first), followed by any products in the
+registry that have no output yet (listed as "Never run"):
+
+```markdown
+# Doc coverage status
+
+Last updated: YYYY-MM-DD
+
+| Product                   | Last checked | Needs work | Covered | Skipped |
+|:--------------------------|:-------------|:-----------|:--------|:--------|
+| zrok                      | 2026-04-06   | 2          | 1       | 5       |
+| platform-doc              | 2026-04-01   | 0          | 3       | 8       |
+| ziti-doc                  | 2026-03-25   | 1          | 2       | 6       |
+| zlan                      | never        | —          | —       | —       |
+| k8s-on-prem-installations | never        | —          | —       | —       |
+| zrok-connector            | never        | —          | —       | —       |
+```
+
+Overwrite `STATUS.md` completely on each run — it is always regenerated from the output files, never manually edited.
