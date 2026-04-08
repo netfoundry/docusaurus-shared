@@ -60,10 +60,10 @@
     "react-instantsearch": "^7"
   },
   "devDependencies": {
-    "@docusaurus/core": "^3.10.0",
-    "@docusaurus/theme-classic": "^3.10.0",
-    "@docusaurus/theme-common": "^3.10.0",
-    "@docusaurus/types": "^3.10.0",
+    "@docusaurus/core": "^3",
+    "@docusaurus/theme-classic": "^3",
+    "@docusaurus/theme-common": "^3",
+    "@docusaurus/types": "^3",
     "@types/js-yaml": "^4.0.9",
     "@types/react": "^18",
     "@types/react-dom": "^18",
