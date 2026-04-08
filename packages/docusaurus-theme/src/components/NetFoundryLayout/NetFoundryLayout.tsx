@@ -2,8 +2,6 @@ import React, {JSX} from "react";
 import clsx from "clsx";
 import ErrorBoundary from "@docusaurus/ErrorBoundary";
 import { ThemeClassNames } from "@docusaurus/theme-common";
-// @ts-ignore
-import { useKeyboardNavigation } from "@docusaurus/theme-common/internal";
 import Head from "@docusaurus/Head";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
@@ -63,8 +61,6 @@ export function NetFoundryLayout({
                                      footerProps,
                                      meta: metaInput = {},
                                  }: NetFoundryLayoutProps): JSX.Element {
-    useKeyboardNavigation();
-
     const abs = useAbs();
     const meta = metaInput;
     const pageTitle =
