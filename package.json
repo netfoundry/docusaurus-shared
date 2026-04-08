@@ -9,5 +9,20 @@
     "dev": "yarn workspace test-site start",
     "build": "yarn workspace test-site build"
   },
-  "packageManager": "yarn@1.22.22"
+  "packageManager": "yarn@1.22.22",
+  "resolutions": {
+    "webpack": "5.99.0",
+    "@docusaurus/core": "3.10.0",
+    "@docusaurus/preset-classic": "3.10.0",
+    "@docusaurus/theme-classic": "3.10.0",
+    "@docusaurus/theme-common": "3.10.0",
+    "@docusaurus/theme-search-algolia": "3.10.0",
+    "@docusaurus/plugin-content-docs": "3.10.0",
+    "@docusaurus/plugin-content-blog": "3.10.0",
+    "@docusaurus/plugin-content-pages": "3.10.0",
+    "@docusaurus/plugin-client-redirects": "3.10.0",
+    "@docusaurus/module-type-aliases": "3.10.0",
+    "@docusaurus/types": "3.10.0",
+    "@docusaurus/utils": "3.10.0"
+  }
 }
