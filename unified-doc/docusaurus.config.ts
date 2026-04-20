@@ -530,6 +530,10 @@ const config: Config = {
                         spec: `${frontdoor}/docusaurus/static/frontdoor-api-spec.yaml`,
                     },
                     {
+                        id: 'core-management',
+                        spec: `${platform}/docusaurus/static/console-api-spec.yaml`,
+                    },
+                    {
                         id: 'edge-client',
                         spec: 'https://get.openziti.io/spec/client.yml',
                     },
