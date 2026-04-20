@@ -233,7 +233,11 @@ When `--draft <owner/repo#PR>` is passed:
    - Active voice, second person ("you/your")
    - Backticks for CLI flags, commands, config keys, code tokens
    - 120-character line length limit
-7. Present the full draft inline in the terminal, followed by the suggested file path, then prompt the user with these
+7. **Only write what the diff and PR description directly support.** Do not infer, extrapolate, or invent behavior that
+   isn't shown. If the diff shows a flag exists but not what it does, say so — don't guess. If the PR description is
+   vague or the diff is too large to confidently summarize, stop and ask the user to clarify before drafting. It's
+   better to ask one question than to ship a plausible-sounding but wrong doc.
+8. Present the full draft inline in the terminal, followed by the suggested file path, then prompt the user with these
    options:
 
    > **What would you like to do?**
