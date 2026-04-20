@@ -430,7 +430,7 @@ const config: Config = {
             ],
             productPickerColumns: [
                 {
-                    header: 'Managed Cloud',
+                    header: 'Cloud SaaS',
                     links: [
                         {
                             label: 'NetFoundry Console',
@@ -447,7 +447,24 @@ const config: Config = {
                     ],
                 },
                 {
-                    header: 'Open Source',
+                    header: 'Self-Hosted Licensed',
+                    links: [
+                        {
+                            label: 'Self-Hosted',
+                            to: '/docs/selfhosted/intro',
+                            logo: 'https://netfoundry.io/docs/img/onprem-sm-logo.svg',
+                            description: 'Deploy the full stack in your own environment.',
+                        },
+                        {
+                            label: 'zLAN',
+                            to: '/docs/zlan/intro',
+                            logo: 'https://netfoundry.io/docs/img/zlan/zlan-logo.svg',
+                            description: 'Zero-trust access for OT networks.',
+                        },
+                    ],
+                },
+                {
+                    header: 'Self-Hosted Open Source',
                     links: [
                         {
                             label: 'OpenZiti',
@@ -461,23 +478,6 @@ const config: Config = {
                             logo: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-purple.svg',
                             logoDark: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-green.svg',
                             description: 'Secure peer-to-peer sharing built on OpenZiti.',
-                        },
-                    ],
-                },
-                {
-                    header: 'Your own infrastructure',
-                    links: [
-                        {
-                            label: 'Self-Hosted',
-                            to: '/docs/selfhosted/intro',
-                            logo: 'https://netfoundry.io/docs/img/onprem-sm-logo.svg',
-                            description: 'Deploy the full stack in your own environment.',
-                        },
-                        {
-                            label: 'zLAN',
-                            to: '/docs/zlan/intro',
-                            logo: 'https://netfoundry.io/docs/img/zlan/zlan-logo.svg',
-                            description: 'Zero-trust access for OT networks.',
                         },
                     ],
                 },

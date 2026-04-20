@@ -107,6 +107,9 @@ export default {
                                 '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
                                 '@zrok': path.resolve(__dirname, `${zrokRoot}`),
                                 '@zrokroot': path.resolve(__dirname, `${zrokRoot}`),
+                                '@netfoundry/docusaurus-theme/ui': path.resolve(__dirname, '../docusaurus-theme/dist/src/ui.js'),
+                                '@netfoundry/docusaurus-theme/plugins': path.resolve(__dirname, '../docusaurus-theme/dist/src/plugins.js'),
+                                '@netfoundry/docusaurus-theme/node': path.resolve(__dirname, '../docusaurus-theme/dist/src/node.js'),
                             },
                         },
                     };
@@ -133,7 +136,7 @@ export default {
             ],
             productPickerColumns: [
                 {
-                    header: 'Managed Cloud',
+                    header: 'Cloud SaaS',
                     links: [
                         {
                             label: 'NetFoundry Console',
@@ -150,7 +153,24 @@ export default {
                     ],
                 },
                 {
-                    header: 'Open Source',
+                    header: 'Self-Hosted Licensed',
+                    links: [
+                        {
+                            label: 'Self-Hosted',
+                            to: '/docs/selfhosted',
+                            logo: 'https://netfoundry.io/docs/img/onprem-sm-logo.svg',
+                            description: 'Deploy the full stack in your own environment.',
+                        },
+                        {
+                            label: 'zLAN',
+                            to: '/docs/zlan',
+                            logo: 'https://netfoundry.io/docs/img/zlan/zlan-logo.svg',
+                            description: 'Zero-trust access for OT networks.',
+                        },
+                    ],
+                },
+                {
+                    header: 'Self-Hosted Open Source',
                     links: [
                         {
                             label: 'OpenZiti',
@@ -164,23 +184,6 @@ export default {
                             logo: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-purple.svg',
                             logoDark: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-green.svg',
                             description: 'Secure peer-to-peer sharing built on OpenZiti.',
-                        },
-                    ],
-                },
-                {
-                    header: 'Your own infrastructure',
-                    links: [
-                        {
-                            label: 'Self-Hosted',
-                            to: '/docs/selfhosted',
-                            logo: 'https://netfoundry.io/docs/img/onprem-sm-logo.svg',
-                            description: 'Deploy the full stack in your own environment.',
-                        },
-                        {
-                            label: 'zLAN',
-                            to: '/docs/zlan',
-                            logo: 'https://netfoundry.io/docs/img/zlan/zlan-logo.svg',
-                            description: 'Zero-trust access for OT networks.',
                         },
                     ],
                 },
