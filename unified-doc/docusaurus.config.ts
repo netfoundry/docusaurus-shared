@@ -14,7 +14,9 @@ import {pluginHotjar, pluginReo} from "@netfoundry/docusaurus-theme/node";
 import {PublishConfig} from 'src/components/docusaurus'
 import {zrokDocsPluginConfig, zrokRedirects} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 import {onpremRedirects} from "./_remotes/selfhosted/docusaurus/docusaurus-plugin-onprem-docs.ts";
-import {platformDocsPluginConfig} from "./_remotes/platform/docusaurus/docusaurus-plugin-platform-docs.ts";
+import {platformDocsPluginConfig, platformRedocSpecs} from "./_remotes/platform/docusaurus/docusaurus-plugin-platform-docs.ts";
+import {frontdoorRedocSpecs} from "./_remotes/frontdoor/docusaurus/docusaurus-plugin-frontdoor-docs.ts";
+import {openzitiRedocSpecs} from "./_remotes/openziti/docusaurus/docusaurus-plugin-openziti-docs.ts";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
@@ -525,22 +527,9 @@ const config: Config = {
         [  'redocusaurus',
             {
                 specs: [
-                    {
-                        id: 'openapi',
-                        spec: `${frontdoor}/docusaurus/static/frontdoor-api-spec.yaml`,
-                    },
-                    {
-                        id: 'core-management',
-                        spec: `${platform}/docusaurus/static/console-api-spec.yaml`,
-                    },
-                    {
-                        id: 'edge-client',
-                        spec: 'https://get.openziti.io/spec/client.yml',
-                    },
-                    {
-                        id: 'edge-management',
-                        spec: 'https://get.openziti.io/spec/management.yml',
-                    },
+                    ...frontdoorRedocSpecs(`${frontdoor}/docusaurus`),
+                    ...platformRedocSpecs(`${platform}/docusaurus`),
+                    ...openzitiRedocSpecs(),
                 ],
                 // Theme Options for modifying how redoc renders them
                 theme: {
