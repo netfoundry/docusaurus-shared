@@ -141,7 +141,7 @@
 .nf-card-header h3 { margin: 0; }
 .nf-bento-card h3 { color: #f1f5f9; font-weight: 900; font-size: 1.05rem; line-height: 1.3; letter-spacing: -0.02em; }
 [data-theme='light'] .nf-bento-card h3 { color: #0f172a; }
-.nf-bento-card p { color: #94a3b8; font-size: 0.875rem; line-height: 1.65; flex-grow: 1; margin: 0 0 0.5rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.nf-bento-card p { color: #94a3b8; font-size: 0.875rem; line-height: 1.65; flex-grow: 1; margin: 0 0 0.5rem; }
 [data-theme='light'] .nf-bento-card p { color: #475569; }
 
 .nf-bento-features { list-style: none; padding: 0; margin: 0 0 0.5rem; display: flex; flex-direction: column; gap: 0.25rem; }

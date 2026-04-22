@@ -14,7 +14,9 @@ import {pluginHotjar, pluginReo} from "@netfoundry/docusaurus-theme/node";
 import {PublishConfig} from 'src/components/docusaurus'
 import {zrokDocsPluginConfig, zrokRedirects} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 import {onpremRedirects} from "./_remotes/selfhosted/docusaurus/docusaurus-plugin-onprem-docs.ts";
-import {platformDocsPluginConfig} from "./_remotes/platform/docusaurus/docusaurus-plugin-platform-docs.ts";
+import {platformDocsPluginConfig, platformRedocSpecs} from "./_remotes/platform/docusaurus/docusaurus-plugin-platform-docs.ts";
+import {frontdoorRedocSpecs} from "./_remotes/frontdoor/docusaurus/docusaurus-plugin-frontdoor-docs.ts";
+import {openzitiRedocSpecs} from "./_remotes/openziti/docusaurus/docusaurus-plugin-openziti-docs.ts";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
@@ -430,7 +432,7 @@ const config: Config = {
             ],
             productPickerColumns: [
                 {
-                    header: 'Cloud SaaS',
+                    header: 'Managed Cloud',
                     links: [
                         {
                             label: 'NetFoundry Console',
@@ -447,24 +449,7 @@ const config: Config = {
                     ],
                 },
                 {
-                    header: 'Self-Hosted Licensed',
-                    links: [
-                        {
-                            label: 'Self-Hosted',
-                            to: '/docs/selfhosted/intro',
-                            logo: 'https://netfoundry.io/docs/img/onprem-sm-logo.svg',
-                            description: 'Deploy the full stack in your own environment.',
-                        },
-                        {
-                            label: 'zLAN',
-                            to: '/docs/zlan/intro',
-                            logo: 'https://netfoundry.io/docs/img/zlan/zlan-logo.svg',
-                            description: 'Zero-trust access for OT networks.',
-                        },
-                    ],
-                },
-                {
-                    header: 'Self-Hosted Open Source',
+                    header: 'Open Source',
                     links: [
                         {
                             label: 'OpenZiti',
@@ -478,6 +463,23 @@ const config: Config = {
                             logo: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-purple.svg',
                             logoDark: 'https://netfoundry.io/docs/img/zrok-1.0.0-rocket-green.svg',
                             description: 'Secure peer-to-peer sharing built on OpenZiti.',
+                        },
+                    ],
+                },
+                {
+                    header: 'Your own infrastructure',
+                    links: [
+                        {
+                            label: 'Self-Hosted',
+                            to: '/docs/selfhosted/intro',
+                            logo: 'https://netfoundry.io/docs/img/onprem-sm-logo.svg',
+                            description: 'Deploy the full stack in your own environment.',
+                        },
+                        {
+                            label: 'zLAN',
+                            to: '/docs/zlan/intro',
+                            logo: 'https://netfoundry.io/docs/img/zlan/zlan-logo.svg',
+                            description: 'Zero-trust access for OT networks.',
                         },
                     ],
                 },
@@ -525,22 +527,9 @@ const config: Config = {
         [  'redocusaurus',
             {
                 specs: [
-                    {
-                        id: 'openapi',
-                        spec: `${frontdoor}/docusaurus/static/frontdoor-api-spec.yaml`,
-                    },
-                    {
-                        id: 'core-management',
-                        spec: `${platform}/docusaurus/static/console-api-spec.yaml`,
-                    },
-                    {
-                        id: 'edge-client',
-                        spec: 'https://get.openziti.io/spec/client.yml',
-                    },
-                    {
-                        id: 'edge-management',
-                        spec: 'https://get.openziti.io/spec/management.yml',
-                    },
+                    ...frontdoorRedocSpecs(`${frontdoor}/docusaurus`),
+                    ...platformRedocSpecs(`${platform}/docusaurus`),
+                    ...openzitiRedocSpecs(),
                 ],
                 // Theme Options for modifying how redoc renders them
                 theme: {
