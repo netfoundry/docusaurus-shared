@@ -1,6 +1,8 @@
 
 @import '@netfoundry/docusaurus-theme/css/tabs-v8-float.css';
 @import '@netfoundry/docusaurus-theme/css/layout.css';
+@import '@netfoundry/docusaurus-theme/css/legacy.css';
+@import '@docsearch/css';
 
 :root {
     --ifm-navbar-height: 60px;
@@ -36,8 +38,15 @@ body,
     justify-content: end;
     min-width: 185px;
 }
+.navbar__logo_nf { /* squeeze whitespace */
+    margin-right: 0;
+    height: var(--ifm-navbar-height);
+}
 .navbar__logo { /* squeeze whitespace */
     margin-right: 0;
+    height: 40px;
+    width: 40px;
+    margin-left: 10px;
 }
 .clean-btn svg {
     /*
@@ -49,8 +58,21 @@ body,
 }
 
 .DocSearch-Button {
-    background: #ebedf0;
+    background: rgba(0, 0, 0, 0.06);
     color: var(--ifm-color-primary);
+}
+.DocSearch-Button-Key {
+    background: rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.5);
+    border-color: rgba(0, 0, 0, 0.15);
+}
+[data-theme='dark'] .DocSearch-Button {
+    background: rgba(255, 255, 255, 0.08);
+}
+[data-theme='dark'] .DocSearch-Button-Key {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 

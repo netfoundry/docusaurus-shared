@@ -80,6 +80,7 @@ export default {
 
     staticDirectories: [
         'static',
+        '../../unified-doc/static',
         `${frontdoor}/docusaurus/static`,
         `${onprem}/docusaurus/static`,
         `${openziti}/docusaurus/static`,
