@@ -85,6 +85,11 @@
 [data-theme='light'] .nf-divider--managed { color: #0891b2; text-shadow: none; }
 [data-theme='light'] .nf-divider--managed::before,
 [data-theme='light'] .nf-divider--managed::after { background: rgba(8, 145, 178, 0.35); height: 2px; }
+.nf-divider--open-source { color: var(--nf-secondary); }
+.nf-divider--open-source::before, .nf-divider--open-source::after { background: rgba(78, 219, 63, 0.4); height: 2px; }
+[data-theme='light'] .nf-divider--open-source { color: #16a34a; }
+[data-theme='light'] .nf-divider--open-source::before,
+[data-theme='light'] .nf-divider--open-source::after { background: rgba(22, 163, 74, 0.35); height: 2px; }
 
 .nf-pair { display: flex; flex-direction: column; }
 .nf-pair-connector {

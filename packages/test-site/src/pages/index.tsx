@@ -121,7 +121,7 @@ export default function Home(): JSX.Element {
             <div className={styles['nf-bento-divider']}>Self-Hosted Licensed</div>
             <BentoCard product={byId['selfhosted']} />
             <BentoCard product={byId['zlan']} />
-            <div className={styles['nf-bento-divider']}>Self-Hosted Open Source</div>
+            <div className={clsx(styles['nf-bento-divider'], styles['nf-divider--open-source'])}>Self-Hosted Open Source</div>
             <BentoCard product={byId['openziti']} />
             <BentoCard product={byId['zrok']} />
           </div>
