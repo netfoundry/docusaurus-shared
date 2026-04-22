@@ -67,8 +67,8 @@
 
 .nf-bento-divider {
     grid-column: 1 / -1; display: flex; align-items: center; gap: 1rem;
-    padding: 1.5rem 0 0.65rem; color: #94a3b8; font-size: 0.82rem; font-weight: 800;
-    letter-spacing: 0.12em; white-space: nowrap;
+    padding: 1.5rem 0 0.65rem; color: #94a3b8; font-size: 0.7rem; font-weight: 900;
+    text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap;
 }
 .nf-bento-divider::before, .nf-bento-divider::after {
     content: ''; flex: 1; height: 1px; background: rgba(148, 163, 184, 0.2);

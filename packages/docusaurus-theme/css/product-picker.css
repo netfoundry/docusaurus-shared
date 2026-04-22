@@ -170,10 +170,11 @@
 
 /* ── Column headers ─────────────────────────────────────────────────────── */
 .picker-header {
-    font-size: 0.82rem;
-    font-weight: 800;
+    font-size: 0.7rem;
+    font-weight: 900;
     color: #94a3b8;
-    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     border-bottom: 2px solid rgba(148, 163, 184, 0.2);
     display: block;
     padding-bottom: 0.5rem;
