@@ -112,3 +112,15 @@ jobs:
 #    name: Check for Broken Links
 #    uses: ./.github/workflows/check-links.yml
 #    secrets: inherit
+
+  notify-on-failure:
+    name: Notify on failure
+    needs: publish-docs-from-container
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Telegram alert
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d "chat_id=8608660512" \
+            -d "text=BUILD FAILED — Run ID: ${{ github.run_id }} — please analyze"
