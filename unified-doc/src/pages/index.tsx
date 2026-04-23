@@ -29,7 +29,7 @@ const products = [
     accent: CYAN,
     link: `${DOCS_BASE}frontdoor/intro`,
     features: ['Enterprise-grade support (24×7)', 'Fully managed by NetFoundry with 99.95% uptime SLA', 'Guidance for resilient, scalable production architecture', 'FIPS compliant'],
-    description: 'Expose any HTTP service through a hardened, authenticated frontend—no firewall changes, no port forwarding. End users authenticate via their existing IdP and access from any browser, no client install required.'
+    description: 'A hardened frontend for any HTTP service—no firewall changes, no client installs. Users authenticate via their existing IdP and access from any browser.'
   },
   {
     id: 'selfhosted',
