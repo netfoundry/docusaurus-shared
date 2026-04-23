@@ -19,7 +19,7 @@ const products = [
     accent: CYAN,
     link: `${DOCS_BASE}platform/intro`,
     features: ['Enterprise-grade support (24×7)', 'Fully managed by NetFoundry with 99.95% uptime SLA', 'Guidance for resilient, scalable production architecture', 'FIPS compliant'],
-    description: "Cloud-managed zero-trust networking platform. Manage identities, policies, services, and routers from the console—or automate everything through the API."
+    description: "Cloud-managed zero-trust networking platform. Manage identities, policies, services, and routers from the console, or automate through the API."
   },
   {
     id: 'frontdoor',
@@ -59,7 +59,7 @@ const products = [
     accent: GREEN,
     link: `${DOCS_BASE}openziti/learn/introduction`,
     features: ['Community support', 'Full overlay mesh: controller, routers, and SDKs', 'Embed zero-trust in any application'],
-    description: 'The open-source zero-trust networking framework behind NetFoundry. Add zero-trust to existing apps with tunnelers, or embed it directly with the SDK for the strongest posture.'
+    description: 'The open-source zero-trust networking framework behind NetFoundry. Add zero trust to existing apps with tunnelers, or embed it directly with the SDK for the strongest posture.'
   },
   {
     id: 'zrok',
