@@ -37,15 +37,8 @@ body,
     align-items:center;
     justify-content: end;
 }
-.navbar__logo_nf { /* squeeze whitespace */
-    margin-right: 0;
-    height: var(--ifm-navbar-height);
-}
 .navbar__logo { /* squeeze whitespace */
     margin-right: 0;
-    height: 40px;
-    width: 40px;
-    margin-left: 10px;
 }
 .clean-btn svg {
     /*

@@ -19,7 +19,7 @@ const products = [
     accent: CYAN,
     link: `${DOCS_BASE}platform/intro`,
     features: ['Enterprise-grade support (24×7)', 'Fully managed by NetFoundry with 99.95% uptime SLA', 'Guidance for resilient, scalable production architecture', 'FIPS compliant'],
-    description: "NetFoundry's fully managed control plane for zero-trust networking. Orchestrate identities, policies, and edge routers."
+    description: "Cloud-managed zero-trust networking platform. Manage identities, policies, services, and routers from the console—or automate everything through the API."
   },
   {
     id: 'frontdoor',
@@ -29,7 +29,7 @@ const products = [
     accent: CYAN,
     link: `${DOCS_BASE}frontdoor/intro`,
     features: ['Enterprise-grade support (24×7)', 'Fully managed by NetFoundry with 99.95% uptime SLA', 'Guidance for resilient, scalable production architecture', 'FIPS compliant'],
-    description: 'Secure, clientless access to any application—without a VPN or firewall rule. Expose nothing to the internet while giving authorized users instant access.'
+    description: 'Expose any HTTP service through a hardened, authenticated frontend—no firewall changes, no port forwarding. End users authenticate via their existing IdP and access from any browser, no client install required.'
   },
   {
     id: 'selfhosted',
@@ -49,7 +49,7 @@ const products = [
     accent: CYAN,
     link: `${DOCS_BASE}zlan/intro`,
     features: ['Deep OT/IT traffic visibility', 'Identity-aware micro-segmentation', 'Centralized zero-trust policy'],
-    description: 'Identity-aware micro-segmentation for OT networks. Deep traffic visibility, centralized policy, and zero-trust access control.'
+    description: 'Software-defined micro-segmentation for OT networks. Deploy firewall agents on Linux machines, observe traffic flows, and enforce consistent policy from a central console.'
   },
   {
     id: 'openziti',
@@ -58,8 +58,8 @@ const products = [
     tag: 'Open Source',
     accent: GREEN,
     link: `${DOCS_BASE}openziti/learn/introduction`,
-    features: ['Community support', 'Self-deployed and managed, self-orchestrated'],
-    description: 'The open-source zero-trust framework behind NetFoundry. Embed app-native security in your code—no VPN, no perimeter.'
+    features: ['Community support', 'Full overlay mesh: controller, routers, and SDKs', 'Embed zero-trust in any application'],
+    description: 'The open-source zero-trust networking framework behind NetFoundry. Add zero-trust to existing apps with tunnelers, or embed it directly with the SDK for the strongest posture.'
   },
   {
     id: 'zrok',
@@ -68,8 +68,8 @@ const products = [
     tag: 'Open Source',
     accent: GREEN,
     link: `${DOCS_BASE}zrok`,
-    features: ['Community support', 'Self-deployed and managed, self-orchestrated'],
-    description: 'Geo-scale secure sharing built on the OpenZiti mesh. Share services, files, or HTTP endpoints peer-to-peer—no open ports, no NAT traversal tricks.'
+    features: ['Community support', 'Self-host or use zrok.io', 'No open ports or firewall rules'],
+    description: 'Secure peer-to-peer sharing built on the OpenZiti mesh. Share services, files, or HTTP endpoints—no open ports, no NAT traversal tricks.'
   },
 ];
 
