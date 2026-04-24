@@ -112,3 +112,35 @@ jobs:
 #    name: Check for Broken Links
 #    uses: ./.github/workflows/check-links.yml
 #    secrets: inherit
+
+  notify-on-success:
+    name: Notify on success
+    needs: publish-docs-from-container
+    if: success()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post success to Mattermost doc-alerts
+        env:
+          WEBHOOK: ${{ secrets.MATTERMOST_DOC_ALERTS_WEBHOOK }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          jq -n --arg text "✅ **Docs build succeeded** — [Run #${RUN_ID}](${RUN_URL}) on \`${BRANCH}\`" \
+            '{text: $text}' | curl -s -X POST "$WEBHOOK" -H 'Content-Type: application/json' -d @-
+
+  notify-on-failure:
+    name: Notify on failure
+    needs: publish-docs-from-container
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post failure to Mattermost doc-alerts
+        env:
+          WEBHOOK: ${{ secrets.MATTERMOST_DOC_ALERTS_WEBHOOK }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          jq -n --arg text "❌ **Docs build failed** — [Run #${RUN_ID}](${RUN_URL}) on \`${BRANCH}\`" \
+            '{text: $text}' | curl -s -X POST "$WEBHOOK" -H 'Content-Type: application/json' -d @-
