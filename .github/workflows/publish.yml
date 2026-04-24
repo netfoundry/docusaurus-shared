@@ -119,10 +119,8 @@ jobs:
     if: failure()
     runs-on: ubuntu-latest
     steps:
-      - name: Post failure to Mattermost via OpenZiti
-        uses: openziti/ziti-mattermost-action-py@v1
-        with:
-          zitiId: ${{ secrets.ZITI_MATTERMOST_IDENTITY }}
-          webhookUrl: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
-          eventJson: ${{ toJson(github.event) }}
-          senderUsername: "BUILD FAILED — Run ${{ github.run_id }}"
+      - name: Post failure to Mattermost doc-alerts
+        run: |
+          curl -s -X POST "${{ secrets.MATTERMOST_DOC_ALERTS_WEBHOOK }}" \
+            -H 'Content-Type: application/json' \
+            -d "{\"text\": \"❌ **Docs build failed** — [Run #${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) on \`${{ github.ref_name }}\`\"}"
