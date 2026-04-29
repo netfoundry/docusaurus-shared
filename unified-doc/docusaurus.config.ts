@@ -101,6 +101,7 @@ const REMARK_MAPPINGS = [
     { from: '@frontdoordocs', to: `${docsBase}frontdoor`},
     { from: '@zlandocs', to: `${docsBase}zlan`},
     { from: '@platformdocs', to: `${docsBase}platform`},
+    { from: '@openziti_img', to: '/img'},
     { from: '@static', to: docsBase},
     { from: '/openziti',   to: `${docsBase}${routeBase('openziti')}`   },
     { from: '/frontdoor',  to: `${docsBase}${routeBase('frontdoor')}`  },
@@ -267,7 +268,8 @@ const config: Config = {
                     return {
                         resolve: {
                             alias: {
-                                '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
+                                '@openziti':         path.resolve(__dirname, `${openziti}/docusaurus`),
+                                '@openziti_remotes': path.resolve(__dirname, `${openziti}/docusaurus/docs/_remotes`),
                                 '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
                                 '@selfhosted': path.resolve(__dirname, `${selfhosted}/docusaurus`),
                                 '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
@@ -342,10 +344,11 @@ const config: Config = {
                 includeCurrentVersion: true,
                 beforeDefaultRemarkPlugins: [
                     remarkGithubAdmonitionsToDirectives,
+                    // alias rewriters must run before Docusaurus's broken-image / broken-link check
+                    [remarkScopedPath,     { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
+                    [remarkReplaceMetaUrl, { from: '@staticoz', to: `${docsBase}openziti`, logLevel: LogLevel.Silent }],
                 ],
                 remarkPlugins: [
-                    [remarkReplaceMetaUrl, {from: '@staticoz', to: `${docsBase}openziti`, logLevel: LogLevel.Silent}],
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
                     [remarkCodeSections, { logLevel: LogLevel.Debug }],
                 ],
             },
