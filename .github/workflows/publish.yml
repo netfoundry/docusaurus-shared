@@ -116,11 +116,25 @@ jobs:
     if: always() && github.event_name == 'schedule' && github.repository_owner == 'netfoundry'
     runs-on: ubuntu-latest
     steps:
+      - name: Build schedule event context
+        id: ctx
+        run: |
+          EVENT_JSON=$(jq -n \
+            --arg repo "$GITHUB_REPOSITORY" \
+            --arg repo_url "https://github.com/$GITHUB_REPOSITORY" \
+            --arg run_url "https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            '{
+              repository: { full_name: $repo, html_url: $repo_url },
+              sender: { login: "ziti-ci" },
+              schedule: "0 2 * * *",
+              run_url: $run_url
+            }')
+          echo "event-json=$EVENT_JSON" >> "$GITHUB_OUTPUT"
       - uses: openziti/ziti-mattermost-action-py@v1
         with:
           zitiId: ${{ secrets.ZITI_MATTERMOST_IDENTITY }}
           webhookUrl: ${{ secrets.ZHOOK_URL_DOC_NOTIFICATIONS }}
-          eventJson: ${{ toJson(github.event) }}
+          eventJson: ${{ steps.ctx.outputs.event-json }}
           senderUsername: "GitHubZ"
 
 #  check-links:
