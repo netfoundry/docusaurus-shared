@@ -433,7 +433,8 @@ const config: Config = {
             title: '',
             items: [
                 { type: 'custom-productPicker',   position: 'left', label: 'Products' },
-                { type: 'custom-versionDropdown',  position: 'left', docsPluginId: 'zrok', pathPrefix: '/docs/zrok' },
+                { type: 'custom-versionDropdown',  position: 'left', docsPluginId: 'zrok',     pathPrefix: '/docs/zrok'     },
+                { type: 'custom-versionDropdown',  position: 'left', docsPluginId: 'openziti', pathPrefix: '/docs/openziti' },
                 { type: 'custom-resourcesPicker', position: 'left' },
                 { type: 'custom-iconLinks',        position: 'right' },
             ],
