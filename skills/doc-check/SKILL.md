@@ -128,23 +128,59 @@ product it belongs to before assessing doc coverage. Mark PRs for other products
 
 ### 3. Assess each PR: customer-facing or internal?
 
-Fetch the diff for each PR:
+Fetch the diff for each PR in **two passes**. Never truncate or pipe through `head` — silently dropping later parts
+of a diff means you miss entire files and their changes, which leads to false coverage assessments.
 
-**GitHub:**
-
-```bash
-gh pr diff <number> --repo <owner>/<repo>
-```
-
-**Bitbucket:**
-
-The simple `/pullrequests/<id>/diff` endpoint returns empty results. Batch-extract commit hashes from the PR list
-response (fields `source.commit.hash` and `destination.commit.hash`) and construct the diff URL as:
+#### Pass 1: get the full file list
 
 ```bash
+# GitHub
+gh pr diff <number> --repo <owner>/<repo> | grep "^diff --git"
+
+# Bitbucket — fetch full diff, then extract file list
 curl -s -u "$BB_EMAIL:$BB_TOKEN" \
-  "https://api.bitbucket.org/2.0/repositories/<your-org>/<slug>/diff/<your-org>/<slug>:<src_hash>%0D<dst_hash>?from_pullrequest_id=<id>&topic=true"
+  "https://api.bitbucket.org/2.0/repositories/<your-org>/<slug>/diff/<your-org>/<slug>:<src_hash>%0D<dst_hash>?from_pullrequest_id=<id>&topic=true" \
+  | grep "^diff --git"
 ```
+
+This gives you the complete list of changed files before you read any content. Use it to:
+
+- Identify which files could contain user-facing changes (installer scripts, CLI code, config parsing, API
+  handlers, UI components, Helm chart templates, env files)
+- Identify which doc files the PR author already updated — these tell you what gaps were addressed, so you know
+  what's left uncovered
+- Scope the content pass to files that matter
+
+#### Pass 2: read the content of relevant files
+
+For each file identified in pass 1 that could affect user-facing behavior, read its diff section in full.
+For large diffs, use targeted extraction rather than reading the whole diff linearly:
+
+```bash
+# GitHub — diff for a specific file
+gh pr diff <number> --repo <owner>/<repo> -- path/to/file
+
+# Bitbucket — extract a specific file's section from the full diff using awk
+curl -s -u "$BB_EMAIL:$BB_TOKEN" \
+  "https://api.bitbucket.org/2.0/repositories/<your-org>/<slug>/diff/..." \
+  | awk '/^diff --git a\/path\/to\/file/,/^diff --git [^a]/'
+```
+
+**Extract key terms from the actual diff**, not just the PR description. Authors frequently omit details from
+descriptions; the diff is the authoritative source. Look for:
+
+- New or renamed CLI flags, subcommands, command names
+- New or changed environment variable names
+- New or changed config file keys
+- New API endpoint paths or request/response fields
+- New feature names, Helm values, or installer prompts visible in the code
+
+Also read any doc files the author changed in the PR — understand what they covered so your coverage assessment
+reflects what's actually missing, not what was already addressed.
+
+**Bitbucket note:** The simple `/pullrequests/<id>/diff` endpoint returns empty results. Batch-extract commit
+hashes from the PR list response (fields `source.commit.hash` and `destination.commit.hash`) and construct the
+diff URL as shown above.
 
 Mark as **customer-facing** (proceed to step 4) if the diff contains:
 

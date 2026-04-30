@@ -21,7 +21,9 @@ scan, and they build user trust.
 - Each topic should have only one H1.
 - For table of contents (ToC) headers, try to make them match the H1 unless you need to shorten for space, or shorten to
   reduce redundancy of terms.
-- Use verb phrases for how-to titles: "Create a certificate", "Install an agent", etc.
+- Use imperative verb phrases for all headings at every level: "Create a certificate", "Install an agent", etc.
+  Avoid gerunds ("Creating a certificate", "Installing an agent") — they're acceptable in conceptual topics but
+  not in how-tos or reference.
 
 ### Sentence-style casing
 
@@ -138,7 +140,8 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 
 ## Punctuation
 
-- Use hyphens for compound adjectives. Avoid em dashes.
+- Use hyphens for compound adjectives. Em dashes (`—`) are okay but use sparingly—prefer colons when introducing or
+  defining items. Do not add spaces before or after em dashes.
 - Use colons to introduce or define items.
 - Use oxford commas.
 
