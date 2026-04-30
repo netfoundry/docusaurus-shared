@@ -24,7 +24,7 @@ import {zrokDocsPluginConfig, zrokRedirects} from "./_remotes/zrok/website/docus
 import {onpremRedirects} from "./_remotes/selfhosted/docusaurus/docusaurus-plugin-onprem-docs.ts";
 import {platformDocsPluginConfig, platformRedocSpecs} from "./_remotes/platform/docusaurus/docusaurus-plugin-platform-docs.ts";
 import {frontdoorRedocSpecs} from "./_remotes/frontdoor/docusaurus/docusaurus-plugin-frontdoor-docs.ts";
-import {openzitiRedocSpecs} from "./_remotes/openziti/docusaurus/docusaurus-plugin-openziti-docs.ts";
+import {openzitiDocsPluginConfig, openzitiRedocSpecs} from "./_remotes/openziti/docusaurus/docusaurus-plugin-openziti-docs.ts";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
@@ -275,7 +275,8 @@ const config: Config = {
                     return {
                         resolve: {
                             alias: {
-                                '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
+                                '@openziti':         path.resolve(__dirname, `${openziti}/docusaurus`),
+                                '@openziti_remotes': path.resolve(__dirname, `${openziti}/docusaurus/docs/_remotes`),
                                 '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
                                 '@selfhosted': path.resolve(__dirname, `${selfhosted}/docusaurus`),
                                 '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
@@ -340,24 +341,7 @@ const config: Config = {
                 ],
             },
         ],
-        build(BUILD_FLAGS.OPENZITI) && [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'openziti', // do not change - affects algolia search
-                path: `${openziti}/docusaurus/docs`,
-                routeBasePath: routeBase('openziti'),
-                sidebarPath: `${openziti}/docusaurus/sidebars.ts`,
-                includeCurrentVersion: true,
-                beforeDefaultRemarkPlugins: [
-                    remarkGithubAdmonitionsToDirectives,
-                ],
-                remarkPlugins: [
-                    [remarkReplaceMetaUrl, {from: '@staticoz', to: `${docsBase}openziti`, logLevel: LogLevel.Silent}],
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
-                    [remarkCodeSections, { logLevel: LogLevel.Debug }],
-                ],
-            },
-        ],
+        build(BUILD_FLAGS.OPENZITI) && extendDocsPlugins(openzitiDocsPluginConfig(`${openziti}/docusaurus`, REMARK_MAPPINGS, routeBase('openziti'))),
         build(BUILD_FLAGS.ZLAN) && [
             '@docusaurus/plugin-content-docs',
             {
