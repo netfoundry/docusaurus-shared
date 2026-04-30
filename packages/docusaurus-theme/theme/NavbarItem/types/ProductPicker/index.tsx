@@ -1,10 +1,10 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
 import clsx from 'clsx';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {useThemeConfig} from '@docusaurus/theme-common';
 import {useLocation} from 'react-router-dom';
 import NavbarPicker from '../../NavbarPicker';
+import {subsitePickerColumns} from '../../../../src/products';
 
 export type PickerLink = {
   label: string;
@@ -27,34 +27,6 @@ type Props = {
 };
 
 const HEADER_CLASSES = ['picker-header--nf-tertiary', 'picker-header--nf-primary', 'picker-header--nf-secondary'];
-const NF_LOGO_DEFAULT = 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg';
-
-const buildDefaultColumns = (img: string, consoleLogo: string): PickerColumn[] => [
-  {
-    header: 'Managed Cloud',
-    headerClass: HEADER_CLASSES[0],
-    links: [
-      { label: 'NetFoundry Console', to: '#',                  logo: consoleLogo,                          description: 'Cloud-managed orchestration and global fabric control.' },
-      { label: 'Frontdoor',          to: '/docs/frontdoor',    logo: `${img}/frontdoor-sm-logo.svg`,       description: 'Secure application access gateway.' },
-    ],
-  },
-  {
-    header: 'Open Source',
-    headerClass: HEADER_CLASSES[1],
-    links: [
-      { label: 'OpenZiti', to: '/docs/openziti', logo: `${img}/openziti-sm-logo.svg`,                                                          description: 'Programmable zero-trust mesh infrastructure.' },
-      { label: 'zrok',     to: '/docs/zrok',     logo: `${img}/zrok-1.0.0-rocket-purple.svg`, logoDark: `${img}/zrok-1.0.0-rocket-green.svg`, description: 'Secure peer-to-peer sharing built on OpenZiti.' },
-    ],
-  },
-  {
-    header: 'Your own infrastructure',
-    headerClass: HEADER_CLASSES[2],
-    links: [
-      { label: 'Self-Hosted', to: '/docs/selfhosted', logo: `${img}/onprem-sm-logo.svg`,    description: 'Deploy the full stack in your own environment.' },
-      { label: 'zLAN',        to: '/docs/zlan',        logo: `${img}/zlan/zlan-logo.svg`,   description: 'Zero-trust access for OT networks.' },
-    ],
-  },
-];
 
 function pathLabel(pathname: string, columns: PickerColumn[], fallback: string): string {
   for (const col of columns) {
@@ -70,14 +42,11 @@ function pathLabel(pathname: string, columns: PickerColumn[], fallback: string):
 }
 
 export default function ProductPicker({label = 'Products', className}: Props) {
-  const {siteConfig} = useDocusaurusContext();
   const themeConfig = useThemeConfig() as any;
   const {pathname} = useLocation();
-  const consoleLogo = themeConfig?.netfoundry?.consoleLogo ?? NF_LOGO_DEFAULT;
-  const img = `${siteConfig.url}${siteConfig.baseUrl}img`;
-  const columns: PickerColumn[] = (themeConfig?.netfoundry?.productPickerColumns ?? [])
-    .map((col: any, i: number) => ({...col, headerClass: HEADER_CLASSES[i] ?? ''}));
-  const resolvedColumns = columns.length ? columns : buildDefaultColumns(img, consoleLogo);
+  const supplied = themeConfig?.netfoundry?.productPickerColumns as PickerColumn[] | undefined;
+  const baseColumns: PickerColumn[] = supplied && supplied.length ? supplied : subsitePickerColumns;
+  const resolvedColumns: PickerColumn[] = baseColumns.map((col, i) => ({...col, headerClass: HEADER_CLASSES[i] ?? ''}));
   const resolvedLabel = pathLabel(pathname, resolvedColumns, label);
 
   return (

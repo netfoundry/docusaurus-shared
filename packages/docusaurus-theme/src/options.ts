@@ -149,7 +149,7 @@ export interface NetFoundryThemeOptions {
 export interface NetFoundryThemeConfig {
   /** Footer configuration */
   footer?: FooterConfig;
-  /** Path-aware star banners — each entry shows only when the current path starts with pathPrefix (omit pathPrefix to show everywhere) */
+  /** Path-aware star banners -- each entry shows only when the current path starts with pathPrefix (omit pathPrefix to show everywhere) */
   starBanners?: StarBannerConfig[];
   /** Product picker columns. If omitted, the theme falls back to built-in NetFoundry defaults. */
   productPickerColumns?: ProductPickerColumn[];

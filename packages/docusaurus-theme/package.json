@@ -1,6 +1,6 @@
 {
   "name": "@netfoundry/docusaurus-theme",
-  "version": "0.10.20",
+  "version": "0.11.3",
   "description": "NetFoundry Docusaurus theme with shared layout, footer, and styling",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -18,7 +18,8 @@
     "prepublishOnly": "yarn build && yarn test"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "exports": {
     ".": {
@@ -52,6 +53,7 @@
   },
   "dependencies": {
     "@docsearch/react": "^3",
+    "@netfoundry/docusaurus-theme": "^0.11.0",
     "algoliasearch": "^5",
     "clsx": "^2.0.0",
     "instantsearch.js": "^4",
