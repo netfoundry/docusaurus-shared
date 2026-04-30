@@ -8,7 +8,6 @@ on:
   pull_request_review_comment:
   pull_request:
     types: [opened, reopened, ready_for_review, closed]
-  push:
   fork:
   release:
     types: [released]
