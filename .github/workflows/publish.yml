@@ -119,7 +119,7 @@ jobs:
       - name: Build schedule event context
         id: ctx
         run: |
-          EVENT_JSON=$(jq -n \
+          EVENT_JSON=$(jq -cn \
             --arg repo "$GITHUB_REPOSITORY" \
             --arg repo_url "https://github.com/$GITHUB_REPOSITORY" \
             --arg run_url "https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
