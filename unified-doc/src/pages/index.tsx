@@ -15,50 +15,31 @@ const products = [
     id: 'console',
     title: 'NetFoundry Console',
     logo: NF_LOGO,
-    tag: 'Managed',
+    tag: 'SaaS',
     accent: CYAN,
     link: `${DOCS_BASE}platform/intro`,
-    features: ['Fully managed SaaS', 'Global edge fabric', 'No infra to operate', 'Policy-based access'],
-    description: "The cloud-managed control plane for NetFoundry's global zero-trust fabric. Orchestrate identities, policies, and edge routers — no infrastructure to run."
-  },
-  {
-    id: 'openziti',
-    title: 'OpenZiti',
-    logo: `${IMG}/openziti-sm-logo.svg`,
-    tag: 'Open Source',
-    accent: GREEN,
-    link: `${DOCS_BASE}openziti/learn/introduction`,
-    description: 'The open-source zero-trust networking framework at the heart of the NetFoundry platform. Embed dark, app-native security directly in your code — no VPN, no perimeter.'
+    features: ['Enterprise-grade support (24×7)', 'Fully managed by NetFoundry with 99.95% uptime SLA', 'Guidance for resilient, scalable production architecture', 'FIPS compliant'],
+    description: "Cloud-managed zero-trust networking platform. Manage identities, policies, services, and routers from the console, or automate through the API."
   },
   {
     id: 'frontdoor',
     title: 'Frontdoor',
     logo: `${IMG}/frontdoor-sm-logo.svg`,
-    tag: 'Managed',
+    tag: 'SaaS',
     accent: CYAN,
     link: `${DOCS_BASE}frontdoor/intro`,
-    features: ['No agent or VPN required', 'Zero firewall rules', 'Identity-based access', 'Any app, any browser'],
-    description: 'Secure, clientless access to any application — without a VPN or firewall rule. Expose nothing to the internet while giving authorized users instant access.'
+    features: ['Enterprise-grade support (24×7)', 'Fully managed by NetFoundry with 99.95% uptime SLA', 'Guidance for resilient, scalable production architecture', 'FIPS compliant'],
+    description: 'A hardened frontend for any HTTP service—no firewall changes, no client installs. Users authenticate via their existing IdP and access from any browser.'
   },
   {
-    id: 'zrok',
-    title: 'zrok',
-    logo: `${IMG}/zrok-1.0.0-rocket-purple.svg`,
-    tag: 'Open Source',
-    accent: GREEN,
-    link: `${DOCS_BASE}zrok`,
-    description: 'Geo-scale secure sharing built on the OpenZiti mesh. Share services, files, or HTTP endpoints peer-to-peer — no open ports, no NAT traversal tricks.'
-  },
-  {
-    id:
-    'selfhosted',
+    id: 'selfhosted',
     title: 'NetFoundry Self-Hosted',
     logo: `${IMG}/onprem-sm-logo.svg`,
     tag: 'Self-Hosted',
     accent: CYAN,
     link: `${DOCS_BASE}selfhosted/intro`,
-    features: ['Full infrastructure control', 'Air-gap compatible', 'On-prem or any cloud', 'Enterprise SLA'],
-    description: 'Deploy the full NetFoundry control plane and fabric in your own environment. Full sovereignty over your zero-trust infrastructure — on-prem, air-gapped, or any cloud.'
+    features: ['Enterprise-grade support (24×7)', 'Self-deployed and managed, self-orchestrated', 'Guidance for resilient, scalable production architecture'],
+    description: 'Run the full NetFoundry stack in your own environment. On-prem, air-gapped, or any cloud. You own the infrastructure.'
   },
   {
     id: 'zlan',
@@ -67,8 +48,28 @@ const products = [
     tag: 'OT Security',
     accent: CYAN,
     link: `${DOCS_BASE}zlan/intro`,
-    features: ['Deep OT/IT traffic visibility', 'Identity-aware micro-segmentation', 'Centralized zero-trust policy', 'Built on NetFoundry Self-Hosted'],
-    description: 'Identity-aware micro-segmentation firewall for operational technology networks. Deep traffic visibility, centralized policy, and zero-trust access control for OT environments.'
+    features: ['Deep OT/IT traffic visibility', 'Identity-aware micro-segmentation', 'Centralized zero-trust policy'],
+    description: 'Software-defined micro-segmentation for OT networks. Deploy firewall agents on Linux machines, observe traffic flows, and enforce consistent policy from a central console.'
+  },
+  {
+    id: 'openziti',
+    title: 'OpenZiti',
+    logo: `${IMG}/openziti-sm-logo.svg`,
+    tag: 'Open Source',
+    accent: GREEN,
+    link: `${DOCS_BASE}openziti/learn/introduction`,
+    features: ['Community support', 'Full overlay mesh: controller, routers, and SDKs', 'Embed zero-trust in any application'],
+    description: 'The open-source zero-trust networking framework behind NetFoundry. Add zero trust to existing apps with tunnelers, or embed it directly with the SDK for the strongest posture.'
+  },
+  {
+    id: 'zrok',
+    title: 'zrok',
+    logo: `${IMG}/zrok-1.0.0-rocket-purple.svg`,
+    tag: 'Open Source',
+    accent: GREEN,
+    link: `${DOCS_BASE}zrok`,
+    features: ['Community support', 'Self-host or use zrok.io', 'No open ports or firewall rules'],
+    description: 'Secure peer-to-peer sharing built on the OpenZiti mesh. Share services, files, or HTTP endpoints—no open ports, no NAT traversal tricks.'
   },
 ];
 
@@ -113,20 +114,15 @@ export default function Home(): JSX.Element {
       <section className={styles['nf-features-section']} style={{marginTop: '-80px', position: 'relative', zIndex: 3}}>
         <div className="container">
           <div className={styles['nf-bento-grid']}>
-            <div className={clsx(styles['nf-bento-divider'], styles['nf-divider--managed'], styles['nf-divider--top'])}>Managed Cloud</div>
-            <div className={styles['nf-pair']}>
-              <BentoCard product={byId['console']} featured />
-              <div className={styles['nf-pair-connector']}>open-source counterpart</div>
-              <BentoCard product={byId['openziti']} />
-            </div>
-            <div className={styles['nf-pair']}>
-              <BentoCard product={byId['frontdoor']} featured />
-              <div className={styles['nf-pair-connector']}>open-source counterpart</div>
-              <BentoCard product={byId['zrok']} />
-            </div>
-            <div className={styles['nf-bento-divider']}>Run on your own infrastructure</div>
+            <div className={clsx(styles['nf-bento-divider'], styles['nf-divider--managed'], styles['nf-divider--top'])}>Cloud SaaS</div>
+            <BentoCard product={byId['console']} featured />
+            <BentoCard product={byId['frontdoor']} featured />
+            <div className={styles['nf-bento-divider']}>Self-Hosted Licensed</div>
             <BentoCard product={byId['selfhosted']} />
             <BentoCard product={byId['zlan']} />
+            <div className={clsx(styles['nf-bento-divider'], styles['nf-divider--open-source'])}>Self-Hosted Open Source</div>
+            <BentoCard product={byId['openziti']} />
+            <BentoCard product={byId['zrok']} />
           </div>
         </div>
       </section>
