@@ -564,11 +564,23 @@ input[type="radio"]:checked+label:after {
     padding-right: 5px;
 }
 
-/* highlight sidebar section headings */
+/* sidebar section separators */
 .theme-doc-sidebar-item-link-level-1.sidebar-title {
-    margin-top: 20px;
+    margin-top: 0.75rem;
     margin-left: 0;
-    font-weight: bold;
+    padding-top: 0.25rem;
+    margin-bottom: -0.25rem;
+    border-top: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.theme-doc-sidebar-item-link-level-1.sidebar-title > .menu__link {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--ifm-color-emphasis-800);
+    padding-left: 0.25rem;
+    cursor: default;
+    pointer-events: none;
 }
 
 /* indent sidebar list items */

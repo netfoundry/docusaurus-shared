@@ -137,23 +137,43 @@ function Invoke-CloneOrUpdate {
     }
 }
 
-# Copies zrok's versioned-docs artifacts from _remotes\zrok\website\ into the
-# unified-doc root, where Docusaurus expects to find them.
-# (Equivalent to sync-versioned-remote.sh)
+# Exposes a remote's versioned-docs at the unified-doc site root.
+# (Mirror of sync-versioned-remote.sh -- keep both in sync.)
+#
+# Docusaurus's plugin-content-docs hardcodes its lookup to siteDir/<id>_versioned_docs/,
+# so the snapshots have to live at the root. Uses straight copies; symlinks/
+# junctions/hardlinks all caused Docusaurus to resolve files to their
+# underlying _remotes/ path, which broke per-plugin remark pipelines (they
+# path-match against the plugin's declared `path`).
+#
+# Each remote's versioned-docs subtree (<remote>_versioned_docs/,
+# <remote>_versioned_sidebars/, <remote>_versions.json) lives inside the cloned
+# remote, but the subdir name varies (zrok uses 'website', openziti uses
+# 'docusaurus'); this auto-detects.
 function Invoke-SyncVersionedRemote([string]$Remote) {
-    $remoteWebsite = Join-Path $remotesDir "$Remote\website"
-    Write-Host "Syncing versioned docs from $remoteWebsite..."
-
-    foreach ($item in @("${Remote}_versioned_docs", "${Remote}_versioned_sidebars")) {
-        $dest = Join-Path $scriptDir $item
-        Remove-Item -Recurse -Force $dest -ErrorAction SilentlyContinue
-        Copy-Item -Recurse (Join-Path $remoteWebsite $item) $dest
-        Write-Host "  Copied $item"
+    $remoteDir = $null
+    foreach ($sub in @("website", "docusaurus")) {
+        $candidate = Join-Path $remotesDir "$Remote\$sub"
+        if (Test-Path $candidate) { $remoteDir = $candidate; break }
     }
+    if (-not $remoteDir) {
+        Write-Error "Cannot find _remotes\$Remote\{website,docusaurus}"
+        return
+    }
+    Write-Host "Copying versioned docs from $remoteDir..."
 
-    $versionsFile = "${Remote}_versions.json"
-    Copy-Item (Join-Path $remoteWebsite $versionsFile) (Join-Path $scriptDir $versionsFile)
-    Write-Host "  Copied $versionsFile"
+    $items = @("${Remote}_versioned_docs", "${Remote}_versioned_sidebars", "${Remote}_versions.json")
+    foreach ($item in $items) {
+        $dest = Join-Path $scriptDir $item
+        $src  = Join-Path $remoteDir $item
+        if (-not (Test-Path $src)) {
+            Write-Host "  WARN: source missing: $src -- skipping"
+            continue
+        }
+        Remove-Item -Recurse -Force $dest -ErrorAction SilentlyContinue
+        Copy-Item -Recurse $src $dest
+        Write-Host "  copied $item"
+    }
 }
 
 function Invoke-LintDocs {
@@ -294,6 +314,7 @@ Get-ChildItem $remotesDir -Recurse -Directory -ErrorAction SilentlyContinue |
 # ─── SYNC VERSIONED DOCS ──────────────────────────────────────────────────────
 
 Invoke-SyncVersionedRemote "zrok"
+Invoke-SyncVersionedRemote "openziti"
 
 # ─── LINT ─────────────────────────────────────────────────────────────────────
 

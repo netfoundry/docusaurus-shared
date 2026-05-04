@@ -53,6 +53,34 @@ export type {
   NavbarIconName,
 } from './options';
 
+// Product registry and pre-built picker column blocks. Consumer sites set
+// `themeConfig.netfoundry.productPickerColumns` to one of:
+//   - `unifiedPickerColumns`  (for the netfoundry.io/docs aggregator)
+//   - `subsitePickerColumns`  (for standalone subsites)
+// Or omit it entirely -- the picker falls back to `subsitePickerColumns`.
+export {
+  PRODUCTS,
+  DOCS_BASE,
+  // whole-array pre-builts
+  subsitePickerColumns,
+  unifiedPickerColumns,
+  // per-product, relative /docs/<path>
+  consoleLink,
+  frontdoorLink,
+  selfhostedLink,
+  zlanLink,
+  openzitiLink,
+  zrokLink,
+  // per-product, absolute https://netfoundry.io/docs/<path>
+  consoleLinkAbs,
+  frontdoorLinkAbs,
+  selfhostedLinkAbs,
+  zlanLinkAbs,
+  openzitiLinkAbs,
+  zrokLinkAbs,
+} from './products';
+export type { ProductId, Product, PickerColumn, PickerLink } from './products';
+
 // NOTE: UI components (defaultNetFoundryFooterProps, defaultSocialProps, etc.)
 // should be imported directly from '@netfoundry/docusaurus-shared/ui' in client code,
 // not from this theme entry point, as this file runs at Node.js config time.

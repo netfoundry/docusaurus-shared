@@ -195,6 +195,45 @@ clone_or_update() {
   fi
 }
 
+# Exposes a remote's versioned-docs at the unified-doc site root via straight
+# copies (Docusaurus's plugin-content-docs hardcodes its lookup to
+# siteDir/<id>_versioned_docs/, so the snapshots have to live at the root).
+# Symlinks/junctions/hardlinks all caused Docusaurus to resolve files to their
+# underlying _remotes/ path, which broke per-plugin remark pipelines.
+#
+# Each remote's versioned-docs subtree lives inside the cloned remote, but the
+# subdir varies (zrok uses 'website', openziti uses 'docusaurus'); auto-detect.
+# (Mirror of Invoke-SyncVersionedRemote in build-docs.ps1 -- keep in sync.)
+sync_versioned_remote() {
+    local remote="$1"
+    local remote_dir=""
+    for sub in website docusaurus; do
+        if [ -d "$script_dir/_remotes/$remote/$sub" ]; then
+            remote_dir="$script_dir/_remotes/$remote/$sub"
+            break
+        fi
+    done
+
+    if [ -z "$remote_dir" ]; then
+        echo "ERROR: cannot find _remotes/$remote/{website,docusaurus}"
+        exit 1
+    fi
+
+    echo "Copying versioned docs from $remote_dir..."
+
+    for item in "${remote}_versioned_docs" "${remote}_versioned_sidebars" "${remote}_versions.json"; do
+        local dest="$script_dir/$item"
+        local src="$remote_dir/$item"
+        if [ ! -e "$src" ]; then
+            echo "  WARN: source missing: $src -- skipping"
+            continue
+        fi
+        rm -rf "$dest"
+        cp -r "$src" "$dest"
+        echo "  copied $item"
+    done
+}
+
 lint_docs() {
     echo "🔍 Starting Quality Checks..."
 
@@ -340,8 +379,8 @@ clone_or_update "https://bitbucket.org/netfoundry/platform-doc.git"             
 echo "Cleaning stale build artifacts from remotes..."
 find "$script_dir/_remotes" -type d \( -path "*/docusaurus/build" -o -path "*/docusaurus/.docusaurus" -o -path "*/website/build" -o -path "*/website/.docusaurus" \) -exec rm -rf {} + 2>/dev/null || true
 
-echo "copying versionable docs locally..."
-"${script_dir}/sync-versioned-remote.sh" zrok
+sync_versioned_remote zrok
+sync_versioned_remote openziti
 
 # --- LINT DOCS ---
 lint_docs
