@@ -35,7 +35,7 @@ const IMG = `${DOCS_BASE}/img`;
 export const PRODUCTS: Record<ProductId, Product> = {
   console: {
     id: 'console',
-    label: 'NetFoundry',
+    label: 'NetFoundry Console',
     path: 'platform/intro',
     logo: NF_LOGO,
     description: 'Cloud-managed orchestration and global fabric control.',

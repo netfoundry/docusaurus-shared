@@ -13,7 +13,7 @@ const NF_LOGO = 'https://raw.githubusercontent.com/netfoundry/branding/refs/head
 const products = [
   {
     id: 'console',
-    title: 'NetFoundry',
+    title: 'NetFoundry Console',
     logo: NF_LOGO,
     tag: 'SaaS',
     accent: CYAN,
