@@ -10,7 +10,8 @@
 
     Auth: token env vars are used when set; otherwise falls back to SSH key auth.
     Token env vars: GH_ZITI_CI_REPO_ACCESS_PAT, BB_REPO_TOKEN_ONPREM,
-                    BB_REPO_TOKEN_FRONTDOOR, BB_USERNAME.
+                    BB_REPO_TOKEN_FRONTDOOR, BB_REPO_TOKEN_PLATFORM_DOC,
+                    BB_REPO_TOKEN_DATA_CONNECTOR, BB_USERNAME.
 
 .EXAMPLE
     .\build-docs.ps1 -ZitiDocBranch my.branch.name
@@ -30,6 +31,7 @@ param(
     [string]$SelfhostedBranch = "main",
     [string]$ZlanBranch       = "main",
     [string]$PlatformBranch   = "main",
+    [string]$DataConnectorBranch = "main",
 
     # Remove all _remotes content and .docusaurus cache before building
     [switch]$Clean,
@@ -47,7 +49,7 @@ param(
     [string]$Qualifier = "",
 
     # Docusaurus build mask (hex). 0x1=openziti, 0x2=frontdoor, 0x4=selfhosted,
-    # 0x8=zrok, 0x10=zlan, 0x20=platform, 0xFF=all
+    # 0x8=zrok, 0x10=zlan, 0x20=platform, 0x40=data-connector, 0xFF=all
     [string]$BuildMask = "0xFF"
 )
 
@@ -185,7 +187,8 @@ function Invoke-LintDocs {
         (Join-Path $remotesDir "zrok\website\docs"),
         (Join-Path $remotesDir "selfhosted\docusaurus\docs"),
         (Join-Path $remotesDir "openziti\docusaurus\docs"),
-        (Join-Path $remotesDir "platform\docusaurus\docs")
+        (Join-Path $remotesDir "platform\docusaurus\docs"),
+        (Join-Path $remotesDir "data-connector\docusaurus\docs")
     )
     $targets = $potentialTargets | Where-Object { Test-Path $_ }
 
@@ -244,6 +247,7 @@ Write-Host "  FrontdoorBranch:  $FrontdoorBranch"
 Write-Host "  SelfhostedBranch: $SelfhostedBranch"
 Write-Host "  ZlanBranch:       $ZlanBranch"
 Write-Host "  PlatformBranch:   $PlatformBranch"
+Write-Host "  DataConnectorBranch: $DataConnectorBranch"
 Write-Host "  Clean:            $Clean"
 Write-Host "  LintOnly:         $LintOnly"
 Write-Host "  SkipLinkedDoc:    $SkipLinkedDoc"
@@ -292,6 +296,12 @@ $urlPlatform = Get-RepoUrl `
     -SshUrl          "git@bitbucket.org:netfoundry/platform-doc.git" `
     -UsernameEnvVar  "BB_USERNAME"
 
+$urlDataConnector = Get-RepoUrl `
+    -DefaultHttpsUrl "https://bitbucket.org/netfoundry/nf-data-connector.git" `
+    -TokenEnvVar     "BB_REPO_TOKEN_DATA_CONNECTOR" `
+    -SshUrl          "git@bitbucket.org:netfoundry/nf-data-connector.git" `
+    -UsernameEnvVar  "BB_USERNAME"
+
 # ─── CLONE / UPDATE REMOTES ───────────────────────────────────────────────────
 
 Invoke-CloneOrUpdate $urlFrontdoor   "frontdoor"  $FrontdoorBranch
@@ -300,6 +310,7 @@ Invoke-CloneOrUpdate $urlZitiDoc     "openziti"   $ZitiDocBranch
 Invoke-CloneOrUpdate $urlZlan        "zlan"       $ZlanBranch
 Invoke-CloneOrUpdate $urlZrok        "zrok"       $ZrokBranch
 Invoke-CloneOrUpdate $urlPlatform    "platform"   $PlatformBranch
+Invoke-CloneOrUpdate $urlDataConnector "data-connector" $DataConnectorBranch
 
 # Remove stale Docusaurus caches and build outputs from inside the cloned remotes.
 # A leftover .docusaurus/ or build/ from a prior run can confuse the unified-doc build.

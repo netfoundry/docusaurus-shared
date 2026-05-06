@@ -25,6 +25,7 @@ import {onpremRedirects} from "./_remotes/selfhosted/docusaurus/docusaurus-plugi
 import {platformDocsPluginConfig, platformRedocSpecs} from "./_remotes/platform/docusaurus/docusaurus-plugin-platform-docs.ts";
 import {frontdoorRedocSpecs} from "./_remotes/frontdoor/docusaurus/docusaurus-plugin-frontdoor-docs.ts";
 import {openzitiDocsPluginConfig, openzitiRedocSpecs} from "./_remotes/openziti/docusaurus/docusaurus-plugin-openziti-docs.ts";
+import {dataconnectorDocsPluginConfig} from "./_remotes/data-connector/docusaurus/docusaurus-plugin-dataconnector-docs.ts";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
@@ -33,6 +34,7 @@ const openziti = `./_remotes/openziti`;
 const zrokRoot = `./_remotes/zrok/website`;
 const zlan = `./_remotes/zlan`;
 const platform = `./_remotes/platform`;
+const dataConnector = `./_remotes/data-connector`;
 
 const isVercel = process.env.IS_VERCEL === 'true';
 const docsBase = isVercel ? '/' : '/docs/';
@@ -47,13 +49,14 @@ function routeBase(name: string) {
 const buildMask = parseInt(process.env.DOCUSAURUS_BUILD_MASK ?? "0xFF", 16);
 
 const BUILD_FLAGS = {
-    NONE:      0x0,
-    OPENZITI:  0x1,
-    FRONTDOOR: 0x2,
-    SELFHOSTED: 0x4,
-    ZROK:      0x8,
-    ZLAN:      0x10,
-    PLATFORM:  0x20,
+    NONE:           0x0,
+    OPENZITI:       0x1,
+    FRONTDOOR:      0x2,
+    SELFHOSTED:     0x4,
+    ZROK:           0x8,
+    ZLAN:           0x10,
+    PLATFORM:       0x20,
+    DATA_CONNECTOR: 0x40,
 };
 
 function build(flag: number) {
@@ -111,6 +114,7 @@ const REMARK_MAPPINGS = [
     { from: '@frontdoordocs', to: `${docsBase}frontdoor`},
     { from: '@zlandocs', to: `${docsBase}zlan`},
     { from: '@platformdocs', to: `${docsBase}platform`},
+    { from: '@dataconnectordocs', to: `${docsBase}dataconnector`},
     { from: '@static', to: docsBase},
     { from: '/openziti',   to: `${docsBase}${routeBase('openziti')}`   },
     { from: '/frontdoor',  to: `${docsBase}${routeBase('frontdoor')}`  },
@@ -118,6 +122,7 @@ const REMARK_MAPPINGS = [
     { from: '/zrok',       to: `${docsBase}${routeBase('zrok')}`       },
     { from: '/zlan',       to: `${docsBase}${routeBase('zlan')}`       },
     { from: '/platform',   to: `${docsBase}${routeBase('platform')}`   },
+    { from: '/dataconnector', to: `${docsBase}${routeBase('dataconnector')}` },
 ];
 
 console.log("CANONICAL URL          : " + cfg.docusaurus.url);
@@ -286,6 +291,7 @@ const config: Config = {
                                 '@zrokroot': path.resolve(__dirname, `${zrokRoot}`),
                                 '@staticdir': path.resolve(__dirname, `docusaurus/static`),
                                 '@platform': path.resolve(__dirname, `${platform}/docusaurus`),
+                                '@dataconnector': path.resolve(__dirname, `${dataConnector}/docusaurus`),
                             },
                         },
                         module: {
@@ -308,6 +314,7 @@ const config: Config = {
         build(BUILD_FLAGS.ZLAN) && ['@docusaurus/plugin-content-pages',{id: `zlan-pages`, path: `${zlan}/docusaurus/src/pages`, routeBasePath: `/${routeBase('zlan')}`}],
         build(BUILD_FLAGS.ZROK) && ['@docusaurus/plugin-content-pages',{id: `zrok-pages`, path: `${zrokRoot}/src/pages`, routeBasePath: `/${routeBase('zrok')}`}],
         build(BUILD_FLAGS.PLATFORM) && ['@docusaurus/plugin-content-pages',{id: `platform-pages`, path: `${platform}/docusaurus/src/pages`, routeBasePath: `/${routeBase('platform')}`}],
+        build(BUILD_FLAGS.DATA_CONNECTOR) && ['@docusaurus/plugin-content-pages',{id: `dataconnector-pages`, path: `${dataConnector}/docusaurus/src/pages`, routeBasePath: `/${routeBase('dataconnector')}`}],
         build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, routeBase('zrok'))),
         build(BUILD_FLAGS.SELFHOSTED) && [
             '@docusaurus/plugin-content-docs',
@@ -365,6 +372,13 @@ const config: Config = {
             `${platform}/docusaurus`,
             REMARK_MAPPINGS,
             routeBase('platform'),
+        ),
+        build(BUILD_FLAGS.DATA_CONNECTOR) && extendDocsPlugins(
+            dataconnectorDocsPluginConfig(
+                `${dataConnector}/docusaurus`,
+                REMARK_MAPPINGS,
+                routeBase('dataconnector'),
+            ),
         ),
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
         [pluginHotjar, {}],
