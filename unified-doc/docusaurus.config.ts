@@ -22,9 +22,8 @@ import {
 import {PublishConfig} from 'src/components/docusaurus'
 import {zrokDocsPluginConfig, zrokRedirects} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 import {onpremRedirects} from "./_remotes/selfhosted/docusaurus/docusaurus-plugin-onprem-docs.ts";
-import {platformDocsPluginConfig, platformRedocSpecs} from "./_remotes/platform/docusaurus/docusaurus-plugin-platform-docs.ts";
-import {frontdoorRedocSpecs} from "./_remotes/frontdoor/docusaurus/docusaurus-plugin-frontdoor-docs.ts";
-import {openzitiDocsPluginConfig, openzitiRedocSpecs} from "./_remotes/openziti/docusaurus/docusaurus-plugin-openziti-docs.ts";
+import {platformDocsPluginConfig} from "./_remotes/platform/docusaurus/docusaurus-plugin-platform-docs.ts";
+import {openzitiDocsPluginConfig} from "./_remotes/openziti/docusaurus/docusaurus-plugin-openziti-docs.ts";
 import {dataconnectorDocsPluginConfig} from "./_remotes/data-connector/docusaurus/docusaurus-plugin-dataconnector-docs.ts";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
@@ -483,22 +482,7 @@ const config: Config = {
             clientId: cfg.reo.clientId
         },
     } satisfies Preset.ThemeConfig,
-    presets: [
-        [  'redocusaurus',
-            {
-                specs: [
-                    ...frontdoorRedocSpecs(`${frontdoor}/docusaurus`),
-                    ...platformRedocSpecs(`${platform}/docusaurus`),
-                    ...openzitiRedocSpecs(),
-                ],
-                // Theme Options for modifying how redoc renders them
-                theme: {
-                    // Change with your site colors
-                    primaryColor: '#1890ff',
-                }
-            },
-        ],
-    ],
+    presets: [],
 };
 
 export default config;

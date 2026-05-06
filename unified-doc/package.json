@@ -67,8 +67,7 @@
     "react-instantsearch": "^7.16.2",
     "react-lite-youtube-embed": "^2.5.6",
     "react-player": "^3.3.2",
-    "redoc": "^2.5.0",
-    "redocusaurus": "^2.5.0",
+    "@scalar/docusaurus": "^0.8.13",
     "remark-github-admonitions-to-directives": "^2.1.0"
   },
   "devDependencies": {
