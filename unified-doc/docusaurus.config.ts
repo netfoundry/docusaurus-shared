@@ -406,14 +406,14 @@ const config: Config = {
             label: 'API reference',
             route: `/${routeBase('platform')}/api-guides/openapi-reference`,
             showNavLink: false,
-            configuration: {url: '/console-api-spec.yaml', hideClientButton: true, hideTestRequestButton: true},
+            configuration: {url: `${docsBase}console-api-spec.yaml`, hideClientButton: true, hideTestRequestButton: true},
         } as ScalarOptions],
         build(BUILD_FLAGS.FRONTDOOR) && ['@scalar/docusaurus', {
             id: 'frontdoor-api',
             label: 'API reference',
             route: `/${routeBase('frontdoor')}/reference/api-reference`,
             showNavLink: false,
-            configuration: {url: '/frontdoor-api-spec.yaml', hideClientButton: true, hideTestRequestButton: true},
+            configuration: {url: `${docsBase}frontdoor-api-spec.yaml`, hideClientButton: true, hideTestRequestButton: true},
         } as ScalarOptions],
     ].filter(Boolean),
     themeConfig: {
