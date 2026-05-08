@@ -1,5 +1,6 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config, PluginConfig} from '@docusaurus/types';
+import type {ScalarOptions} from '@scalar/docusaurus';
 import type * as Preset from '@docusaurus/preset-classic';
 import * as path from "node:path";
 import {
@@ -251,6 +252,7 @@ const config: Config = {
             customCss: [
                 require.resolve('./src/css/custom.css'),
                 require.resolve('@netfoundry/docusaurus-theme/css/product-picker.css'),
+                require.resolve('@scalar/docusaurus/dist/theme.css'),
             ],
         }],
         '@netfoundry/docusaurus-theme',
@@ -385,6 +387,34 @@ const config: Config = {
         ['@docusaurus/plugin-google-tag-manager', {id: `openziti-gtm`, containerId: cfg.google.tag}],
         build(BUILD_FLAGS.SELFHOSTED) && onpremRedirects(routeBase('selfhosted')),
         build(BUILD_FLAGS.ZROK) && zrokRedirects(routeBase('zrok')),
+        build(BUILD_FLAGS.OPENZITI) && ['@scalar/docusaurus', {
+            id: 'edge-client',
+            label: 'Edge Client API reference',
+            route: '/docs/openziti/reference/developer/api/edge-client-api-reference',
+            showNavLink: false,
+            configuration: {url: 'https://get.openziti.io/spec/client.yml'},
+        } as ScalarOptions],
+        build(BUILD_FLAGS.OPENZITI) && ['@scalar/docusaurus', {
+            id: 'edge-management',
+            label: 'Edge Management API reference',
+            route: '/docs/openziti/reference/developer/api/edge-management-api-reference',
+            showNavLink: false,
+            configuration: {url: 'https://get.openziti.io/spec/management.yml'},
+        } as ScalarOptions],
+        build(BUILD_FLAGS.PLATFORM) && ['@scalar/docusaurus', {
+            id: 'platform-api',
+            label: 'API reference',
+            route: '/docs/platform/api-guides/openapi-reference',
+            showNavLink: false,
+            configuration: {url: '/console-api-spec.yaml'},
+        } as ScalarOptions],
+        build(BUILD_FLAGS.FRONTDOOR) && ['@scalar/docusaurus', {
+            id: 'frontdoor-api',
+            label: 'API reference',
+            route: '/docs/frontdoor/reference/api-reference',
+            showNavLink: false,
+            configuration: {url: '/frontdoor-api-spec.yaml'},
+        } as ScalarOptions],
     ].filter(Boolean),
     themeConfig: {
         netfoundry: {
