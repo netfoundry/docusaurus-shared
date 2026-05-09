@@ -430,6 +430,9 @@ now=$(date)
 commit=$(git -C "${script_dir}" rev-parse --short HEAD 2>/dev/null || echo "unknown")
 printf "%s\n%s\n" "$now" "$commit" > "${script_dir}/static/build-time.txt"
 
+# --- GENERATE llms.txt ---
+node "${script_dir}/scripts/generate-llms-txt.mjs"
+
 MINIFY_FLAG=""
 if [ -n "${NO_MINIFY:-}" ]; then
   MINIFY_FLAG="--no-minify"
