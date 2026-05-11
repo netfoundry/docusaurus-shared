@@ -1,0 +1,60 @@
+# Importing GitHub Markdown
+
+You can pull Markdown from other repositories (e.g. an upstream `README.md`)
+into a Docusaurus site by adding a Git remote in `gendoc.sh` and importing the
+file as an MDX component.
+
+## Basic import
+
+```mdx
+import SomeMd from '/docs/remotes/some-remote/README.md';
+
+<SomeMd />
+```
+
+## Handling the H1 title
+
+When importing a README, Docusaurus also auto-renders its own page title --
+typically derived from the filename. This often produces a duplicate H1.
+
+You have two options:
+
+### Use the imported title
+
+Hide the Docusaurus auto-title via frontmatter:
+
+```yaml
+---
+hide_title: true
+---
+
+import SomeMd from '/docs/remotes/some-remote/README.md';
+
+<SomeMd />
+```
+
+### Use a Docusaurus-set title and strip the imported H1
+
+Set an explicit `title` in frontmatter and wrap the import in
+`<MarkdownWithoutH1>`:
+
+```yaml
+---
+title: A descriptive title
+---
+
+import SomeMd from '/docs/remotes/some-remote/README.md';
+import MarkdownWithoutH1 from '@site/src/components/MarkdownWithoutH1';
+
+<MarkdownWithoutH1>
+  <SomeMd />
+</MarkdownWithoutH1>
+```
+
+## Related
+
+- [Admonitions](../markdown/admonitions.mdx#github-style-admonitions) -- the
+  remark plugin that turns `> [!NOTE]` into a Docusaurus admonition makes
+  GitHub READMEs render correctly after import.
+- [Frontmatter knobs](./frontmatter-knobs.mdx#hide_title) -- the `hide_title`
+  field referenced above.

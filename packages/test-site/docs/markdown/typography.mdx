@@ -1,0 +1,139 @@
+# Typography reference
+
+A single page that exercises every text-level Markdown feature so you can spot
+regressions in `legacy.css` or the IFM defaults.
+
+## Heading levels
+
+# h1 -- The largest heading
+
+## h2 -- A major section
+
+### h3 -- A subsection
+
+#### h4 -- A sub-subsection
+
+##### h5 -- Rarely used
+
+###### h6 -- The smallest heading
+
+## Paragraphs and inline marks
+
+This is a paragraph with **bold text**, *italic text*, ***bold italic***,
+~~strikethrough~~, `inline code`, and a [link to example.com](https://example.com).
+You can also use <kbd>Ctrl</kbd>+<kbd>C</kbd> to mark keyboard shortcuts, or
+<mark>highlighted text</mark> to draw the eye.
+
+H<sub>2</sub>O is subscript; E = mc<sup>2</sup> uses superscript.
+
+## Blockquotes
+
+> A simple blockquote.
+
+> A blockquote that spans
+> multiple lines and wraps
+> across line breaks.
+
+> Outer blockquote.
+>
+> > Nested blockquote inside.
+> >
+> > > Triple-nested.
+>
+> Back to the outer.
+
+## Links
+
+- Internal relative: [Tab group samples](../components/tab-groups.mdx)
+- Internal with anchor: [Typography heading levels](#heading-levels)
+- External: [example.com](https://example.com)
+- Mailto: [send an email](mailto:hello@example.com)
+- Inline code inside link: [the `--verbose` flag](https://example.com)
+
+## Lists
+
+### Unordered, nested
+
+- Top level
+  - Second level
+    - Third level
+      - Fourth level
+  - Back to second
+- Another top level
+
+### Ordered, nested (4-space indent per style guide)
+
+1.  First
+    1.  First sub
+    2.  Second sub
+        1.  Third level
+2.  Second
+3.  Third
+
+### Mixed ordered + unordered
+
+1.  Numbered step one
+    - Bulleted sub-point
+    - Another bullet
+2.  Numbered step two
+    - Bulleted sub-point with `inline code`
+    - Bulleted sub-point with a [link](https://example.com)
+
+### Task lists
+
+- [x] Completed task
+- [x] Another completed task
+- [ ] Pending task
+- [ ] Pending task with `inline code`
+
+### List with embedded paragraph and code
+
+1.  First step. The paragraph continues here and wraps over multiple lines so
+    you can see how the indent handles longer content.
+
+    ```bash
+    echo "step one"
+    ```
+
+    A second paragraph inside the same list item, after the code block.
+
+2.  Second step.
+
+## Definition lists
+
+Term 1
+: Definition for term 1.
+
+Term 2
+: Definition for term 2, which may be longer and wrap across multiple lines so
+the renderer has to handle wrapping inside the definition cell.
+
+Term with `code`
+: Definition that references `another piece of code`.
+
+## Footnotes
+
+Here is a statement that needs a citation.[^1] And here is another.[^longnote]
+
+[^1]: A short footnote.
+[^longnote]: A longer footnote with multiple paragraphs and code.
+
+    Indented to belong to the footnote.
+
+    ```bash
+    code inside a footnote
+    ```
+
+## Horizontal rule
+
+Above the rule.
+
+---
+
+Below the rule.
+
+## Emoji and unicode
+
+:rocket: :sparkles: :white_check_mark: :warning: :x:
+
+Greek: α β γ δ. Math symbols: ≤ ≥ ≠ ± ∑ ∫. Arrows: → ← ↑ ↓ ↔.

@@ -1,0 +1,46 @@
+# Video player (react-player)
+
+`react-player` (used in `unified-doc`) renders YouTube, Vimeo, mp4, m3u8,
+Twitch, and a long tail of other video sources behind a single component.
+
+For embedded YouTube specifically, prefer `remarkYouTube` (see the
+[plugin docs](../plugins/youtube-embed.mdx)) -- it converts bare URLs into
+lazy `<LiteYouTubeEmbed>` instances automatically. Use `react-player` when:
+
+- The source is **not** YouTube (mp4, m3u8, Vimeo, etc.).
+- You need playback controls or events that `LiteYouTubeEmbed` doesn't expose.
+
+## Required setup
+
+```json
+"dependencies": {
+  "react-player": "^3.3.2"
+}
+```
+
+## Usage
+
+```mdx
+import ReactPlayer from 'react-player';
+
+<ReactPlayer
+  url="https://example.com/path/to/video.mp4"
+  controls
+  width="100%"
+  height="auto"
+/>
+```
+
+Or for HLS:
+
+```mdx
+<ReactPlayer
+  url="https://example.com/path/to/playlist.m3u8"
+  controls
+/>
+```
+
+## Status in test-site
+
+Not currently wired up. Action item: add the dependency and a sample
+`.mp4` to `static/video/` for a live demo.

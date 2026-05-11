@@ -1,0 +1,60 @@
+# Asciinema terminal recordings
+
+`asciinema-player` is listed in `unified-doc/package.json` and used to embed
+terminal session recordings (`.cast` files) as interactive playable widgets in
+the docs.
+
+## Required setup
+
+```json
+"dependencies": {
+  "asciinema-player": "^3.10.0"
+}
+```
+
+Then in an MDX page:
+
+```mdx
+import 'asciinema-player/dist/bundle/asciinema-player.css';
+import * as AsciinemaPlayer from 'asciinema-player';
+import {useEffect, useRef} from 'react';
+
+function AsciinemaCast({src, ...opts}) {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!ref.current) return;
+    const player = AsciinemaPlayer.create(src, ref.current, opts);
+    return () => player.dispose();
+  }, [src]);
+  return <div ref={ref} />;
+}
+
+<AsciinemaCast src="/casts/install-ziti.cast" autoPlay={false} loop={false} />
+```
+
+Wrap the player in a thin component (above) and place it in
+`packages/docusaurus-theme/src/components/` so consuming sites can import it as
+`<AsciinemaCast/>` without re-implementing the hook.
+
+## Recording a cast
+
+```bash
+asciinema rec my-session.cast
+# ... do stuff in the terminal ...
+exit
+asciinema play my-session.cast   # local preview
+```
+
+Drop the `.cast` file under `static/casts/` and reference it by path.
+
+## Why use this
+
+A `.cast` file is text, not video -- diffs cleanly in git, doesn't need
+transcoding, and stays sharp at any zoom. For CLI walkthroughs it beats a GIF
+or MP4 on file size, accessibility (copy/paste from the playback), and quality.
+
+## Status in test-site
+
+Not currently wired up. Action item: add the dependency, add a small
+`<AsciinemaCast/>` wrapper component to the theme package, and replace this
+page with a live demo.

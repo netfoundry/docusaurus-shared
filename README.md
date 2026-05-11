@@ -7,12 +7,15 @@ Shared documentation theme, components, and tooling for NetFoundry's Docusaurus-
 ```
 docusaurus-shared/
 ├── packages/
-│   └── docusaurus-theme/     # @netfoundry/docusaurus-theme npm package
-├── test-site/                # Local development/testing site
-├── unified-doc/              # Unified documentation build system
+│   ├── docusaurus-theme/     # @netfoundry/docusaurus-theme npm package
+│   └── test-site/            # Local dev sandbox for the theme
+├── unified-doc/              # Unified production documentation build
 ├── docs-linter/              # Vale + markdownlint tooling
 └── bootstrap.sh              # New site bootstrapper
 ```
+
+See [`packages/test-site/README.md`](./packages/test-site/README.md) for the
+test-site dev loop, docs organization, and debug recipes.
 
 ## Quick Start
 

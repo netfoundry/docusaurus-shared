@@ -1,0 +1,73 @@
+# Mermaid diagrams
+
+`@docusaurus/theme-mermaid` is registered in `docusaurus.config.ts`, so
+fenced ` ```mermaid ` blocks render as live diagrams.
+
+## Flowchart
+
+```mermaid
+flowchart LR
+    A[Client] -->|TLS| B(Edge Router)
+    B --> C{Controller}
+    C -->|policy| D[Edge Router]
+    D --> E[Service]
+```
+
+## Sequence diagram
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant ER as Edge Router
+    participant Ctrl as Controller
+    participant S as Service
+
+    C->>ER: Connect (TLS)
+    ER->>Ctrl: Auth + policy check
+    Ctrl-->>ER: Permitted
+    ER->>S: Forward
+    S-->>C: Response
+```
+
+## State diagram
+
+```mermaid
+stateDiagram-v2
+    [*] --> Disconnected
+    Disconnected --> Connecting: connect()
+    Connecting --> Connected: handshake ok
+    Connecting --> Disconnected: timeout
+    Connected --> Disconnected: disconnect()
+    Connected --> [*]
+```
+
+## Class diagram
+
+```mermaid
+classDiagram
+    class Identity {
+      +string name
+      +string token
+      +authenticate()
+    }
+    class Service {
+      +string name
+      +int port
+    }
+    class Policy {
+      +string name
+      +allow()
+    }
+    Identity --> Policy
+    Policy --> Service
+```
+
+## Pie chart
+
+```mermaid
+pie title Traffic by service
+    "API"    : 45
+    "Web"    : 30
+    "gRPC"   : 15
+    "Other"  : 10
+```

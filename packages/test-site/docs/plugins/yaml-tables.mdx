@@ -1,0 +1,41 @@
+# remarkYamlTable
+
+Transforms fenced YAML blocks (with a specific marker) into rendered Markdown
+tables. Useful when you want the source-of-truth to be structured YAML but the
+output to be a human-readable table.
+
+## Import
+
+```ts
+import {remarkYamlTable} from '@netfoundry/docusaurus-theme/plugins';
+
+remarkPlugins: [
+  [remarkYamlTable, {logLevel: LogLevel.Silent}],
+],
+```
+
+## Use case
+
+Maintain a structured list of flags / fields / endpoints as YAML, get a table
+in the rendered docs for free. The YAML is the canonical form; the rendered
+table is generated.
+
+## Syntax (example)
+
+The exact fence syntax depends on the plugin's marker -- check
+`packages/docusaurus-theme/src/docusaurus-plugins/remarkYamlTable.ts` for the
+current contract. Typical usage looks like:
+
+````markdown
+```yaml-table
+columns: [Flag, Default, Purpose]
+rows:
+  - ["--ctrl-port", "1280", "control plane port"]
+  - ["--router-port", "3022", "router port"]
+  - ["--verbose", "--", "additional output"]
+```
+````
+
+## See also
+
+- [Tables](../markdown/tables.mdx) -- regular hand-written Markdown tables.

@@ -27,7 +27,15 @@ export default function themeNetFoundry(
         // consuming sites are expected to register. Adding it here would
         // double-load it on sites with Algolia and load it unnecessarily
         // on sites without search.
-        require.resolve('../css/theme.css'),
+        //
+        // Path note: at runtime this file is dist/src/index.js. We resolve
+        // up two levels to the package's *source* `css/` folder rather than
+        // a copy under `dist/css/`. That way live edits to css/*.css are
+        // picked up by the test-site dev server without needing to rerun
+        // `yarn build:css`. Published consumers also have `css/` at the
+        // package root (per the `files` allowlist), so this path is valid
+        // in both dev and prod.
+        require.resolve('../../css/theme.css'),
       ];
 
       // Add custom CSS if specified in options

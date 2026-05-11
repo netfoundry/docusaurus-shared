@@ -1,0 +1,51 @@
+# GitHub admonitions to directives
+
+`remark-github-admonitions-to-directives` is an upstream remark plugin that
+converts GitHub-flavored admonitions (`> [!NOTE]`) into Docusaurus admonitions
+(`:::note`) before MDX parses them. Lets imported README files render with
+properly styled callouts instead of plain blockquotes.
+
+## Import
+
+```ts
+import remarkGithubAdmonitionsToDirectives from 'remark-github-admonitions-to-directives';
+
+beforeDefaultRemarkPlugins: [
+  remarkGithubAdmonitionsToDirectives,
+],
+```
+
+Note this goes in `beforeDefaultRemarkPlugins`, not `remarkPlugins` -- it has
+to run before Docusaurus's directive parser.
+
+## Recognized syntax
+
+```markdown
+> [!NOTE]
+> A note.
+
+> [!TIP]
+> A tip.
+
+> [!IMPORTANT]
+> An important.
+
+> [!WARNING]
+> A warning.
+
+> [!CAUTION]
+> A caution.
+```
+
+## Live demo
+
+See [admonitions -- GitHub-style admonitions](../markdown/admonitions.mdx#github-style-admonitions)
+for rendered output.
+
+## Where it's used in unified-doc
+
+Every sub-project docs plugin in `unified-doc/docusaurus.config.ts` registers
+this in `beforeDefaultRemarkPlugins`. The wrapper helper `extendDocsPlugins()`
+adds it automatically for the three plugins that go through that helper
+(openziti, zrok, data-connector); the other plugins (selfhosted, frontdoor,
+zlan) wire it explicitly.

@@ -1,0 +1,75 @@
+# remarkCodeSections
+
+Parses fenced code blocks whose language starts with `example` and extracts
+`@description:`, `@command:`, `@code:`, and `@results:` sections into a
+structured layout.
+
+## Import
+
+```ts
+import {remarkCodeSections} from '@netfoundry/docusaurus-theme/plugins';
+
+remarkPlugins: [
+  [remarkCodeSections, {logLevel: LogLevel.Silent}],
+],
+```
+
+## Syntax
+
+A bare `example` fence with only `@results:`:
+
+````markdown
+```example
+@results: total 12
+drwxr-xr-x  5 user staff 160 Jan 28 12:34 .
+-rw-r--r--  1 user staff   0 Jan 28 12:34 file.txt
+```
+````
+
+A language-tagged `example-bash` fence:
+
+````markdown
+```example-bash
+@results: total 12
+drwxr-xr-x  5 user staff 160 Jan 28 12:34 .
+```
+````
+
+A fully decorated `example-python` fence:
+
+````markdown
+```example-python
+@description:
+A longer description block. Renders as the lead-in paragraph above the code.
+
+@command:
+ls -l
+
+@code: An alternate title for the code section
+print("Hello, World!")
+
+@results:
+output line 1
+output line 2
+```
+````
+
+## Live demo
+
+```example-python
+@description:
+This is a longer description block. The plugin renders it as the lead-in
+paragraph above the code.
+
+@command:
+ls -l
+
+@code: An alternate title for the code section
+print("Hello, World!")
+
+@results: the results go here
+and more output below
+```
+
+See [code blocks](../markdown/code-blocks.mdx#netfoundry--tagged-example-fences)
+for additional variants.

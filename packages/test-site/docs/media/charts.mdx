@@ -1,0 +1,58 @@
+# Charts (ECharts)
+
+`echarts` + `echarts-for-react` are listed in `unified-doc/package.json` for
+embedding interactive charts inside docs.
+
+## Required setup
+
+```json
+"dependencies": {
+  "echarts": "^6.0.0",
+  "echarts-for-react": "^3.0.2"
+}
+```
+
+## Usage
+
+```mdx
+import ReactECharts from 'echarts-for-react';
+
+<ReactECharts
+  option={{
+    title: {text: 'Connections per second'},
+    tooltip: {trigger: 'axis'},
+    xAxis: {type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']},
+    yAxis: {type: 'value'},
+    series: [{
+      data: [120, 200, 150, 80, 70],
+      type: 'line',
+      smooth: true,
+    }],
+  }}
+  style={{height: 320}}
+/>
+```
+
+## Common chart types
+
+| Type      | `series.type`  | Use case                          |
+|-----------|----------------|-----------------------------------|
+| Line      | `'line'`       | Time series                       |
+| Bar       | `'bar'`        | Category comparison               |
+| Pie       | `'pie'`        | Proportions                       |
+| Scatter   | `'scatter'`    | Two-variable distributions        |
+| Heatmap   | `'heatmap'`    | Density / grid intensity          |
+| Sankey    | `'sankey'`     | Flow between categories           |
+
+## Mermaid vs ECharts
+
+| Need                                  | Use                |
+|---------------------------------------|--------------------|
+| Static diagram (flowchart, sequence)  | [Mermaid](./mermaid.mdx) |
+| Data-driven interactive chart         | ECharts            |
+
+## Status in test-site
+
+Not currently wired up. Action item: add the deps and a small wrapper component
+in the theme package so consuming sites import `<NfChart option={...}/>` instead
+of writing ReactECharts boilerplate per page.

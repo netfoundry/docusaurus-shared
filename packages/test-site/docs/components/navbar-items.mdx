@@ -1,0 +1,90 @@
+# Navbar items and icons
+
+Two related exports from `@netfoundry/docusaurus-theme/ui`:
+
+- `NavbarItems` -- a shared array of navbar item *configurations* consumed by
+  `docusaurus.config.ts` (`themeConfig.navbar.items`). It is **not** a React
+  component; it does not render on a page.
+- `icons` -- a set of React icon components (`GitHubIcon`, `DiscourseIcon`,
+  `RedditIcon`, `XIcon`, `YouTubeIcon`) used in the navbar chrome and elsewhere.
+
+## NavbarItems shape
+
+```ts
+export type NavbarItem = {
+  label: string;
+  href?: string;       // external URL
+  to?: string;         // internal doc/page
+  type?: string;       // e.g. 'docSidebar'
+  position?: 'left' | 'right';
+  sidebarId?: string;
+};
+```
+
+Used like this in a consuming site's `docusaurus.config.ts`:
+
+```ts
+import {NavbarItems} from '@netfoundry/docusaurus-theme/ui';
+
+themeConfig: {
+  navbar: {
+    items: [
+      ...NavbarItems,
+      // site-specific items appended here
+    ],
+  },
+}
+```
+
+The navbar for the current page already renders these -- look up. To verify the
+shared array, compare what's on screen against the default in
+`packages/docusaurus-theme/src/components/NetFoundryNavbarItems/NetFoundryNavbarItems.tsx`.
+
+## Icon gallery
+
+import {DiscourseIcon, GitHubIcon, RedditIcon, XIcon, YouTubeIcon} from '@netfoundry/docusaurus-theme/ui';
+
+Each icon below is rendered at 32px so you can sanity-check stroke weight,
+viewBox, and dark-mode behavior side by side.
+
+<div style={{display: 'flex', gap: '2rem', alignItems: 'center', padding: '1rem 0'}}>
+  <div style={{textAlign: 'center'}}>
+    <div style={{width: 32, height: 32}}><GitHubIcon /></div>
+    <div style={{fontSize: '0.75rem', marginTop: '0.25rem'}}>GitHubIcon</div>
+  </div>
+  <div style={{textAlign: 'center'}}>
+    <div style={{width: 32, height: 32}}><DiscourseIcon /></div>
+    <div style={{fontSize: '0.75rem', marginTop: '0.25rem'}}>DiscourseIcon</div>
+  </div>
+  <div style={{textAlign: 'center'}}>
+    <div style={{width: 32, height: 32}}><RedditIcon /></div>
+    <div style={{fontSize: '0.75rem', marginTop: '0.25rem'}}>RedditIcon</div>
+  </div>
+  <div style={{textAlign: 'center'}}>
+    <div style={{width: 32, height: 32}}><XIcon /></div>
+    <div style={{fontSize: '0.75rem', marginTop: '0.25rem'}}>XIcon</div>
+  </div>
+  <div style={{textAlign: 'center'}}>
+    <div style={{width: 32, height: 32}}><YouTubeIcon /></div>
+    <div style={{fontSize: '0.75rem', marginTop: '0.25rem'}}>YouTubeIcon</div>
+  </div>
+</div>
+
+## Icons at multiple sizes
+
+<div style={{display: 'flex', gap: '1.5rem', alignItems: 'center', padding: '1rem 0'}}>
+  <div style={{width: 16, height: 16}}><GitHubIcon /></div>
+  <div style={{width: 24, height: 24}}><GitHubIcon /></div>
+  <div style={{width: 32, height: 32}}><GitHubIcon /></div>
+  <div style={{width: 48, height: 48}}><GitHubIcon /></div>
+  <div style={{width: 64, height: 64}}><GitHubIcon /></div>
+</div>
+
+## Icons with hover color (CSS-driven)
+
+The `.nf-icon-link--discourse:hover` rule in `layout.css` is one example.
+Hover the icon below to see whether it picks up `color: inherit` correctly:
+
+<a href="https://example.com" className="nf-icon-link--discourse" style={{display: 'inline-block', width: 32, height: 32}}>
+  <DiscourseIcon />
+</a>

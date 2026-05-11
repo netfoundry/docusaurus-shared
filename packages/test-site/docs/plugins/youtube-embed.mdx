@@ -1,0 +1,48 @@
+# remarkYouTube
+
+Replaces bare YouTube URLs in Markdown with a `<LiteYouTubeEmbed>` component.
+Saves the page from loading the full YouTube player iframe until the user
+clicks.
+
+## Import
+
+```ts
+import {remarkYouTube} from '@netfoundry/docusaurus-theme/plugins';
+
+remarkPlugins: [
+  [remarkYouTube, {logLevel: LogLevel.Silent}],
+],
+```
+
+## Recognized URL forms
+
+| Source            | Pattern                                                  |
+|-------------------|----------------------------------------------------------|
+| Standard          | `https://www.youtube.com/watch?v=VIDEO_ID`               |
+| Short             | `https://youtu.be/VIDEO_ID`                              |
+| No-cookie         | `https://www.youtube-nocookie.com/watch?v=VIDEO_ID`      |
+| Hashnode-style    | `%[https://youtu.be/VIDEO_ID]`                            |
+
+## Syntax
+
+Any of these forms will be rewritten to a lazy embed:
+
+```markdown
+https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
+[Watch the talk](https://youtu.be/dQw4w9WgXcQ)
+
+%[https://youtu.be/dQw4w9WgXcQ]
+```
+
+## Wiring requirement
+
+The plugin replaces the node with a `<LiteYouTubeEmbed>` JSX element. The
+consuming site must have `react-lite-youtube-embed` installed and importable.
+
+## Live demo
+
+If the plugin is enabled for this site's docs plugin, the URL below renders
+as a lazy embed. If not, it renders as a plain link.
+
+https://www.youtube.com/watch?v=dQw4w9WgXcQ

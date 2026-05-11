@@ -1,0 +1,160 @@
+import DetailsExample from '../_partials/_details_with_code.mdx';
+
+# Admonitions
+
+Every admonition variant Docusaurus supports, plus GitHub-style admonitions
+(handled by a remark plugin), embedded code, embedded tables, embedded buttons,
+and nesting.
+
+## Docusaurus admonition variants
+
+:::note
+A `note`. Used for incidental context the reader can skim.
+:::
+
+:::tip
+A `tip`. Used for non-essential helpful suggestions.
+:::
+
+:::info
+An `info`. Used for important context the reader should not miss.
+:::
+
+:::warning
+A `warning`. Used for things that could cause minor issues.
+:::
+
+:::caution
+A `caution`. Synonym/alias for `warning` in some Docusaurus versions.
+:::
+
+:::danger
+A `danger`. Used for destructive or irreversible operations.
+:::
+
+:::important
+An `important`. Available in some Docusaurus versions as an alias.
+:::
+
+## Admonitions with custom titles
+
+:::tip[Pro tip]
+A `tip` with a custom title in the header strip.
+:::
+
+:::danger[Danger zone]
+A `danger` with a custom title.
+:::
+
+## Admonitions with code
+
+:::note
+Some setup is required before running the command below:
+
+```bash
+export ZITI_HOME=$HOME/.ziti
+mkdir -p $ZITI_HOME
+```
+
+After running, verify `$ZITI_HOME` is set.
+:::
+
+:::tip
+```yaml
+site:
+  name: MySite
+  theme: dark
+  plugins:
+    - search
+    - analytics
+```
+:::
+
+## Admonition with a table
+
+:::warning
+Default ports the controller uses:
+
+| Service | Port |
+|---------|------|
+| API     | 1280 |
+| Router  | 3022 |
+
+Make sure none of these are in use before continuing.
+:::
+
+## Admonition with a button (raw HTML)
+
+:::danger[Danger button]
+```sh
+rm -rf /
+```
+
+<button onclick="alert('You clicked the danger button')">Danger button</button>
+:::
+
+## Admonition with the partial that ships everything
+
+:::note
+<DetailsExample/>
+:::
+
+:::tip
+<DetailsExample/>
+:::
+
+:::info
+<DetailsExample/>
+:::
+
+:::warning
+<DetailsExample/>
+:::
+
+:::danger
+<DetailsExample/>
+:::
+
+## GitHub-style admonitions
+
+A remark plugin translates GitHub-flavored admonitions into Docusaurus ones, so
+you can import a README that uses `> [!NOTE]` syntax and it renders correctly.
+
+> [!NOTE]
+> A GitHub-style note.
+
+> [!TIP]
+> A GitHub-style tip.
+
+> [!IMPORTANT]
+> A GitHub-style important.
+
+> [!WARNING]
+> A GitHub-style warning.
+
+> [!CAUTION]
+> A GitHub-style caution.
+
+## Admonition inside a list
+
+1. First step.
+2. Second step.
+
+   :::warning
+   This admonition is indented as a list-item child.
+   :::
+
+3. Third step.
+
+## Nested admonitions
+
+:::danger
+Outer danger admonition.
+
+:::tip
+Inner tip nested inside. Nesting depth is limited; Docusaurus parses the
+innermost `:::` pair as the closer, so deeply nested cases can break.
+:::
+
+Still inside the outer admonition.
+:::
