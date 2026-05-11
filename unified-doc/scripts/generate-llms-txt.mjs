@@ -5,8 +5,7 @@
  * Walks source markdown from each product's docs directory, extracts frontmatter
  * and headings, and writes a structured index for AI agents.
  *
- * Run after all remotes are cloned and versioned docs synced (build-docs.sh calls
- * this before yarn build).
+ * Runs after all remotes are cloned (build-docs.sh calls this before yarn build).
  */
 
 import { readFileSync, readdirSync, statSync, writeFileSync, existsSync } from 'fs';
