@@ -29,6 +29,16 @@ qualifier="-site"
 echo "build qualifier set: $qualifier"
 "${pub_script_root}/build-docs.sh" --qualifier="$qualifier" "${flags[@]}"
 
+# Generate llms.txt directly into the build output (remotes are still present at this point).
+node "${pub_script_root}/scripts/generate-llms-txt.mjs" "${pub_script_root}/build${qualifier}/llms.txt"
+
+# Inject llms.txt into the sitemap so crawlers can discover it.
+SITEMAP="${pub_script_root}/build${qualifier}/sitemap.xml"
+if [ -f "$SITEMAP" ]; then
+    sed -i 's|</urlset>|  <url><loc>https://netfoundry.io/docs/llms.txt</loc><changefreq>daily</changefreq><priority>0.5</priority></url>\n</urlset>|' "$SITEMAP"
+    echo "Injected llms.txt entry into sitemap.xml"
+fi
+
 publish_docs() {
   local HOST=$1 PORT=$2 USER=$3 TARGET_DIR=$4 KEY_FILE=$5
   local zip_target="unified-docs${qualifier}.zip"
