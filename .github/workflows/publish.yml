@@ -124,8 +124,8 @@ jobs:
             --arg repo_url "https://github.com/$GITHUB_REPOSITORY" \
             --arg run_url "https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
             '{
-              repository: { full_name: $repo, html_url: $repo_url },
-              sender: { login: "ziti-ci", avatar_url: "https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/png/icon/netfoundry-icon-color.png" },
+              repository: { full_name: $repo, html_url: $repo_url, stargazers_count: 0 },
+              sender: { login: "ziti-ci", url: "https://api.github.com/users/netfoundry", html_url: "https://github.com/netfoundry", avatar_url: "https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/png/icon/netfoundry-icon-color.png" },
               schedule: "0 2 * * *",
               run_url: $run_url
             }')
