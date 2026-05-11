@@ -11,48 +11,31 @@
 import { readFileSync, readdirSync, statSync, writeFileSync, existsSync } from 'fs';
 import { join, relative, extname, basename, dirname } from 'path';
 import { fileURLToPath } from 'url';
+// @netfoundry/docusaurus-theme's dist uses bare specifiers (no .js extensions) that raw
+// Node ESM can't resolve. Import the compiled products module directly as a workaround.
+import { PRODUCTS as THEME_PRODUCTS } from '../node_modules/@netfoundry/docusaurus-theme/dist/src/products.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const unifiedDocDir = join(__dirname, '..');
 const BASE_URL = 'https://netfoundry.io/docs';
 
+// Maps theme product id → URL slug and docs source directory.
+// slug differs from id only for 'console', which is served at /docs/platform/.
+const DOCS_DIRS = {
+    openziti:   { slug: 'openziti',   dir: '_remotes/openziti/docusaurus/docs'   },
+    selfhosted: { slug: 'selfhosted', dir: '_remotes/selfhosted/docusaurus/docs' },
+    console:    { slug: 'platform',   dir: '_remotes/platform/docusaurus/docs'   },
+    frontdoor:  { slug: 'frontdoor',  dir: '_remotes/frontdoor/docusaurus/docs'  },
+    zrok:       { slug: 'zrok',       dir: '_remotes/zrok/website/docs'          },
+    zlan:       { slug: 'zlan',       dir: '_remotes/zlan/docusaurus/docs'       },
+};
+
 const PRODUCTS = [
-    {
-        slug: 'openziti',
-        name: 'OpenZiti',
-        description: 'Open-source zero trust networking framework. Embed zero trust networking in any application or deploy standalone network infrastructure.',
-        docsDir: join(unifiedDocDir, '_remotes/openziti/docusaurus/docs'),
-    },
-    {
-        slug: 'selfhosted',
-        name: 'NetFoundry Self-Hosted',
-        description: 'Kubernetes-based deployment of OpenZiti network infrastructure you run in your own datacenter or cloud environment.',
-        docsDir: join(unifiedDocDir, '_remotes/selfhosted/docusaurus/docs'),
-    },
-    {
-        slug: 'platform',
-        name: 'NetFoundry Platform',
-        description: 'NetFoundry console for creating and managing zero trust networks as a service.',
-        docsDir: join(unifiedDocDir, '_remotes/platform/docusaurus/docs'),
-    },
-    {
-        slug: 'frontdoor',
-        name: 'Frontdoor',
-        description: 'Secure tunneling and access management for exposing services without opening inbound firewall ports.',
-        docsDir: join(unifiedDocDir, '_remotes/frontdoor/docusaurus/docs'),
-    },
-    {
-        slug: 'zrok',
-        name: 'zrok',
-        description: 'Open-source sharing platform built on OpenZiti. Share services and files securely with public or private access controls.',
-        docsDir: join(unifiedDocDir, '_remotes/zrok/website/docs'),
-    },
-    {
-        slug: 'zlan',
-        name: 'NetFoundry zLAN',
-        description: 'Micro-segmentation solution for operational technology (OT) networks with software-defined firewall capabilities.',
-        docsDir: join(unifiedDocDir, '_remotes/zlan/docusaurus/docs'),
-    },
+    ...Object.entries(DOCS_DIRS).map(([id, { slug, dir }]) => {
+        const p = THEME_PRODUCTS[id];
+        return { slug, name: p.label, description: p.description, docsDir: join(unifiedDocDir, dir) };
+    }),
+    // data-connector is not yet in the theme registry; add it manually for now.
     {
         slug: 'dataconnector',
         name: 'NetFoundry Data Connector',
@@ -159,13 +142,14 @@ for (const product of PRODUCTS) {
     console.log(`  ${product.name}: ${entries.length} pages`);
 }
 
+const productList = sections.map(({ product }) => product.name).join(', ');
+
 const lines = [
     '# NetFoundry Documentation',
     '',
     '> Documentation for NetFoundry products and the OpenZiti open-source zero trust networking framework.',
     '',
-    'This index covers OpenZiti, NetFoundry Self-Hosted, the NetFoundry Platform console, Frontdoor, zrok,',
-    'NetFoundry zLAN, and the NetFoundry Data Connector. All URLs resolve under https://netfoundry.io/docs.',
+    `This index covers ${productList}. All URLs resolve under https://netfoundry.io/docs.`,
     '',
 ];
 
@@ -181,6 +165,6 @@ for (const { product, entries } of sections) {
 }
 
 const output = lines.join('\n');
-const outPath = join(unifiedDocDir, 'static/llms.txt');
+const outPath = process.argv[2] ?? join(unifiedDocDir, 'static/llms.txt');
 writeFileSync(outPath, output, 'utf8');
 console.log(`✅ Wrote static/llms.txt (${output.split('\n').length} lines, ${(output.length / 1024).toFixed(1)} KB)`);
