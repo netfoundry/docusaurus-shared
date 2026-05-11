@@ -78,6 +78,10 @@ export default {
         '@docusaurus/theme-search-algolia',
     ],
 
+    markdown: {
+        mermaid: true,
+    },
+
     staticDirectories: [
         'static',
         '../../unified-doc/static',

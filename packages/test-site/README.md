@@ -9,19 +9,37 @@ it exists is to give a fast inner loop for theme/component/css changes.
 
 ## Quick start
 
+All commands run from the **repo root** -- no `cd` needed.
+
 ```bash
-# from the repo root, install once
+# install once
 yarn install
 
 # build the theme (only needed once, or after editing TypeScript / theme/)
-yarn workspace @netfoundry/docusaurus-theme build
+yarn theme:build
 
 # start the test-site dev server
-yarn --cwd packages/test-site start
+yarn test-site
 ```
 
 Visit http://localhost:3000. The root `/` redirects to `/docs`, which is the
 category-grid landing page.
+
+### Root scripts cheat-sheet
+
+| Command                  | What it does                                              |
+|--------------------------|-----------------------------------------------------------|
+| `yarn test-site`         | Start the test-site dev server (alias: `yarn dev`)        |
+| `yarn test-site:build`   | Production build of the test-site                         |
+| `yarn test-site:clear`   | Clear test-site Docusaurus cache                          |
+| `yarn theme:build`       | Build `@netfoundry/docusaurus-theme`                      |
+| `yarn theme:watch`       | Watch the theme for incremental rebuilds                  |
+| `yarn theme:clean`       | Clear theme `dist/`                                       |
+| `yarn unified`           | Start the unified-doc dev server                          |
+| `yarn unified:build`     | Production build of unified-doc                           |
+| `yarn unified:clear`     | Clear unified-doc Docusaurus cache                        |
+| `yarn test`              | Run theme unit tests                                      |
+| `yarn reinstall`         | Wipe every node_modules + lockfile and reinstall fresh    |
 
 ## How the dev loop works
 
@@ -43,7 +61,7 @@ For the **No** rows: rebuild the theme, then restart (or hard-refresh) the
 test-site:
 
 ```bash
-yarn workspace @netfoundry/docusaurus-theme build
+yarn theme:build
 ```
 
 If you'd rather not run that by hand each time, run the theme's watcher in a
@@ -51,10 +69,10 @@ second terminal:
 
 ```bash
 # terminal 1: theme watcher (TS + per-component CSS)
-yarn --cwd packages/docusaurus-theme watch
+yarn theme:watch
 
 # terminal 2: test-site dev server
-yarn --cwd packages/test-site start
+yarn test-site
 ```
 
 The watcher recompiles in ~1s; Docusaurus picks up the new `dist/` and
@@ -130,8 +148,8 @@ Two things to check:
 
 The component is in `packages/docusaurus-theme/src/components/`, which is
 TypeScript. The test-site's webpack alias points at the built `dist/src/*.js`.
-Either run `yarn workspace @netfoundry/docusaurus-theme build`, or keep
-`yarn watch` running in the theme package (see the dev-loop section above).
+Either run `yarn theme:build`, or keep `yarn theme:watch` running in a second
+terminal (see the dev-loop section above).
 
 ### Math page broke the build
 
@@ -163,11 +181,25 @@ Search the docs for the old filename and update the relative links. The test
 site is configured with `onBrokenLinks: 'throw'` so broken links surface at
 build time.
 
+### "The workspace is in a weird state" (stale theme version, etc.)
+
+Run `yarn reinstall` from the repo root. That wipes every `node_modules/` and
+`yarn.lock`, then runs a fresh `yarn install`. Useful after:
+
+- Bumping a Docusaurus major/minor (the lockfile pins the old version).
+- Discovering yarn pulled a stale npm copy of a workspace package instead of
+  symlinking the local one (a version-range mismatch between consumer and
+  workspace).
+- Any "deps drift" symptom where edits to a workspace source folder aren't
+  visible in a consumer.
+
+Takes ~30s; rebuilds native bindings.
+
 ## Building for production
 
 ```bash
-yarn --cwd packages/test-site build
-yarn --cwd packages/test-site serve
+yarn test-site:build
+yarn workspace test-site serve   # serve the built output locally
 ```
 
 The static output lands in `packages/test-site/build/`. Useful for verifying

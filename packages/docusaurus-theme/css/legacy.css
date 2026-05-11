@@ -2173,7 +2173,12 @@ p > img {
         border: var(--ziti-code-block-border-thickness) solid var(--ziti-code-block-border-color);
     }
     div {
-        background: var(--ziti-code-block-background-color);
+        /* background: var(--ziti-code-block-background-color);
+           Commented out: was painting EVERY div inside any .alert, which made
+           <details class="alert">'s collapsibleContent wrapper and other nested
+           divs pick up the alert background color (visible as a stray blue strip
+           around code blocks inside Details). Theme-code-block + pre code rules
+           below still color the actual code surface. */
     }
 }
 .theme-code-block {

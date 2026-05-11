@@ -56,12 +56,15 @@ server — no reinstall needed.
 
 ## Step 2: Develop with test-site
 
-Start the dev server:
+Start the dev server from the **repo root**:
 
 ```bash
-cd packages/test-site
-yarn start
+yarn test-site
 ```
+
+(See the top-level `README.md` or `packages/test-site/README.md` for the full
+list of root scripts -- `theme:build`, `theme:watch`, `unified`, `reinstall`,
+etc.)
 
 ### What needs a rebuild
 
@@ -88,17 +91,15 @@ change `'../../css/theme.css'` back to `'../css/theme.css'` and have
 
 ### Watching theme changes during development
 
-`yarn watch` runs `tsc --watch` and a CSS file watcher together. Run it in a second
-terminal:
+`yarn theme:watch` runs `tsc --watch` and a CSS file watcher together. Run it
+in a second terminal:
 
 ```bash
-# Terminal 1 — theme watcher (TS + CSS)
-cd packages/docusaurus-theme
-yarn watch
+# Terminal 1 -- theme watcher (TS + per-component CSS)
+yarn theme:watch
 
-# Terminal 2 — test site dev server
-cd packages/test-site
-yarn start
+# Terminal 2 -- test-site dev server
+yarn test-site
 ```
 
 On every save, changes compile in ~1 second and Docusaurus hot-reloads the result.

@@ -40,14 +40,11 @@ body,
 .navbar__logo { /* squeeze whitespace */
     margin-right: 0;
 }
-.clean-btn svg {
-    /*
-    used to change the size of the light/dark toggle
-    needs to be this specific for docusaurus
-    */
-    height: 30px;
-    width: 30px;
-}
+/* Previously: `.clean-btn svg { height: 30px; width: 30px; }` to bump the
+   light/dark toggle. Removed because .clean-btn is also Docusaurus's class for
+   the code-block copy button and other icon buttons, so the rule was making
+   all of them oversized. If the toggle needs to be bigger again, scope tightly:
+   [class*='colorModeToggle'] .clean-btn svg { height: 30px; width: 30px; } */
 
 .DocSearch-Button {
     background: rgba(0, 0, 0, 0.06);
