@@ -1,0 +1,8 @@
+{
+  "label": "Markdown",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Plain Markdown / MDX features exercised by the theme: typography, code blocks, admonitions, tables, cross-references."
+  }
+}

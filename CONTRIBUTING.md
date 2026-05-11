@@ -24,10 +24,10 @@ docusaurus-shared/
 │       │   └── legacy.css        # Comprehensive styling
 │       └── __tests__/
 │
-├── test-site/                # Local development test site
-│   ├── docusaurus.config.ts
-│   ├── docs/
-│   └── src/
+│   └── test-site/            # Local dev sandbox for the theme
+│       ├── docusaurus.config.ts
+│       ├── docs/             # See packages/test-site/README.md
+│       └── src/
 │
 ├── unified-doc/              # Unified documentation build system
 ├── docs-linter/              # Vale + markdownlint tooling

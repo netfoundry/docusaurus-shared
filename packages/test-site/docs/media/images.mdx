@@ -1,0 +1,79 @@
+# Images
+
+Exercises image rendering modes including light/dark variants, sizing, and
+captions. Uses `static/img/logo.svg` as the placeholder.
+
+## Plain Markdown image
+
+![NetFoundry logo](/img/logo.svg)
+
+## Sized image (style-guide max 600px)
+
+<img src="/img/logo.svg" alt="NetFoundry logo, 200px" width="200" />
+
+<img src="/img/logo.svg" alt="NetFoundry logo, 600px" width="600" />
+
+## Centered with caption (figure)
+
+<figure style={{textAlign: 'center'}}>
+  <img src="/img/logo.svg" alt="NetFoundry logo" width="200" />
+  <figcaption><em>Figure 1.</em> The NetFoundry logo at 200px wide.</figcaption>
+</figure>
+
+## Side-by-side images
+
+<div style={{display: 'flex', gap: '1rem', alignItems: 'center', justifyContent: 'center'}}>
+  <img src="/img/logo.svg" alt="left" width="180" />
+  <img src="/img/logo.svg" alt="middle" width="180" />
+  <img src="/img/logo.svg" alt="right" width="180" />
+</div>
+
+## Image with border and shadow
+
+<img
+  src="/img/logo.svg"
+  alt="NetFoundry logo with border + shadow"
+  width="240"
+  style={{
+    border: '1px solid var(--ifm-color-emphasis-200)',
+    borderRadius: 'var(--ifm-global-radius)',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+    padding: '0.5rem',
+  }}
+/>
+
+## Light / dark theme variants
+
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+<ThemedImage
+  alt="Themed logo"
+  sources={{
+    light: useBaseUrl('/img/logo.svg'),
+    dark: useBaseUrl('/img/logo.svg'),
+  }}
+  width={200}
+/>
+
+Both variants currently point at the same SVG -- swap one for a dark-mode-specific
+asset once it exists to verify the theme switch.
+
+## Image inside a link
+
+[<img src="/img/logo.svg" alt="Click me" width="120" />](https://netfoundry.io)
+
+## Image inside an admonition
+
+:::info
+Embedding inside admonitions:
+
+<img src="/img/logo.svg" alt="logo inside info" width="100" />
+:::
+
+## Image inside a table cell
+
+| Logo                                    | Description       |
+|-----------------------------------------|-------------------|
+| <img src="/img/logo.svg" width="48" />  | The brand mark    |
+| <img src="/img/logo.svg" width="48" />  | The brand mark    |

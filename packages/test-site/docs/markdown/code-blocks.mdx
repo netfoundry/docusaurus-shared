@@ -1,0 +1,264 @@
+# Code blocks
+
+Exercises every code-block knob Docusaurus supports plus NetFoundry's own
+`@`-tagged example fences. `--ifm-pre-padding: 0.5rem` from `vars.css` keeps
+these compact.
+
+## Basic fenced block
+
+```bash
+echo "hello world"
+```
+
+## Fenced block with a title
+
+```bash title="install.sh"
+#!/usr/bin/env bash
+set -euo pipefail
+echo "Installing..."
+```
+
+## Fenced block with showLineNumbers
+
+```js showLineNumbers
+function greet(name) {
+  console.log(`Hello, ${name}!`);
+  return name.length;
+}
+greet('world');
+```
+
+## Fenced block with line highlighting
+
+Highlight a single line and a range:
+
+```js {2,4-5}
+function greet(name) {
+  console.log(`Hello, ${name}!`);
+  const length = name.length;
+  console.log(`Name is ${length} characters`);
+  return length;
+}
+```
+
+## Combined: title, line numbers, and highlighting
+
+```ts title="src/greet.ts" showLineNumbers {3-4}
+export function greet(name: string): number {
+  console.log(`Hello, ${name}!`);
+  const length = name.length;
+  console.log(`Name is ${length} characters`);
+  return length;
+}
+```
+
+## Diff block
+
+```diff
+ function greet(name) {
+-  console.log(name);
++  console.log(`Hello, ${name}!`);
+   return name.length;
+ }
+```
+
+## Console / shell with `$` prompt
+
+```console
+$ ziti edge login https://controller.example.com:1280
+Enter username: admin
+Enter password: ********
+Token: eyJhbGciOi...
+$ ziti edge list services
+```
+
+## Plain (no language) block
+
+```
+plain text fence
+preserves    whitespace
+and renders without syntax highlighting
+```
+
+## Multiple languages side-by-side
+
+```js
+console.log("Hello, World!");
+```
+
+```ts
+const msg: string = "Hello, World!";
+console.log(msg);
+```
+
+```python
+print("Hello, World!")
+```
+
+```c
+#include <stdio.h>
+int main() { printf("Hello, World!\n"); return 0; }
+```
+
+```bash
+echo "Hello, World!"
+```
+
+```json
+{ "msg": "Hello, World!" }
+```
+
+```yaml
+msg: Hello, World!
+```
+
+```html
+<button onclick="alert('Hello!')">Click me</button>
+```
+
+## NetFoundry `@`-tagged example fences
+
+The remark plugin in the theme recognizes fences whose language starts with
+`example` and parses `@description:`, `@command:`, `@code:`, and `@results:`
+sections.
+
+A plain `example` fence with only `@results:` (renders like a plain code block):
+
+```example
+@results: total 12
+drwxr-xr-x  5 user staff 160 Jan 28 12:34 .
+drwxr-xr-x 20 user staff 640 Jan 28 12:34 ..
+-rw-r--r--  1 user staff   0 Jan 28 12:34 file.txt
+```
+
+An `example-bash` fence with only `@results:` (no command shown):
+
+```example-bash
+@results: total 12
+drwxr-xr-x  5 user staff 160 Jan 28 12:34 .
+drwxr-xr-x 20 user staff 640 Jan 28 12:34 ..
+-rw-r--r--  1 user staff   0 Jan 28 12:34 file.txt
+```
+
+A fully decorated `example-python` block:
+
+```example-python
+@description:
+This is a longer description block. The plugin renders it as the lead-in
+paragraph above the code.
+
+@command:
+ls -l
+
+@code: An alternate title for the code section
+print("Hello, World!")
+print("Hello, World!")
+print("Hello, World!")
+
+@results: the results go here
+and more output below
+```
+
+## Very wide block (horizontal scroll)
+
+```bash
+ziti edge create config my-very-long-config-name-that-keeps-going host.v1 '{"protocol":"tcp","address":"some-very-long-internal-hostname.internal.example.com","port":12345,"allowedAddresses":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}'
+```
+
+## Very tall block (vertical scroll)
+
+```text
+line  1
+line  2
+line  3
+line  4
+line  5
+line  6
+line  7
+line  8
+line  9
+line 10
+line 11
+line 12
+line 13
+line 14
+line 15
+line 16
+line 17
+line 18
+line 19
+line 20
+```
+
+## Code in a bulleted list (with a nested admonition)
+
+* a bullet introducing a code block
+
+    ```
+    code at the indented level
+    second line of code
+    ```
+
+    :::note
+    A note next to the code block, both indented under the bullet:
+
+    ```
+    code inside a note inside a list item
+    ```
+    :::
+
+* another bullet for spacing
+
+## Code in an ordered list
+
+1. Run the install command:
+
+   ```bash
+   curl -sSf https://get.openziti.io/install.bash | sudo bash
+   ```
+
+2. Verify:
+
+   ```bash
+   ziti version
+   ```
+
+## Code in a table cell
+
+| Step | Command                        | Notes              |
+|------|--------------------------------|--------------------|
+| 1    | `ziti edge login <host>`       | Authenticate       |
+| 2    | `ziti edge list services`      | View services      |
+| 3    | `ziti edge create config ...`  | Create a config    |
+
+## Code in a blockquote
+
+> Run `./deploy.sh` only from the `main` branch.
+>
+> ```bash
+> ./deploy.sh --prod
+> ```
+
+## Inline code variations
+
+Plain inline `code`, inline `code with spaces`, inline code inside **bold `text`**,
+inline code inside *italic `text`*, and inline code inside a [link `target`](https://example.com).
+
+## Wrapping stress test (entirely inline code)
+
+`This is a` `block of text` `that is composed` `entirely of backticked` `words to see`
+`what it looks` `like when it` `is rendered. it` `needs to be` `reallylong and you`
+`should look at` `it and resize` `the screen and` `make sure it` `always keeps looking`
+`correct.`
+
+## Complex function (real-world TypeScript)
+
+```ts
+function debounce<F extends (...args: any[]) => void>(fn: F, delay = 300): F {
+  let timeout: ReturnType<typeof setTimeout>;
+  return function(this: any, ...args: any[]) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => fn.apply(this, args), delay);
+  } as F;
+}
+```

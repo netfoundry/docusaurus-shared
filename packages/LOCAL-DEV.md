@@ -56,34 +56,50 @@ server — no reinstall needed.
 
 ## Step 2: Develop with test-site
 
-Start the dev server:
+Start the dev server from the **repo root**:
 
 ```bash
-cd packages/test-site
-yarn start
+yarn test-site
 ```
+
+(See the top-level `README.md` or `packages/test-site/README.md` for the full
+list of root scripts -- `theme:build`, `theme:watch`, `unified`, `reinstall`,
+etc.)
 
 ### What needs a rebuild
 
-| What you changed | What to do |
-|---|---|
-| `src/` components (React/TS) | Nothing extra — `yarn watch` recompiles automatically |
-| `theme/` component overrides | Nothing extra — `yarn watch` recompiles automatically |
-| `css/` stylesheets | Nothing extra — `yarn watch` copies CSS automatically |
+| What you changed                          | What to do                                                                |
+|-------------------------------------------|---------------------------------------------------------------------------|
+| `css/*.css` (shared theme stylesheets)    | **Nothing.** Hot-reloads live. See "Why CSS hot-reloads" below.            |
+| `src/**/*.ts(x)` (React/TS)               | `yarn build` (or run `yarn watch` in a second terminal)                   |
+| `src/**/*.module.css` (component CSS)     | `yarn build` (or `yarn watch`) -- the JS that imports it lives in `dist/` |
+| `theme/**` (Docusaurus overrides)         | `yarn build` (or `yarn watch`)                                            |
+| `packages/test-site/docs/**.mdx`          | Nothing -- Docusaurus watches it.                                          |
+| `packages/test-site/src/custom/custom.css`| Nothing -- Docusaurus watches it.                                          |
+
+### Why CSS hot-reloads
+
+The theme's plugin entry (`src/index.ts`) calls
+`require.resolve('../../css/theme.css')`. At runtime that file is
+`dist/src/index.js`, so the path lands at the package's **source** `css/`
+folder, not a built copy. Edits to `css/vars.css`, `css/layout.css`, etc.
+propagate immediately.
+
+If you ever need to revert this behavior (e.g. for a hermetic prod build),
+change `'../../css/theme.css'` back to `'../css/theme.css'` and have
+`scripts/build-css.mjs` copy `css/` -> `dist/css/` again.
 
 ### Watching theme changes during development
 
-`yarn watch` runs `tsc --watch` and a CSS file watcher together. Run it in a second
-terminal:
+`yarn theme:watch` runs `tsc --watch` and a CSS file watcher together. Run it
+in a second terminal:
 
 ```bash
-# Terminal 1 — theme watcher (TS + CSS)
-cd packages/docusaurus-theme
-yarn watch
+# Terminal 1 -- theme watcher (TS + per-component CSS)
+yarn theme:watch
 
-# Terminal 2 — test site dev server
-cd packages/test-site
-yarn start
+# Terminal 2 -- test-site dev server
+yarn test-site
 ```
 
 On every save, changes compile in ~1 second and Docusaurus hot-reloads the result.

@@ -1,0 +1,46 @@
+# remarkReplaceMetaUrl
+
+Build-time plugin that rewrites the `content` attribute of `<meta>` JSX
+elements. Lets the same content source produce different `<meta>` tags
+depending on which site it's embedded in.
+
+## Import
+
+```ts
+import {remarkReplaceMetaUrl} from '@netfoundry/docusaurus-theme/plugins';
+
+remarkPlugins: [
+  [remarkReplaceMetaUrl, {
+    from: 'https://placeholder.example.com',
+    to: 'https://netfoundry.io',
+    logLevel: LogLevel.Silent,
+  }],
+],
+```
+
+## Behavior
+
+For every `<meta content="..." />` JSX element in the MDX tree, the plugin
+checks whether the `content` value contains the `from` string. If yes, it
+replaces the first occurrence with `to`.
+
+## Example
+
+Source MDX:
+
+```mdx
+<meta property="og:image" content="https://placeholder.example.com/og.png" />
+```
+
+After build (with the mapping above):
+
+```html
+<meta property="og:image" content="https://netfoundry.io/og.png" />
+```
+
+## Why this matters
+
+Open Graph / Twitter card images, canonical URLs, and similar `<meta>` values
+need to reflect the *current* host even when the content was authored against a
+different one. This plugin handles that swap without forcing the authoring
+team to know which host their content will land on.

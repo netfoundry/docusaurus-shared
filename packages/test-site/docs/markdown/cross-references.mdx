@@ -1,0 +1,57 @@
+# Cross-references
+
+Per the NetFoundry style guide, internal links should use **relative paths**,
+not `@site/` or absolute `/docs/...`. This page exercises every link form.
+
+## Relative link to another doc
+
+[Tab group samples](../components/tab-groups.mdx)
+
+[Tables](./tables.mdx)
+
+[Admonitions sampler](./admonitions.mdx)
+
+## Relative link with a heading anchor
+
+[Code blocks -- diff block](./code-blocks.mdx#diff-block)
+
+[Typography -- heading levels](./typography.mdx#heading-levels)
+
+## Anchor link within this page
+
+Jump to [the bottom](#last-section).
+
+Jump to [a sibling section](#sibling-section).
+
+## Sibling section
+
+You jumped here from the in-page anchor above.
+
+## Link to an image
+
+[Open the logo SVG](/img/logo.svg)
+
+## Anti-patterns (do not do these)
+
+The style guide forbids these forms even though they may technically work:
+
+- `[link](@site/docs/foo.mdx)` -- uses the `@site` alias instead of a relative path.
+- `[link](/docs/foo)` -- absolute path; breaks if `baseUrl` or the docs route changes.
+
+Use `./foo.mdx` or `../section/foo.mdx` instead.
+
+## Link styling
+
+When inline `code` is the link text, it should inherit the link color (set in
+`layout.css` via `a code { color: inherit }`):
+
+[`--verbose`](./code-blocks.mdx) -- inline code inside a link.
+
+## External links
+
+- [openziti.io](https://openziti.io)
+- [github.com/openziti](https://github.com/openziti)
+
+## Last section
+
+You can jump back to the [top of the page](#cross-references).

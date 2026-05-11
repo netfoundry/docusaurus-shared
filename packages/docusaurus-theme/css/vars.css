@@ -1,6 +1,8 @@
 :root {
     --ifm-navbar-height: 50px;
     --ifm-navbar-padding-vertical: 0;
+    --ifm-pre-padding: 0.5rem;
+    --ifm-table-cell-padding: 0.25rem;
     --nf-docs-max-width: 1400px;
 
     --nf-icon-link-size: 1.5rem;

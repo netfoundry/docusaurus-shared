@@ -1,1 +1,52 @@
-# Main Index Docs
+---
+title: NetFoundry theme sandbox
+sidebar_label: Welcome
+sidebar_position: 0
+slug: /
+hide_title: false
+---
+
+# NetFoundry theme sandbox
+
+This is the **dev sandbox** for `@netfoundry/docusaurus-theme`. Every page here
+exists to exercise some part of the shared theme so visual regressions are easy
+to spot. If something looks broken here, it's broken everywhere downstream.
+
+## Sections
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem', marginTop: '1.5rem'}}>
+
+  <a href="/docs/category/markdown" style={{display: 'block', padding: '1rem 1.25rem', border: '1px solid var(--ifm-color-emphasis-200)', borderRadius: 'var(--ifm-global-radius)', textDecoration: 'none', color: 'inherit'}}>
+    <strong>Markdown</strong>
+    <div style={{fontSize: '0.85rem', color: 'var(--ifm-color-emphasis-700)', marginTop: '0.25rem'}}>Typography, code blocks, admonitions, tables, cross-references.</div>
+  </a>
+
+  <a href="/docs/category/components" style={{display: 'block', padding: '1rem 1.25rem', border: '1px solid var(--ifm-color-emphasis-200)', borderRadius: 'var(--ifm-global-radius)', textDecoration: 'none', color: 'inherit'}}>
+    <strong>Components</strong>
+    <div style={{fontSize: '0.85rem', color: 'var(--ifm-color-emphasis-700)', marginTop: '0.25rem'}}>OsTabs, tab groups, Alert, DownloadCard, navbar items, ProductSearch.</div>
+  </a>
+
+  <a href="/docs/category/media" style={{display: 'block', padding: '1rem 1.25rem', border: '1px solid var(--ifm-color-emphasis-200)', borderRadius: 'var(--ifm-global-radius)', textDecoration: 'none', color: 'inherit'}}>
+    <strong>Media</strong>
+    <div style={{fontSize: '0.85rem', color: 'var(--ifm-color-emphasis-700)', marginTop: '0.25rem'}}>Images (light/dark, sized), Mermaid diagrams, KaTeX math.</div>
+  </a>
+
+  <a href="/docs/category/reference" style={{display: 'block', padding: '1rem 1.25rem', border: '1px solid var(--ifm-color-emphasis-200)', borderRadius: 'var(--ifm-global-radius)', textDecoration: 'none', color: 'inherit'}}>
+    <strong>Reference</strong>
+    <div style={{fontSize: '0.85rem', color: 'var(--ifm-color-emphasis-700)', marginTop: '0.25rem'}}>Frontmatter knobs, importing GitHub Markdown, long-page TOC stress test.</div>
+  </a>
+
+  <a href="/docs/category/plugins" style={{display: 'block', padding: '1rem 1.25rem', border: '1px solid var(--ifm-color-emphasis-200)', borderRadius: 'var(--ifm-global-radius)', textDecoration: 'none', color: 'inherit'}}>
+    <strong>Plugins</strong>
+    <div style={{fontSize: '0.85rem', color: 'var(--ifm-color-emphasis-700)', marginTop: '0.25rem'}}>NetFoundry remark plugins, GitHub admonitions, Scalar OpenAPI.</div>
+  </a>
+
+</div>
+
+## How to use this site
+
+- Browse the sidebar; every page is a self-contained demo.
+- Edit `packages/docusaurus-theme/css/` and refresh to see effects here first.
+- When you change shared CSS, eyeball each section to catch regressions.
+- Run `yarn workspace @netfoundry/docusaurus-theme build` before restarting if
+  you touched the theme package source.

@@ -1,0 +1,71 @@
+# Tables
+
+Stresses every table variant. `--ifm-table-cell-padding: 0.25rem` from `vars.css`
+keeps these compact.
+
+## Inside `<Details>` (the canonical "optional flags" pattern)
+
+<Details>
+<summary>Optional flags</summary>
+
+| Flag                | Default      | Purpose                                                          |
+|---------------------|--------------|------------------------------------------------------------------|
+| `--ctrl-address`    | *(hostname)* | advertised address for the control plane and API                 |
+| `--ctrl-port`       | `1280`       | listen port for the control plane and API                        |
+| `--router-address`  | *(hostname)* | advertised address for the integrated router                     |
+| `--router-port`     | `3022`       | listen port for the integrated router                            |
+| `--username` / `-u` | `admin`      | admin username                                                   |
+| `--password` / `-p` | `admin`      | admin password                                                   |
+| `--home`            | *(temp dir)* | write config to a permanent directory so state survives restarts |
+| `--no-router`       | --           | start the controller only, without an integrated router          |
+| `--verbose`         | --           | show additional output                                           |
+
+</Details>
+
+## Column alignment
+
+| Left-aligned | Centered      | Right-aligned |
+|:-------------|:-------------:|--------------:|
+| short        | short         | short         |
+| a longer cell| a longer cell | a longer cell |
+| `code`       | `code`        | `code`        |
+
+## Code in cells
+
+| Command            | Description                 | Default |
+|--------------------|-----------------------------|---------|
+| `ziti version`     | Print version info          | --      |
+| `ziti edge login`  | Authenticate to controller  | --      |
+| `ziti edge logout` | Clear stored credentials    | --      |
+
+## Long content (wrapping behavior)
+
+| Flag             | Default | Purpose                                                                                                          |
+|------------------|---------|------------------------------------------------------------------------------------------------------------------|
+| `--ctrl-address` | host    | the advertised address used by routers, identities, and admin clients to reach the control plane and HTTP API    |
+| `--ctrl-port`    | `1280`  | listen port for the control plane and HTTP API; clients connect here for authentication and management endpoints |
+| `--home`         | temp    | the directory where the controller persists state, configuration, and the embedded database between restarts    |
+
+## Wide table (horizontal scroll)
+
+| Col A | Col B | Col C | Col D | Col E | Col F | Col G | Col H | Col I | Col J | Col K | Col L |
+|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
+| a1    | b1    | c1    | d1    | e1    | f1    | g1    | h1    | i1    | j1    | k1    | l1    |
+| a2    | b2    | c2    | d2    | e2    | f2    | g2    | h2    | i2    | j2    | k2    | l2    |
+| a3    | b3    | c3    | d3    | e3    | f3    | g3    | h3    | i3    | j3    | k3    | l3    |
+
+## Plain comparison table
+
+| Column A | Column B | Column C |
+|----------|----------|----------|
+| one      | two      | three    |
+| four     | five     | six      |
+| seven    | eight    | nine     |
+
+## Empty-cell table
+
+| Field | Required | Default | Notes     |
+|-------|----------|---------|-----------|
+| name  | yes      |         |           |
+| port  | no       | 1280    |           |
+| host  | no       |         | DNS or IP |

@@ -1,0 +1,70 @@
+# OpenAPI reference (Scalar)
+
+`@scalar/docusaurus` renders an OpenAPI spec as an interactive API reference
+page. Used in `unified-doc/` for four API surfaces; not currently wired into
+`packages/test-site/`.
+
+## Where it's used in unified-doc
+
+Each instance is a separate plugin entry in `unified-doc/docusaurus.config.ts`:
+
+| ID                | Route                                                            | Spec source                                         |
+|-------------------|------------------------------------------------------------------|-----------------------------------------------------|
+| `edge-client`     | `/docs/openziti/reference/developer/api/edge-client-api-reference`     | `https://get.openziti.io/spec/client.yml`     |
+| `edge-management` | `/docs/openziti/reference/developer/api/edge-management-api-reference` | `https://get.openziti.io/spec/management.yml` |
+| `platform-api`    | `/docs/platform/api-guides/openapi-reference`                          | `${docsBase}console-api-spec.yaml` (local)    |
+| `frontdoor-api`   | `/docs/frontdoor/reference/api-reference`                              | `${docsBase}frontdoor-api-spec.yaml` (local)  |
+
+## Plugin entry shape
+
+```ts
+import type {ScalarOptions} from '@scalar/docusaurus';
+
+['@scalar/docusaurus', {
+  id: 'edge-client',
+  label: 'Edge Client API reference',
+  route: '/docs/openziti/reference/developer/api/edge-client-api-reference',
+  showNavLink: false,
+  configuration: {
+    url: 'https://get.openziti.io/spec/client.yml',
+    hideClientButton: true,
+    hideTestRequestButton: true,
+  },
+} as ScalarOptions]
+```
+
+## Required setup in the consuming site
+
+1. Add the dependency:
+
+   ```json
+   "dependencies": {
+     "@scalar/docusaurus": "^0.8.13"
+   }
+   ```
+
+2. Add the Scalar theme stylesheet to `themes` -> `customCss`:
+
+   ```ts
+   require.resolve('@scalar/docusaurus/dist/theme.css'),
+   ```
+
+3. Add one plugin entry per API spec (see the table above).
+
+4. Reference the rendered page from your sidebar or from other docs:
+
+   ```markdown
+   See the [Edge Client API reference](/docs/openziti/reference/developer/api/edge-client-api-reference).
+   ```
+
+## Why not redocusaurus
+
+`packages/test-site/package.json` currently lists `redocusaurus` (a different
+OpenAPI renderer). Unified-doc standardized on Scalar -- the test-site should
+match. Action item: swap `redocusaurus` for `@scalar/docusaurus` so the
+test-site reflects the production stack.
+
+## See also
+
+- The four `@scalar/docusaurus` entries in
+  `unified-doc/docusaurus.config.ts` (around lines 390-417 at time of writing).

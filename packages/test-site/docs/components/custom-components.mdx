@@ -1,0 +1,67 @@
+import {Alert, NetFoundryHighlight, NetFoundryHorizontalSection, DownloadSection, StarUs} from '@netfoundry/docusaurus-theme/ui';
+
+# Custom components
+
+Live showcases of the renderable components exported from
+`@netfoundry/docusaurus-theme/ui`. (For navbar items and icons see
+[Navbar items](./navbar-items.mdx); for search see [ProductSearch](./product-search.mdx).)
+
+## `<Alert>`
+
+Four `type` values: `info`, `success`, `warning`, `error`. Optional `title`.
+
+<Alert type="info" title="Info alert">An informational message.</Alert>
+
+<Alert type="success" title="Success alert">The operation completed.</Alert>
+
+<Alert type="warning" title="Warning alert">Heads up -- this might be an issue.</Alert>
+
+<Alert type="error" title="Error alert">Something failed.</Alert>
+
+<Alert type="info">No title -- just body text.</Alert>
+
+## `<NetFoundryHighlight>`
+
+Wraps inline text in the brand primary color. Useful for inline emphasis.
+
+This sentence has <NetFoundryHighlight>highlighted text</NetFoundryHighlight> in the middle.
+
+With a custom style override:
+
+<NetFoundryHighlight style={{fontWeight: 700, fontSize: '1.25rem'}}>Bold, large, primary-colored.</NetFoundryHighlight>
+
+## `<NetFoundryHorizontalSection>`
+
+A full-width horizontal section wrapper. Useful for landing-page strips.
+
+<NetFoundryHorizontalSection id="demo-section" style={{padding: '2rem 1rem', background: 'var(--ifm-color-emphasis-100)'}}>
+  <h2 style={{margin: 0}}>Section heading</h2>
+  <p style={{margin: '0.5rem 0 0'}}>Content lives inside a section that spans the available width.</p>
+</NetFoundryHorizontalSection>
+
+## `<DownloadSection>`
+
+Renders OS-specific download cards with one or more architecture buttons each.
+
+<DownloadSection
+  windows={{links: [{arch: 'x64', url: '#windows-x64'}, {arch: 'arm64', url: '#windows-arm64'}]}}
+  macos={{links: [{arch: 'Apple Silicon', url: '#macos-arm64'}, {arch: 'Intel', url: '#macos-x64'}]}}
+  linux={{links: [{arch: 'amd64', url: '#linux-amd64'}, {arch: 'arm64', url: '#linux-arm64'}]}}
+/>
+
+With an extra platform via `extras`:
+
+<DownloadSection
+  windows={{links: [{arch: 'x64', url: '#windows-x64'}]}}
+  extras={[
+    {osName: 'FreeBSD', links: [{arch: 'amd64', url: '#freebsd-amd64'}]},
+    {osName: 'OpenBSD', links: [{arch: 'amd64', url: '#openbsd-amd64'}]},
+  ]}
+/>
+
+## `<StarUs>`
+
+Renders a "Star us on GitHub" banner that normally lives in the layout between
+the navbar and content. Rendered inline here for inspection only:
+
+<StarUs repoUrl="https://github.com/openziti/ziti" label="Star us on GitHub" />

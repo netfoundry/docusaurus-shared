@@ -1,0 +1,168 @@
+# Mermaid diagrams
+
+`@docusaurus/theme-mermaid` is registered in `docusaurus.config.ts` and
+`markdown.mermaid` is set to `true`, so fenced ` ```mermaid ` blocks render as
+live diagrams. The source for each diagram is in a collapsible block underneath.
+
+## Flowchart
+
+```mermaid
+flowchart LR
+    A[Client] -->|TLS| B(Edge Router)
+    B --> C{Controller}
+    C -->|policy| D[Edge Router]
+    D --> E[Service]
+```
+
+<Details>
+<summary>View source</summary>
+
+````text
+```mermaid
+flowchart LR
+    A[Client] -->|TLS| B(Edge Router)
+    B --> C{Controller}
+    C -->|policy| D[Edge Router]
+    D --> E[Service]
+```
+````
+
+</Details>
+
+## Sequence diagram
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant ER as Edge Router
+    participant Ctrl as Controller
+    participant S as Service
+
+    C->>ER: Connect (TLS)
+    ER->>Ctrl: Auth + policy check
+    Ctrl-->>ER: Permitted
+    ER->>S: Forward
+    S-->>C: Response
+```
+
+<Details>
+<summary>View source</summary>
+
+````text
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant ER as Edge Router
+    participant Ctrl as Controller
+    participant S as Service
+
+    C->>ER: Connect (TLS)
+    ER->>Ctrl: Auth + policy check
+    Ctrl-->>ER: Permitted
+    ER->>S: Forward
+    S-->>C: Response
+```
+````
+
+</Details>
+
+## State diagram
+
+```mermaid
+stateDiagram-v2
+    [*] --> Disconnected
+    Disconnected --> Connecting: connect()
+    Connecting --> Connected: handshake ok
+    Connecting --> Disconnected: timeout
+    Connected --> Disconnected: disconnect()
+    Connected --> [*]
+```
+
+<Details>
+<summary>View source</summary>
+
+````text
+```mermaid
+stateDiagram-v2
+    [*] --> Disconnected
+    Disconnected --> Connecting: connect()
+    Connecting --> Connected: handshake ok
+    Connecting --> Disconnected: timeout
+    Connected --> Disconnected: disconnect()
+    Connected --> [*]
+```
+````
+
+</Details>
+
+## Class diagram
+
+```mermaid
+classDiagram
+    class Identity {
+      +string name
+      +string token
+      +authenticate()
+    }
+    class Service {
+      +string name
+      +int port
+    }
+    class Policy {
+      +string name
+      +allow()
+    }
+    Identity --> Policy
+    Policy --> Service
+```
+
+<Details>
+<summary>View source</summary>
+
+````text
+```mermaid
+classDiagram
+    class Identity {
+      +string name
+      +string token
+      +authenticate()
+    }
+    class Service {
+      +string name
+      +int port
+    }
+    class Policy {
+      +string name
+      +allow()
+    }
+    Identity --> Policy
+    Policy --> Service
+```
+````
+
+</Details>
+
+## Pie chart
+
+```mermaid
+pie title Traffic by service
+    "API"    : 45
+    "Web"    : 30
+    "gRPC"   : 15
+    "Other"  : 10
+```
+
+<Details>
+<summary>View source</summary>
+
+````text
+```mermaid
+pie title Traffic by service
+    "API"    : 45
+    "Web"    : 30
+    "gRPC"   : 15
+    "Other"  : 10
+```
+````
+
+</Details>

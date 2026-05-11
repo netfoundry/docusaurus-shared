@@ -1,0 +1,79 @@
+# Math (KaTeX)
+
+:::caution
+KaTeX (`remark-math` + `rehype-katex`) is **not** currently configured in
+`docusaurus.config.ts`. The examples below are shown as `latex` source blocks
+rather than rendered math, because MDX otherwise tries to parse the curly
+braces in expressions like `\frac{a}{b}` as JS expressions and crashes.
+
+Once KaTeX is wired up, swap each `latex` fence for the corresponding `$$ ... $$`
+math fence.
+:::
+
+## Inline math (source)
+
+```latex
+$E = mc^2$
+
+$\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$
+```
+
+## Display math (source)
+
+```latex
+$$
+\int_{0}^{\infty} e^{-x^2}\, dx = \frac{\sqrt{\pi}}{2}
+$$
+```
+
+## Aligned equations (source)
+
+```latex
+$$
+\begin{aligned}
+  a^2 + b^2 &= c^2 \\
+  (x + y)^2 &= x^2 + 2xy + y^2
+\end{aligned}
+$$
+```
+
+## Matrix (source)
+
+```latex
+$$
+\begin{bmatrix}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1
+\end{bmatrix}
+$$
+```
+
+## How to enable KaTeX
+
+Add to `docusaurus.config.ts`:
+
+```ts
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+
+presets: [
+  ['classic', {
+    docs: {
+      remarkPlugins: [remarkMath],
+      rehypePlugins: [rehypeKatex],
+    },
+  }],
+],
+
+stylesheets: [
+  {
+    href: 'https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css',
+    integrity: 'sha384-...',
+    crossorigin: 'anonymous',
+  },
+],
+```
+
+After enabling, replace the `latex` fences on this page with `$$ ... $$` for
+display math and inline `$...$` for inline math.

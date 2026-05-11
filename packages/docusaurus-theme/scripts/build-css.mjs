@@ -19,14 +19,11 @@ const walk = async (dir) => {
 
 await fs.mkdir("dist", { recursive: true });
 
-// copy css/ -> dist/css/
-try {
-  const files = await walk("css");
-  for (const f of files) {
-    if (!f.endsWith(".css")) continue;
-    await copyFile(f, path.join("dist", f));
-  }
-} catch {}
+// css/ is NOT copied to dist/css/. The theme's getClientModules() resolves
+// '../../css/theme.css' from dist/src/index.js, which lands at the package's
+// source css/ folder. This lets live edits to css/*.css flow into the dev
+// server without rebuilding. Published consumers still get css/ at the
+// package root via the `files` allowlist in package.json.
 
 // copy src/**/*.css -> dist/src/**/*
 try {

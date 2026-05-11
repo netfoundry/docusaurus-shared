@@ -1,0 +1,68 @@
+# OsTabs
+
+import {OsTabs} from '@netfoundry/docusaurus-theme/ui';
+import TabItem from '@theme/TabItem';
+
+`OsTabs` wraps Docusaurus `<Tabs>` and auto-selects the tab matching the
+visitor's OS (detected via `react-device-detect`). Falls back to Windows if
+unknown; falls back to the first available tab if the preferred OS isn't in the
+tab set.
+
+## Default (auto-detected)
+
+<OsTabs values={[
+  {label: 'Windows', value: 'Windows'},
+  {label: 'Mac OS', value: 'Mac OS'},
+  {label: 'Linux', value: 'Linux'},
+  {label: 'iOS', value: 'iOS'},
+  {label: 'Android', value: 'Android'},
+]}>
+  <TabItem value="Windows">Windows-specific instructions.</TabItem>
+  <TabItem value="Mac OS">macOS-specific instructions.</TabItem>
+  <TabItem value="Linux">Linux-specific instructions.</TabItem>
+  <TabItem value="iOS">iOS-specific instructions.</TabItem>
+  <TabItem value="Android">Android-specific instructions.</TabItem>
+</OsTabs>
+
+## Subset (Linux + Docker only)
+
+When the visitor's OS isn't in the tab set, OsTabs falls back to the first
+listed value instead of crashing.
+
+<OsTabs values={[
+  {label: 'Linux', value: 'Linux'},
+  {label: 'Docker', value: 'Docker'},
+]}>
+  <TabItem value="Linux">Linux instructions.</TabItem>
+  <TabItem value="Docker">Docker instructions.</TabItem>
+</OsTabs>
+
+## With code blocks inside tabs
+
+<OsTabs values={[
+  {label: 'Windows', value: 'Windows'},
+  {label: 'Mac OS', value: 'Mac OS'},
+  {label: 'Linux', value: 'Linux'},
+]}>
+  <TabItem value="Windows">
+
+```powershell
+winget install OpenZiti.Ziti
+```
+
+  </TabItem>
+  <TabItem value="Mac OS">
+
+```bash
+brew install openziti/release/ziti
+```
+
+  </TabItem>
+  <TabItem value="Linux">
+
+```bash
+curl -sSf https://get.openziti.io/install.bash | sudo bash
+```
+
+  </TabItem>
+</OsTabs>

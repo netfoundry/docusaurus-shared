@@ -1,13 +1,27 @@
 {
   "private": true,
   "workspaces": [
-    "packages/*",
-    "test-site"
+    "packages/*"
   ],
   "scripts": {
     "test": "yarn workspace @netfoundry/docusaurus-theme test",
+
+    "theme:build": "yarn workspace @netfoundry/docusaurus-theme build",
+    "theme:watch": "yarn workspace @netfoundry/docusaurus-theme watch",
+    "theme:clean": "yarn workspace @netfoundry/docusaurus-theme clean",
+
+    "test-site": "yarn workspace test-site start",
+    "test-site:build": "yarn workspace test-site build",
+    "test-site:clear": "yarn workspace test-site clear",
+
+    "unified": "yarn --cwd unified-doc start",
+    "unified:build": "yarn --cwd unified-doc build",
+    "unified:clear": "yarn --cwd unified-doc clear",
+
     "dev": "yarn workspace test-site start",
-    "build": "yarn workspace test-site build"
+    "build": "yarn workspace test-site build",
+
+    "reinstall": "node scripts/reinstall.mjs"
   },
   "packageManager": "yarn@1.22.22"
 }

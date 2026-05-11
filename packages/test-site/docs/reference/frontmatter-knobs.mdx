@@ -1,0 +1,157 @@
+---
+title: Frontmatter knobs
+sidebar_label: Frontmatter knobs
+description: Reference for every Docusaurus frontmatter field used in NetFoundry docs.
+keywords: [frontmatter, docusaurus, reference]
+hide_table_of_contents: false
+---
+
+# Frontmatter knobs
+
+Reference for every Docusaurus frontmatter field used in NetFoundry docs. The
+frontmatter for *this* page demonstrates many of them at once -- view source to
+see the YAML block at the top.
+
+## `title`
+
+Overrides the page's H1 + `<title>` tag.
+
+```yaml
+---
+title: Custom title
+---
+```
+
+## `sidebar_label`
+
+Text shown in the sidebar (defaults to `title` or the first H1).
+
+```yaml
+---
+sidebar_label: Short label
+---
+```
+
+## `sidebar_position`
+
+Numeric ordering hint within an auto-generated sidebar. Lower numbers come
+first.
+
+```yaml
+---
+sidebar_position: 2
+---
+```
+
+## `slug`
+
+Overrides the URL path for the page.
+
+```yaml
+---
+slug: /custom/url/path
+---
+```
+
+## `description`
+
+Used for `<meta name="description">` and (where supported) social preview cards.
+
+```yaml
+---
+description: A one-sentence summary of this page.
+---
+```
+
+## `keywords`
+
+Array of keywords for `<meta name="keywords">`.
+
+```yaml
+---
+keywords: [auth, login, identity]
+---
+```
+
+## `hide_table_of_contents`
+
+Hides the right-hand TOC on the page.
+
+```yaml
+---
+hide_table_of_contents: true
+---
+```
+
+## `hide_title`
+
+Suppresses the auto-rendered H1.
+
+```yaml
+---
+hide_title: true
+---
+```
+
+## `draft`
+
+When `true`, excludes the page from production builds.
+
+```yaml
+---
+draft: true
+---
+```
+
+## `tags`
+
+Tags the page for Docusaurus's tag index.
+
+```yaml
+---
+tags: [getting-started, identity]
+---
+```
+
+## `pagination_label`
+
+Overrides the label shown in prev/next pagination links.
+
+```yaml
+---
+pagination_label: Custom prev/next label
+---
+```
+
+## `pagination_prev` / `pagination_next`
+
+Override the previous/next link targets explicitly.
+
+```yaml
+---
+pagination_prev: getting-started/intro
+pagination_next: getting-started/install
+---
+```
+
+## `image`
+
+Social preview image (Open Graph).
+
+```yaml
+---
+image: /img/og-preview.png
+---
+```
+
+## `last_update`
+
+Override the "Last updated" timestamp.
+
+```yaml
+---
+last_update:
+  date: 2025-01-15
+  author: NetFoundry Docs
+---
+```

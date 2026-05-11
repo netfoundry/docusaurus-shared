@@ -1,0 +1,53 @@
+# ProductSearch
+
+The `ProductSearch` component from `@netfoundry/docusaurus-theme/ui` wraps
+Algolia InstantSearch and renders a multi-product search experience.
+
+## Required configuration
+
+`ProductSearch` requires three Algolia values that must be supplied as props:
+
+| Prop         | Type     | Purpose                              |
+|--------------|----------|--------------------------------------|
+| `appId`      | string   | Algolia application ID               |
+| `apiKey`     | string   | Algolia search-only API key          |
+| `indexName`  | string   | Index to search                      |
+| `products`   | string[] | Optional product filter list         |
+
+The test-site reads these from `customFields` in `docusaurus.config.ts`:
+
+```ts
+customFields: {
+  ALGOLIA_APPID:     cfg.algolia.appId,
+  ALGOLIA_APIKEY:    cfg.algolia.apiKey,
+  ALGOLIA_INDEXNAME: cfg.algolia.indexName,
+}
+```
+
+## Live demo
+
+The component is intentionally **not** rendered on this page by default because
+it needs real Algolia credentials. To embed it:
+
+```mdx
+import {ProductSearch} from '@netfoundry/docusaurus-theme/ui';
+import {useCustomFields} from '@netfoundry/docusaurus-theme/ui';
+
+<ProductSearch
+  appId={customFields.ALGOLIA_APPID}
+  apiKey={customFields.ALGOLIA_APIKEY}
+  indexName={customFields.ALGOLIA_INDEXNAME}
+  products={['ziti', 'zrok']}
+/>
+```
+
+## What to verify when wiring it up
+
+1. Search box renders and accepts input.
+2. Hits stream in as you type (no submit needed).
+3. Product filter chips reflect the `products` prop.
+4. Pagination renders at the bottom of the results list.
+5. The "Powered by Algolia" badge appears.
+6. Clicking a hit navigates to the matching doc URL (`url_without_anchor` +
+   `anchor` are honored).
+7. Snippets highlight matched terms within the result body.

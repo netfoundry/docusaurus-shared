@@ -11,6 +11,13 @@ html {
     scrollbar-gutter: stable;
 }
 
+/* Hide focus outlines for mouse users; keep them for keyboard navigation.
+   Paired with useKeyboardNavigation() which toggles .navigation-with-keyboard
+   on <body> based on Tab vs mousedown. */
+body:not(.navigation-with-keyboard) *:not(input):focus {
+    outline: none;
+}
+
 /* Right navbar order: icons → toggle → search */
 .navbar__items--right > div:has(button.clean-btn),
 .navbar__items--right > button.clean-btn              { order: 10; }
@@ -38,6 +45,26 @@ html {
     /* work around issue from docusaurus doc grow/shrinking based on content */
     width: 100%;
     max-width: var(--ziti-max-width);
+}
+
+/* Soften the Details/accordion component.
+   details.alert specificity is needed to beat rules in legacy.css. */
+details.alert {
+    background: var(--ifm-background-surface-color);
+    border-radius: var(--ifm-global-radius);
+    padding: 0.5rem 0.75rem;
+}
+details summary {
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Inline code inside links (e.g. TOC headings) should inherit the link color.
+   Background uses --ifm-color-emphasis-100 so it flips automatically per theme. */
+a code {
+    color: inherit;
+    background: var(--ifm-color-emphasis-100);
+    border: 1px solid var(--ifm-color-emphasis-200);
 }
 
 

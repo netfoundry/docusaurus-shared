@@ -7,12 +7,15 @@ Shared documentation theme, components, and tooling for NetFoundry's Docusaurus-
 ```
 docusaurus-shared/
 ├── packages/
-│   └── docusaurus-theme/     # @netfoundry/docusaurus-theme npm package
-├── test-site/                # Local development/testing site
-├── unified-doc/              # Unified documentation build system
+│   ├── docusaurus-theme/     # @netfoundry/docusaurus-theme npm package
+│   └── test-site/            # Local dev sandbox for the theme
+├── unified-doc/              # Unified production documentation build
 ├── docs-linter/              # Vale + markdownlint tooling
 └── bootstrap.sh              # New site bootstrapper
 ```
+
+See [`packages/test-site/README.md`](./packages/test-site/README.md) for the
+test-site dev loop, docs organization, and debug recipes.
 
 ## Quick Start
 
@@ -66,16 +69,24 @@ See the [theme README](./packages/docusaurus-theme/README.md) for full documenta
 git clone https://github.com/netfoundry/docusaurus-shared.git
 cd docusaurus-shared
 yarn install
-
-# Start development server
-yarn dev
-
-# Run tests
-yarn test
-
-# Build
-yarn build
 ```
+
+All routine commands run from the repo root. No `cd` into subfolders required:
+
+| Command                  | What it does                                              |
+|--------------------------|-----------------------------------------------------------|
+| `yarn test-site`         | Start the test-site dev sandbox (alias: `yarn dev`)       |
+| `yarn test-site:build`   | Production build of the test-site (alias: `yarn build`)   |
+| `yarn theme:build`       | Build `@netfoundry/docusaurus-theme`                      |
+| `yarn theme:watch`       | Watch the theme for incremental rebuilds                  |
+| `yarn unified`           | Start the unified-doc dev server                          |
+| `yarn unified:build`     | Production build of unified-doc                           |
+| `yarn test`              | Run theme unit tests                                      |
+| `yarn reinstall`         | Wipe every node_modules + lockfile, install fresh         |
+
+See [packages/test-site/README.md](./packages/test-site/README.md) for the full
+dev-loop walkthrough, debug recipes, and what hot-reloads vs. what needs a
+rebuild.
 
 ## Local Development
 

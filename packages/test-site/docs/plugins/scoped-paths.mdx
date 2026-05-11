@@ -1,0 +1,57 @@
+# remarkScopedPath
+
+Rewrites Markdown links and image URLs that begin with one of a configured set
+of prefixes. Lets each remote doc repo use stable aliases that resolve
+differently depending on which site embeds the content.
+
+## Import
+
+```ts
+import {remarkScopedPath} from '@netfoundry/docusaurus-theme/plugins';
+
+remarkPlugins: [
+  [remarkScopedPath, {
+    mappings: [
+      {from: '@openzitidocs',     to: '/docs/openziti'},
+      {from: '@frontdoordocs',    to: '/docs/frontdoor'},
+      {from: '@selfhosteddocs',   to: '/docs/selfhosted'},
+      {from: '/openziti',         to: '/docs/openziti'},
+      {from: '/zrok',             to: '/docs/zrok'},
+    ],
+    logLevel: LogLevel.Silent,
+  }],
+],
+```
+
+## Behavior
+
+For each mapping `{from, to}`, the plugin rewrites:
+
+- `[link](FROM/path)` -> `[link](TO/path)`
+- `![alt](FROM/img.png)` -> `![alt](TO/img.png)`
+- `<a href="FROM/path">` (in JSX) -> `<a href="TO/path">`
+
+Only links that *start with* `FROM` are rewritten -- substring matches in the
+middle of a URL are not affected.
+
+## Example
+
+With the mappings above:
+
+| Source                                  | Rewritten to                       |
+|-----------------------------------------|------------------------------------|
+| `[install](@openzitidocs/install)`       | `[install](/docs/openziti/install)`|
+| `![arch](@frontdoordocs/img/arch.png)`   | `![arch](/docs/frontdoor/img/arch.png)` |
+| `[zrok docs](/zrok/getting-started)`     | `[zrok docs](/docs/zrok/getting-started)` |
+
+## Why this matters
+
+When the openziti repo's docs are embedded under `/docs/openziti/` in the
+unified site but under `/` in the openziti standalone site, both can write
+`@openzitidocs/foo` and have it resolve correctly in either context. The
+mapping table changes per host; the source content does not.
+
+## See also
+
+- [Cross-references](../markdown/cross-references.mdx) -- the link styles you
+  can use in MDX before the plugin rewrites them.
