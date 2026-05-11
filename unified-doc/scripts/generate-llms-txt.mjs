@@ -22,7 +22,7 @@ const PRODUCTS = [
         slug: 'openziti',
         name: 'OpenZiti',
         description: 'Open-source zero trust networking framework. Embed zero trust networking in any application or deploy standalone network infrastructure.',
-        docsDir: join(unifiedDocDir, 'openziti_versioned_docs/version-1.x'),
+        docsDir: join(unifiedDocDir, '_remotes/openziti/docusaurus/docs'),
     },
     {
         slug: 'selfhosted',
