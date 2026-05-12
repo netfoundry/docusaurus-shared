@@ -150,6 +150,12 @@ function extendDocsPlugins(plugin: PluginConfig): PluginConfig {
         [remarkCodeSections, { logLevel: LogLevel.Silent }],
     ];
 
+    // Force per-file detection: .md uses CommonMark, .mdx uses strict MDX.
+    // Overrides whatever the imported plugin config from _remotes/ set, so
+    // upstream content with {#heading-ids} or raw <!-- comments --> parses
+    // correctly under future.v4 / Docusaurus 3.10+.
+    config.format = 'detect';
+
     return [pluginName, config];
 }
 
@@ -227,6 +233,11 @@ const config: Config = {
             onBrokenMarkdownLinks: "throw"
         },
         mermaid: true,
+        // Per-file detection by extension: .md uses CommonMark (looser, accepts
+        // {#heading-id}, raw <!-- comments -->, stray braces), .mdx uses strict MDX.
+        // Important under future.v4 -- without this, .md files get MDX-parsed and
+        // upstream content from _remotes/ breaks.
+        format: 'detect',
     },
     staticDirectories: [
         'static',
