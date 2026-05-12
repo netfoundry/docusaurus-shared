@@ -2,18 +2,26 @@ name: Publish the shared library to npmjs
 
 on:
   workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Run npm publish in --dry-run mode (no upload)"
+        type: boolean
+        default: false
 
 permissions:
-  id-token: write  # Required for OIDC
+  id-token: write   # required for npm OIDC trusted publisher
   contents: read
 
 jobs:
   publish:
-    defaults:
-      run:
-        working-directory: lib/packages/docusaurus-shared
     runs-on: ubuntu-latest
     steps:
+      - name: Refuse to run from non-main branches
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "::error::This workflow may only be dispatched from main (got ${{ github.ref }})."
+          exit 1
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
@@ -21,8 +29,45 @@ jobs:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
-      - run: corepack enable
-      - run: yarn install --immutable
-      - run: yarn build --if-present
-      - run: yarn test
-      - run: npm publish
+      # Pre-flight: read version from package.json, fail loudly *before*
+      # spending time on install/build if the version is already on npm.
+      - name: Verify version is not already published
+        id: precheck
+        run: |
+          set -euo pipefail
+          name="$(node -p "require('./packages/docusaurus-theme/package.json').name")"
+          version="$(node -p "require('./packages/docusaurus-theme/package.json').version")"
+          echo "name=$name"     >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "Checking $name@$version on npm..."
+          existing="$(npm view "${name}@${version}" version 2>/dev/null || true)"
+          if [ -n "$existing" ]; then
+            echo "::error title=Version already published::${name}@${version} is already on npm. Bump packages/docusaurus-theme/package.json before re-running."
+            exit 1
+          fi
+          echo "OK: ${name}@${version} is not on npm yet."
+
+      - name: Install, build, test, publish
+        run: ./scripts/publish-theme.sh ${{ inputs.dry-run && '--dry-run' || '' }}
+
+      - name: Explain npm publish failure
+        if: failure() && steps.precheck.outcome == 'success'
+        run: |
+          cat <<'EOF'
+          ::error title=Publish failed::npm publish failed after the version pre-check passed.
+
+          Most common cause: npm Trusted Publisher (OIDC) is not yet
+          configured for this package + workflow. To fix:
+
+            1. Log in to npmjs.com as a maintainer of @netfoundry/docusaurus-theme
+            2. Go to: package > Settings > Trusted Publishers > Add
+            3. Provider:        GitHub Actions
+               Organization:    netfoundry
+               Repository:      docusaurus-shared
+               Workflow file:   .github/workflows/pubshared.yml
+               Environment:     (leave blank)
+            4. Re-run this workflow.
+
+          If trusted publisher is already configured, check the publish step
+          logs above for the actual npm error.
+          EOF
