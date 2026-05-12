@@ -80,6 +80,10 @@ export default {
 
     markdown: {
         mermaid: true,
+        // Per-file detection by extension: .md uses CommonMark (looser, accepts
+        // {#heading-id}, raw <!-- comments -->, stray braces), .mdx uses strict MDX.
+        // Matches unified-doc so upstream content from _remotes/ parses consistently.
+        format: 'detect',
     },
 
     staticDirectories: [

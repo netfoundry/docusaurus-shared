@@ -13,10 +13,12 @@
     "test-site": "yarn workspace test-site start",
     "test-site:build": "yarn workspace test-site build",
     "test-site:clear": "yarn workspace test-site clear",
+    "test-site:fresh": "yarn test-site:clear && yarn test-site",
 
     "unified": "yarn --cwd unified-doc start",
     "unified:build": "yarn --cwd unified-doc build",
     "unified:clear": "yarn --cwd unified-doc clear",
+    "unified:fresh": "yarn unified:clear && yarn unified",
 
     "dev": "yarn workspace test-site start",
     "build": "yarn workspace test-site build",

@@ -1,6 +1,6 @@
 {
   "name": "@netfoundry/docusaurus-theme",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "description": "NetFoundry Docusaurus theme with shared layout, footer, and styling",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -53,7 +53,6 @@
   },
   "dependencies": {
     "@docsearch/react": "^3",
-    "@netfoundry/docusaurus-theme": "^0.11.0",
     "algoliasearch": "^5",
     "clsx": "^2.0.0",
     "instantsearch.js": "^4",
