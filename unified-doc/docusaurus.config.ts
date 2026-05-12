@@ -150,12 +150,6 @@ function extendDocsPlugins(plugin: PluginConfig): PluginConfig {
         [remarkCodeSections, { logLevel: LogLevel.Silent }],
     ];
 
-    // Force per-file detection: .md uses CommonMark, .mdx uses strict MDX.
-    // Overrides whatever the imported plugin config from _remotes/ set, so
-    // upstream content with {#heading-ids} or raw <!-- comments --> parses
-    // correctly under future.v4 / Docusaurus 3.10+.
-    config.format = 'detect';
-
     return [pluginName, config];
 }
 
