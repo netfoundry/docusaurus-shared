@@ -1,4 +1,4 @@
-import {Alert, NetFoundryHighlight, NetFoundryHorizontalSection, DownloadSection, StarUs} from '@netfoundry/docusaurus-theme/ui';
+import {Alert, NetFoundryHighlight, NetFoundryHorizontalSection, DownloadSection, GitHubReleaseDownloads, StarUs} from '@netfoundry/docusaurus-theme/ui';
 
 # Custom components
 
@@ -57,6 +57,48 @@ With an extra platform via `extras`:
     {osName: 'FreeBSD', links: [{arch: 'amd64', url: '#freebsd-amd64'}]},
     {osName: 'OpenBSD', links: [{arch: 'amd64', url: '#openbsd-amd64'}]},
   ]}
+/>
+
+## `<GitHubReleaseDownloads>`
+
+Thin fetcher/adapter over `<DownloadSection>`. Resolves GitHub release assets at runtime
+and renders the matching platform cards. Returns `null` while loading or on error.
+
+Live against `openziti/ziti` (stable channel). Asset names look like
+`ziti-linux-amd64-1.6.5.tar.gz`, so substring patterns are the simplest fit:
+
+<GitHubReleaseDownloads
+  repo="openziti/ziti"
+  channel="stable"
+  platforms={{
+    windows: { 'x86_64': 'windows-amd64', 'ARM64': 'windows-arm64' },
+    macos:   { 'x86_64': 'darwin-amd64',  'ARM64': 'darwin-arm64'  },
+    linux:   { 'x86_64': 'linux-amd64',   'ARM64': 'linux-arm64', 'ARM': /linux-arm-/ },
+  }}
+/>
+
+`openziti/ziti-tunnel-sdk-c` -- many more arches. Asset names look like
+`ziti-edge-tunnel-Linux_x86_64.zip`, so the patterns use the capitalized OS + underscore form:
+
+<GitHubReleaseDownloads
+  repo="openziti/ziti-tunnel-sdk-c"
+  channel="stable"
+  platforms={{
+    windows: {
+      'x86_64': 'Windows_x86_64',
+      'ARM64':  'Windows_arm64',
+    },
+    macos: {
+      'x86_64': 'Darwin_x86_64',
+      'ARM64':  'Darwin_arm64',
+    },
+    linux: {
+      'x86_64':  'Linux_x86_64',
+      'ARM64':   'Linux_arm64',
+      'ARM':     /Linux_arm\./,
+      'riscv64': 'Linux_riscv64',
+    },
+  }}
 />
 
 ## `<StarUs>`

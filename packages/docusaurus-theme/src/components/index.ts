@@ -3,6 +3,7 @@ export * from './icons';
 export * from './CodeBlock';
 export * from './Common';
 export * from './DownloadCard';
+export * from './GitHubReleaseDownloads';
 export * from './NetFoundry'
 export * from './NetFoundryFooter';
 export * from './NetFoundryHighlight';
