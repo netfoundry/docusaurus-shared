@@ -134,6 +134,31 @@ console.log("    hotjar app         : " + cfg.hotjar.id);
 console.log('REMARK_MAPPINGS:', JSON.stringify(REMARK_MAPPINGS, null, 2));
 
 
+// Promotes the %%HEADING_ID:slug%% marker (emitted by the site-level preprocessor
+// for .mdx files that originally used `## Heading {#slug}` syntax) into the
+// heading's real `id` attribute. This is the AST-stage counterpart to the
+// preprocessor: together they replace Docusaurus's built-in {#id} handling for
+// .mdx files (which doesn't survive MDX micromark tokenization under
+// future.v4 / 3.10+), while producing real heading IDs that Docusaurus's anchor
+// validator can see.
+function remarkPromoteHeadingId() {
+    const {visit} = require('unist-util-visit');
+    return (tree: any) => {
+        visit(tree, 'heading', (node: any) => {
+            const last = node.children[node.children.length - 1];
+            if (!last || last.type !== 'text') return;
+            const m = last.value.match(/^(.*?)\s*xHIDx([a-zA-Z][\w-]*)xHIDx\s*$/s);
+            if (!m) return;
+            last.value = m[1].replace(/\s+$/, '');
+            if (last.value === '') node.children.pop();
+            node.data = node.data || {};
+            node.data.id = m[2];
+            node.data.hProperties = node.data.hProperties || {};
+            node.data.hProperties.id = m[2];
+        });
+    };
+}
+
 function extendDocsPlugins(plugin: PluginConfig): PluginConfig {
     if (!Array.isArray(plugin)) return plugin;
 
@@ -141,6 +166,7 @@ function extendDocsPlugins(plugin: PluginConfig): PluginConfig {
 
     config.beforeDefaultRemarkPlugins = [
         ...(config.beforeDefaultRemarkPlugins || []),
+        remarkPromoteHeadingId,
         remarkGithubAdmonitionsToDirectives,
     ];
 
@@ -149,12 +175,6 @@ function extendDocsPlugins(plugin: PluginConfig): PluginConfig {
         [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
         [remarkCodeSections, { logLevel: LogLevel.Silent }],
     ];
-
-    // Force per-file detection: .md uses CommonMark, .mdx uses strict MDX.
-    // Overrides whatever the imported plugin config from _remotes/ set, so
-    // upstream content with {#heading-ids} or raw <!-- comments --> parses
-    // correctly under future.v4 / Docusaurus 3.10+.
-    config.format = 'detect';
 
     return [pluginName, config];
 }
@@ -238,6 +258,29 @@ const config: Config = {
         // Important under future.v4 -- without this, .md files get MDX-parsed and
         // upstream content from _remotes/ breaks.
         format: 'detect',
+        // Source-level rewrites for .mdx files from upstream remotes that use
+        // CommonMark-only syntax (HTML comments, `{#id}` heading anchors). Runs
+        // before MDX micromark tokenization, so we can transform without forking
+        // upstream content. Only .mdx files are touched; .md files already parse
+        // as CommonMark under format:'detect'.
+        preprocessor: ({filePath, fileContent}) => {
+            if (!filePath.endsWith('.mdx')) return fileContent;
+            let out = fileContent;
+            // <!-- ... --> -> {/* ... */}  (works for single- and multi-line)
+            out = out.replace(/<!--([\s\S]*?)-->/g, (_m, body) => `{/*${body}*/}`);
+            // `## Heading {#id}` -> `## Heading xHIDxidxHIDx`. MDX strict mode
+            // treats `{` as a JSX expression start so the original syntax fails;
+            // the marker is plain alphanumeric text (no `:` or `%`, which MDX
+            // splits text nodes on) that survives micromark tokenization, and is
+            // then promoted to a real heading `id` by remarkPromoteHeadingId.
+            // The result is an actual <h2 id="..."> that Docusaurus's anchor
+            // validator sees.
+            out = out.replace(
+                /^(#{1,6}[ \t]+.+?)[ \t]*\{#([a-zA-Z][\w-]*)\}[ \t]*$/gm,
+                '$1 xHIDx$2xHIDx'
+            );
+            return out;
+        },
     },
     staticDirectories: [
         'static',
