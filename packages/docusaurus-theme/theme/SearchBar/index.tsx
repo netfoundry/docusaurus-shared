@@ -21,11 +21,6 @@ export default function SearchBar() {
                 e.preventDefault();
                 setOpen(true);
             }
-            const tag = (e.target as HTMLElement).tagName;
-            if (e.key === "/" && tag !== "INPUT" && tag !== "TEXTAREA" && !(e.target as HTMLElement).isContentEditable) {
-                e.preventDefault();
-                setOpen(true);
-            }
             if (e.key === "Escape") setOpen(false);
         };
         window.addEventListener("keydown", onKey);
