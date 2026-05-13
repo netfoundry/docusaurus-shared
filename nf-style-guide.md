@@ -19,8 +19,10 @@ scan, and they build user trust.
 
 - Use [ATX headings](https://github.github.com/gfm/#atx-headings), and include a line space after each heading.
 - Each topic should have only one H1.
-- For table of contents (ToC) headers, try to make them match the H1 unless you need to shorten for space, or shorten to
-  reduce redundancy of terms.
+- The H1 and the sidebar label (`sidebar_label` in frontmatter) should match. If they differ, prefer shortening the
+  sidebar label rather than the H1. Exceptions are acceptable when the label needs to be significantly shorter for
+  navigation context, or when shortening reduces redundancy (e.g., a label like "Overview" under a category that
+  already names the topic).
 - Use imperative verb phrases for all headings at every level: "Create a certificate", "Install an agent", etc.
   Avoid gerunds ("Creating a certificate", "Installing an agent") — they're acceptable in conceptual topics but
   not in how-tos or reference.
@@ -141,9 +143,13 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 ## Punctuation
 
 - Use hyphens for compound adjectives. Em dashes (`—`) are okay but use sparingly—prefer colons when introducing or
-  defining items. Do not add spaces before or after em dashes.
+  defining items. Spaces around em dashes are optional; both `word—word` and `word — word` are acceptable. Be consistent
+  within a document.
 - Use colons to introduce or define items.
 - Use oxford commas.
+- **Slashes**: no spaces around a slash joining single words (`Debian/Ubuntu`, `TCP/UDP`, `on/off`). Use spaces when
+  joining multi-word phrases (`New York / New Jersey`). Exception: when both sides are code phrases, spaces improve
+  readability and allow wrapping in tables — use `` `FOO` / `BAR` `` rather than `` `FOO`/`BAR` ``.
 
 ## Admonitions
 
