@@ -25,7 +25,7 @@
 [CmdletBinding()]
 param(
     # Branch to clone for each remote repo
-    [string]$ZitiDocBranch    = "docusaurus-3.10",
+    [string]$ZitiDocBranch    = "main",
     [string]$ZrokBranch       = "main",
     [string]$FrontdoorBranch  = "develop",
     [string]$SelfhostedBranch = "main",
