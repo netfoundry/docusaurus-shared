@@ -471,6 +471,11 @@ const config: Config = {
         } as ScalarOptions],
     ].filter(Boolean),
     themeConfig: {
+        docs: {
+            sidebar: {
+                autoCollapseCategories: true,
+            },
+        },
         netfoundry: {
             resourcesPickerSections: [
                 {
