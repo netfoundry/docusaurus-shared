@@ -64,7 +64,7 @@ export const PRODUCTS: Record<ProductId, Product> = {
   openziti: {
     id: 'openziti',
     label: 'OpenZiti',
-    path: 'openziti/learn/introduction',
+    path: 'openziti/intro',
     logo: `${IMG}/openziti-sm-logo.svg`,
     description: 'Programmable zero-trust mesh infrastructure.',
   },
