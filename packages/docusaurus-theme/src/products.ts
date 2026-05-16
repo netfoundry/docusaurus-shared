@@ -71,7 +71,7 @@ export const PRODUCTS: Record<ProductId, Product> = {
   zrok: {
     id: 'zrok',
     label: 'zrok',
-    path: 'zrok/get-started',
+    path: 'zrok/intro',
     logo: `${IMG}/zrok-1.0.0-rocket-purple.svg`,
     logoDark: `${IMG}/zrok-1.0.0-rocket-green.svg`,
     description: 'Secure peer-to-peer sharing built on OpenZiti.',
