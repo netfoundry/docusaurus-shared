@@ -106,31 +106,24 @@ jobs:
           path: unified-doc/build-site/
           retention-days: 7
 
-  # Notify the doc-alerts Mattermost channel about the result of the nightly
-  # scheduled run only. Push/workflow_dispatch runs are watched live by whoever
-  # triggered them; the cron is unattended, so this is where we actually need
-  # a heads-up on failure (and a confirmation on success).
+  # Notify the doc-alerts Mattermost channel only when the nightly scheduled
+  # run fails. Push/workflow_dispatch runs are watched live by whoever triggered
+  # them; the cron is unattended, so we only need a heads-up on failure.
   notify-mattermost:
-    name: Notify doc-alerts of nightly build result
+    name: Notify doc-alerts of nightly build failure
     needs: publish-docs-from-container
-    if: always() && github.event_name == 'schedule' && github.repository_owner == 'netfoundry'
+    if: always() && github.event_name == 'schedule' && github.repository_owner == 'netfoundry' && needs.publish-docs-from-container.result != 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Build schedule event context
         id: ctx
         run: |
-          BUILD_RESULT="${{ needs.publish-docs-from-container.result }}"
           RUN_URL="https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
-          if [ "$BUILD_RESULT" = "success" ]; then
-            ACTION_LABEL="✅ succeeded"
-          else
-            ACTION_LABEL="❌ FAILED"
-          fi
           EVENT_JSON=$(jq -cn \
             --arg repo "$GITHUB_REPOSITORY" \
             --arg repo_url "https://github.com/$GITHUB_REPOSITORY" \
             --arg run_url "$RUN_URL" \
-            --arg action "${ACTION_LABEL} — [View logs](${RUN_URL})" \
+            --arg action "❌ FAILED — [View logs](${RUN_URL})" \
             '{
               repository: { full_name: $repo, html_url: $repo_url, stargazers_count: 0 },
               sender: { login: "ziti-ci", url: "https://api.github.com/users/netfoundry", html_url: "https://github.com/netfoundry", avatar_url: "https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/png/icon/netfoundry-icon-color.png" },
