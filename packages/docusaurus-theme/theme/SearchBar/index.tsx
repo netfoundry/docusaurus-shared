@@ -4,18 +4,25 @@ import ReactDOM from "react-dom";
 import {DocSearchButton as DocSearchButtonOrig} from "@docsearch/react";
 const DocSearchButton = DocSearchButtonOrig as React.ComponentType<{onClick: () => void}>;
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import {useLocation} from '@docusaurus/router';
 
 import {ProductSearch} from "../../src/components/ProductSearch";
 import styles from "./SearchBar.module.css";
 import clsx from "clsx";
 
+const isScalarPage = (pathname: string) =>
+    /\/(api-reference|openapi-reference)$/.test(pathname);
+
 export default function SearchBar() {
     const [open, setOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
     const [mouseDownTarget, setMouseDownTarget] = useState<EventTarget | null>(null);
+    const { pathname } = useLocation();
+    const onApiPage = isScalarPage(pathname);
 
     useEffect(() => setMounted(true), []);
     useEffect(() => {
+        if (onApiPage) return;
         const onKey = (e: KeyboardEvent) => {
             if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
                 e.preventDefault();
@@ -25,7 +32,7 @@ export default function SearchBar() {
         };
         window.addEventListener("keydown", onKey);
         return () => window.removeEventListener("keydown", onKey);
-    }, []);
+    }, [onApiPage]);
     useEffect(() => { document.body.style.overflow = open ? "hidden" : ""; }, [open]);
 
     const { siteConfig } = useDocusaurusContext();
