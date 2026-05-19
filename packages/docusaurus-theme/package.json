@@ -46,7 +46,6 @@
   },
   "peerDependencies": {
     "@docusaurus/core": "^3",
-    "@docusaurus/router": "^3",
     "@docusaurus/theme-classic": "^3",
     "@docusaurus/theme-common": "^3",
     "react": "^18 || ^19",
@@ -63,7 +62,6 @@
   },
   "devDependencies": {
     "@docusaurus/core": "^3",
-    "@docusaurus/router": "^3",
     "@docusaurus/theme-classic": "^3",
     "@docusaurus/theme-common": "^3",
     "@docusaurus/types": "^3",
