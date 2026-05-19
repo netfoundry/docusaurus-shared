@@ -16,7 +16,7 @@
     "paths": {
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "theme/**/*"],
   "exclude": ["node_modules", "dist"],
   "watchOptions": {
     "watchFile": "dynamicPriorityPolling",
