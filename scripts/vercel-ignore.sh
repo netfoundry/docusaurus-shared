@@ -26,3 +26,4 @@ else
   echo "Changes detected under $WATCH_PATH vs origin/main -- building."
   exit 1
 fi
+
