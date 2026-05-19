@@ -19,6 +19,25 @@ export default function themeNetFoundry(
       return path.resolve(__dirname, '../theme');
     },
 
+    // If @scalar/docusaurus is installed, redirect its built-in ScalarDocusaurus
+    // component to our version which calls instance.destroy() on unmount,
+    // preventing its global Ctrl+K listener from leaking to non-API pages.
+    configureWebpack() {
+      try {
+        const scalarDist = path.dirname(require.resolve('@scalar/docusaurus/dist/index.js'));
+        return {
+          resolve: {
+            alias: {
+              [path.join(scalarDist, 'ScalarDocusaurus')]:
+                path.resolve(__dirname, '../theme/ScalarDocusaurus/index.js'),
+            },
+          },
+        };
+      } catch {
+        return {};
+      }
+    },
+
     // Automatically inject CSS
     getClientModules() {
       const modules: string[] = [

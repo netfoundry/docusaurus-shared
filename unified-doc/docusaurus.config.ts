@@ -337,8 +337,6 @@ const config: Config = {
                     return {
                         resolve: {
                             alias: {
-                                [path.join(path.dirname(require.resolve('@scalar/docusaurus/dist/index.js')), 'ScalarDocusaurus')]:
-                                    path.resolve(__dirname, 'src/theme/ScalarDocusaurus/index.tsx'),
                                 '@openziti':         path.resolve(__dirname, `${openziti}/docusaurus`),
                                 '@openziti_remotes': path.resolve(__dirname, `${openziti}/docusaurus/docs/_remotes`),
                                 '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
