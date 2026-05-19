@@ -11,7 +11,7 @@ import clsx from "clsx";
 
 // Scalar API reference routes — Ctrl+K belongs to Scalar on these pages.
 const isScalarPage = (pathname: string) =>
-    /\/(api-reference|openapi-reference)$/.test(pathname);
+    /(api-reference|openapi-reference)$/.test(pathname);
 
 export default function SearchBar() {
     const [open, setOpen] = useState(false);

@@ -25,7 +25,7 @@ const mapFooter = (p: string) => {
 
 export default function LayoutWrapper(props: NetFoundryLayoutProps): ReactNode {
     const {pathname} = useLocation();
-    const isApiPage = /\/(api-reference|openapi-reference)$/.test(pathname);
+    const isApiPage = /(api-reference|openapi-reference)$/.test(pathname);
     const backUrl = isApiPage ? pathname.split('/').slice(0, -1).join('/') || '/' : '/';
     let starProps: StarUsProps | undefined;
     if (matchPath(pathname, 'openziti')) {

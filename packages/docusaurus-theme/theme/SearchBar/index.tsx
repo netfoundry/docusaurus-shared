@@ -11,7 +11,7 @@ import styles from "./SearchBar.module.css";
 import clsx from "clsx";
 
 const isScalarPage = (pathname: string) =>
-    /\/(api-reference|openapi-reference)$/.test(pathname);
+    /(api-reference|openapi-reference)$/.test(pathname);
 
 export default function SearchBar() {
     const [open, setOpen] = useState(false);
