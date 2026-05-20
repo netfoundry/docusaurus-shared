@@ -64,14 +64,14 @@ export const PRODUCTS: Record<ProductId, Product> = {
   openziti: {
     id: 'openziti',
     label: 'OpenZiti',
-    path: 'openziti/learn/introduction',
+    path: 'openziti/intro',
     logo: `${IMG}/openziti-sm-logo.svg`,
     description: 'Programmable zero-trust mesh infrastructure.',
   },
   zrok: {
     id: 'zrok',
     label: 'zrok',
-    path: 'zrok/get-started',
+    path: 'zrok/intro',
     logo: `${IMG}/zrok-1.0.0-rocket-purple.svg`,
     logoDark: `${IMG}/zrok-1.0.0-rocket-green.svg`,
     description: 'Secure peer-to-peer sharing built on OpenZiti.',
