@@ -108,7 +108,7 @@ const cfg: PublishConfig = process.env.DOCUSAURUS_PUBLISH_ENV === 'prod' ? prod 
 const REMARK_MAPPINGS = [
     { from: '@selfhosteddocs', to: `${docsBase}selfhosted` },
     { from: '@openzitidocs', to: `${docsBase}openziti`},
-    { from: '@openziti2x',   to: `${docsBase}openziti/next`},
+    { from: '@openziti2x',   to: `${docsBase}openziti`},
     { from: '@openziti1x',   to: `${docsBase}openziti/1.x`},
     { from: '@zrokdocs', to: `${docsBase}zrok`},
     { from: '@frontdoordocs', to: `${docsBase}frontdoor`},
