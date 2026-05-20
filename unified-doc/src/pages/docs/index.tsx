@@ -35,7 +35,7 @@ export default function Home(): ReactNode {
                             <span style={{margin: '0 8px'}} />
                             <Link className="button button--secondary button--lg" to={useBaseUrl('/docs/frontdoor/intro')}>Frontdoor Docs</Link>
                             <span style={{margin: '0 8px'}} />
-                            <Link className="button button--secondary button--lg" to={useBaseUrl('/docs/openziti/learn/introduction')}>OpenZiti Docs</Link>
+                            <Link className="button button--secondary button--lg" to={useBaseUrl('/docs/openziti/intro')}>OpenZiti Docs</Link>
                             <span style={{margin: '0 8px'}} />
                             <Link className="button button--secondary button--lg" to={useBaseUrl('/docs/zlan/intro')}>zLAN Docs</Link>
                         </div>
@@ -85,7 +85,7 @@ export default function Home(): ReactNode {
                                         Open-source zero-trust networking project and SDKs.
                                     </div>
                                     <div className="card__footer">
-                                        <Link className="button button--primary button--block" to={useBaseUrl('/docs/openziti/learn/introduction')}>Go to OpenZiti</Link>
+                                        <Link className="button button--primary button--block" to={useBaseUrl('/docs/openziti/intro')}>Go to OpenZiti</Link>
                                     </div>
                                 </div>
                             </div>
