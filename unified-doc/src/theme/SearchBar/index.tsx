@@ -2,27 +2,19 @@
 import React, {useEffect, useState} from "react";
 import ReactDOM from "react-dom";
 import {DocSearchButton} from "@docsearch/react";
-import {useLocation} from '@docusaurus/router';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 import { ProductSearch } from '@netfoundry/docusaurus-theme/ui';
 import styles from "./SearchBar.module.css";
 import clsx from "clsx";
 
-// Scalar API reference routes — Ctrl+K belongs to Scalar on these pages.
-const isScalarPage = (pathname: string) =>
-    /(api-reference|openapi-reference)$/.test(pathname);
-
 export default function SearchBar() {
     const [open, setOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
     const [mouseDownTarget, setMouseDownTarget] = useState<EventTarget | null>(null);
-    const { pathname } = useLocation();
-    const onApiPage = isScalarPage(pathname);
 
     useEffect(() => setMounted(true), []);
     useEffect(() => {
-        if (onApiPage) return;
         const onKey = (e: KeyboardEvent) => {
             if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
                 e.preventDefault();
@@ -32,7 +24,7 @@ export default function SearchBar() {
         };
         window.addEventListener("keydown", onKey);
         return () => window.removeEventListener("keydown", onKey);
-    }, [onApiPage]);
+    }, []);
     useEffect(() => { document.body.style.overflow = open ? "hidden" : ""; }, [open]);
 
     const { customFields } = useDocusaurusContext().siteConfig;
