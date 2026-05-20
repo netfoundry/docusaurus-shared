@@ -57,7 +57,7 @@ const products = [
     logo: `${IMG}/openziti-sm-logo.svg`,
     tag: 'Open Source',
     accent: GREEN,
-    link: `${DOCS_BASE}openziti/learn/introduction`,
+    link: `${DOCS_BASE}openziti/intro`,
     features: ['Community support', 'Full overlay mesh: controller, routers, and SDKs', 'Embed zero-trust in any application'],
     description: 'The open-source zero-trust networking framework behind NetFoundry. Add zero trust to existing apps with tunnelers, or embed it directly with the SDK for the strongest posture.'
   },
