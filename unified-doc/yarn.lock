@@ -2622,10 +2622,10 @@
     "@emnapi/runtime" "^1.5.0"
     "@tybys/wasm-util" "^0.10.1"
 
-"@netfoundry/docusaurus-theme@^0.12.0":
-  version "0.12.3"
-  resolved "https://registry.yarnpkg.com/@netfoundry/docusaurus-theme/-/docusaurus-theme-0.12.3.tgz#6cd6f54e67cec3de7448f36ce0087fb9d9e9a0c6"
-  integrity sha512-+lW829COqEmYrWQtLLfVArwKP++Dnjfvcn0pCST+ipTNuDF7tk3zscgIUwxq7y+EoD1ZDqesg5CjwpO6lJxcXQ==
+"@netfoundry/docusaurus-theme@^0.12.4":
+  version "0.12.4"
+  resolved "https://registry.yarnpkg.com/@netfoundry/docusaurus-theme/-/docusaurus-theme-0.12.4.tgz#6bcf3e6063d3cfd2058ebfe47b2f621c6a8924c3"
+  integrity sha512-fMFLiEBrx+Esfmz3lXJ40cQdRKPkM+BQ3VVM9hgDZnGuhRRlg8v+dPoayzerKUqmSnL2jhCqUJSlDQIaxdzf2A==
   dependencies:
     "@docsearch/react" "^3"
     algoliasearch "^5"
