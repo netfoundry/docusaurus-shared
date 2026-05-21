@@ -2,7 +2,7 @@ import React, {JSX} from "react";
 import clsx from "clsx";
 import ErrorBoundary from "@docusaurus/ErrorBoundary";
 import { ThemeClassNames } from "@docusaurus/theme-common";
-import { useKeyboardNavigation } from "../../hooks";
+import { useKeyboardNavigation, useRehashOnLoad } from "../../hooks";
 import Head from "@docusaurus/Head";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
@@ -63,6 +63,7 @@ export function NetFoundryLayout({
                                      meta: metaInput = {},
                                  }: NetFoundryLayoutProps): JSX.Element {
     useKeyboardNavigation();
+    useRehashOnLoad();
 
     const abs = useAbs();
     const meta = metaInput;
