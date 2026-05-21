@@ -47,6 +47,8 @@ jobs:
       # these are defined in a github environment: repo/settings/environments
       ZITI_HOTJAR_APPID: ${{ secrets.ZITI_HOTJAR_APPID }}
     environment: ${{ github.event.inputs.environment || (github.ref_name == 'main' && 'main' || 'stg') }}
+    outputs:
+      has_drift: ${{ steps.drift-ctx.outputs.has_drift }}
     steps:
       - name: Checkout Workspace
         uses: actions/checkout@v4
@@ -172,7 +174,7 @@ ${PATHS}
   notify-mattermost:
     name: Notify doc-alerts of nightly build failure
     needs: publish-docs-from-container
-    if: always() && github.event_name == 'schedule' && github.repository_owner == 'netfoundry' && needs.publish-docs-from-container.result != 'success'
+    if: always() && github.event_name == 'schedule' && github.repository_owner == 'netfoundry' && needs.publish-docs-from-container.result != 'success' && needs.publish-docs-from-container.outputs.has_drift != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Build schedule event context
