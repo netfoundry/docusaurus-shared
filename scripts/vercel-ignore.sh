@@ -12,6 +12,10 @@ if [ -z "$WATCH_PATH" ]; then
   exit 1
 fi
 
+# Anchor at the repo root so the pathspec is interpreted from there, not from
+# the caller's cwd (Vercel runs this from each project's rootDirectory).
+cd "$(git rev-parse --show-toplevel)"
+
 # Vercel clones shallow with no 'origin' remote configured. Wire one up.
 if ! git remote get-url origin >/dev/null 2>&1; then
   git remote add origin "https://github.com/netfoundry/docusaurus-shared"
