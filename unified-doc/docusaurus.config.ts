@@ -24,7 +24,7 @@ import {PublishConfig} from 'src/components/docusaurus'
 import {zrokDocsPluginConfig, zrokRedirects} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 import {onpremRedirects} from "./_remotes/selfhosted/docusaurus/docusaurus-plugin-onprem-docs.ts";
 import {platformDocsPluginConfig} from "./_remotes/platform/docusaurus/docusaurus-plugin-platform-docs.ts";
-import {openzitiDocsPluginConfig} from "./_remotes/openziti/docusaurus/docusaurus-plugin-openziti-docs.ts";
+import {openzitiDocsPluginConfig, openzitiRedirects} from "./_remotes/openziti/docusaurus/docusaurus-plugin-openziti-docs.ts";
 import {dataconnectorDocsPluginConfig} from "./_remotes/data-connector/docusaurus/docusaurus-plugin-dataconnector-docs.ts";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
@@ -439,6 +439,7 @@ const config: Config = {
         [pluginHotjar, {}],
         [pluginReo, {}],
         ['@docusaurus/plugin-google-tag-manager', {id: `openziti-gtm`, containerId: cfg.google.tag}],
+        build(BUILD_FLAGS.OPENZITI) && openzitiRedirects(routeBase('openziti')),
         build(BUILD_FLAGS.SELFHOSTED) && onpremRedirects(routeBase('selfhosted')),
         build(BUILD_FLAGS.ZROK) && zrokRedirects(routeBase('zrok')),
         build(BUILD_FLAGS.OPENZITI) && ['@scalar/docusaurus', {
