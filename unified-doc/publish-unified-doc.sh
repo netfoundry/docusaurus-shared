@@ -39,8 +39,11 @@ if [ -f "$SITEMAP" ]; then
     echo "Injected llms.txt entry into sitemap.xml"
 fi
 
-# Check for paths removed vs production — writes sitemap-drift.json if any found.
-node "${pub_script_root}/scripts/check-sitemap-drift.mjs" "$SITEMAP" || true
+# Gate: hard-fail if any paths were removed without a redirect stub.
+# BASELINE is restored here by CI (actions/cache); absent on first run → seeds from live prod.
+BASELINE="${pub_script_root}/sitemap-baseline.xml"
+node "${pub_script_root}/scripts/check-sitemap-drift.mjs" \
+    "$SITEMAP" "$BASELINE" "${pub_script_root}/build${qualifier}"
 
 publish_docs() {
   local HOST=$1 PORT=$2 USER=$3 TARGET_DIR=$4 KEY_FILE=$5

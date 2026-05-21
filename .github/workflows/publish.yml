@@ -66,6 +66,14 @@ jobs:
       - name: Install csvtojson
         run: npm install -g csvtojson
 
+      - name: Restore sitemap baseline
+        uses: actions/cache/restore@v4
+        with:
+          path: unified-doc/sitemap-baseline.xml
+          key: sitemap-baseline-${{ github.ref_name }}-${{ github.run_id }}
+          restore-keys: |
+            sitemap-baseline-${{ github.ref_name }}-
+
       - name: Setup SSH
         run: |
           mkdir -p $HOME/.ssh
@@ -99,49 +107,41 @@ jobs:
           DOCUSAURUS_URL: 'https://netfoundry.io'
         run: unified-doc/publish-unified-doc.sh -ds
 
+      - name: Update sitemap baseline
+        if: success()
+        run: cp unified-doc/build-site/sitemap.xml unified-doc/sitemap-baseline.xml
+
+      - name: Cache sitemap baseline
+        if: success()
+        uses: actions/cache/save@v4
+        with:
+          path: unified-doc/sitemap-baseline.xml
+          key: sitemap-baseline-${{ github.ref_name }}-${{ github.run_id }}
+
       - name: Upload build artifact
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: docusaurus-build-site
           path: unified-doc/build-site/
           retention-days: 7
 
-  notify-sitemap-drift:
-    name: Notify doc-alerts of removed paths
-    needs: publish-docs-from-container
-    if: always() && needs.publish-docs-from-container.result == 'success' && github.repository_owner == 'netfoundry'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: docusaurus-build-site
-          path: build-site/
-      - name: Check for sitemap drift report
-        id: drift
+      - name: Build drift alert context
+        id: drift-ctx
+        if: failure()
         run: |
-          REPORT="build-site/sitemap-drift.json"
+          REPORT="unified-doc/build-site/sitemap-drift.json"
           if [ ! -f "$REPORT" ]; then
             echo "has_drift=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          COUNT=$(jq '.count' "$REPORT")
-          PATHS=$(jq -r '.removed[]' "$REPORT" | head -20 | sed 's/^/- /')
           echo "has_drift=true" >> "$GITHUB_OUTPUT"
-          echo "count=$COUNT"   >> "$GITHUB_OUTPUT"
-          {
-            echo "paths<<EOF"
-            echo "$PATHS"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
-      - name: Build drift event context
-        id: ctx
-        if: steps.drift.outputs.has_drift == 'true'
-        run: |
+          COUNT=$(jq '.count' "$REPORT")
+          PATHS=$(jq -r '.unresolved[]' "$REPORT" | head -20 | sed 's/^/- /')
           RUN_URL="https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
-          BODY="⚠️ **${{ steps.drift.outputs.count }} path(s) removed** from the new build — redirects may be needed.
+          BODY="❌ **${COUNT} path(s) removed with no redirect** — build blocked before publish.
 
-${{ steps.drift.outputs.paths }}
+${PATHS}
 
 [View build logs](${RUN_URL})"
           EVENT_JSON=$(jq -cn \
@@ -156,13 +156,14 @@ ${{ steps.drift.outputs.paths }}
               run_url: $run_url
             }')
           echo "event-json=$EVENT_JSON" >> "$GITHUB_OUTPUT"
-      - name: Send Mattermost alert
-        if: steps.drift.outputs.has_drift == 'true'
+
+      - name: Send drift alert
+        if: failure() && steps.drift-ctx.outputs.has_drift == 'true'
         uses: openziti/ziti-mattermost-action-py@v1
         with:
           zitiId: ${{ secrets.ZITI_MATTERMOST_IDENTITY }}
           webhookUrl: ${{ secrets.ZHOOK_URL_DOC_NOTIFICATIONS }}
-          eventJson: ${{ steps.ctx.outputs.event-json }}
+          eventJson: ${{ steps.drift-ctx.outputs.event-json }}
           senderUsername: "GitHubZ"
 
   # Notify the doc-alerts Mattermost channel only when the nightly scheduled
