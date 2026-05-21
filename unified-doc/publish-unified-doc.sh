@@ -39,6 +39,9 @@ if [ -f "$SITEMAP" ]; then
     echo "Injected llms.txt entry into sitemap.xml"
 fi
 
+# Check for paths removed vs production — writes sitemap-drift.json if any found.
+node "${pub_script_root}/scripts/check-sitemap-drift.mjs" "$SITEMAP" || true
+
 publish_docs() {
   local HOST=$1 PORT=$2 USER=$3 TARGET_DIR=$4 KEY_FILE=$5
   local zip_target="unified-docs${qualifier}.zip"
