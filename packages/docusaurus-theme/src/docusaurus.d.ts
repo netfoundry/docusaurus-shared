@@ -24,6 +24,17 @@ declare module '@docusaurus/ErrorBoundary' {
   export default ErrorBoundary;
 }
 
+declare module '@docusaurus/router' {
+  interface Location {
+    pathname: string;
+    search: string;
+    hash: string;
+    state?: unknown;
+    key?: string;
+  }
+  export function useLocation(): Location;
+}
+
 declare module '@docusaurus/useDocusaurusContext' {
   interface DocusaurusContext {
     siteConfig: {
