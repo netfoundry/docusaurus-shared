@@ -146,4 +146,3 @@ vite.config.ts.timestamp-*
 
 **/github_deploy_key
 .claude
-CLAUDE.md
