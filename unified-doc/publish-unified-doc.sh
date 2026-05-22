@@ -41,9 +41,7 @@ fi
 
 # Gate: hard-fail if any paths were removed without a redirect stub.
 # BASELINE is restored here by CI (actions/cache); absent on first run → seeds from live prod.
-BASELINE="${pub_script_root}/sitemap-baseline.xml"
-node "${pub_script_root}/scripts/check-sitemap-drift.mjs" \
-    "$SITEMAP" "$BASELINE" "${pub_script_root}/build${qualifier}"
+yarn --cwd "${pub_script_root}" check-drift
 
 publish_docs() {
   local HOST=$1 PORT=$2 USER=$3 TARGET_DIR=$4 KEY_FILE=$5

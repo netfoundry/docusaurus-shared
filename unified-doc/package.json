@@ -45,7 +45,8 @@
     "vrt:report:zlan": "backstop openReport --config=backstop.zlan.json",
     "vrt:report:home": "backstop openReport --config=backstop.home.json",
     "vrt": "node scripts/vrt-run.mjs",
-    "vrt:clean": "node scripts/vrt-run.mjs"
+    "vrt:clean": "node scripts/vrt-run.mjs",
+    "check-drift": "node scripts/check-sitemap-drift.mjs build-site/sitemap.xml sitemap-baseline.xml build-site"
   },
   "dependencies": {
     "@docusaurus/core": "^3.10.1",

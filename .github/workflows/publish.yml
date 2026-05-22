@@ -76,6 +76,14 @@ jobs:
           restore-keys: |
             sitemap-baseline-${{ github.ref_name }}-
 
+      - name: Archive input sitemap baseline
+        if: hashFiles('unified-doc/sitemap-baseline.xml') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: sitemap-baseline-input
+          path: unified-doc/sitemap-baseline.xml
+          retention-days: 90
+
       - name: Setup SSH
         run: |
           mkdir -p $HOME/.ssh
@@ -119,6 +127,14 @@ jobs:
         with:
           path: unified-doc/sitemap-baseline.xml
           key: sitemap-baseline-${{ github.ref_name }}-${{ github.run_id }}
+
+      - name: Archive output sitemap baseline
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sitemap-baseline-output
+          path: unified-doc/sitemap-baseline.xml
+          retention-days: 90
 
       - name: Upload build artifact
         if: success()
