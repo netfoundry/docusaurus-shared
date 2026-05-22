@@ -23,7 +23,8 @@
     "dev": "yarn workspace test-site start",
     "build": "yarn workspace test-site build",
 
-    "reinstall": "node scripts/reinstall.mjs"
+    "reinstall": "node scripts/reinstall.mjs",
+    "unified:check-drift": "yarn --cwd unified-doc check-drift"
   },
   "packageManager": "yarn@1.22.22"
 }

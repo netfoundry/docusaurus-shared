@@ -47,6 +47,8 @@ jobs:
       # these are defined in a github environment: repo/settings/environments
       ZITI_HOTJAR_APPID: ${{ secrets.ZITI_HOTJAR_APPID }}
     environment: ${{ github.event.inputs.environment || (github.ref_name == 'main' && 'main' || 'stg') }}
+    outputs:
+      has_drift: ${{ steps.drift-ctx.outputs.has_drift }}
     steps:
       - name: Checkout Workspace
         uses: actions/checkout@v4
@@ -65,6 +67,22 @@ jobs:
 
       - name: Install csvtojson
         run: npm install -g csvtojson
+
+      - name: Restore sitemap baseline
+        uses: actions/cache/restore@v4
+        with:
+          path: unified-doc/sitemap-baseline.xml
+          key: sitemap-baseline-${{ github.ref_name }}-${{ github.run_id }}
+          restore-keys: |
+            sitemap-baseline-${{ github.ref_name }}-
+
+      - name: Archive input sitemap baseline
+        if: hashFiles('unified-doc/sitemap-baseline.xml') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: sitemap-baseline-input
+          path: unified-doc/sitemap-baseline.xml
+          retention-days: 90
 
       - name: Setup SSH
         run: |
@@ -99,12 +117,72 @@ jobs:
           DOCUSAURUS_URL: 'https://netfoundry.io'
         run: unified-doc/publish-unified-doc.sh -ds
 
+      - name: Update sitemap baseline
+        if: success()
+        run: cp unified-doc/build-site/sitemap.xml unified-doc/sitemap-baseline.xml
+
+      - name: Cache sitemap baseline
+        if: success()
+        uses: actions/cache/save@v4
+        with:
+          path: unified-doc/sitemap-baseline.xml
+          key: sitemap-baseline-${{ github.ref_name }}-${{ github.run_id }}
+
+      - name: Archive output sitemap baseline
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sitemap-baseline-output
+          path: unified-doc/sitemap-baseline.xml
+          retention-days: 90
+
       - name: Upload build artifact
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: docusaurus-build-site
           path: unified-doc/build-site/
           retention-days: 7
+
+      - name: Build drift alert context
+        id: drift-ctx
+        if: failure()
+        run: |
+          REPORT="unified-doc/build-site/sitemap-drift.json"
+          if [ ! -f "$REPORT" ]; then
+            echo "has_drift=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "has_drift=true" >> "$GITHUB_OUTPUT"
+          COUNT=$(jq '.count' "$REPORT")
+          PATHS=$(jq -r '.unresolved[]' "$REPORT" | head -20 | sed 's/^/- /')
+          RUN_URL="https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          BODY="❌ **${COUNT} path(s) removed with no redirect** — build blocked before publish.
+
+${PATHS}
+
+[View build logs](${RUN_URL})"
+          EVENT_JSON=$(jq -cn \
+            --arg repo "$GITHUB_REPOSITORY" \
+            --arg repo_url "https://github.com/$GITHUB_REPOSITORY" \
+            --arg run_url "$RUN_URL" \
+            --arg action "$BODY" \
+            '{
+              repository: { full_name: $repo, html_url: $repo_url, stargazers_count: 0 },
+              sender: { login: "ziti-ci", url: "https://api.github.com/users/netfoundry", html_url: "https://github.com/netfoundry", avatar_url: "https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/png/icon/netfoundry-icon-color.png" },
+              action: $action,
+              run_url: $run_url
+            }')
+          echo "event-json=$EVENT_JSON" >> "$GITHUB_OUTPUT"
+
+      - name: Send drift alert
+        if: failure() && steps.drift-ctx.outputs.has_drift == 'true'
+        uses: openziti/ziti-mattermost-action-py@v1
+        with:
+          zitiId: ${{ secrets.ZITI_MATTERMOST_IDENTITY }}
+          webhookUrl: ${{ secrets.ZHOOK_URL_DOC_NOTIFICATIONS }}
+          eventJson: ${{ steps.drift-ctx.outputs.event-json }}
+          senderUsername: "GitHubZ"
 
   # Notify the doc-alerts Mattermost channel only when the nightly scheduled
   # run fails. Push/workflow_dispatch runs are watched live by whoever triggered
@@ -112,7 +190,7 @@ jobs:
   notify-mattermost:
     name: Notify doc-alerts of nightly build failure
     needs: publish-docs-from-container
-    if: always() && github.event_name == 'schedule' && github.repository_owner == 'netfoundry' && needs.publish-docs-from-container.result != 'success'
+    if: always() && github.event_name == 'schedule' && github.repository_owner == 'netfoundry' && needs.publish-docs-from-container.result != 'success' && needs.publish-docs-from-container.outputs.has_drift != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Build schedule event context

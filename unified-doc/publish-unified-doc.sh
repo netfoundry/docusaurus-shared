@@ -39,6 +39,10 @@ if [ -f "$SITEMAP" ]; then
     echo "Injected llms.txt entry into sitemap.xml"
 fi
 
+# Gate: hard-fail if any paths were removed without a redirect stub.
+# BASELINE is restored here by CI (actions/cache); absent on first run → seeds from live prod.
+yarn --cwd "${pub_script_root}" check-drift
+
 publish_docs() {
   local HOST=$1 PORT=$2 USER=$3 TARGET_DIR=$4 KEY_FILE=$5
   local zip_target="unified-docs${qualifier}.zip"
