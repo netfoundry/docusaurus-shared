@@ -201,6 +201,15 @@ Mark as **internal** (skip, add to skipped list) if changes are limited to:
 
 ### 4. Cross-reference flagged PRs against existing docs
 
+Before searching, pull the latest changes to the local doc path so coverage assessments reflect current content:
+
+```bash
+git -C <local-doc-path> pull
+```
+
+If the pull fails (uncommitted changes, detached HEAD, network error), note it in the report and proceed with the
+current local state — don't abort the scan.
+
 For each customer-facing PR, search the local doc path for the product (see registry above) to determine whether
 coverage already exists. Use grep and file reads — do not guess.
 
