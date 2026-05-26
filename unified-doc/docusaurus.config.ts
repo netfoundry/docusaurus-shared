@@ -530,7 +530,7 @@ const config: Config = {
             productPickerColumns: [
                 { header: 'Cloud SaaS',              links: [consoleLink,    frontdoorLink] },
                 { header: 'Self-Hosted Licensed',    links: [selfhostedLink, zlanLink]      },
-                { header: 'Self-Hosted Open Source', links: [openzitiLink,   {...zrokLink, description: 'Your new description here'}] },
+                { header: 'Self-Hosted Open Source', links: [openzitiLink,   zrokLink] },
             ],
         },
         navbar: {
