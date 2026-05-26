@@ -147,33 +147,7 @@ jobs:
       - name: Build drift alert context
         id: drift-ctx
         if: failure()
-        run: |
-          REPORT="unified-doc/build-site/sitemap-drift.json"
-          if [ ! -f "$REPORT" ]; then
-            echo "has_drift=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          echo "has_drift=true" >> "$GITHUB_OUTPUT"
-          COUNT=$(jq '.count' "$REPORT")
-          PATHS=$(jq -r '.unresolved[]' "$REPORT" | head -20 | sed 's/^/- /')
-          RUN_URL="https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
-          BODY="❌ **${COUNT} path(s) removed with no redirect** — build blocked before publish.
-
-${PATHS}
-
-[View build logs](${RUN_URL})"
-          EVENT_JSON=$(jq -cn \
-            --arg repo "$GITHUB_REPOSITORY" \
-            --arg repo_url "https://github.com/$GITHUB_REPOSITORY" \
-            --arg run_url "$RUN_URL" \
-            --arg action "$BODY" \
-            '{
-              repository: { full_name: $repo, html_url: $repo_url, stargazers_count: 0 },
-              sender: { login: "ziti-ci", url: "https://api.github.com/users/netfoundry", html_url: "https://github.com/netfoundry", avatar_url: "https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/png/icon/netfoundry-icon-color.png" },
-              action: $action,
-              run_url: $run_url
-            }')
-          echo "event-json=$EVENT_JSON" >> "$GITHUB_OUTPUT"
+        run: unified-doc/scripts/build-drift-alert-context.sh "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" "$GITHUB_OUTPUT"
 
       - name: Send drift alert
         if: failure() && steps.drift-ctx.outputs.has_drift == 'true'
