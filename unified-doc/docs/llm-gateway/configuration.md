@@ -9,12 +9,20 @@ NetFoundry LLM Gateway is configured with a YAML file. CLI flags can override in
 
 ## Gateway settings
 
-Controls the listen address and optional zrok share for the gateway process:
+Controls the listen address for the gateway process:
 
 ```yaml
-gateway:
-  address: localhost:8080   # address to listen on (default: localhost:8080)
-  zrok_share_token: ""      # optional zrok share token for overlay network access
+listen: ":8080"   # address to listen on (default: :8080)
+```
+
+To expose the gateway over a zrok overlay instead of a local port, add a top-level `zrok:` block:
+
+```yaml
+zrok:
+  share:
+    enabled: false
+    mode: private
+    token: ""
 ```
 
 ## Providers
@@ -22,14 +30,15 @@ gateway:
 Configure which inference providers the gateway can route to:
 
 ```yaml
-openai:
-  api_key: ${OPENAI_API_KEY}    # supports environment variable expansion
+providers:
+  open_ai:
+    api_key: ${OPENAI_API_KEY}    # supports environment variable expansion
 
-anthropic:
-  api_key: ${ANTHROPIC_API_KEY}
+  anthropic:
+    api_key: ${ANTHROPIC_API_KEY}
 
-local:
-  base_url: http://localhost:11434
+  local:
+    base_url: http://localhost:11434
 ```
 
 ## Virtual API keys
@@ -110,9 +119,12 @@ llm-gateway run config.yaml
 A full configuration combining all sections:
 
 ```yaml
-gateway:
-  address: 0.0.0.0:8080
-  zrok_share_token: ${ZROK_SHARE_TOKEN}
+listen: "0.0.0.0:8080"
+
+zrok:
+  share:
+    enabled: true
+    token: ${ZROK_SHARE_TOKEN}
 
 api_keys:
   enabled: true
@@ -121,14 +133,15 @@ api_keys:
       key: ${PRIMARY_API_KEY}
       allowed_models: ["gpt-*", "claude-*", "llama*"]
 
-openai:
-  api_key: ${OPENAI_API_KEY}
+providers:
+  open_ai:
+    api_key: ${OPENAI_API_KEY}
 
-anthropic:
-  api_key: ${ANTHROPIC_API_KEY}
+  anthropic:
+    api_key: ${ANTHROPIC_API_KEY}
 
-local:
-  base_url: http://localhost:11434
+  local:
+    base_url: http://localhost:11434
 
 routing:
   default_route: general
@@ -156,10 +169,10 @@ llm-gateway run config.yaml
 llm-gateway run <config-path> [flags]
 
 Flags:
-  --address string          Gateway listen address (e.g., 0.0.0.0:8080)
-  --zrok-share-token string Zrok share token for overlay network access
-  --metrics-address string  Prometheus metrics listen address
-  -h, --help               Show help
+  --address string   Gateway listen address (e.g., 0.0.0.0:8080)
+  --zrok             Enable zrok share (boolean)
+  --zrok-mode string Zrok share mode (private or public)
+  -h, --help         Show help
 ```
 
 CLI flags take precedence over the config file.
@@ -168,11 +181,14 @@ CLI flags take precedence over the config file.
 
 When the gateway starts, it:
 
-1. Loads the YAML config file.
+1. Loads and parses the YAML config file.
 2. Applies any CLI flag overrides.
 3. Expands environment variables.
-4. Initializes providers and the router.
-5. Starts the HTTP server.
+4. Initializes providers (OpenAI, Anthropic, local/self-hosted) in order.
+5. Creates the model-to-provider router.
+6. Initializes OpenTelemetry metrics (if enabled).
+7. Initializes the semantic router (if configured).
+8. Starts the HTTP server (local or via zrok share).
 
-On shutdown (SIGINT/SIGTERM), the gateway drains in-flight requests, closes connections,
-and cleans up any zrok shares before exiting.
+On shutdown (SIGINT/SIGTERM), the gateway closes all providers, deletes ephemeral zrok shares, and
+releases zrok access objects before exiting.

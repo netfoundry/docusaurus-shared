@@ -568,16 +568,17 @@ const config: Config = {
             productPickerColumns: [
                 { header: 'Cloud SaaS',              links: [consoleLink,    frontdoorLink] },
                 { header: 'Self-Hosted Licensed',    links: [selfhostedLink, zlanLink]      },
-                { header: 'Self-Hosted Open Source', links: [openzitiLink,   zrokLink]      },
-                { header: 'AI Gateways', links: [
+                { header: 'Self-Hosted Open Source', links: [
+                    openzitiLink,
+                    zrokLink,
                     {
-                        label: 'NetFoundry LLM Gateway',
+                        label: 'LLM Gateway',
                         to: '/docs/llm-gateway/intro',
                         logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
                         description: 'OpenAI-compatible proxy for multi-provider LLM routing.',
                     },
                     {
-                        label: 'NetFoundry MCP Gateway',
+                        label: 'MCP Gateway',
                         to: '/docs/mcp-gateway/intro',
                         logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
                         description: 'Secure zero-trust access to MCP tools across distributed systems.',

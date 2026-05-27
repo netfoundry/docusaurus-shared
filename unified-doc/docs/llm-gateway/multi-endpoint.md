@@ -23,17 +23,18 @@ The gateway works with any OpenAI-compatible backend:
 Instead of a single `base_url`, define an `endpoints` list:
 
 ```yaml
-local:
-  endpoints:
-    - name: ollama-primary
-      base_url: http://localhost:11434
-      weight: 2
-    - name: ollama-secondary
-      base_url: http://localhost:11435
-      weight: 1
-    - name: vllm-endpoint
-      base_url: http://vllm.example.com:8000
-      weight: 1
+providers:
+  local:
+    endpoints:
+      - name: ollama-primary
+        base_url: http://localhost:11434
+        weight: 2
+      - name: ollama-secondary
+        base_url: http://localhost:11435
+        weight: 1
+      - name: vllm-endpoint
+        base_url: http://vllm.example.com:8000
+        weight: 1
 ```
 
 Each endpoint has:
@@ -42,14 +43,18 @@ Each endpoint has:
 - **`base_url`**: Direct HTTP access to the backend, or use `zrok_share_token` for overlay network access.
 - **`weight`**: Controls traffic distribution proportion. Optional, default `1`.
 
+The `local` key is the section name — it doesn't restrict which backends you can use. Endpoints can be
+any OpenAI-compatible server: Ollama, vLLM, llama.cpp, SGLang, or any custom server.
+
 To access a remote backend via zrok:
 
 ```yaml
-local:
-  endpoints:
-    - name: remote-ollama
-      zrok_share_token: ${ZROK_OLLAMA_TOKEN}
-      weight: 1
+providers:
+  local:
+    endpoints:
+      - name: remote-ollama
+        zrok_share_token: ${ZROK_OLLAMA_TOKEN}
+        weight: 1
 ```
 
 ## Load balancing
@@ -64,18 +69,22 @@ The gateway uses **weighted round-robin** load balancing. An endpoint with `weig
 A background process periodically checks endpoint health:
 
 ```yaml
-local:
-  health_check:
-    interval: 30s     # check every 30 seconds (default)
-    timeout: 10s      # per-endpoint timeout (default)
-    max_retries: 5    # retry up to 5 times before marking unhealthy
+providers:
+  local:
+    health_check:
+      interval_seconds: 30   # check every 30 seconds (default)
+      timeout_seconds: 5     # per-endpoint timeout (default)
 ```
 
 The health check probes `/v1/models` (standard OpenAI format) or falls back to `/api/tags` (Ollama).
 
-When an endpoint is unhealthy, it stops receiving requests. Health checks continue at an exponential
-backoff schedule — 1× interval after the first failure, up to 10× after many failures. Once an endpoint
-recovers, it resumes normal traffic.
+When an endpoint fails a check, the gateway logs `endpoint 'name' is now unhealthy` and stops sending it
+traffic. When it recovers, it logs `endpoint 'name' is now healthy` and resumes normal traffic. Health
+checks continue at an exponential backoff schedule — 1× interval after the first failure, up to 10×
+after many failures.
+
+If the system detects a long gap since the last health check (for example, after a VM sleep/wake cycle),
+endpoint checks are staggered to avoid flooding the network with simultaneous reconnection attempts.
 
 ## Failover
 
@@ -94,29 +103,29 @@ No additional configuration is needed.
 Three local endpoints with weighted distribution, health checking, and a zrok-connected backup alongside cloud providers:
 
 ```yaml
-local:
-  endpoints:
-    - name: ollama-primary
-      base_url: http://localhost:11434
-      weight: 3
-    - name: ollama-secondary
-      base_url: http://localhost:11435
-      weight: 1
-    - name: vllm-prod
-      base_url: http://vllm-prod.example.com:8000
-      weight: 2
-    - name: vllm-backup
-      zrok_share_token: ${ZROK_VLLM_BACKUP_TOKEN}
-      weight: 1
+providers:
+  local:
+    endpoints:
+      - name: ollama-primary
+        base_url: http://localhost:11434
+        weight: 3
+      - name: ollama-secondary
+        base_url: http://localhost:11435
+        weight: 1
+      - name: vllm-prod
+        base_url: http://vllm-prod.example.com:8000
+        weight: 2
+      - name: vllm-backup
+        zrok_share_token: ${ZROK_VLLM_BACKUP_TOKEN}
+        weight: 1
 
-  health_check:
-    interval: 30s
-    timeout: 10s
-    max_retries: 5
+    health_check:
+      interval_seconds: 30
+      timeout_seconds: 5
 
-openai:
-  api_key: ${OPENAI_API_KEY}
+  open_ai:
+    api_key: ${OPENAI_API_KEY}
 
-anthropic:
-  api_key: ${ANTHROPIC_API_KEY}
+  anthropic:
+    api_key: ${ANTHROPIC_API_KEY}
 ```

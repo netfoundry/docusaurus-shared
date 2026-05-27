@@ -94,14 +94,15 @@ The gateway listens on `http://localhost:8080` by default.
 The gateway routes requests to the correct provider by prefix-matching on the model name:
 
 ```yaml
-openai:
-  api_key: ${OPENAI_API_KEY}
+providers:
+  open_ai:
+    api_key: ${OPENAI_API_KEY}
 
-anthropic:
-  api_key: ${ANTHROPIC_API_KEY}
+  anthropic:
+    api_key: ${ANTHROPIC_API_KEY}
 
-local:
-  base_url: http://localhost:11434
+  local:
+    base_url: http://localhost:11434
 ```
 
 Requests are routed automatically based on the model prefix: `gpt-*` goes to OpenAI, `claude-*` to
@@ -146,14 +147,15 @@ curl -X POST http://localhost:8080/v1/chat/completions \
           key: ${LOCAL_API_KEY}
           allowed_models: ["llama*"]
 
-    openai:
-      api_key: ${OPENAI_API_KEY}
+    providers:
+      open_ai:
+        api_key: ${OPENAI_API_KEY}
 
-    anthropic:
-      api_key: ${ANTHROPIC_API_KEY}
+      anthropic:
+        api_key: ${ANTHROPIC_API_KEY}
 
-    local:
-      base_url: http://localhost:11434
+      local:
+        base_url: http://localhost:11434
     ```
 
 3. Clients send their key in the `Authorization` header:
@@ -224,8 +226,9 @@ routing:
         - "what is the capital of France"
         - "explain how photosynthesis works"
 
-local:
-  base_url: http://localhost:11434
+providers:
+  local:
+    base_url: http://localhost:11434
 ```
 
 See [Semantic routing](semantic-routing.md) for a full explanation of how routing works.
@@ -235,23 +238,24 @@ See [Semantic routing](semantic-routing.md) for a full explanation of how routin
 Distribute requests across multiple inference backends:
 
 ```yaml
-local:
-  endpoints:
-    - name: ollama-primary
-      base_url: http://localhost:11434
-      weight: 2
-    - name: ollama-secondary
-      base_url: http://localhost:11435
-      weight: 1
-    - name: vllm-endpoint
-      base_url: http://vllm.example.com:8000
-      weight: 1
+providers:
+  local:
+    endpoints:
+      - name: ollama-primary
+        base_url: http://localhost:11434
+        weight: 2
+      - name: ollama-secondary
+        base_url: http://localhost:11435
+        weight: 1
+      - name: vllm-endpoint
+        base_url: http://vllm.example.com:8000
+        weight: 1
 
-openai:
-  api_key: ${OPENAI_API_KEY}
+  open_ai:
+    api_key: ${OPENAI_API_KEY}
 
-anthropic:
-  api_key: ${ANTHROPIC_API_KEY}
+  anthropic:
+    api_key: ${ANTHROPIC_API_KEY}
 ```
 
 See [Multi-endpoint load balancing](multi-endpoint.md) for health check and failover options.
@@ -266,17 +270,19 @@ zrok:
     enabled: true
     mode: private
 
-local:
-  base_url: http://localhost:11434
+providers:
+  local:
+    base_url: http://localhost:11434
 ```
 
 Or access a remote inference backend through a zrok share:
 
 ```yaml
-local:
-  endpoints:
-    - name: remote-ollama
-      zrok_share_token: ${ZROK_OLLAMA_TOKEN}
+providers:
+  local:
+    endpoints:
+      - name: remote-ollama
+        zrok_share_token: ${ZROK_OLLAMA_TOKEN}
 ```
 
 See [Connect via zrok](connect-zrok.md) for setup details.
@@ -287,9 +293,12 @@ A full configuration combining multiple providers, API key authentication, seman
 balancing, metrics, and zrok:
 
 ```yaml
-gateway:
-  address: 0.0.0.0:8080
-  zrok_share_token: ${ZROK_SHARE_TOKEN}
+listen: "0.0.0.0:8080"
+
+zrok:
+  share:
+    enabled: true
+    token: ${ZROK_SHARE_TOKEN}
 
 api_keys:
   enabled: true
@@ -301,23 +310,24 @@ api_keys:
       key: ${LOCAL_API_KEY}
       allowed_models: ["llama*"]
 
-openai:
-  api_key: ${OPENAI_API_KEY}
+providers:
+  open_ai:
+    api_key: ${OPENAI_API_KEY}
 
-anthropic:
-  api_key: ${ANTHROPIC_API_KEY}
+  anthropic:
+    api_key: ${ANTHROPIC_API_KEY}
 
-local:
-  endpoints:
-    - name: ollama-primary
-      base_url: http://localhost:11434
-      weight: 3
-    - name: ollama-secondary
-      base_url: http://localhost:11435
-      weight: 1
-    - name: vllm-endpoint
-      zrok_share_token: ${ZROK_VLLM_TOKEN}
-      weight: 2
+  local:
+    endpoints:
+      - name: ollama-primary
+        base_url: http://localhost:11434
+        weight: 3
+      - name: ollama-secondary
+        base_url: http://localhost:11435
+        weight: 1
+      - name: vllm-endpoint
+        zrok_share_token: ${ZROK_VLLM_TOKEN}
+        weight: 2
 
 routing:
   default_route: general

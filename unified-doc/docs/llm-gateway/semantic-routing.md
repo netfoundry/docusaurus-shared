@@ -143,7 +143,8 @@ The embedding layer converts text into numerical vectors and uses cosine similar
 route.
 
 At startup, each route's example prompts are embedded and stored in memory. When a request arrives, the
-last user message is embedded and compared against each route's stored vectors.
+last user message is embedded and compared against each route's stored vectors. Messages longer than
+2048 characters are truncated before embedding.
 
 ### Configuration
 
@@ -233,6 +234,9 @@ The classifier relies on the `description` field to understand what each route r
 descriptions that are specific enough for an LLM to distinguish between routes — vague descriptions
 produce poor classifications.
 
+The classifier's response may be wrapped in markdown code blocks. The gateway strips those
+automatically before parsing the result.
+
 ## Default route
 
 If no layer produces a confident result, the gateway uses:
@@ -303,7 +307,7 @@ routing:
     threshold: 0.75
     ambiguous_threshold: 0.5
     comparison: centroid
-    cache_embeddings: true
+    cache_embeddings: false   # default: false
     cache_ttl: 3600
     cache_size: 1000
 
@@ -311,9 +315,9 @@ routing:
     enabled: true
     provider: local
     model: qwen3-vl:30b
-    timeout_ms: 10000
-    confidence_threshold: 0.7
-    cache_results: true
+    timeout_ms: 0             # default: 0 (no timeout)
+    confidence_threshold: 0   # default: 0
+    cache_results: false      # default: false
     cache_ttl: 3600
     cache_size: 500
 

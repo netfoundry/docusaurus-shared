@@ -260,6 +260,11 @@ Options:
 Any MCP client that supports stdio transport can use `mcp-tools run <token>` directly. For HTTP-based
 clients, use `mcp-tools http`.
 
+**n8n example:** Configure the n8n MCP Client Tool:
+
+- **URL**: `http://127.0.0.1:8080`
+- **Transport**: SSE (default) or streamable HTTP
+
 ## Troubleshooting
 
 - **"zrok enable" required**: Run `zrok2 enable` with your account token first.
