@@ -7,7 +7,20 @@ sidebar_label: Streaming
 
 All providers support streaming chat completions via Server-Sent Events (SSE).
 
+## How the gateway handles streaming
+
+When the client sends `"stream": true`, the gateway:
+
+1. Sends the request to the upstream provider with streaming enabled.
+2. Sets SSE response headers (`Content-Type: text/event-stream`, `Cache-Control: no-cache`,
+   `X-Accel-Buffering: no`).
+3. Reads chunks from the provider as they arrive.
+4. Writes each chunk as a `data: {json}\n\n` SSE event and flushes immediately.
+5. Sends `data: [DONE]\n\n` when the stream completes.
+
 ## Send a streaming request
+
+### curl
 
 Include `"stream": true` in your request to receive incremental token output:
 
@@ -21,16 +34,25 @@ curl -X POST http://localhost:8080/v1/chat/completions \
   }'
 ```
 
-## How the gateway handles streaming
+### Python
 
-When the client sends `"stream": true`, the gateway:
+Use the OpenAI Python client with `stream=True`:
 
-1. Sends the request to the upstream provider with streaming enabled.
-2. Sets SSE response headers (`Content-Type: text/event-stream`, `Cache-Control: no-cache`,
-   `X-Accel-Buffering: no`).
-3. Reads chunks from the provider as they arrive.
-4. Writes each chunk as a `data: {json}\n\n` SSE event and flushes immediately.
-5. Sends `data: [DONE]\n\n` when the stream completes.
+```python
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:8080/v1", api_key="not-needed")
+
+stream = client.chat.completions.create(
+    model="claude-sonnet-4-20250514",
+    messages=[{"role": "user", "content": "Write a haiku"}],
+    stream=True,
+)
+
+for chunk in stream:
+    if chunk.choices[0].delta.content:
+        print(chunk.choices[0].delta.content, end="")
+```
 
 ## Response format
 

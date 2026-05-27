@@ -36,6 +36,9 @@ All traffic between components travels over an OpenZiti overlay network via [zro
 Nothing is ever exposed on a public IP. Only authorized parties with a valid zrok environment can
 connect to a share. This model functions transparently through NATs and firewalls.
 
+The gateway creates an isolated session for each connecting client. Each client gets dedicated
+backend connections — no shared state, no cross-talk between sessions.
+
 ## Quick example
 
 1. Share a local MCP server over the overlay:

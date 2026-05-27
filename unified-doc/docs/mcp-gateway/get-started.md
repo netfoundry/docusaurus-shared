@@ -66,6 +66,18 @@ go install github.com/openziti/mcp-gateway/cmd/...@latest
 This installs all components: `mcp-gateway`, `mcp-bridge`, `mcp-tools`, and `mcp-filesystem` (a
 sandboxed filesystem server included for getting started).
 
+### Build from source
+
+Clone the repository and build each binary individually:
+
+```bash
+git clone https://github.com/openziti/mcp-gateway.git
+cd mcp-gateway
+go build ./cmd/mcp-gateway
+go build ./cmd/mcp-bridge
+go build ./cmd/mcp-tools
+```
+
 ### Start the bridge
 
 ```bash

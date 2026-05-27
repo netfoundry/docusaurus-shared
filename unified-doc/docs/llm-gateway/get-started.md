@@ -14,7 +14,7 @@ Choose the installation method that fits your environment.
 
 ### Pre-built binaries
 
-Pre-built binaries are available for macOS (Intel and Apple Silicon) and Linux (x86 and ARM):
+Pre-built binaries are available for Linux, macOS, and Windows:
 
 1. Visit the [GitHub Releases](https://github.com/openziti/llm-gateway/releases) page.
 2. Download the binary for your platform.
@@ -164,6 +164,38 @@ curl -X POST http://localhost:8080/v1/chat/completions \
       -H "Authorization: Bearer sk-gw-a1b2c3d4e5f6..." \
       -d '{"model": "gpt-4", "messages": [{"role": "user", "content": "Hello"}]}'
     ```
+
+### Use the Python OpenAI client
+
+The gateway works as a drop-in replacement for the OpenAI Python client. Point `base_url` at the
+gateway and it handles provider routing transparently:
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:8080/v1",
+    api_key="not-needed"  # gateway handles auth
+)
+
+# Routes to OpenAI
+response = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[{"role": "user", "content": "Hello!"}]
+)
+
+# Routes to Anthropic (translated automatically)
+response = client.chat.completions.create(
+    model="claude-sonnet-4-20250514",
+    messages=[{"role": "user", "content": "Hello!"}]
+)
+
+# Routes to local backend (Ollama, vLLM, etc.)
+response = client.chat.completions.create(
+    model="llama3.2",
+    messages=[{"role": "user", "content": "Hello!"}]
+)
+```
 
 ### Semantic routing
 

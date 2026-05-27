@@ -57,6 +57,8 @@ local:
 The gateway uses **weighted round-robin** load balancing. An endpoint with `weight: 3` receives roughly
 3× the requests of an endpoint with `weight: 1`.
 
+`GET /v1/models` returns the deduplicated union of models from all healthy endpoints.
+
 ## Health checking
 
 A background process periodically checks endpoint health:
