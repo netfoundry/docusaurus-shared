@@ -38,6 +38,11 @@ jobs:
       STG_DOC_SSH_TARGET_DIR: ${{ secrets.STG_DOC_SSH_TARGET_DIR }}
       STG_DOC_SSH_USER: ${{ secrets.STG_DOC_SSH_USER }}
       STG_KEY_FILE: ${{ secrets.STG_KEY_FILE }}
+      DEV_DOC_SSH_HOST: ${{ secrets.DEV_DOC_SSH_HOST }}
+      DEV_DOC_SSH_PORT: ${{ secrets.DEV_DOC_SSH_PORT }}
+      DEV_DOC_SSH_TARGET_DIR: ${{ secrets.DEV_DOC_SSH_TARGET_DIR }}
+      DEV_DOC_SSH_USER: ${{ secrets.DEV_DOC_SSH_USER }}
+      DEV_KEY_FILE: ${{ secrets.DEV_KEY_FILE }}
       PROD_DOC_SSH_HOST: ${{ secrets.PROD_DOC_SSH_HOST }}
       PROD_DOC_SSH_PORT: ${{ secrets.PROD_DOC_SSH_PORT }}
       PROD_DOC_SSH_TARGET_DIR: ${{ secrets.PROD_DOC_SSH_TARGET_DIR }}
