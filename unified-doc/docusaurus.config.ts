@@ -35,6 +35,8 @@ const zrokRoot = `./_remotes/zrok/website`;
 const zlan = `./_remotes/zlan`;
 const platform = `./_remotes/platform`;
 const dataConnector = `./_remotes/data-connector`;
+const llmGateway = `./docs/llm-gateway`;
+const mcpGateway = `./docs/mcp-gateway`;
 
 const isVercel = process.env.IS_VERCEL === 'true';
 const docsBase = isVercel ? '/' : '/docs/';
@@ -46,7 +48,7 @@ function routeBase(name: string) {
     return isVercel ? `docs/${name}` : name;
 }
 
-const buildMask = parseInt(process.env.DOCUSAURUS_BUILD_MASK ?? "0xFF", 16);
+const buildMask = parseInt(process.env.DOCUSAURUS_BUILD_MASK ?? "0x1FF", 16);
 
 const BUILD_FLAGS = {
     NONE:           0x0,
@@ -57,6 +59,8 @@ const BUILD_FLAGS = {
     ZLAN:           0x10,
     PLATFORM:       0x20,
     DATA_CONNECTOR: 0x40,
+    LLM_GATEWAY:    0x80,
+    MCP_GATEWAY:    0x100,
 };
 
 function build(flag: number) {
@@ -115,6 +119,8 @@ const REMARK_MAPPINGS = [
     { from: '@zlandocs', to: `${docsBase}zlan`},
     { from: '@platformdocs', to: `${docsBase}platform`},
     { from: '@dataconnectordocs', to: `${docsBase}dataconnector`},
+    { from: '@llmgatewaydocs', to: `${docsBase}llm-gateway`},
+    { from: '@mcpgatewaydocs', to: `${docsBase}mcp-gateway`},
     { from: '@static', to: docsBase},
     { from: '/openziti',   to: `${docsBase}${routeBase('openziti')}`   },
     { from: '/frontdoor',  to: `${docsBase}${routeBase('frontdoor')}`  },
@@ -435,6 +441,38 @@ const config: Config = {
                 routeBase('dataconnector'),
             ),
         ),
+        build(BUILD_FLAGS.LLM_GATEWAY) && [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'llm-gateway',
+                path: llmGateway,
+                routeBasePath: routeBase('llm-gateway'),
+                sidebarPath: './sidebars-llm-gateway.ts',
+                beforeDefaultRemarkPlugins: [
+                    remarkGithubAdmonitionsToDirectives,
+                ],
+                remarkPlugins: [
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
+                    [remarkCodeSections, { logLevel: LogLevel.Silent }],
+                ],
+            },
+        ],
+        build(BUILD_FLAGS.MCP_GATEWAY) && [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'mcp-gateway',
+                path: mcpGateway,
+                routeBasePath: routeBase('mcp-gateway'),
+                sidebarPath: './sidebars-mcp-gateway.ts',
+                beforeDefaultRemarkPlugins: [
+                    remarkGithubAdmonitionsToDirectives,
+                ],
+                remarkPlugins: [
+                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
+                    [remarkCodeSections, { logLevel: LogLevel.Silent }],
+                ],
+            },
+        ],
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
         [pluginHotjar, {}],
         [pluginReo, {}],
@@ -530,7 +568,21 @@ const config: Config = {
             productPickerColumns: [
                 { header: 'Cloud SaaS',              links: [consoleLink,    frontdoorLink] },
                 { header: 'Self-Hosted Licensed',    links: [selfhostedLink, zlanLink]      },
-                { header: 'Self-Hosted Open Source', links: [openzitiLink,   zrokLink] },
+                { header: 'Self-Hosted Open Source', links: [openzitiLink,   zrokLink]      },
+                { header: 'AI Gateways', links: [
+                    {
+                        label: 'NetFoundry LLM Gateway',
+                        to: '/docs/llm-gateway/intro',
+                        logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
+                        description: 'OpenAI-compatible proxy for multi-provider LLM routing.',
+                    },
+                    {
+                        label: 'NetFoundry MCP Gateway',
+                        to: '/docs/mcp-gateway/intro',
+                        logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
+                        description: 'Secure zero-trust access to MCP tools across distributed systems.',
+                    },
+                ]},
             ],
         },
         navbar: {
