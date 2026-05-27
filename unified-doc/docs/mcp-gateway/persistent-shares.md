@@ -8,39 +8,35 @@ sidebar_label: Persistent shares
 By default, share tokens are ephemeral — they disappear when the process exits. For production use,
 create persistent shares that survive restarts and keep a stable token.
 
-## Create a persistent share
+1. Create a persistent share by running this once to reserve a named token:
 
-Run this once to reserve a named share:
+    ```bash
+    zrok2 create share my-gateway
+    ```
 
-```bash
-zrok2 create share my-gateway
-```
+    Share names must be 3–32 characters, lowercase alphanumeric and hyphens (`[a-z0-9-]`). If you omit
+    the name, zrok generates a random token.
 
-Share names must be 3–32 characters, lowercase alphanumeric and hyphens (`[a-z0-9-]`). If you omit
-the name, zrok generates a random token.
+2. Reference the token in your config:
 
-## Use with mcp-gateway
+    **mcp-gateway** — set `share_token` at the top level:
 
-Set the `share_token` at the top level of your config:
+    ```yaml
+    share_token: "my-gateway"
 
-```yaml
-share_token: "my-gateway"
+    aggregator:
+      name: "my-dev-tools"
+      version: "1.0.0"
+    ```
 
-aggregator:
-  name: "my-dev-tools"
-  version: "1.0.0"
-```
+    **mcp-bridge** — pass `--share-token`:
 
-## Use with mcp-bridge
+    ```bash
+    mcp-bridge --share-token my-bridge mcp-filesystem ~/Documents
+    ```
 
-Pass the token with the `--share-token` flag:
+3. When you no longer need the share, delete it:
 
-```bash
-mcp-bridge --share-token my-bridge mcp-filesystem ~/Documents
-```
-
-## Delete when done
-
-```bash
-zrok2 delete share my-gateway
-```
+    ```bash
+    zrok2 delete share my-gateway
+    ```
