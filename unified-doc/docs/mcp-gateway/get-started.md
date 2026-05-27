@@ -166,9 +166,14 @@ backends:
 
 ### Start the gateway
 
+Pass the config file path as the argument:
+
 ```bash
 mcp-gateway run gateway-config.yml
-# {"share_token":"x9y8z7w6v5u4"}
+```
+
+```text title="Output"
+{"share_token":"x9y8z7w6v5u4"}
 ```
 
 Connect the same way:
@@ -199,7 +204,10 @@ You can connect to MCP servers running on other machines using `mcp-bridge` with
 
 ```bash
 mcp-bridge mcp-filesystem /data
-# {"share_token":"remote-token"}
+```
+
+```text title="Output"
+{"share_token":"remote-token"}
 ```
 
 ### Add as a gateway backend

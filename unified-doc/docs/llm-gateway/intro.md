@@ -9,7 +9,7 @@ description: >
 # NetFoundry LLM Gateway overview
 
 NetFoundry LLM Gateway is an OpenAI-compatible API proxy that routes requests across multiple LLM
-providers using zero-trust networking. The open source can be found at:
+providers using zero-trust networking. The project is open source and can be found at:
 [github.com/openziti/llm-gateway](https://github.com/openziti/llm-gateway).
 
 ## What it does

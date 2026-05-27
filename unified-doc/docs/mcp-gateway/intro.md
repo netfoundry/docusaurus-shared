@@ -9,7 +9,7 @@ description: >
 # NetFoundry MCP Gateway overview
 
 NetFoundry MCP Gateway enables secure, isolated access to Model Context Protocol (MCP) tools across
-distributed systems without exposing public endpoints. The open source can be found at:
+distributed systems without exposing public endpoints. The project is open source and can be found at:
 [github.com/openziti/mcp-gateway](https://github.com/openziti/mcp-gateway).
 
 ## The problem it solves
@@ -45,7 +45,10 @@ backend connections — no shared state, no cross-talk between sessions.
 
     ```bash
     mcp-bridge mcp-filesystem ~/Documents
-    # {"share_token":"a1b2c3d4e5f6"}
+    ```
+
+    ```text title="Output"
+    {"share_token":"a1b2c3d4e5f6"}
     ```
 
 2. Connect to it from anywhere with a zrok-enabled environment:

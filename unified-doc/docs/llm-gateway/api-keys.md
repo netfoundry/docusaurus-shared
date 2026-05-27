@@ -53,7 +53,10 @@ Keys use the prefix `sk-gw-` to distinguish them from upstream provider keys (Op
 
 ```bash
 llm-gateway genkey
-# sk-gw-a1b2c3d4e5f6...
+```
+
+```text title="Output"
+sk-gw-a1b2c3d4e5f6...
 ```
 
 Keys are stored as plaintext in the config file, consistent with how upstream API keys are stored.
