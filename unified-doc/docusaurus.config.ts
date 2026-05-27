@@ -568,9 +568,8 @@ const config: Config = {
             productPickerColumns: [
                 { header: 'Cloud SaaS',              links: [consoleLink,    frontdoorLink] },
                 { header: 'Self-Hosted Licensed',    links: [selfhostedLink, zlanLink]      },
-                { header: 'Self-Hosted Open Source', links: [
-                    openzitiLink,
-                    zrokLink,
+                { header: 'Self-Hosted Open Source', links: [openzitiLink, zrokLink] },
+                { header: 'AI Gateways', links: [
                     {
                         label: 'LLM Gateway',
                         to: '/docs/llm-gateway/intro',
