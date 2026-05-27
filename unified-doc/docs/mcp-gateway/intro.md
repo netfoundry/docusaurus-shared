@@ -9,7 +9,7 @@ description: >
 # NetFoundry MCP Gateway overview
 
 NetFoundry MCP Gateway enables secure, isolated access to Model Context Protocol (MCP) tools across
-distributed systems without exposing public endpoints. It's open source:
+distributed systems without exposing public endpoints. The open source can be found at:
 [github.com/openziti/mcp-gateway](https://github.com/openziti/mcp-gateway).
 
 ## The problem it solves
