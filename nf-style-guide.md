@@ -23,9 +23,11 @@ scan, and they build user trust.
   sidebar label rather than the H1. Exceptions are acceptable when the label needs to be significantly shorter for
   navigation context, or when shortening reduces redundancy (e.g., a label like "Overview" under a category that
   already names the topic).
-- Use imperative verb phrases for all headings at every level: "Create a certificate", "Install an agent", etc.
+- Use imperative verb phrases for how-to page titles and headings: "Create a certificate", "Install an agent", etc.
   Avoid gerunds ("Creating a certificate", "Installing an agent") — they're acceptable in conceptual topics but
   not in how-tos or reference.
+- Sidebar category/bucket labels use noun phrases, not verb phrases: "Deployments", "Identity providers",
+  "Topologies". Reserve imperative phrases for leaf how-to pages that actually walk through a task.
 
 ### Sentence-style casing
 
