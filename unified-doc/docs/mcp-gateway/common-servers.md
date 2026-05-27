@@ -5,8 +5,9 @@ sidebar_label: Common MCP servers
 
 # Common MCP servers
 
-Install any of them with `npx -y @modelcontextprotocol/server-<name>`. Any `stdio` MCP server works
-with `mcp-bridge` and `mcp-gateway` regardless of language or runtime.
+The following MCP servers are available from the official `@modelcontextprotocol` npm scope. Install
+any of these with `npx -y @modelcontextprotocol/server-<name>`. Any `stdio` MCP server works with
+`mcp-bridge` and `mcp-gateway` regardless of language or runtime.
 
 | Package | Purpose |
 |---------|---------|
