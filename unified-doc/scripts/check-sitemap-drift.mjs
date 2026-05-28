@@ -70,6 +70,19 @@ function extractPaths(xml) {
     return paths;
 }
 
+// Detect the site's base URL prefix (e.g. '/docs') from the sitemap paths.
+// Docusaurus puts build output at build/<route> (not build/<baseUrl>/<route>),
+// so file lookups must strip the base URL prefix before joining with buildDir.
+function detectBaseUrl(paths) {
+    if (paths.size === 0) return '';
+    const firstSegs = [...paths].map(p => p.split('/').filter(Boolean)[0]).filter(Boolean);
+    const counts = firstSegs.reduce((m, s) => (m.set(s, (m.get(s) ?? 0) + 1), m), new Map());
+    const [topEntry] = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+    if (!topEntry) return '';
+    const cand = '/' + topEntry[0];
+    return [...paths].every(p => p === cand || p.startsWith(cand + '/')) ? cand : '';
+}
+
 // ---------- Product grouping (for copy-paste output) ----------
 
 const PRODUCTS = [
@@ -122,7 +135,7 @@ function printUnresolvedAsRedirects(unresolved, newPaths) {
 
 // ---------- Redirect stub scanning ----------
 
-function buildRedirectMap(dir) {
+function buildRedirectMap(dir, baseUrl = '') {
     const map = new Map(); // fromPath → toPath
     const base = resolve(dir);
 
@@ -141,7 +154,7 @@ function buildRedirectMap(dir) {
                 if (!m) continue;
                 let toPath = m[1];
                 try { toPath = new URL(toPath, 'https://x').pathname.replace(/\/$/, '') || '/'; } catch { /* keep */ }
-                const fromPath = dirname(full).slice(base.length).replace(/\/$/, '') || '/';
+                const fromPath = baseUrl + (dirname(full).slice(base.length).replace(/\/$/, '') || '/');
                 map.set(fromPath, toPath);
             }
         }
@@ -221,10 +234,18 @@ async function main() {
     const baselinePaths = extractPaths(baselineXml);
     const newPaths      = extractPaths(newXml);
 
+    // Docusaurus builds to build/<route> (not build/<baseUrl>/<route>), so strip
+    // the site's base URL prefix when resolving sitemap paths to file paths.
+    const baseUrl = detectBaseUrl(newPaths);
+    function pathToFile(p) {
+        const rel = baseUrl ? (p.slice(baseUrl.length) || '/') : p;
+        return join(buildDir, rel, 'index.html');
+    }
+
     // --- Pass 1: removed paths ---
     const removed    = [...baselinePaths].filter(p => !newPaths.has(p) && !shouldIgnore(p)).sort();
-    const covered    = removed.filter(p =>  existsSync(join(buildDir, p, 'index.html')));
-    const unresolved = removed.filter(p => !existsSync(join(buildDir, p, 'index.html')));
+    const covered    = removed.filter(p =>  existsSync(pathToFile(p)));
+    const unresolved = removed.filter(p => !existsSync(pathToFile(p)));
 
     if (covered.length > 0) {
         console.log(`[sitemap-drift] ${covered.length} removed path(s) covered by redirects:`);
@@ -233,7 +254,7 @@ async function main() {
 
     // --- Pass 2: redirect quality ---
     console.log(`[sitemap-drift] Scanning redirect stubs...`);
-    const redirectMap = buildRedirectMap(buildDir);
+    const redirectMap = buildRedirectMap(buildDir, baseUrl);
     const { stale, loops, chained, shadowed } = validateRedirects(redirectMap, newPaths);
 
     // Non-blocking warnings
