@@ -154,14 +154,16 @@ jobs:
         if: failure()
         run: unified-doc/scripts/build-drift-alert-context.sh "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" "$GITHUB_OUTPUT"
 
-      - name: Send drift alert
-        if: failure() && steps.drift-ctx.outputs.has_drift == 'true' && github.event_name == 'schedule'
-        uses: openziti/ziti-mattermost-action-py@v1
-        with:
-          zitiId: ${{ secrets.ZITI_MATTERMOST_IDENTITY }}
-          webhookUrl: ${{ secrets.ZHOOK_URL_DOC_NOTIFICATIONS }}
-          eventJson: ${{ steps.drift-ctx.outputs.event-json }}
-          senderUsername: "GitHubZ"
+      # Send drift alert disabled pending fix to openziti/ziti-mattermost-action-py
+      # (addPushDetails crashes with KeyError: 'forced' on non-push event JSON)
+      # - name: Send drift alert
+      #   if: failure() && steps.drift-ctx.outputs.has_drift == 'true'
+      #   uses: openziti/ziti-mattermost-action-py@v1
+      #   with:
+      #     zitiId: ${{ secrets.ZITI_MATTERMOST_IDENTITY }}
+      #     webhookUrl: ${{ secrets.ZHOOK_URL_DOC_NOTIFICATIONS }}
+      #     eventJson: ${{ steps.drift-ctx.outputs.event-json }}
+      #     senderUsername: "GitHubZ"
 
   # Notify the doc-alerts Mattermost channel only when the nightly scheduled
   # run fails. Push/workflow_dispatch runs are watched live by whoever triggered
