@@ -44,6 +44,7 @@ EVENT_JSON=$(jq -cn \
       avatar_url: "https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/png/icon/netfoundry-icon-color.png"
     },
     action: $action,
+    schedule: "0 2 * * *",
     run_url: $run_url
   }')
 
