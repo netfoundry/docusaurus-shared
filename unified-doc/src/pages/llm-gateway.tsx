@@ -1,4 +1,3 @@
-// src/pages/docs/llm-gateway.tsx
 // Redirects the bare /docs/llm-gateway route to /docs/llm-gateway/intro.
 import type {ReactNode} from 'react';
 import {Redirect} from '@docusaurus/router';
