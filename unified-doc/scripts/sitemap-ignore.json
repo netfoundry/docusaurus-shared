@@ -4,6 +4,8 @@
     "/docs/openziti/1.x",
     "/docs/openziti/tags",
     "/docs/openziti/category",
-    "/docs/llms.txt"
+    "/docs/llms.txt",
+    "/docs/docs/llm-gateway",
+    "/docs/docs/mcp-gateway"
   ]
 }
