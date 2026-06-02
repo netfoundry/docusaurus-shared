@@ -35,12 +35,17 @@
 .nf-navbar-product-icon {
     display: inline-flex;
     align-items: center;
+    gap: 0.4rem;
     margin: 0 0.5rem;
+    color: var(--ifm-navbar-link-color);
 }
 .nf-navbar-product-icon img {
     height: 32px;
     width: auto;
     display: block;
+}
+.nf-navbar-product-icon__label {
+    font-weight: 600;
 }
 /* Previously: `.clean-btn svg { height: 30px; width: 30px; }` to bump the
    light/dark toggle. Removed because .clean-btn is also Docusaurus's class for

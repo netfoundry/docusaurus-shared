@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import {useThemeConfig} from '@docusaurus/theme-common';
 import {useLocation} from 'react-router-dom';
 import NavbarPicker from '../../NavbarPicker';
+import MobilePickerMenu from '../../MobilePickerMenu';
 import {subsitePickerColumns} from '../../../../src/products';
 
 export type PickerLink = {
@@ -24,6 +25,8 @@ type Props = {
   label?: string;
   position?: 'left' | 'right';
   className?: string;
+  /** Set by Docusaurus when rendered inside the mobile navbar sidebar. */
+  mobile?: boolean;
 };
 
 const HEADER_CLASSES = ['picker-header--nf-tertiary', 'picker-header--nf-primary', 'picker-header--nf-secondary'];
@@ -41,13 +44,37 @@ function pathLabel(pathname: string, columns: PickerColumn[], fallback: string):
   return fallback;
 }
 
-export default function ProductPicker({label = 'Products', className}: Props) {
+export default function ProductPicker({label = 'Products', className, mobile}: Props) {
   const themeConfig = useThemeConfig() as any;
   const {pathname} = useLocation();
   const supplied = themeConfig?.netfoundry?.productPickerColumns as PickerColumn[] | undefined;
   const baseColumns: PickerColumn[] = supplied && supplied.length ? supplied : subsitePickerColumns;
   const resolvedColumns: PickerColumn[] = baseColumns.map((col, i) => ({...col, headerClass: HEADER_CLASSES[i] ?? ''}));
   const resolvedLabel = pathLabel(pathname, resolvedColumns, label);
+
+  if (mobile) {
+    return (
+      <MobilePickerMenu
+        label={resolvedLabel}
+        className={className}
+        groups={resolvedColumns.map((col) => ({
+          header: col.header,
+          headerClass: col.headerClass,
+          links: col.links.map((link) => ({
+            label: link.label,
+            to: link.to,
+            description: link.description,
+            leading: (link.logo || link.logoDark) ? (
+              <>
+                {link.logo && <img src={link.logo} className={clsx('picker-logo', link.logoDark && 'picker-logo--light')} alt="" />}
+                {link.logoDark && <img src={link.logoDark} className="picker-logo picker-logo--dark" alt="" />}
+              </>
+            ) : null,
+          })),
+        }))}
+      />
+    );
+  }
 
   return (
     <NavbarPicker label={resolvedLabel} className={className}>

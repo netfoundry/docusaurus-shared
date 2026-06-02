@@ -59,6 +59,9 @@ export default {
     title: 'Test Site - Unified Doc Structure',
     url: 'https://netfoundry.io',
     baseUrl: '/',
+    // DEV-ONLY debug probe button (self-gates to NODE_ENV !== 'production').
+    // Remove this line + delete src/debug/mobile-probe.js when done debugging.
+    clientModules: [require.resolve('./src/debug/mobile-probe.js')],
     customFields: {
         ALGOLIA_APPID:    cfg.algolia.appId,
         ALGOLIA_APIKEY:   cfg.algolia.apiKey,
@@ -235,7 +238,7 @@ export default {
                 {
                     type: 'html',
                     position: 'left',
-                    value: '<a href="/" class="nf-navbar-product-icon" title="Test product home"><img src="https://netfoundry.io/docs/img/openziti-sm-logo.svg" alt="Test product" /></a>',
+                    value: '<a href="/" class="nf-navbar-product-icon" title="OpenZiti home"><img src="https://netfoundry.io/docs/img/openziti-sm-logo.svg" alt="OpenZiti" /><span class="nf-navbar-product-icon__label">OpenZiti</span></a>',
                 },
                 { type: 'custom-productPicker',   position: 'left' },
                 { type: 'custom-versionDropdown', position: 'left', docsPluginId: 'zrok', pathPrefix: '/docs/zrok' },
