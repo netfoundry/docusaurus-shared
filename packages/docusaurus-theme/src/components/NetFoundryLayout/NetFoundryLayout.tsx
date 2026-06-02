@@ -75,7 +75,7 @@ export function NetFoundryLayout({
         <LayoutProvider>
             <Head>
                 <title>{pageTitle}</title>
-                <meta data-rh="true" name="nf-layout-version" content={version} />
+                <meta name="nf-layout-version" content={version} />
                 {(meta.description ?? description) && (<meta name="description" content={meta.description ?? description} />)}
                 {meta.url && <meta property="og:url" content={meta.url} />}
                 {meta.siteName && <meta property="og:site_name" content={meta.siteName} />}
