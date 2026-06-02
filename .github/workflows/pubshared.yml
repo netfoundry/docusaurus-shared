@@ -10,7 +10,7 @@ on:
 
 permissions:
   id-token: write   # required for npm OIDC trusted publisher
-  contents: read
+  contents: write   # required to push the release tag
 
 jobs:
   publish:
@@ -49,6 +49,11 @@ jobs:
 
       - name: Install, build, test, publish
         run: ./scripts/publish-theme.sh ${{ inputs.dry-run && '--dry-run' || '' }}
+
+      # Tag the release only after a successful publish. On dry-run this just
+      # prints the tag it would create/push (no mutation).
+      - name: Tag the release
+        run: ./scripts/tag-release.sh ${{ inputs.dry-run && '--dry-run' || '' }}
 
       - name: Explain npm publish failure
         if: failure() && steps.precheck.outcome == 'success'
