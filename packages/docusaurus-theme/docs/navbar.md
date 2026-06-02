@@ -107,6 +107,32 @@ navbar-item type for this; use a Docusaurus `type: 'html'` item placed first in 
 Size it in CSS via the wrapper class (e.g. `.nf-navbar-product-icon img { height: 32px }`). In the test-site this is a
 demo element, so its sizing lives in the test-site's `custom.css`, not the theme.
 
+## Mobile navbar (sidebar) rendering
+
+Docusaurus renders each navbar item **twice** -- once in the top navbar, once in the mobile hamburger sidebar -- and
+passes a `mobile` boolean to the component for the sidebar render. The custom pickers/icon-links originally ignored it
+and emitted their desktop `.navbar__item` / `.navbar__link` markup into the sidebar, which infima hides/mis-styles at
+mobile widths -- so Products/Resources rendered as invisible jammed text (the DOM had them, the screen didn't). The fix
+is to branch on `mobile` and emit idiomatic `.menu__list-item` / `.menu__link` markup.
+
+- **`MobilePickerMenu`** (`theme/NavbarItem/MobilePickerMenu.tsx`) is the shared mobile renderer: a collapsible
+  `.menu__list-item` (Docusaurus `Collapsible` + `useCollapsible`) whose rows show `leading icon + bold label + muted
+  description`, grouped under colored section sub-headers. `ProductPicker` and `ResourcesPicker` build `groups` (with
+  `headerClass` = the same `picker-header--nf-*` modifier as desktop, so the underline/label colors match) and pass
+  per-link `leading` art + `description`; when `mobile` they return `<MobilePickerMenu/>` instead of the desktop
+  `NavbarPicker` dropdown.
+- **`IconLinks`** branches on `mobile` to render each social link as a labeled `.menu__link` row (icon + title) instead
+  of the bare top-bar icon row.
+- **Search in the mobile menu**: `theme/Navbar/MobileSidebar/PrimaryMenu/index.tsx` wraps the upstream primary menu
+  (via `@theme-init`) and prepends `<SearchBar/>` so search is reachable once the menu is open (SearchBar otherwise only
+  lives in the top navbar).
+- **Top-bar icons below 996px**: hidden (`@media (max-width: 996px) { .navbar__items--right .nf-icon-links { display: none } }`)
+  because they're now in the sidebar menu and were colliding with the search button on tablet widths.
+- All the mobile CSS (`.nf-mobile-picker-*`, the search block, the `<996px` hides) lives in `css/product-picker.css`.
+
+The picker components live under `theme/`, so editing them is subject to the `tsc`-build stubs / `mobile`-prop notes in
+the root `CLAUDE.md` ("Editing theme/ components (swizzles)").
+
 ## StarUs banner
 
 Configured via `themeConfig.netfoundry.starBanners`. Each entry shows when `pathname` starts with its `pathPrefix`
