@@ -146,3 +146,5 @@ vite.config.ts.timestamp-*
 
 **/github_deploy_key
 .claude
+
+nf-debug.json

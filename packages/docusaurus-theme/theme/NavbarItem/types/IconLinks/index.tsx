@@ -32,7 +32,7 @@ function resolveIcon(name: string, colored?: boolean): React.ReactElement {
   return <></>;
 }
 
-export default function IconLinks(_props: {position?: 'left' | 'right'}) {
+export default function IconLinks(_props: {position?: 'left' | 'right'; mobile?: boolean}) {
   const themeConfig = useThemeConfig() as any;
   const links: NavbarIconLink[] = themeConfig?.netfoundry?.navbarIconLinks ?? DEFAULT_ICON_LINKS;
   const {pathname} = useLocation();
@@ -40,6 +40,24 @@ export default function IconLinks(_props: {position?: 'left' | 'right'}) {
   const visible = links.filter(link =>
     !link.pathPrefixes || link.pathPrefixes.some((p: string) => pathname.startsWith(p))
   );
+
+  // Mobile sidebar: render as labeled menu rows (icon + title), matching the
+  // picker mobile rows, instead of the desktop bare-icon row.
+  if (_props.mobile) {
+    return (
+      <>
+        {visible.map((link, i) => (
+          <li className="menu__list-item" key={i}>
+            <a href={link.href} target="_blank" rel="noopener noreferrer"
+               className="menu__link nf-mobile-picker-link" title={link.title}>
+              <span className="nf-mobile-picker-link__icon">{resolveIcon(link.iconName, link.colored)}</span>
+              <span className="nf-mobile-picker-link__text"><strong>{link.title}</strong></span>
+            </a>
+          </li>
+        ))}
+      </>
+    );
+  }
 
   return (
     <div className="nf-icon-links">

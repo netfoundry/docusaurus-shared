@@ -30,3 +30,14 @@ declare module '@theme/NavbarItem' {
   const NavbarItem: React.ComponentType<any>;
   export default NavbarItem;
 }
+
+declare module '@theme/SearchBar' {
+  import type React from 'react';
+  const SearchBar: React.ComponentType<any>;
+  export default SearchBar;
+}
+
+declare module '@theme-init/Navbar/MobileSidebar/PrimaryMenu' {
+  const PrimaryMenu: any;
+  export default PrimaryMenu;
+}

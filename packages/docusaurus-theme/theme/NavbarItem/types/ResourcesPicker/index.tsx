@@ -2,6 +2,7 @@ import React from 'react';
 import Link from '@docusaurus/Link';
 import {useThemeConfig} from '@docusaurus/theme-common';
 import NavbarPicker from '../../NavbarPicker';
+import MobilePickerMenu from '../../MobilePickerMenu';
 import {DiscourseIcon, GitHubIcon, YouTubeIcon} from '@netfoundry/docusaurus-theme/ui';
 import type {ResourcesPickerSection, ResourcesPickerLink} from '@netfoundry/docusaurus-theme';
 
@@ -9,10 +10,30 @@ const NF_LOGO_DEFAULT       = 'https://raw.githubusercontent.com/netfoundry/bran
 const OPENZITI_LOGO_DEFAULT = 'https://netfoundry.io/docs/img/openziti-sm-logo.svg';
 
 function resolveIcon(name: string, size = 32): React.ReactElement {
-  if (name === 'discourse') return <DiscourseIcon width={size} height={size} />;
+  // colored brand icons (YouTube red, Discourse multicolor) -- not greyscale.
+  if (name === 'discourse') return <DiscourseIcon colored width={size} height={size} />;
   if (name === 'github')    return <GitHubIcon    width={size} height={size} />;
-  if (name === 'youtube')   return <YouTubeIcon   width={size} height={size} />;
+  if (name === 'youtube')   return <YouTubeIcon   colored width={size} height={size} />;
   return <></>;
+}
+
+/** Leading icon/logo node for the mobile picker menu (no desktop margins). */
+function mobileLeadingFor(link: ResourcesPickerLink): React.ReactNode {
+  const badge = link.badge ? resolveIcon(link.badge, 14) : null;
+  if (link.logoUrl) {
+    return (
+      <span style={{position: 'relative', display: 'inline-flex', width: 32, height: 32}}>
+        <img src={link.logoUrl} style={{width: 32, height: 32, objectFit: 'contain'}} alt="" />
+        {badge && (
+          <span style={{position: 'absolute', bottom: -2, right: -4, width: 14, height: 14, display: 'block'}}>
+            {badge}
+          </span>
+        )}
+      </span>
+    );
+  }
+  if (link.iconName) return resolveIcon(link.iconName);
+  return null;
 }
 
 function ResourceLink({link}: {link: ResourcesPickerLink}) {
@@ -64,14 +85,36 @@ type Props = {
   label?: string;
   position?: 'left' | 'right';
   className?: string;
+  /** Set by Docusaurus when rendered inside the mobile navbar sidebar. */
+  mobile?: boolean;
 };
 
-export default function ResourcesPicker({label = 'Resources', className}: Props) {
+export default function ResourcesPicker({label = 'Resources', className, mobile}: Props) {
   const themeConfig   = useThemeConfig() as any;
   const consoleLogo   = themeConfig?.netfoundry?.consoleLogo   ?? NF_LOGO_DEFAULT;
   const openzitiLogo  = themeConfig?.netfoundry?.openzitiLogo  ?? OPENZITI_LOGO_DEFAULT;
   const sections: ResourcesPickerSection[] =
     themeConfig?.netfoundry?.resourcesPickerSections ?? buildDefaultSections(consoleLogo, openzitiLogo);
+
+  if (mobile) {
+    return (
+      <MobilePickerMenu
+        label={label}
+        className={className}
+        groups={sections.map((section, i) => ({
+          header: section.header,
+          headerClass: `picker-header--nf-${i === 0 ? 'primary' : 'secondary'}`,
+          links: section.links.map((link) => ({
+            label: link.label,
+            to: link.href,
+            external: true,
+            description: link.description,
+            leading: mobileLeadingFor(link),
+          })),
+        }))}
+      />
+    );
+  }
 
   return (
     <NavbarPicker label={label} className={className} panelClassName="nf-picker-panel--narrow" autoPosition>

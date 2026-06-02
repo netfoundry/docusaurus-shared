@@ -5,7 +5,8 @@
 @import '@docsearch/css';
 
 :root {
-    --ifm-navbar-height: 60px;
+    /* Match unified-doc: it leaves --ifm-navbar-height at the legacy 50px. */
+    --ifm-navbar-height: 50px;
     --ziti-landing-max-width: 1800px;
     --ifm-container-width-xl: 1400px;
     --ziti-star-us-height: 1px;
@@ -32,15 +33,33 @@
 
 /* Product icon (the type: 'html' navbar item between the NetFoundry logo and
    "Products"). Demo-only, so it is scoped to this test-site, not the theme. */
+/* The html navbar item wraps the anchor in a .navbar__item; make that wrapper
+   flex-center so the (inline-flex) shield centers vertically like the nav links
+   instead of riding high on the text baseline. */
+.navbar__item:has(.nf-navbar-product-icon) {
+    display: flex;
+    align-items: center;
+}
 .nf-navbar-product-icon {
     display: inline-flex;
     align-items: center;
+    gap: 0.4rem;
     margin: 0 0.5rem;
+    color: var(--ifm-navbar-link-color);
 }
 .nf-navbar-product-icon img {
     height: 32px;
     width: auto;
     display: block;
+}
+.nf-navbar-product-icon__label {
+    font-weight: 600;
+    /* Mobile-menu only: the product name shows in the sidebar, not the desktop
+       navbar (where the bare shield stays aligned with the nav links). */
+    display: none;
+}
+.navbar-sidebar .nf-navbar-product-icon__label {
+    display: inline;
 }
 /* Previously: `.clean-btn svg { height: 30px; width: 30px; }` to bump the
    light/dark toggle. Removed because .clean-btn is also Docusaurus's class for
