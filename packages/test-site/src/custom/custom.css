@@ -11,24 +11,13 @@
     --ziti-star-us-height: 1px;
 }
 
-html,
-body,
-#__docusaurus {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
+/* App-shell layout (html/body/#__docusaurus sizing + flex column) lives in the
+   shared theme's layout.css. Defining height: 100% here capped #__docusaurus at
+   one viewport and broke the navbar's sticky positioning -- removed. */
 
 /* Docusaurus-specific utility class */
 :global(.docusaurus-mt-lg) {
     margin-top: 3rem;
-}
-
-:global(#__docusaurus) {
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
 }
 
 .navbar__brand { /* squeeze whitespace */
@@ -39,6 +28,19 @@ body,
 }
 .navbar__logo { /* squeeze whitespace */
     margin-right: 0;
+}
+
+/* Product icon (the type: 'html' navbar item between the NetFoundry logo and
+   "Products"). Demo-only, so it is scoped to this test-site, not the theme. */
+.nf-navbar-product-icon {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0.5rem;
+}
+.nf-navbar-product-icon img {
+    height: 32px;
+    width: auto;
+    display: block;
 }
 /* Previously: `.clean-btn svg { height: 30px; width: 30px; }` to bump the
    light/dark toggle. Removed because .clean-btn is also Docusaurus's class for

@@ -142,6 +142,14 @@ export default {
             starBanners: [
                 { pathPrefix: '/docs/openziti', repoUrl: 'https://github.com/openziti/ziti', label: 'Star OpenZiti on GitHub' },
                 { pathPrefix: '/docs/zrok',     repoUrl: 'https://github.com/openziti/zrok', label: 'Star zrok on GitHub'     },
+                // DEMO-ONLY catch-all (no pathPrefix) so the banner renders on every test-site page.
+                // Why it's here: the two entries above are path-gated to /docs/openziti and /docs/zrok,
+                // and the test-site has no pages under those prefixes, so without this the banner never
+                // shows. Exercising the real path-gated behavior would need a doc tree under those
+                // prefixes (effectively a second test site), which we deliberately don't have.
+                // TO REMOVE: delete just this one line -- the path-gated entries above are the real
+                // production-style config and should stay.
+                { repoUrl: 'https://github.com/netfoundry/docusaurus-shared', label: 'Star us on GitHub' },
             ],
             // productPickerColumns intentionally omitted — the theme provides
             // the canonical NetFoundry picker via @netfoundry/docusaurus-theme/products.
@@ -197,6 +205,9 @@ export default {
                 { href: 'https://github.com/openziti/ziti', title: 'GitHub',  iconName: 'github',  pathPrefixes: ['/docs/openziti'] },
                 { href: 'https://github.com/openziti/zrok', title: 'GitHub', iconName: 'github', pathPrefixes: ['/docs/zrok']     },
                 { href: 'https://openziti.discourse.group/', title: 'Discourse', iconName: 'discourse' },
+                // Catch-all GitHub icon (no pathPrefixes) so it renders next to discourse on every
+                // test-site page -- demonstrates the github icon styling alongside discourse.
+                { href: 'https://github.com/netfoundry/docusaurus-shared', title: 'GitHub', iconName: 'github' },
             ],
             footer: {
                 description: 'This is just a test site for the NetFoundry Docusaurus theme.',
@@ -218,6 +229,14 @@ export default {
                 src: 'https://netfoundry.io/docs/img/netfoundry-name-and-logo.svg',
             },
             items: [
+                // Product icon between the NetFoundry logo and "Products", mirroring how the real
+                // product sites show their project logo there. type: 'html' lets us drop in an <img>;
+                // sizing lives in src/custom/custom.css (.nf-navbar-product-icon).
+                {
+                    type: 'html',
+                    position: 'left',
+                    value: '<a href="/" class="nf-navbar-product-icon" title="Test product home"><img src="https://netfoundry.io/docs/img/openziti-sm-logo.svg" alt="Test product" /></a>',
+                },
                 { type: 'custom-productPicker',   position: 'left' },
                 { type: 'custom-versionDropdown', position: 'left', docsPluginId: 'zrok', pathPrefix: '/docs/zrok' },
                 { type: 'custom-resourcesPicker', position: 'left' },

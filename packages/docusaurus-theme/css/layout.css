@@ -1,8 +1,14 @@
 html,
-body,
-#__docusaurus {
-    height: 100%;
+body {
     width: 100%;
+}
+
+/* min-height (not height: 100%) lets the app shell grow with its content.
+   Capping it at one viewport would shrink the sticky navbar's containing
+   block to 100vh, so the navbar would scroll out of view one page down. */
+#__docusaurus {
+    width: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -27,6 +33,13 @@ body:not(.navigation-with-keyboard) *:not(input):focus {
 .nf-icon-link--discourse:hover {
     opacity: 0.8;
     color: inherit;
+}
+
+/* NetFoundry navbar logo height. Infima defaults to 2rem (32px), which renders
+   the name-and-logo lockup too small; 50px is the intended brand height. The
+   navbar (--ifm-navbar-height) must be tall enough to give it breathing room. */
+.navbar__logo {
+    height: 50px;
 }
 
 /* Separator between navbar logo and nav items */
@@ -65,6 +78,13 @@ a code {
     color: inherit;
     background: var(--ifm-color-emphasis-100);
     border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+/* Breathing room around the scrollable left-hand sidebar nav only.
+   Scoped to .menu so the shared .thin-scrollbar class doesn't also shift
+   the right-hand TOC or code-block scroll containers. */
+.menu.thin-scrollbar {
+    margin: 10px 2px;
 }
 
 
