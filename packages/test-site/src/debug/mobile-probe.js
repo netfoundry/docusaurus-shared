@@ -57,6 +57,14 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
       boxShadow: '0 2px 8px rgba(0,0,0,.3)',
     });
     btn.addEventListener('click', () => {
+      window.alert(
+        'Debug probe (dev only).\n\n' +
+        'This button is a debugging aid: it captures the live navbar / DOM ' +
+        '(element markup, sizes, positions) into a JSON file so an AI coding ' +
+        'agent can read what the page actually rendered while debugging.\n\n' +
+        'The file (nf-debug.json) downloads now -- save it somewhere the agent ' +
+        'can read it. Not part of the real site; remove before shipping.'
+      );
       const blob = new Blob([JSON.stringify(collect(), null, 2)], {type: 'application/json'});
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
