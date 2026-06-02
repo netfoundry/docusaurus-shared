@@ -28,6 +28,16 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
       rightItems: list('.navbar__items--right > *'),
       rightIcons: list('.navbar__items--right .nf-icon-link'),
       searchRect: rect(q('.navbar__items--right .DocSearch-Button')),
+      // Left-navbar vertical alignment -- compare .t/.b of each to spot what's
+      // off-center vs the Products/Resources link text.
+      leftAlign: {
+        brand: rect(q('.navbar__brand')),
+        brandImg: rect(q('.navbar__brand img')),
+        productIcon: rect(q('.nf-navbar-product-icon')),
+        productImg: rect(q('.nf-navbar-product-icon img')),
+        productLabel: rect(q('.nf-navbar-product-icon__label')),
+        pickers: list('.navbar__items .nf-picker-trigger'),
+      },
       // Full markup -- how the pickers / icon links render in the mobile sidebar.
       navbarHTML: q('.navbar')?.outerHTML ?? null,
       navbarSidebarHTML: q('.navbar-sidebar')?.outerHTML ?? null,

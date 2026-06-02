@@ -46,6 +46,12 @@
 }
 .nf-navbar-product-icon__label {
     font-weight: 600;
+    /* Mobile-menu only: the product name shows in the sidebar, not the desktop
+       navbar (where the bare shield stays aligned with the nav links). */
+    display: none;
+}
+.navbar-sidebar .nf-navbar-product-icon__label {
+    display: inline;
 }
 /* Previously: `.clean-btn svg { height: 30px; width: 30px; }` to bump the
    light/dark toggle. Removed because .clean-btn is also Docusaurus's class for
