@@ -1,7 +1,12 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
 import clsx from 'clsx';
-import {Collapsible, useCollapsible} from '@docusaurus/theme-common';
+import {Collapsible as CollapsibleOrig, useCollapsible} from '@docusaurus/theme-common';
+
+// theme-common's Collapsible is typed against a different @types/react than the
+// standalone tsc build, which rejects it as a JSX component. Cast like the other
+// theme files do (NavbarItem, etc.).
+const Collapsible = CollapsibleOrig as React.ComponentType<any>;
 
 export type MobilePickerLink = {
   label: string;
