@@ -78,15 +78,6 @@
     max-width: var(--ziti-landing-max-width);
 }
 
-html,
-body,
-#__docusaurus {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
 .navbar {
     padding-top: 0;
 }
