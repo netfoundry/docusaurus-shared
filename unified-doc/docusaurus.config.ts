@@ -613,7 +613,21 @@ const config: Config = {
                 hitsPerPage: 25,
                 attributesToRetrieve: ["content", "hierarchy", "url"],
                 attributesToHighlight: ["content", "hierarchy"],
-                restrictSearchableAttributes: ["content", "hierarchy"]
+                // The index's searchableAttributes are `content` + `unordered(hierarchy.lvlN)`
+                // (see algolia-prod-crawler.json). There is no bare `hierarchy` searchable
+                // attribute, so restricting to "hierarchy" makes Algolia return 400
+                // ("attribute hierarchy is not in searchableAttributes setting"). List the
+                // actual searchable sub-attributes instead.
+                restrictSearchableAttributes: [
+                    "content",
+                    "hierarchy.lvl0",
+                    "hierarchy.lvl1",
+                    "hierarchy.lvl2",
+                    "hierarchy.lvl3",
+                    "hierarchy.lvl4",
+                    "hierarchy.lvl5",
+                    "hierarchy.lvl6",
+                ]
             },
             searchPagePath: 'search'
         },
