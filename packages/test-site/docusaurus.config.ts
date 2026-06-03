@@ -44,7 +44,11 @@ const prod: PublishConfig = {
     algolia: {
         appId: 'UWUTF7ESUI',
         apiKey: '3a4a0691d0e8e3bb7c27c702c6a86ea9',
-        indexName: 'netfoundry.io_UWUTF7ESUI',
+        // Match unified-doc/prod. The crawler writes the custom `nfdocs` index
+        // (see unified-doc/algolia-prod-crawler.json), not the auto-named
+        // `netfoundry.io_UWUTF7ESUI` index, so test-site must query `nfdocs`
+        // to mirror what production search actually hits.
+        indexName: 'nfdocs',
     },
     hotjar: {
         id: "6506483"
