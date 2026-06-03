@@ -32,7 +32,7 @@
 #   BB_REPO_TOKEN_ONPREM         Bitbucket token for k8s-on-prem-installations (falls back to SSH)
 #   BB_REPO_TOKEN_PLATFORM_DOC       Bitbucket token for platform-doc (falls back to SSH)
 #   BB_REPO_TOKEN_DATA_CONNECTOR     Bitbucket token for nf-data-connector (falls back to SSH)
-#   BB_REPO_TOKEN_PLATFORM_DOC       Bitbucket token for customer-connect-docs (falls back to SSH)
+#   BB_REPO_TOKEN_CUSTOMER_CONNECT   Bitbucket token for customer-connect-docs (falls back to SSH)
 #   BB_USERNAME                  Bitbucket username (default: x-token-auth)
 #   DOCUSAURUS_BUILD_MASK        Hex bitmask: 0x1=openziti 0x2=frontdoor 0x4=selfhosted
 #                                             0x8=zrok 0x10=zlan 0x20=platform
@@ -194,10 +194,10 @@ clone_or_update() {
       fi
       ;;
     *customer-connect-docs*)
-      if [ -n "${BB_REPO_TOKEN_PLATFORM_DOC:-}" ]; then
+      if [ -n "${BB_REPO_TOKEN_CUSTOMER_CONNECT:-}" ]; then
         local bb_user="${BB_USERNAME:-x-token-auth}"
-        url="https://${bb_user}:${BB_REPO_TOKEN_PLATFORM_DOC}@bitbucket.org/netfoundry/customer-connect-docs.git"
-        echo "🔑 Using BB_REPO_TOKEN_PLATFORM_DOC token for customer-connect-docs" >&2
+        url="https://${bb_user}:${BB_REPO_TOKEN_CUSTOMER_CONNECT}@bitbucket.org/netfoundry/customer-connect-docs.git"
+        echo "🔑 Using BB_REPO_TOKEN_CUSTOMER_CONNECT token" >&2
       else
         url="git@bitbucket.org:netfoundry/customer-connect-docs.git"
         echo "🔑 Using SSH for customer-connect-docs" >&2
