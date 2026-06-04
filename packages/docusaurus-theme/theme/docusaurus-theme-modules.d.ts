@@ -41,4 +41,3 @@ declare module '@theme-init/Navbar/MobileSidebar/PrimaryMenu' {
   const PrimaryMenu: any;
   export default PrimaryMenu;
 }
-
