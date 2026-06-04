@@ -107,11 +107,6 @@ export default {
         ['@docusaurus/plugin-content-docs', {
             routeBasePath: '/docs',
             sidebarPath: './sidebars.ts',
-            lastVersion: 'current',
-            versions: {
-                current:       { label: 'Current',    path: '',          banner: 'none'         },
-                'test-maint':  { label: 'Test Maint', path: 'test-maint', banner: 'unmaintained' },
-            },
         }],
         ['@docusaurus/plugin-content-pages', {}],
         // Webpack aliases for sub-project imports (mirrors unified-doc)
@@ -221,13 +216,6 @@ export default {
                 // test-site page -- demonstrates the github icon styling alongside discourse.
                 { href: 'https://github.com/netfoundry/docusaurus-shared', title: 'GitHub', iconName: 'github' },
             ],
-            versionBanners: [
-                {
-                    pathPrefix: '/docs/test-maint',
-                    message: 'Test Maintenance LTS — this is a custom banner. You should NOT see the default Docusaurus "no longer actively maintained" text.',
-                    type: 'warning',
-                },
-            ],
             footer: {
                 description: 'This is just a test site for the NetFoundry Docusaurus theme.',
                 socialProps: {
@@ -257,7 +245,6 @@ export default {
                     value: '<a href="/" class="nf-navbar-product-icon" title="OpenZiti home"><img src="https://netfoundry.io/docs/img/openziti-sm-logo.svg" alt="OpenZiti" /><span class="nf-navbar-product-icon__label">OpenZiti</span></a>',
                 },
                 { type: 'custom-productPicker',   position: 'left' },
-                { type: 'docsVersionDropdown',    position: 'left', docsPluginId: 'default' },
                 { type: 'custom-versionDropdown', position: 'left', docsPluginId: 'zrok', pathPrefix: '/docs/zrok' },
                 { type: 'custom-resourcesPicker', position: 'left' },
                 { type: 'custom-iconLinks',        position: 'right' },
