@@ -113,7 +113,7 @@ const REMARK_MAPPINGS = [
     { from: '@selfhosteddocs', to: `${docsBase}selfhosted` },
     { from: '@openzitidocs', to: `${docsBase}openziti`},
     { from: '@openziti2x',   to: `${docsBase}openziti`},
-    { from: '@openziti1x',   to: `${docsBase}openziti/1.x`},
+    { from: '@openziti1x',   to: `${docsBase}openziti/maint`},
     { from: '@zrokdocs', to: `${docsBase}zrok`},
     { from: '@frontdoordocs', to: `${docsBase}frontdoor`},
     { from: '@zlandocs', to: `${docsBase}zlan`},
