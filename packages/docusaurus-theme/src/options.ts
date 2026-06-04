@@ -125,6 +125,18 @@ export interface NetFoundryThemeOptions {
 }
 
 /**
+ * Version banner configuration for path-aware custom banners
+ */
+export interface VersionBannerConfig {
+  /** Path prefix to match — e.g. '/docs/openziti/maint' or '/docs/zrok/1.x' */
+  pathPrefix: string;
+  /** Banner message (plain text). */
+  message: string;
+  /** Visual style. 'warning' (default) renders amber, 'info' renders blue, 'note' renders gray. */
+  type?: 'warning' | 'info' | 'note';
+}
+
+/**
  * Theme configuration in themeConfig.netfoundry
  *
  * @example
@@ -159,6 +171,8 @@ export interface NetFoundryThemeConfig {
   resourcesPickerSections?: ResourcesPickerSection[];
   /** Navbar icon links. If omitted, the theme falls back to built-in NetFoundry defaults. */
   navbarIconLinks?: NavbarIconLink[];
+  /** Path-aware version banners — each entry renders a custom banner on any doc page whose URL starts with pathPrefix. Falls back to the default Docusaurus version banner if no entry matches. */
+  versionBanners?: VersionBannerConfig[];
 }
 
 /**
