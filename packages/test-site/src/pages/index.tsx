@@ -92,9 +92,6 @@ function HeroSection() {
                     <a href="/docs" style={btnGhost}>
                         Browse the Docs
                     </a>
-                    <a href="/docs/openziti/intro" style={btnGhost}>
-                        OpenZiti Docs
-                    </a>
                 </div>
             </div>
         </NetFoundryHorizontalSection>

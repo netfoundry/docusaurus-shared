@@ -3,7 +3,6 @@ import type * as Preset from '@docusaurus/preset-classic';
 import path from "node:path"
 import {themes as prismThemes} from 'prism-react-renderer';
 import {zrokDocsPluginConfig} from "./remotes/zrok/website/docusaurus-plugin-zrok-docs";
-import {openzitiDocsPluginConfig} from "./remotes/openziti/docusaurus/docusaurus-plugin-openziti-docs";
 import {frontdoorDocsPluginConfig} from "./remotes/frontdoor/docusaurus/docusaurus-plugin-frontdoor-docs";
 import {onpremDocsPluginConfig} from "./remotes/onprem/docusaurus/docusaurus-plugin-onprem-docs";
 import {zlanDocsPluginConfig} from "./remotes/zlan/docusaurus/docusaurus-plugin-zlan-docs";
@@ -13,7 +12,6 @@ import {zlanDocsPluginConfig} from "./remotes/zlan/docusaurus/docusaurus-plugin-
 // Sub-project paths (mirrors unified-doc structure)
 const frontdoor = `./remotes/frontdoor`;
 const onprem = `./remotes/onprem`;
-const openziti = `./remotes/openziti`;
 const zlan = `./remotes/zlan`;
 const zrokRoot = `./remotes/zrok/website`;
 
@@ -98,8 +96,7 @@ export default {
         '../../unified-doc/static',
         `${frontdoor}/docusaurus/static`,
         `${onprem}/docusaurus/static`,
-        `${openziti}/docusaurus/static`,
-        `${zlan}/docusaurus/static`,
+`${zlan}/docusaurus/static`,
         `${zrokRoot}/static`,
     ],
 
@@ -107,6 +104,13 @@ export default {
         ['@docusaurus/plugin-content-docs', {
             routeBasePath: '/docs',
             sidebarPath: './sidebars.ts',
+            lastVersion: 'current',
+            includeCurrentVersion: true,
+            versions: {
+                'current': { label: 'Stable', path: '',     banner: 'none' },
+                'beta':    { label: 'Beta',   path: 'beta', banner: 'unreleased' },
+                'eol':     { label: 'EOL',    path: 'eol',  banner: 'unmaintained' },
+            },
         }],
         ['@docusaurus/plugin-content-pages', {}],
         // Webpack aliases for sub-project imports (mirrors unified-doc)
@@ -117,8 +121,7 @@ export default {
                     return {
                         resolve: {
                             alias: {
-                                '@openziti': path.resolve(__dirname, `${openziti}/docusaurus`),
-                                '@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
+'@frontdoor': path.resolve(__dirname, `${frontdoor}/docusaurus`),
                                 '@onprem': path.resolve(__dirname, `${onprem}/docusaurus`),
                                 '@zlan': path.resolve(__dirname, `${zlan}/docusaurus`),
                                 '@zrok': path.resolve(__dirname, `${zrokRoot}`),
@@ -134,8 +137,7 @@ export default {
         },
 
         // Sub-project docs plugins (same pattern as unified-doc)
-        openzitiDocsPluginConfig(`${openziti}/docusaurus`, REMARK_MAPPINGS, 'docs/openziti'),
-        frontdoorDocsPluginConfig(`${frontdoor}/docusaurus`, REMARK_MAPPINGS, 'docs/frontdoor'),
+frontdoorDocsPluginConfig(`${frontdoor}/docusaurus`, REMARK_MAPPINGS, 'docs/frontdoor'),
         onpremDocsPluginConfig(`${onprem}/docusaurus`, REMARK_MAPPINGS, 'docs/onprem'),
         zlanDocsPluginConfig(`${zlan}/docusaurus`, REMARK_MAPPINGS, 'docs/zlan'),
         zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, 'docs/zrok'),
@@ -147,16 +149,8 @@ export default {
         // NetFoundry theme configuration
         netfoundry: {
             starBanners: [
-                { pathPrefix: '/docs/openziti', repoUrl: 'https://github.com/openziti/ziti', label: 'Star OpenZiti on GitHub' },
-                { pathPrefix: '/docs/zrok',     repoUrl: 'https://github.com/openziti/zrok', label: 'Star zrok on GitHub'     },
-                // DEMO-ONLY catch-all (no pathPrefix) so the banner renders on every test-site page.
-                // Why it's here: the two entries above are path-gated to /docs/openziti and /docs/zrok,
-                // and the test-site has no pages under those prefixes, so without this the banner never
-                // shows. Exercising the real path-gated behavior would need a doc tree under those
-                // prefixes (effectively a second test site), which we deliberately don't have.
-                // TO REMOVE: delete just this one line -- the path-gated entries above are the real
-                // production-style config and should stay.
-                { repoUrl: 'https://github.com/netfoundry/docusaurus-shared', label: 'Star us on GitHub' },
+                { pathPrefix: '/docs/zrok', repoUrl: 'https://github.com/openziti/zrok', label: 'Star zrok on GitHub' },
+                { pathPrefix: '/docs',      repoUrl: 'https://github.com/netfoundry/docusaurus-shared', label: 'Star us on GitHub' },
             ],
             // productPickerColumns intentionally omitted — the theme provides
             // the canonical NetFoundry picker via @netfoundry/docusaurus-theme/products.
@@ -171,12 +165,6 @@ export default {
                             href: 'https://netfoundry.io/blog/',
                             logoUrl: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
                         },
-                        {
-                            label: 'OpenZiti Tech Blog',
-                            description: 'Technical articles and community updates.',
-                            href: 'https://blog.openziti.io/',
-                            logoUrl: 'https://netfoundry.io/docs/img/openziti-sm-logo.svg',
-                        },
                     ],
                 },
                 {
@@ -189,56 +177,31 @@ export default {
                             logoUrl: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
                             badge: 'youtube',
                         },
-                        {
-                            label: 'OpenZiti YouTube',
-                            description: 'OpenZiti community videos and project updates.',
-                            href: 'https://www.youtube.com/openziti',
-                            logoUrl: 'https://netfoundry.io/docs/img/openziti-sm-logo.svg',
-                            badge: 'youtube',
-                        },
-                        {
-                            label: 'OpenZiti Discourse',
-                            description: 'Ask questions and connect with the community.',
-                            href: 'https://openziti.discourse.group/',
-                            iconName: 'discourse',
-                        },
                     ],
                 },
             ],
             navbarIconLinks: [
-                { href: 'https://reddit.com/r/openziti',    title: 'Reddit',  iconName: 'reddit',  pathPrefixes: ['/docs/openziti'] },
-                { href: 'https://x.com/openziti',           title: 'X',       iconName: 'x',       pathPrefixes: ['/docs/openziti'] },
-                { href: 'https://www.youtube.com/openziti', title: 'YouTube', iconName: 'youtube', pathPrefixes: ['/docs/openziti'] },
-                { href: 'https://github.com/openziti/ziti', title: 'GitHub',  iconName: 'github',  pathPrefixes: ['/docs/openziti'] },
-                { href: 'https://github.com/openziti/zrok', title: 'GitHub', iconName: 'github', pathPrefixes: ['/docs/zrok']     },
-                { href: 'https://openziti.discourse.group/', title: 'Discourse', iconName: 'discourse' },
-                // Catch-all GitHub icon (no pathPrefixes) so it renders next to discourse on every
-                // test-site page -- demonstrates the github icon styling alongside discourse.
-                { href: 'https://github.com/netfoundry/docusaurus-shared', title: 'GitHub', iconName: 'github' },
+                { href: 'https://github.com/openziti/zrok',                 title: 'GitHub',    iconName: 'github',    pathPrefixes: ['/docs/zrok'] },
+                { href: 'https://openziti.discourse.group/',                title: 'Discourse', iconName: 'discourse', pathPrefixes: ['/docs/zrok'] },
+                { href: 'https://github.com/netfoundry/docusaurus-shared',  title: 'GitHub',    iconName: 'github' },
             ],
             versionBanners: [
                 {
-                    pathPrefix: '/docs/openziti/latest',
-                    message: 'This is the latest development documentation and may describe features not yet available in a long-term-stable (LTS) release. See the release policy for more information. For stable documentation, see Active LTS (2.0.x).',
+                    pathPrefix: '/docs/beta',
+                    message: 'This is beta documentation for features that may not yet be available in a stable release. For stable documentation, see Stable.',
                     type: 'info',
-                    links: [
-                        { text: 'release policy', href: 'https://github.com/openziti/ziti/blob/main/RELEASE_POLICY.md' },
-                    ],
                     versionLink: {
-                        text: 'Active LTS (2.0.x)',
-                        fallbackHref: '/docs/openziti/intro',
+                        text: 'Stable',
+                        fallbackHref: '/docs/intro',
                     },
                 },
                 {
-                    pathPrefix: '/docs/openziti/maint',
-                    message: 'Maintenance LTS (1.6.x) — receives security fixes and critical production defect patches only. See the release policy for more information. For new features and active support, see Active LTS (2.0.x).',
+                    pathPrefix: '/docs/eol',
+                    message: 'This version has reached end of life and no longer receives updates. For current documentation, see Stable.',
                     type: 'warning',
-                    links: [
-                        { text: 'release policy', href: 'https://github.com/openziti/ziti/blob/main/RELEASE_POLICY.md' },
-                    ],
                     versionLink: {
-                        text: 'Active LTS (2.0.x)',
-                        fallbackHref: '/docs/openziti/intro',
+                        text: 'Stable',
+                        fallbackHref: '/docs/intro',
                     },
                 },
             ],
@@ -265,13 +228,8 @@ export default {
                 // Product icon between the NetFoundry logo and "Products", mirroring how the real
                 // product sites show their project logo there. type: 'html' lets us drop in an <img>;
                 // sizing lives in src/custom/custom.css (.nf-navbar-product-icon).
-                {
-                    type: 'html',
-                    position: 'left',
-                    value: '<a href="/" class="nf-navbar-product-icon" title="OpenZiti home"><img src="https://netfoundry.io/docs/img/openziti-sm-logo.svg" alt="OpenZiti" /><span class="nf-navbar-product-icon__label">OpenZiti</span></a>',
-                },
                 { type: 'custom-productPicker',   position: 'left' },
-{ type: 'custom-versionDropdown', position: 'left', docsPluginId: 'openziti', pathPrefix: '/docs/openziti' },
+                { type: 'custom-versionDropdown', position: 'left', docsPluginId: 'default', pathPrefix: '/docs' },
                 { type: 'custom-versionDropdown', position: 'left', docsPluginId: 'zrok', pathPrefix: '/docs/zrok' },
                 { type: 'custom-resourcesPicker', position: 'left' },
                 { type: 'custom-iconLinks',        position: 'right' },

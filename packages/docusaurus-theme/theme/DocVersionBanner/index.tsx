@@ -43,7 +43,7 @@ function renderBanner(match: VersionBannerConfig, className: string | undefined,
  */
 function BannerWithVersionLink({ match, className }: { match: VersionBannerConfig; className?: string }): ReactNode {
     const activePlugin = useActivePlugin();
-    const activeDocContext = useActiveDocContext(activePlugin!.pluginId);
+    const activeDocContext = useActiveDocContext(activePlugin?.pluginId ?? 'default');
     const currentDoc = activeDocContext?.alternateDocVersions?.['current'];
     const href = currentDoc?.path ?? match.versionLink!.fallbackHref;
     const links: VersionBannerLink[] = [
