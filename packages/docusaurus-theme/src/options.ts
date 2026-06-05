@@ -146,6 +146,15 @@ export interface VersionBannerConfig {
   type?: 'warning' | 'info' | 'note';
   /** Substrings within message to render as inline links. Each text must appear in message exactly. */
   links?: VersionBannerLink[];
+  /**
+   * Version-aware link that resolves to the equivalent page in the lastVersion (Active LTS).
+   * Falls back to fallbackHref when the equivalent page doesn't exist in lastVersion.
+   * The text must appear in message exactly — same matching rule as links[].
+   */
+  versionLink?: {
+    text: string;
+    fallbackHref: string;
+  };
 }
 
 /**
