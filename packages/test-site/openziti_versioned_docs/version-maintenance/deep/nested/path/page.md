@@ -2,7 +2,7 @@
 sidebar_label: Deep nested page
 ---
 
-# Deep nested page (Maintenance LTS)
+# Deep nested page — Maintenance LTS (1.6.x)
 
-This page is at a long nested path and exists in both **Maintenance LTS** and **Active LTS**. The
-version banner's "Active LTS" link should resolve to the equivalent deep path.
+This page is at a long nested path and exists in **Active LTS**. If you arrived here from a version
+banner, the `versionLink` correctly resolved the deep path across versions.

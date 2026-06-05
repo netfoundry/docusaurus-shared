@@ -271,6 +271,7 @@ export default {
                     value: '<a href="/" class="nf-navbar-product-icon" title="OpenZiti home"><img src="https://netfoundry.io/docs/img/openziti-sm-logo.svg" alt="OpenZiti" /><span class="nf-navbar-product-icon__label">OpenZiti</span></a>',
                 },
                 { type: 'custom-productPicker',   position: 'left' },
+{ type: 'custom-versionDropdown', position: 'left', docsPluginId: 'openziti', pathPrefix: '/docs/openziti' },
                 { type: 'custom-versionDropdown', position: 'left', docsPluginId: 'zrok', pathPrefix: '/docs/zrok' },
                 { type: 'custom-resourcesPicker', position: 'left' },
                 { type: 'custom-iconLinks',        position: 'right' },
