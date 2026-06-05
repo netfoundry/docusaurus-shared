@@ -125,15 +125,27 @@ export interface NetFoundryThemeOptions {
 }
 
 /**
+ * An inline link to embed within a version banner message
+ */
+export interface VersionBannerLink {
+  /** Substring of message to render as an anchor. Must match the message exactly. */
+  text: string;
+  /** URL for the anchor. */
+  href: string;
+}
+
+/**
  * Version banner configuration for path-aware custom banners
  */
 export interface VersionBannerConfig {
   /** Path prefix to match — e.g. '/docs/openziti/maint' or '/docs/zrok/1.x' */
   pathPrefix: string;
-  /** Banner message (plain text). */
+  /** Banner message (plain text). Substrings listed in links are rendered as anchors. */
   message: string;
   /** Visual style. 'warning' (default) renders amber, 'info' renders blue, 'note' renders gray. */
   type?: 'warning' | 'info' | 'note';
+  /** Substrings within message to render as inline links. Each text must appear in message exactly. */
+  links?: VersionBannerLink[];
 }
 
 /**
