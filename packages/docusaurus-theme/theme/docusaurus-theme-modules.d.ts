@@ -41,3 +41,11 @@ declare module '@theme-init/Navbar/MobileSidebar/PrimaryMenu' {
   const PrimaryMenu: any;
   export default PrimaryMenu;
 }
+
+declare module '@docusaurus/plugin-content-docs/client' {
+  export function useActivePlugin(options?: { failfast?: boolean }): { pluginId: string } | undefined;
+  export function useActiveDocContext(pluginId: string): {
+    activeDoc?: { path: string; id: string };
+    alternateDocVersions: Record<string, { path: string; id: string }>;
+  };
+}
