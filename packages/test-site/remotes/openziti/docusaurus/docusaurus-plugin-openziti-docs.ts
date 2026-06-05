@@ -15,7 +15,13 @@ export function openzitiDocsPluginConfig(
             path: docsPath,
             routeBasePath,
             sidebarPath,
+            lastVersion: 'current',
             includeCurrentVersion: true,
+            versions: {
+                'current':     { label: 'Active LTS (2.0.x)',      path: '',       banner: 'none'         },
+                'latest':      { label: 'Latest',                  path: 'latest', banner: 'unreleased'   },
+                'maintenance': { label: 'Maintenance LTS (1.6.x)', path: 'maint',  banner: 'unmaintained' },
+            },
         } as any,
     ];
 }
