@@ -17,6 +17,8 @@
 #   --zlan-branch=BRANCH         Branch for netfoundry/zlan                       (default: main)
 #   --platform-branch=BRANCH     Branch for netfoundry/platform-doc               (default: main)
 #   --data-connector-branch=BRANCH  Branch for netfoundry/nf-data-connector      (default: main)
+#   --llm-gateway-branch=BRANCH  Branch for openziti/llm-gateway                  (default: main)
+#   --mcp-gateway-branch=BRANCH  Branch for openziti/mcp-gateway                  (default: main)
 #   --clean                      Wipe _remotes and .docusaurus cache before building
 #   --lint-only                  Run lint checks only; skip build
 #   --qualifier=VALUE            Append VALUE to output dir (e.g. --qualifier=-preview -> build-preview)
@@ -34,7 +36,7 @@
 #   BB_USERNAME                  Bitbucket username (default: x-token-auth)
 #   DOCUSAURUS_BUILD_MASK        Hex bitmask: 0x1=openziti 0x2=frontdoor 0x4=selfhosted
 #                                             0x8=zrok 0x10=zlan 0x20=platform
-#                                             0x40=data-connector 0xFF=all (default: 0xFF)
+#                                             0x40=data-connector 0x80=llm-gateway 0x100=mcp-gateway 0x1FF=all (default: 0x1FF)
 #   DOCUSAURUS_PUBLISH_ENV       Set to 'prod' to use production Algolia index
 #   NO_MINIFY                    Set to any value to pass --no-minify to Docusaurus
 #   IS_VERCEL                    Set to 'true' on Vercel preview deployments
@@ -62,6 +64,8 @@ BRANCH_SELFHOSTED="main"
 BRANCH_ZLAN="main"
 BRANCH_PLATFORM="main"
 BRANCH_DATA_CONNECTOR="main"
+BRANCH_LLM_GATEWAY="main"
+BRANCH_MCP_GATEWAY="main"
 
 usage() {
   sed -n '/^# USAGE/,/^# =====/{ /^# =====/d; s/^# \{0,1\}//; p }' "$0"
@@ -76,6 +80,8 @@ while [[ $# -gt 0 ]]; do
     --zlan-branch=*)        BRANCH_ZLAN="${1#*=}";        shift ;;
     --platform-branch=*)    BRANCH_PLATFORM="${1#*=}";   shift ;;
     --data-connector-branch=*) BRANCH_DATA_CONNECTOR="${1#*=}"; shift ;;
+    --llm-gateway-branch=*) BRANCH_LLM_GATEWAY="${1#*=}"; shift ;;
+    --mcp-gateway-branch=*) BRANCH_MCP_GATEWAY="${1#*=}"; shift ;;
     --ziti-doc-branch)      BRANCH_ZITI_DOC="${2:?--ziti-doc-branch requires a value}";     shift 2 ;;
     --zrok-branch)          BRANCH_ZROK="${2:?--zrok-branch requires a value}";             shift 2 ;;
     --frontdoor-branch)     BRANCH_FRONTDOOR="${2:?--frontdoor-branch requires a value}";   shift 2 ;;
@@ -83,6 +89,8 @@ while [[ $# -gt 0 ]]; do
     --zlan-branch)          BRANCH_ZLAN="${2:?--zlan-branch requires a value}";             shift 2 ;;
     --platform-branch)      BRANCH_PLATFORM="${2:?--platform-branch requires a value}";     shift 2 ;;
     --data-connector-branch) BRANCH_DATA_CONNECTOR="${2:?--data-connector-branch requires a value}"; shift 2 ;;
+    --llm-gateway-branch)   BRANCH_LLM_GATEWAY="${2:?--llm-gateway-branch requires a value}"; shift 2 ;;
+    --mcp-gateway-branch)   BRANCH_MCP_GATEWAY="${2:?--mcp-gateway-branch requires a value}"; shift 2 ;;
     --clean) CLEAN=1; shift ;;
     --lint-only) LINT_ONLY=1; shift ;;
     -h|--help) usage; exit 0 ;;
@@ -109,6 +117,8 @@ echo "  BRANCH_SELFHOSTED='$BRANCH_SELFHOSTED'"
 echo "  BRANCH_ZLAN='$BRANCH_ZLAN'"
 echo "  BRANCH_PLATFORM='$BRANCH_PLATFORM'"
 echo "  BRANCH_DATA_CONNECTOR='$BRANCH_DATA_CONNECTOR'"
+echo "  BRANCH_LLM_GATEWAY='$BRANCH_LLM_GATEWAY'"
+echo "  BRANCH_MCP_GATEWAY='$BRANCH_MCP_GATEWAY'"
 echo "  CLEAN=$CLEAN"
 echo "  IS_VERCEL='${IS_VERCEL:-}'"
 echo "  node: $(node --version 2>/dev/null || echo 'not found')"
@@ -263,6 +273,8 @@ lint_docs() {
         "${script_dir}/_remotes/openziti/docusaurus/docs"
         "${script_dir}/_remotes/platform/docusaurus/docs"
         "${script_dir}/_remotes/data-connector/docusaurus/docs"
+        "${script_dir}/_remotes/llm-gateway/docusaurus/docs"
+        "${script_dir}/_remotes/mcp-gateway/docusaurus/docs"
     )
 
     # 2. VERIFY FOLDERS
@@ -394,6 +406,8 @@ clone_or_update "https://github.com/netfoundry/zlan.git"                        
 clone_or_update "https://github.com/openziti/zrok.git"                           zrok       "$BRANCH_ZROK"
 clone_or_update "https://bitbucket.org/netfoundry/platform-doc.git"              platform   "$BRANCH_PLATFORM"
 clone_or_update "https://bitbucket.org/netfoundry/nf-data-connector.git"         data-connector "$BRANCH_DATA_CONNECTOR"
+clone_or_update "https://github.com/openziti/llm-gateway.git"                    llm-gateway    "$BRANCH_LLM_GATEWAY"
+clone_or_update "https://github.com/openziti/mcp-gateway.git"                    mcp-gateway    "$BRANCH_MCP_GATEWAY"
 
 echo "Cleaning stale build artifacts from remotes..."
 find "$script_dir/_remotes" -type d \( -path "*/docusaurus/build" -o -path "*/docusaurus/.docusaurus" -o -path "*/website/build" -o -path "*/website/.docusaurus" \) -exec rm -rf {} + 2>/dev/null || true

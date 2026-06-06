@@ -26,6 +26,8 @@ import {onpremRedirects} from "./_remotes/selfhosted/docusaurus/docusaurus-plugi
 import {platformDocsPluginConfig} from "./_remotes/platform/docusaurus/docusaurus-plugin-platform-docs.ts";
 import {openzitiDocsPluginConfig, openzitiRedirects} from "./_remotes/openziti/docusaurus/docusaurus-plugin-openziti-docs.ts";
 import {dataconnectorDocsPluginConfig} from "./_remotes/data-connector/docusaurus/docusaurus-plugin-dataconnector-docs.ts";
+import {llmgatewayDocsPluginConfig} from "./_remotes/llm-gateway/docusaurus/docusaurus-plugin-llmgateway-docs.ts";
+import {mcpgatewayDocsPluginConfig} from "./_remotes/mcp-gateway/docusaurus/docusaurus-plugin-mcpgateway-docs.ts";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
@@ -35,8 +37,8 @@ const zrokRoot = `./_remotes/zrok/website`;
 const zlan = `./_remotes/zlan`;
 const platform = `./_remotes/platform`;
 const dataConnector = `./_remotes/data-connector`;
-const llmGateway = `./docs/llm-gateway`;
-const mcpGateway = `./docs/mcp-gateway`;
+const llmGateway = `./_remotes/llm-gateway`;
+const mcpGateway = `./_remotes/mcp-gateway`;
 
 const isVercel = process.env.IS_VERCEL === 'true';
 const docsBase = isVercel ? '/' : '/docs/';
@@ -353,6 +355,8 @@ const config: Config = {
                                 '@staticdir': path.resolve(__dirname, `docusaurus/static`),
                                 '@platform': path.resolve(__dirname, `${platform}/docusaurus`),
                                 '@dataconnector': path.resolve(__dirname, `${dataConnector}/docusaurus`),
+                                '@llm-gateway': path.resolve(__dirname, `${llmGateway}/docusaurus`),
+                                '@mcp-gateway': path.resolve(__dirname, `${mcpGateway}/docusaurus`),
                             },
                         },
                         module: {
@@ -441,38 +445,16 @@ const config: Config = {
                 routeBase('dataconnector'),
             ),
         ),
-        build(BUILD_FLAGS.LLM_GATEWAY) && [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'llm-gateway',
-                path: llmGateway,
-                routeBasePath: routeBase('llm-gateway'),
-                sidebarPath: './sidebars-llm-gateway.ts',
-                beforeDefaultRemarkPlugins: [
-                    remarkGithubAdmonitionsToDirectives,
-                ],
-                remarkPlugins: [
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
-                    [remarkCodeSections, { logLevel: LogLevel.Silent }],
-                ],
-            },
-        ],
-        build(BUILD_FLAGS.MCP_GATEWAY) && [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'mcp-gateway',
-                path: mcpGateway,
-                routeBasePath: routeBase('mcp-gateway'),
-                sidebarPath: './sidebars-mcp-gateway.ts',
-                beforeDefaultRemarkPlugins: [
-                    remarkGithubAdmonitionsToDirectives,
-                ],
-                remarkPlugins: [
-                    [remarkScopedPath, { mappings: REMARK_MAPPINGS, logLevel: LogLevel.Silent }],
-                    [remarkCodeSections, { logLevel: LogLevel.Silent }],
-                ],
-            },
-        ],
+        build(BUILD_FLAGS.LLM_GATEWAY) && llmgatewayDocsPluginConfig(
+            `${llmGateway}/docusaurus`,
+            REMARK_MAPPINGS,
+            routeBase('llm-gateway'),
+        ),
+        build(BUILD_FLAGS.MCP_GATEWAY) && mcpgatewayDocsPluginConfig(
+            `${mcpGateway}/docusaurus`,
+            REMARK_MAPPINGS,
+            routeBase('mcp-gateway'),
+        ),
         ['@docusaurus/plugin-sitemap', { changefreq: "daily", priority: 0.8 }],
         [pluginHotjar, {}],
         [pluginReo, {}],
