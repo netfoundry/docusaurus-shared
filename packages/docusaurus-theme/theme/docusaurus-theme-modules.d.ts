@@ -54,7 +54,6 @@ declare module '@docusaurus/plugin-content-docs/client' {
     label: string;
     path: string;
     mainDocId: string;
-    banner: 'unreleased' | 'unmaintained' | null;
     docs: Array<{ id: string; path: string }>;
   }>;
 }

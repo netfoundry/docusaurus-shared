@@ -229,7 +229,7 @@ frontdoorDocsPluginConfig(`${frontdoor}/docusaurus`, REMARK_MAPPINGS, 'docs/fron
                 // product sites show their project logo there. type: 'html' lets us drop in an <img>;
                 // sizing lives in src/custom/custom.css (.nf-navbar-product-icon).
                 { type: 'custom-productPicker',   position: 'left' },
-                { type: 'custom-versionDropdown', position: 'left', docsPluginId: 'default', pathPrefix: '/docs' },
+                { type: 'custom-versionDropdown', position: 'left', docsPluginId: 'default', pathPrefix: '/docs', versionOrder: {beta: 0, current: 1, eol: 2} },
                 { type: 'custom-versionDropdown', position: 'left', docsPluginId: 'zrok', pathPrefix: '/docs/zrok' },
                 { type: 'custom-resourcesPicker', position: 'left' },
                 { type: 'custom-iconLinks',        position: 'right' },
