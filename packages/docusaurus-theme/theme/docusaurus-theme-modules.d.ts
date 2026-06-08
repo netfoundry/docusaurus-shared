@@ -46,6 +46,15 @@ declare module '@docusaurus/plugin-content-docs/client' {
   export function useActivePlugin(options?: { failfast?: boolean }): { pluginId: string } | undefined;
   export function useActiveDocContext(pluginId: string): {
     activeDoc?: { path: string; id: string };
+    activeVersion?: { name: string; label: string };
     alternateDocVersions: Record<string, { path: string; id: string }>;
   };
+  export function useVersions(pluginId?: string): Array<{
+    name: string;
+    label: string;
+    path: string;
+    mainDocId: string;
+    banner: 'unreleased' | 'unmaintained' | null;
+    docs: Array<{ id: string; path: string }>;
+  }>;
 }
