@@ -113,7 +113,7 @@ const REMARK_MAPPINGS = [
     { from: '@selfhosteddocs', to: `${docsBase}selfhosted` },
     { from: '@openzitidocs', to: `${docsBase}openziti`},
     { from: '@openziti2x',   to: `${docsBase}openziti`},
-    { from: '@openziti1x',   to: `${docsBase}openziti/1.x`},
+    { from: '@openziti1x',   to: `${docsBase}openziti/maint`},
     { from: '@zrokdocs', to: `${docsBase}zrok`},
     { from: '@frontdoordocs', to: `${docsBase}frontdoor`},
     { from: '@zlandocs', to: `${docsBase}zlan`},
@@ -516,6 +516,32 @@ const config: Config = {
             },
         },
         netfoundry: {
+            versionBanners: [
+                {
+                    pathPrefix: '/docs/openziti/latest',
+                    message: `This is the latest development documentation and may describe features not yet available in a long-term-stable (LTS) release. See the release policy for more information. For stable documentation, see Active LTS (2.0.x).`,
+                    type: 'info',
+                    links: [
+                        { text: 'release policy', href: 'https://github.com/openziti/ziti/blob/main/RELEASE_POLICY.md' },
+                    ],
+                    versionLink: {
+                        text: 'Active LTS (2.0.x)',
+                        fallbackHref: '/docs/openziti/intro',
+                    },
+                },
+                {
+                    pathPrefix: '/docs/openziti/maint',
+                    message: `Maintenance LTS (1.6.x) — receives security fixes and critical production defect patches only. See the release policy for more information. For new features and active support, see Active LTS (2.0.x).`,
+                    type: 'warning',
+                    links: [
+                        { text: 'release policy', href: 'https://github.com/openziti/ziti/blob/main/RELEASE_POLICY.md' },
+                    ],
+                    versionLink: {
+                        text: 'Active LTS (2.0.x)',
+                        fallbackHref: '/docs/openziti/intro',
+                    },
+                },
+            ],
             resourcesPickerSections: [
                 {
                     header: 'Learn & Engage',
