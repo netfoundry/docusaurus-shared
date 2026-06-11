@@ -1989,6 +1989,16 @@ code {
     white-space: pre;
 }
 
+/* Inline code must wrap. The rule above forces white-space: pre on all <code>,
+   which is correct inside a scrollable <pre> code block but breaks inline code:
+   long commands or paths (e.g. `echo ${ZITI_CTRL_EDGE_ADVERTISED_ADDRESS}`) can't
+   scroll, so they push the page wider than the viewport and create horizontal
+   overflow on mobile. Re-enable wrapping for code that isn't inside a <pre>. */
+:not(pre) > code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
 code p {
 }
 
