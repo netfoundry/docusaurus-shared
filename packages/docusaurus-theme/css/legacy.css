@@ -1989,6 +1989,12 @@ code {
     white-space: pre;
 }
 
+/* Inline code must wrap; the rule above forces white-space: pre, which overflows the page on mobile. */
+:not(pre) > code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
 code p {
 }
 
