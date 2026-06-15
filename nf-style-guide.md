@@ -141,6 +141,9 @@ The exact top-level buckets we use for the ToC can vary depending on the product
   historically associated with creating a record. Also, this aligns with most modern tech doc style guides.
   - One word (hyphenated) for adjective ("the sign-in page") and two words for verb ("sign in to your account")
 - For words with an acronym, write it out on first mention with the acronym in parentheses, then use only the acronym.
+- Write "zero trust" with no hyphen, even as a compound adjective ("zero trust network access"). This is a NetFoundry
+  branding preference that overrides the usual compound-adjective hyphenation rule. Don't change file paths, slugs, or
+  code tokens that already contain the hyphenated form.
 
 ## Punctuation
 
