@@ -4,6 +4,8 @@
     "packages/*"
   ],
   "scripts": {
+    "help": "yarn run",
+
     "test": "yarn workspace @netfoundry/docusaurus-theme test",
 
     "theme:build": "yarn workspace @netfoundry/docusaurus-theme build",
@@ -15,6 +17,7 @@
     "test-site:clear": "yarn workspace test-site clear",
     "test-site:fresh": "yarn test-site:clear && yarn test-site",
 
+    "unified:install": "yarn --cwd unified-doc install",
     "unified": "yarn --cwd unified-doc start",
     "unified:build": "yarn --cwd unified-doc build",
     "unified:clear": "yarn --cwd unified-doc clear",
