@@ -77,7 +77,8 @@ export default function NavbarPicker({label, className, panelClassName, autoPosi
         <div
           className={clsx('nf-picker-panel', panelClassName)}
           style={panelStyle}
-          onMouseDown={e => e.stopPropagation()}>
+          onMouseDown={e => e.stopPropagation()}
+          onClick={e => { if ((e.target as HTMLElement).closest('a')) close(); }}>
           {children}
         </div>
       )}
