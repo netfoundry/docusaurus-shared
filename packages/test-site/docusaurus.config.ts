@@ -2,6 +2,7 @@ import type { Config, PluginConfig } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import path from "node:path"
 import {themes as prismThemes} from 'prism-react-renderer';
+import {subsitePickerColumns} from "@netfoundry/docusaurus-theme";
 import {zrokDocsPluginConfig} from "./remotes/zrok/website/docusaurus-plugin-zrok-docs";
 import {frontdoorDocsPluginConfig} from "./remotes/frontdoor/docusaurus/docusaurus-plugin-frontdoor-docs";
 import {onpremDocsPluginConfig} from "./remotes/onprem/docusaurus/docusaurus-plugin-onprem-docs";
@@ -152,9 +153,31 @@ frontdoorDocsPluginConfig(`${frontdoor}/docusaurus`, REMARK_MAPPINGS, 'docs/fron
                 { pathPrefix: '/docs/zrok', repoUrl: 'https://github.com/openziti/zrok', label: 'Star zrok on GitHub' },
                 { pathPrefix: '/docs',      repoUrl: 'https://github.com/netfoundry/docusaurus-shared', label: 'Star us on GitHub' },
             ],
-            // productPickerColumns intentionally omitted — the theme provides
-            // the canonical NetFoundry picker via @netfoundry/docusaurus-theme/products.
-            // Add `self: '<productId>'` here to make this site's own product link to '/'.
+            // Mirrors the unified-doc picker (canonical 6 products + AI Gateways), plus one
+            // local "Test site" entry pointing at a page on the running sandbox. The canonical
+            // links all go to absolute netfoundry.io URLs (navigate off localhost), so this
+            // local link is the only way to exercise the "same-URL click closes the picker"
+            // fix in NavbarPicker.
+            productPickerColumns: [
+                ...subsitePickerColumns,
+                { header: 'AI Gateways', links: [
+                    {
+                        label: 'LLM Gateway',
+                        to: 'https://netfoundry.io/docs/llm-gateway/intro',
+                        logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
+                        description: 'OpenAI-compatible proxy for multi-provider LLM routing.',
+                    },
+                    {
+                        label: 'MCP Gateway',
+                        to: 'https://netfoundry.io/docs/mcp-gateway/intro',
+                        logo: 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg',
+                        description: 'Secure zero-trust access to MCP tools across distributed systems.',
+                    },
+                ]},
+                { header: 'Test site', links: [
+                    { label: 'Test Site', to: '/docs', description: 'Local sandbox — same-URL click should close the picker.' },
+                ]},
+            ],
             resourcesPickerSections: [
                 {
                     header: 'Learn & Engage',
