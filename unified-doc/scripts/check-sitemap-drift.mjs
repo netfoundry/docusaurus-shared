@@ -91,6 +91,7 @@ const PRODUCTS = [
     { prefix: '/docs/selfhosted', name: 'selfhosted',  repo: 'k8s-on-prem-installations', fn: 'selfhostedRedirects()' },
     { prefix: '/docs/frontdoor',  name: 'frontdoor',   repo: 'frontdoor',                 fn: 'frontdoorRedirects()'  },
     { prefix: '/docs/zlan',       name: 'zlan',         repo: 'zlan',                      fn: 'zlanRedirects()'       },
+    { prefix: '/docs/platform',   name: 'platform',     repo: 'platform-doc',              fn: 'platformRedirects()'   },
 ];
 
 function productFor(p) {
