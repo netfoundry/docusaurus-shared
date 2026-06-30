@@ -12,6 +12,7 @@ scan, and they build user trust.
 - Use active voice when possible, especially for how-tos.
 - Use everyday language. Be direct and conversational. Use contractions freely. Use technical terms accurately but avoid
   unnecessary industry jargon or slang that can confuse non-experts.
+- Write plainly: simple sentence structure, precise technical terms, no literary punctuation, no cleverness.
 - Use [screenshots](#images-and-file-names) compatible with mobile devices.
 - Avoid pronouns but use 'you' and 'your' when needed, not "the user".
 
@@ -144,9 +145,9 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 
 ## Punctuation
 
-- Use hyphens for compound adjectives. Em dashes (`—`) are okay but use sparingly—prefer colons when introducing or
-  defining items. Spaces around em dashes are optional; both `word—word` and `word — word` are acceptable. Be consistent
-  within a document.
+- Use hyphens for compound adjectives.
+- **Avoid em dashes.** Rewrite as a separate sentence, or use a colon to introduce or define and a comma for an aside.
+  If an em dash is genuinely unavoidable, put spaces around it: `word — word`, never `word—word`.
 - Use colons to introduce or define items.
 - Use oxford commas.
 - **Slashes**: no spaces around a slash joining single words (`Debian/Ubuntu`, `TCP/UDP`, `on/off`). Use spaces when
