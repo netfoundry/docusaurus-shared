@@ -526,11 +526,8 @@ const config: Config = {
                     type: 'warning',
                     links: [
                         { text: 'release policy', href: 'https://github.com/openziti/ziti/blob/main/RELEASE_POLICY.md' },
+                        { text: 'Active LTS (2.0.x)', href: '/docs/openziti/2.0/intro' },
                     ],
-                    versionLink: {
-                        text: 'Active LTS (2.0.x)',
-                        fallbackHref: '/docs/openziti/2.0/intro',
-                    },
                 },
                 {
                     pathPrefix: '/docs/openziti/2.0',
@@ -544,10 +541,9 @@ const config: Config = {
                     pathPrefix: '/docs/openziti/',
                     message: `You're viewing the latest docs, which may cover features not yet in a stable release. For production, see Active LTS (2.0.x).`,
                     type: 'info',
-                    versionLink: {
-                        text: 'Active LTS (2.0.x)',
-                        fallbackHref: '/docs/openziti/2.0/intro',
-                    },
+                    links: [
+                        { text: 'Active LTS (2.0.x)', href: '/docs/openziti/2.0/intro' },
+                    ],
                 },
             ],
             resourcesPickerSections: [
