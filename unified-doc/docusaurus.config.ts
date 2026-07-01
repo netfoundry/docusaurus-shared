@@ -518,7 +518,7 @@ const config: Config = {
         },
         netfoundry: {
             // Matched first-to-last by path prefix (see theme DocVersionBanner), so order
-            // most-specific first: /maint and /2.0 must precede the root catch-all for Latest.
+            // most-specific first: /maint and /active must precede the root catch-all for Latest.
             versionBanners: [
                 {
                     pathPrefix: '/docs/openziti/maint',
@@ -526,11 +526,11 @@ const config: Config = {
                     type: 'warning',
                     links: [
                         { text: 'release policy', href: 'https://github.com/openziti/ziti/blob/main/RELEASE_POLICY.md' },
-                        { text: 'Active LTS (2.0.x)', href: '/docs/openziti/2.0/intro' },
+                        { text: 'Active LTS (2.0.x)', href: '/docs/openziti/active/intro' },
                     ],
                 },
                 {
-                    pathPrefix: '/docs/openziti/2.0',
+                    pathPrefix: '/docs/openziti/active',
                     message: `This is the Active LTS (2.0.x) release. For the newest features, see Latest.`,
                     type: 'note',
                     links: [
@@ -542,7 +542,7 @@ const config: Config = {
                     message: `You're viewing the latest docs, which may cover features not yet in a stable release. For production, see Active LTS (2.0.x).`,
                     type: 'info',
                     links: [
-                        { text: 'Active LTS (2.0.x)', href: '/docs/openziti/2.0/intro' },
+                        { text: 'Active LTS (2.0.x)', href: '/docs/openziti/active/intro' },
                     ],
                 },
             ],
