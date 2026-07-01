@@ -522,11 +522,12 @@ const config: Config = {
             versionBanners: [
                 {
                     pathPrefix: '/docs/openziti/maint',
-                    message: `Maintenance LTS (1.6.x) — receives security fixes and critical production defect patches only. See the release policy for more information. For new features and active support, see Active LTS (2.0.x).`,
+                    message: `Maintenance LTS (1.6.x) — receives security fixes and critical production defect patches only. See the release policy for more information. For active support, see Active LTS (2.0.x). For the newest features, see Latest.`,
                     type: 'warning',
                     links: [
                         { text: 'release policy', href: 'https://github.com/openziti/ziti/blob/main/RELEASE_POLICY.md' },
                         { text: 'Active LTS (2.0.x)', href: '/docs/openziti/active/intro' },
+                        { text: 'Latest', href: '/docs/openziti/intro' },
                     ],
                 },
                 {
