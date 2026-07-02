@@ -518,22 +518,20 @@ const config: Config = {
         },
         netfoundry: {
             // Matched first-to-last by path prefix (see theme DocVersionBanner), so order
-            // most-specific first: /maint and /2.0 must precede the root catch-all for Latest.
+            // most-specific first: /maint and /active must precede the root catch-all for Latest.
             versionBanners: [
                 {
                     pathPrefix: '/docs/openziti/maint',
-                    message: `Maintenance LTS (1.6.x) — receives security fixes and critical production defect patches only. See the release policy for more information. For new features and active support, see Active LTS (2.0.x).`,
+                    message: `Maintenance LTS (1.6.x) — receives security fixes and critical production defect patches only. See the release policy for more information. For active support, see Active LTS (2.0.x). For the newest features, see Latest.`,
                     type: 'warning',
                     links: [
                         { text: 'release policy', href: 'https://github.com/openziti/ziti/blob/main/RELEASE_POLICY.md' },
+                        { text: 'Active LTS (2.0.x)', href: '/docs/openziti/active/intro' },
+                        { text: 'Latest', href: '/docs/openziti/intro' },
                     ],
-                    versionLink: {
-                        text: 'Active LTS (2.0.x)',
-                        fallbackHref: '/docs/openziti/2.0/intro',
-                    },
                 },
                 {
-                    pathPrefix: '/docs/openziti/2.0',
+                    pathPrefix: '/docs/openziti/active',
                     message: `This is the Active LTS (2.0.x) release. For the newest features, see Latest.`,
                     type: 'note',
                     links: [
@@ -544,10 +542,9 @@ const config: Config = {
                     pathPrefix: '/docs/openziti/',
                     message: `You're viewing the latest docs, which may cover features not yet in a stable release. For production, see Active LTS (2.0.x).`,
                     type: 'info',
-                    versionLink: {
-                        text: 'Active LTS (2.0.x)',
-                        fallbackHref: '/docs/openziti/2.0/intro',
-                    },
+                    links: [
+                        { text: 'Active LTS (2.0.x)', href: '/docs/openziti/active/intro' },
+                    ],
                 },
             ],
             resourcesPickerSections: [
