@@ -1,0 +1,58 @@
+name: check-stargazers-token
+
+# Weekly health check for STARGAZERS_READ_TOKEN, the collaborator-scoped token the
+# unified-doc build uses to read openziti's restricted "List stargazers" API. The token
+# expires; without this, the stars chart on netfoundry.io would silently freeze the day it
+# lapses. On any failure (expired, revoked, rescoped, or expiring within the warning
+# window) we ping the doc-alerts Mattermost channel.
+
+on:
+  schedule:
+    - cron: '17 6 * * 1' # Mondays 06:17 UTC
+  workflow_dispatch:
+
+jobs:
+  check-token:
+    name: Check stargazers read token
+    if: github.repository_owner == 'netfoundry'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check STARGAZERS_READ_TOKEN health
+        env:
+          STARGAZERS_READ_TOKEN: ${{ secrets.STARGAZERS_READ_TOKEN }}
+          WARN_DAYS: '14'
+        run: unified-doc/scripts/check-stargazers-token.sh
+
+  # Alert doc-alerts whenever the check job does not succeed. Mirrors the nightly
+  # build-failure notify in publish.yml (synthetic webhook payload for the shared action).
+  notify-mattermost:
+    name: Notify doc-alerts of token problem
+    needs: check-token
+    if: always() && github.repository_owner == 'netfoundry' && needs.check-token.result != 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build event context
+        id: ctx
+        run: |
+          RUN_URL="https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          EVENT_JSON=$(jq -cn \
+            --arg repo "$GITHUB_REPOSITORY" \
+            --arg repo_url "https://github.com/$GITHUB_REPOSITORY" \
+            --arg run_url "$RUN_URL" \
+            --arg action "⚠️ STARGAZERS_READ_TOKEN check failed — the netfoundry.io stars chart will freeze until the token is rotated. [View logs](${RUN_URL})" \
+            '{
+              repository: { full_name: $repo, html_url: $repo_url, stargazers_count: 0 },
+              sender: { login: "ziti-ci", url: "https://api.github.com/users/netfoundry", html_url: "https://github.com/netfoundry", avatar_url: "https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/png/icon/netfoundry-icon-color.png" },
+              action: $action,
+              run_url: $run_url
+            }')
+          echo "event-json=$EVENT_JSON" >> "$GITHUB_OUTPUT"
+      - uses: openziti/ziti-mattermost-action-py@v1
+        with:
+          zitiId: ${{ secrets.ZITI_MATTERMOST_IDENTITY }}
+          webhookUrl: ${{ secrets.ZHOOK_URL_DOC_NOTIFICATIONS }}
+          eventJson: ${{ steps.ctx.outputs.event-json }}
+          senderUsername: "GitHubZ"
