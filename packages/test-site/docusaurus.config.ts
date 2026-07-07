@@ -246,6 +246,7 @@ frontdoorDocsPluginConfig(`${frontdoor}/docusaurus`, REMARK_MAPPINGS, 'docs/fron
             logo: {
                 alt: 'NetFoundry Logo',
                 src: 'https://netfoundry.io/docs/img/netfoundry-name-and-logo.svg',
+                srcDark: 'https://netfoundry.io/docs/img/netfoundry-name-and-logo-dark.svg',
             },
             items: [
                 // Product icon between the NetFoundry logo and "Products", mirroring how the real
