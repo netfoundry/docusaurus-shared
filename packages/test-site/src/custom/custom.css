@@ -102,4 +102,11 @@
     max-width: var(--ziti-landing-max-width);
 }
 
+/* The shared theme sizes .navbar__logo at 50px, equal to the 50px navbar height,
+   so the logo clips at the top. Drop it slightly here (matching the live site) so
+   it sits centered with breathing room. */
+.navbar__logo {
+    height: 40px;
+}
+
 
