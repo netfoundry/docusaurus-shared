@@ -19,6 +19,9 @@
 /* Legacy design system variables and comprehensive styling */
 @import "./legacy.css";
 
+/* Code block syntax theme (token colors driven by the --code-* vars) */
+@import "./code.css";
+
 /* ── Footer social link hover ───────────────────────────────────────────── */
 footer a[class*="footerSocialLink"] {
     transition: all 0.2s ease;

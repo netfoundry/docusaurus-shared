@@ -23,3 +23,22 @@
         /*background: sandybrown;*/
     }
 }
+
+/* Code block syntax palette (light): high-contrast, GitHub Light inspired.
+   Token rules that consume these live in code.css. */
+:root {
+    --code-bg: #f6f8fa;
+    --code-fg: #1f2328;
+    --code-comment: #6e7781;
+    --code-punctuation: #57606a;
+    --code-keyword: #cf222e;   /* red    */
+    --code-string: #0a3069;    /* navy   */
+    --code-function: #8250df;  /* violet */
+    --code-number: #0550ae;    /* blue   */
+    --code-class: #116329;     /* green  */
+    --code-operator: #57606a;  /* slate  */
+    --code-property: #953800;  /* amber  */
+    --code-flag: #4c6b8a;      /* steel blue, for CLI flags */
+    --prism-background-color: var(--code-bg);
+    --prism-color: var(--code-fg);
+}

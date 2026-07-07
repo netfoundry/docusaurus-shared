@@ -4,3 +4,4 @@
  * Import from '@netfoundry/docusaurus-theme/node' in Node.js contexts.
  */
 export * from './docusaurus-envhelper';
+export * from './prism';

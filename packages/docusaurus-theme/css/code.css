@@ -1,0 +1,65 @@
+/**
+ * Code block syntax theme.
+ *
+ * Colors are driven by CSS variables (see vars.css for light, vars-dark.css for dark),
+ * so a consuming site can retune any hue by overriding a single --code-* variable, and
+ * the change hot-reloads with no server restart.
+ *
+ * Pair this with the prism-react-renderer theme exported from
+ * '@netfoundry/docusaurus-theme/node' (prismTheme), which maps the code block's base
+ * foreground/background to --code-fg / --code-bg and leaves every token color to these rules.
+ */
+
+/* Soft rounding on the whole block */
+div[class*='codeBlockContainer'] {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.token.comment,
+.token.prolog,
+.token.cdata,
+.token.doctype {
+    color: var(--code-comment);
+    font-style: italic;
+}
+.token.punctuation { color: var(--code-punctuation); }
+.token.namespace { opacity: 0.7; }
+
+.token.keyword,
+.token.atrule,
+.token.important,
+.token.rule { color: var(--code-keyword); }
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.inserted { color: var(--code-string); }
+
+.token.function,
+.token.deleted { color: var(--code-function); }
+
+.token.number,
+.token.boolean,
+.token.constant,
+.token.symbol { color: var(--code-number); }
+
+.token.class-name,
+.token.tag,
+.token.selector,
+.token.builtin { color: var(--code-class); }
+
+.token.operator,
+.token.entity,
+.token.url { color: var(--code-operator); }
+
+.token.property,
+.token.attr-name { color: var(--code-property); }
+
+/* Command-line flags (e.g. -k, --username) and shell variables: muted accent */
+.token.variable,
+.token.parameter { color: var(--code-flag); }
+
+.token.bold { font-weight: 600; }
+.token.italic { font-style: italic; }
