@@ -5,3 +5,20 @@ html[data-theme="dark"] {
         /*background: orange;*/
     }
 }
+
+/* Code block syntax palette (dark): Tokyo Night inspired.
+   Token rules that consume these live in code.css. */
+html[data-theme="dark"] {
+    --code-bg: #1a1b26;
+    --code-fg: #a9b1d6;
+    --code-comment: #565f89;
+    --code-punctuation: #9aa5ce;
+    --code-keyword: #bb9af7;   /* violet */
+    --code-string: #9ece6a;    /* green  */
+    --code-function: #7aa2f7;  /* blue   */
+    --code-number: #ff9e64;    /* orange */
+    --code-class: #2ac3de;     /* cyan   */
+    --code-operator: #89ddff;  /* sky    */
+    --code-property: #7dcfff;  /* light sky */
+    --code-flag: #7f9cc0;      /* soft steel blue, for CLI flags */
+}

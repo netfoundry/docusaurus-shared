@@ -1,8 +1,8 @@
 import type { Config, PluginConfig } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import path from "node:path"
-import {themes as prismThemes} from 'prism-react-renderer';
 import {subsitePickerColumns} from "@netfoundry/docusaurus-theme";
+import {prismTheme, prismAdditionalLanguages} from "@netfoundry/docusaurus-theme/node";
 import {zrokDocsPluginConfig} from "./remotes/zrok/website/docusaurus-plugin-zrok-docs";
 import {frontdoorDocsPluginConfig} from "./remotes/frontdoor/docusaurus/docusaurus-plugin-frontdoor-docs";
 import {onpremDocsPluginConfig} from "./remotes/onprem/docusaurus/docusaurus-plugin-onprem-docs";
@@ -259,8 +259,9 @@ frontdoorDocsPluginConfig(`${frontdoor}/docusaurus`, REMARK_MAPPINGS, 'docs/fron
             ],
         },
         prism: {
-            theme: prismThemes.github,
-            darkTheme: prismThemes.dracula,
+            theme: prismTheme,
+            darkTheme: prismTheme,
+            additionalLanguages: prismAdditionalLanguages,
         },
         algolia: {
             appId: cfg.algolia.appId,
