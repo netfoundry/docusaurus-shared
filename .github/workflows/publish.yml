@@ -114,14 +114,25 @@ jobs:
           ZITI_CI_GH_KEY: ${{ secrets.ZITI_CI_GH_KEY }}
           JENKINS_CI_BB_KEY: ${{ secrets.JENKINS_CI_BB_KEY }}
 
+      # Mint a short-lived token from the openziti-stargazer-audit GitHub App
+      # (installed org-wide, metadata:read). GitHub's 2026-06-30 restriction blocks
+      # PATs from the List-Stargazers endpoint, so an App installation token is the
+      # only maintenance-free way to read it. owner: openziti scopes the token to
+      # that org's installation (all repos, including future ones).
+      - name: Mint stargazer App token
+        id: star-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.STARGAZER_APP_ID }}
+          private-key: ${{ secrets.STARGAZER_APP_PRIVATE_KEY }}
+          owner: openziti
+
       - name: Build & Publish Docusaurus Site
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          # Collaborator-scoped token for the restricted List stargazers API (metadata:read
-          # across the openziti org). github.token can't read cross-repo stargazers since
-          # GitHub's 2026-06-30 restriction; gendoc.sh/gh-stats.sh prefer this, else fall
-          # back to GITHUB_TOKEN. See openziti/ziti-doc gh-stats.sh.
-          STARGAZERS_READ_TOKEN: ${{ secrets.STARGAZERS_READ_TOKEN }}
+          # gh-stats.sh reads the stargazer API via this (mapped to GH_TOKEN). It's the
+          # App installation token minted above -- see the "Mint stargazer App token" step.
+          STARGAZERS_READ_TOKEN: ${{ steps.star-token.outputs.token }}
           ZITI_HOTJAR_APPID: ${{ secrets.PROD_DOC_HOTJAR_APPID }}
           DEPLOY_ENV: 'kinsta'
           DOCUSAURUS_URL: 'https://netfoundry.io'
@@ -153,6 +164,22 @@ jobs:
           name: docusaurus-build-site
           path: unified-doc/build-site/
           retention-days: 7
+
+      # Stargazer data gathered by gh-stats.sh (openziti/ziti-doc), for analysis.
+      # Only people with read access to this repo can download it. always() so a
+      # failed/empty fetch still leaves the partial data behind to inspect.
+      - name: Upload stargazer data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stargazer-data
+          path: |
+            /tmp/stats/*/all.stargazers.detail.json
+            /tmp/stats/*/all.ziti.stargazers.json
+            /tmp/stats/*/all.zrok.stargazers.json
+            /tmp/stats/*/all.other.stargazers.json
+          if-no-files-found: ignore
+          retention-days: 30
 
       - name: Build drift alert context
         id: drift-ctx
