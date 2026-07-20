@@ -109,3 +109,5 @@ fi
 
 # --- REMOVE TEMP FILES ---
 rm "$LIST_FILE" "$VALE_LOG" "$MD_LOG" "$VALE_CLEAN" "$MD_CLEAN"
+
+[ "$TOTAL" -eq 0 ] || exit 1
