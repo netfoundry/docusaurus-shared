@@ -65,7 +65,7 @@ BRANCH_SELFHOSTED="main"
 BRANCH_ZLAN="main"
 BRANCH_PLATFORM="main"
 BRANCH_DATA_CONNECTOR="main"
-BRANCH_CUSTOMER_CONNECT="add-docs"
+BRANCH_CUSTOMER_CONNECT="main"
 
 usage() {
   sed -n '/^# USAGE/,/^# =====/{ /^# =====/d; s/^# \{0,1\}//; p }' "$0"
