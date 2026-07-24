@@ -11,12 +11,12 @@ All providers support streaming chat completions via Server-Sent Events (SSE).
 
 When the client sends `"stream": true`, the gateway:
 
-1. Sends the request to the upstream provider with streaming enabled.
-2. Sets SSE response headers (`Content-Type: text/event-stream`, `Cache-Control: no-cache`,
-   `X-Accel-Buffering: no`).
-3. Reads chunks from the provider as they arrive.
-4. Writes each chunk as a `data: {json}\n\n` SSE event and flushes immediately.
-5. Sends `data: [DONE]\n\n` when the stream completes.
+1.  Sends the request to the upstream provider with streaming enabled.
+2.  Sets SSE response headers (`Content-Type: text/event-stream`, `Cache-Control: no-cache`,
+    `X-Accel-Buffering: no`).
+3.  Reads chunks from the provider as they arrive.
+4.  Writes each chunk as a `data: {json}\n\n` SSE event and flushes immediately.
+5.  Sends `data: [DONE]\n\n` when the stream completes.
 
 ## Send a streaming request
 
@@ -58,7 +58,7 @@ for chunk in stream:
 
 The gateway returns a series of SSE events. Each chunk follows the OpenAI format:
 
-```
+```text
 data: {"id":"chatcmpl-abc","object":"chat.completion.chunk","choices":[{"delta":{"content":"Quantum"},"index":0}]}
 
 data: {"id":"chatcmpl-abc","object":"chat.completion.chunk","choices":[{"delta":{"content":" entanglement"},"index":0}]}

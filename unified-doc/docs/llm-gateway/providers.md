@@ -13,7 +13,7 @@ Anthropic, and a local/self-hosted provider for any backend that implements `/v1
 
 All clients interact with the gateway using the [OpenAI chat completions format](https://developers.openai.com/api/reference/chat-completions/overview):
 
-```
+```text
 POST /v1/chat/completions    chat completions (streaming and non-streaming)
 GET  /v1/models              list available models from all providers
 GET  /health                 health check

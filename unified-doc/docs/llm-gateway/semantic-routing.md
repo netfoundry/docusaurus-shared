@@ -15,7 +15,7 @@ falls back to a configured default route.
 
 The router evaluates layers in order and stops at the first confident result:
 
-```
+```text
 Request arrives
     |
     v
@@ -38,7 +38,7 @@ Request arrives
 
 Each step appends to a **cascade log** visible in the gateway's output:
 
-```
+```text
 semantic routing: method=semantic route='coding' model='claude-haiku-4-5-20251001'
   confidence=0.87 latency=12ms cascade=[heuristic:no_match,semantic:coding:0.87]
 ```
@@ -182,7 +182,7 @@ Three modes control how the embedding layer compares a request against stored ro
 
 ### Thresholds
 
-```
+```text
 score >= threshold                            → confident match, return immediately
 ambiguous_threshold <= score < threshold      → ambiguous, escalate to classifier
 score < ambiguous_threshold                   → no match, continue to next layer

@@ -16,19 +16,19 @@ Choose the installation method that fits your environment.
 
 Pre-built binaries are available for Linux, macOS, and Windows:
 
-1. Visit the [GitHub Releases](https://github.com/openziti/llm-gateway/releases) page.
-2. Download the binary for your platform.
-3. Make it executable:
+1.  Visit the [GitHub Releases](https://github.com/openziti/llm-gateway/releases) page.
+2.  Download the binary for your platform.
+3.  Make it executable:
 
-   ```bash
-   chmod +x llm-gateway
-   ```
+    ```bash
+    chmod +x llm-gateway
+    ```
 
-4. Run it:
+4.  Run it:
 
-   ```bash
-   ./llm-gateway run config.yaml
-   ```
+    ```bash
+    ./llm-gateway run config.yaml
+    ```
 
 ### Install with Go
 
@@ -56,26 +56,26 @@ The examples below progress from a simple single-provider proxy to a full produc
 
 ### Proxy a local inference server
 
-1. Start Ollama:
+1.  Start Ollama:
 
     ```bash
     ollama serve
     ```
 
-2. Create `config.yaml`:
+2.  Create `config.yaml`:
 
     ```yaml
     local:
       base_url: http://localhost:11434
     ```
 
-3. Start the gateway:
+3.  Start the gateway:
 
     ```bash
     llm-gateway run config.yaml
     ```
 
-4. Send a request:
+4.  Send a request:
 
     ```bash
     curl -X POST http://localhost:8080/v1/chat/completions \
@@ -127,14 +127,14 @@ curl -X POST http://localhost:8080/v1/chat/completions \
 
 ### Restrict API access with virtual keys
 
-1. Generate an API key:
+1.  Generate an API key:
 
     ```bash
     llm-gateway genkey
     # sk-gw-a1b2c3d4e5f6...
     ```
 
-2. Add `api_keys` to your config, referencing the key and setting per-key model permissions:
+2.  Add `api_keys` to your config, referencing the key and setting per-key model permissions:
 
     ```yaml
     api_keys:
@@ -158,7 +158,7 @@ curl -X POST http://localhost:8080/v1/chat/completions \
         base_url: http://localhost:11434
     ```
 
-3. Clients send their key in the `Authorization` header:
+3.  Clients send their key in the `Authorization` header:
 
     ```bash
     curl -X POST http://localhost:8080/v1/chat/completions \

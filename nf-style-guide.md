@@ -73,7 +73,7 @@ We use a Diátaxis framework. When creating content, think in terms of these fou
 
 - **Tutorials** (Learning-oriented)
   - **Goal:** To help the user *learn* by doing.
-  - **Description:** Step-by-step lessons that allow the user to successfully complete a practical, simple project. They
+  - **Description:** Step-by-step lessons that allow the user to complete a practical, simple project. They
     are focused on **teaching**, not explaining, and prioritize the shortest path to success.
   - **Question answered:** *How do I get started?*
 
@@ -123,7 +123,7 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 - Don't use "the button". Say "Click **Next**."
 - Tell the user to *click* UI items. If it's a drop-down, use *select*.
 
-## Images and File Names
+## Images and file names
 
 - A significant amount of readers are on mobile. Don't use images wider than 600-700 px. Shrink browsers for
   screenshots.

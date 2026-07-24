@@ -18,7 +18,7 @@ Both use zrok's overlay network built on [OpenZiti](https://openziti.io).
 The gateway requires a zrok environment on the host machine. If `zrok enable` hasn't been run, the
 gateway fails at startup:
 
-```
+```text
 zrok environment is not enabled; run 'zrok enable' first
 ```
 
@@ -33,7 +33,7 @@ to the share token rather than an IP address.
 
 An ephemeral share is created at startup and deleted when the gateway shuts down.
 
-1. Add the zrok config to `config.yaml`:
+1.  Add the zrok config to `config.yaml`:
 
     ```yaml
     zrok:
@@ -48,13 +48,13 @@ An ephemeral share is created at startup and deleted when the gateway shuts down
     llm-gateway run config.yaml --zrok --zrok-mode private
     ```
 
-2. Start the gateway. The share token is logged at startup:
+2.  Start the gateway. The share token is logged at startup:
 
-    ```
+    ```text
     serving via zrok share 'abc123def456'
     ```
 
-3. Give clients the share token to connect.
+3.  Give clients the share token to connect.
 
 **Public mode** creates a share accessible by anyone with the token. **Private mode** (the default)
 requires the client to have a zrok environment enabled and creates an access-controlled connection

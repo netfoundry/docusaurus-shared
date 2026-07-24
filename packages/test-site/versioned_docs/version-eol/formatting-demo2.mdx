@@ -30,9 +30,10 @@ npm run build
 }
 ```
 
-## 🧱 Inside Admonition
+## 🧱 Inside admonition
 
 :::note YAML inside a note
+
 ```yaml
 site:
   name: MySite
@@ -41,6 +42,7 @@ site:
     - search
     - analytics
 ```
+
 :::
 
 ## 📋 Lists with Code
@@ -48,11 +50,12 @@ site:
 - Install with `yarn`
 - Build with `npm run build`
 - Run a local server:
+
   ```bash
   npx serve dist
   ```
 
-## 🧩 Mixed Content
+## 🧩 Mixed content
 
 > ❗ Run `./deploy.sh` only from the `main` branch.
 >
@@ -60,7 +63,7 @@ site:
 > ./deploy.sh --prod
 > ```
 
-## 🔗 Code inside Table
+## 🔗 Code inside table
 
 | Command | Description         |
 |---------|---------------------|
@@ -76,7 +79,7 @@ Use raw HTML for buttons:
 <button onclick="alert('Hello!')">Click Me</button>
 ```
 
-## 🧬 Complex Function
+## 🧬 Complex function
 
 ```ts
 function debounce<F extends (...args: any[]) => void>(fn: F, delay = 300): F {
@@ -87,7 +90,6 @@ function debounce<F extends (...args: any[]) => void>(fn: F, delay = 300): F {
   } as F;
 }
 ```
-
 
 Demonstrates every admonition, `<details>`, inline HTML, code blocks, and embedded buttons.
 
@@ -167,7 +169,7 @@ type Important = "Very";
 
 ---
 
-## 🔍 Expandable Content
+## 🔍 Expandable content
 
 <details>
 <summary>Click to expand</summary>
@@ -177,11 +179,13 @@ type Important = "Very";
 ```bash
 echo "Inside details"
 ```
+
 :::note
 
 ```bash
 echo "Inside admonition, inside details"
 ```
+
 :::
 
 <button onclick="alert('Details Button')">Details Button</button>
@@ -190,7 +194,7 @@ echo "Inside admonition, inside details"
 
 ---
 
-## ✅ Confirmed Features
+## ✅ Confirmed features
 
 - [x] Admonitions
 - [x] Code blocks
@@ -210,7 +214,7 @@ import SomeMd from '/docs/remotes/some-remote/README.md';
 
 See GitHub Markdown admonition examples in the [Code Block Formatting Demo](./formatting-demo.mdx#github-markdown-examples)
 
-### When to Use the MarkdownWithoutH1 Component with Imported Markdown
+### When to use the MarkdownWithoutH1 component with imported Markdown
 
 When importing GitHub Markdown as MDX, you have two choices for the H1 page title: use the title from the imported Markdown or set an alternative title. 
 

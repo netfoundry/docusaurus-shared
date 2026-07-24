@@ -1,10 +1,10 @@
-# Local Development Guide
+# Local development guide
 
 How to develop and test the theme locally before publishing to npm.
 
 ## Overview
 
-```
+```text
 ┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
 │   test-site/    │     │  file: protocol  │     │    npm install  │
 │  (yarn link)    │ --> │  (simulates npm) │ --> │   (production)  │
@@ -14,7 +14,7 @@ How to develop and test the theme locally before publishing to npm.
 
 ## Project layout
 
-```
+```text
 packages/
 ├── docusaurus-theme/         # @netfoundry/docusaurus-theme npm package
 │   ├── src/                  # TypeScript source → compiled to dist/
@@ -115,7 +115,7 @@ yarn build
 
 This compiles TypeScript to CommonJS in `dist/`.
 
-## Step 4: Test with remote site (file: protocol)
+## Step 4: Test with remote site (`file:` protocol)
 
 This simulates exactly what npm publish will deliver.
 
@@ -208,7 +208,7 @@ yarn build
 
 Each sub-project in `remotes/` follows the same pattern as the real repos:
 
-```
+```text
 remotes/zrok/website/
 ├── docusaurus.config.ts                  # Standalone config (references local theme)
 ├── docusaurus-plugin-zrok-docs.ts        # Plugin config for aggregation

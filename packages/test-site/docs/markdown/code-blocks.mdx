@@ -41,7 +41,7 @@ function greet(name) {
 }
 ```
 
-## Combined: title, line numbers, and highlighting
+## Combined: Title, line numbers, and highlighting
 
 ```ts title="src/greet.ts" showLineNumbers {3-4}
 export function greet(name: string): number {
@@ -74,7 +74,7 @@ $ ziti edge list services
 
 ## Plain (no language) block
 
-```
+```text
 plain text fence
 preserves    whitespace
 and renders without syntax highlighting
@@ -194,7 +194,7 @@ line 20
 
 * a bullet introducing a code block
 
-    ```
+    ```text
     code at the indented level
     second line of code
     ```
@@ -202,26 +202,27 @@ line 20
     :::note
     A note next to the code block, both indented under the bullet:
 
-    ```
+    ```text
     code inside a note inside a list item
     ```
+
     :::
 
 * another bullet for spacing
 
 ## Code in an ordered list
 
-1. Run the install command:
+1.  Run the install command:
 
-   ```bash
-   curl -sSf https://get.openziti.io/install.bash | sudo bash
-   ```
+    ```bash
+    curl -sSf https://get.openziti.io/install.bash | sudo bash
+    ```
 
-2. Verify:
+2.  Verify:
 
-   ```bash
-   ziti version
-   ```
+    ```bash
+    ziti version
+    ```
 
 ## Code in a table cell
 

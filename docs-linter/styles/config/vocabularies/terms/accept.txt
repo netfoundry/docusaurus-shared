@@ -2,6 +2,19 @@
 (?i)config
 (?i)ip
 (?i)hostname
+(?i)docusaurus
+(?i)failover
+(?i)failovers
+(?i)markdown
+(?i)h1
+(?i)h2
+(?i)h3
+(?i)h4
+(?i)h5
+(?i)h6
+(?i)test-site
+(?i)code
+(?i)vs
 
 # URLs and domains
 openziti.io
@@ -16,8 +29,6 @@ datacenter
 datacenters
 egress
 egressed
-failover
-failovers
 ingress
 ingressed
 microsegmentation
@@ -29,42 +40,93 @@ untrusted
 # Documentation-specific terms
 sidebar_position
 sidebar_label
+showLineNumbers
+STATUS.md
+
+# Theme components and remark plugins (rendered verbatim in headings)
+MarkdownWithoutH1
+OsTabs
+ProductSearch
+StarUs
+remarkReplaceMetaUrl
+remarkScopedPath
+remarkYamlTable
+remarkYouTube
 
 # Product/Brand names
-Docusaurus
 Frontdoor
+LLM Gateway
+MCP Gateway
 NetFoundry
+NetFoundry Docusaurus Shared
+On-Prem
 OpenZiti
 Ziti
 zLAN
 zrok
 
+# Binaries and CLI tool names (lowercase by design)
+curl
+llm-gateway
+mcp-bridge
+mcp-gateway
+mcp-tools
+
 # Third-party products/services
+Beta
 Bitbucket
+Claude
+Claude Desktop
+ECharts
 GitHub
 JavaScript
+KaTeX
 Keycloak
+Kinsta
 Kubernetes
+Mermaid
 Okta
+Ollama
+Scalar
+Stable
 TypeScript
 
 # Acronyms and initialisms
+Active LTS
 AMI
 AMIs
 API
 CA
 CAs
 CLI
+CSS
+EOL
 FQDN
 FQDNs
+Go
+HTML
+HTTP
 IdP
 IdPs
+JSON
+JSX
 JWT
 JWTs
+LLM
+LTS
+MCP
+MDX
 MFA
+OpenAPI
+PR
+PRs
+TL;DR
 TLDs
+URL
+URLs
 VM
 VMs
+YAML
 
 # Other terms
 namespace

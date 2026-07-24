@@ -3,7 +3,7 @@ name: doc-check
 description: Check merged PRs in a repo for customer-facing changes, cross-reference against existing docs, and flag what is missing, stale, or already covered
 ---
 
-Check merged PRs in a product's source repo(s) for customer-facing changes. For each flagged PR, search the local doc
+Check merged PRs in a product's source repos for customer-facing changes. For each flagged PR, search the local doc
 directory to assess whether coverage already exists, is stale, or is missing entirely. Produce an actionable report,
 then optionally generate a doc draft.
 
@@ -11,13 +11,13 @@ then optionally generate a doc draft.
 
 Before using this skill, configure it for your organization:
 
-1. **Update the product registry** below with your products, source repos, auth method, and local doc paths.
-2. **Set auth environment variables** as needed (see Auth section below).
-3. **Update the style guide reference** in step 7 to point to your own documentation style guide.
+1.  **Update the product registry** below with your products, source repos, auth method, and local doc paths.
+2.  **Set auth environment variables** as needed (see Auth section below).
+3.  **Update the style guide reference** in step 7 to point to your own documentation style guide.
 
 ## Invocation
 
-```
+```text
 /doc-check status
 /doc-check <product>
 /doc-check <product> --since YYYY-MM-DD
@@ -126,12 +126,12 @@ combined total (most recent first across repos). In the report, prefix each PR w
 **Monorepos**: If a source repo hosts multiple products, read the PR title, description, and diff to determine which
 product it belongs to before assessing doc coverage. Mark PRs for other products as skipped with a note.
 
-### 3. Assess each PR: customer-facing or internal?
+### 3. Assess each PR: Customer-facing or internal?
 
 Fetch the diff for each PR in **two passes**. Never truncate or pipe through `head` — silently dropping later parts
 of a diff means you miss entire files and their changes, which leads to false coverage assessments.
 
-#### Pass 1: get the full file list
+#### Pass 1: Get the full file list
 
 ```bash
 # GitHub
@@ -151,7 +151,7 @@ This gives you the complete list of changed files before you read any content. U
   what's left uncovered
 - Scope the content pass to files that matter
 
-#### Pass 2: read the content of relevant files
+#### Pass 2: Read the content of relevant files
 
 For each file identified in pass 1 that could affect user-facing behavior, read its diff section in full.
 For large diffs, use targeted extraction rather than reading the whole diff linearly:
@@ -178,7 +178,7 @@ descriptions; the diff is the authoritative source. Look for:
 Also read any doc files the author changed in the PR — understand what they covered so your coverage assessment
 reflects what's actually missing, not what was already addressed.
 
-**Bitbucket note:** The simple `/pullrequests/<id>/diff` endpoint returns empty results. Batch-extract commit
+**Bitbucket note:** The simple `/pullrequests/<id>/diff` endpoint returns empty results. Batch-fetch commit
 hashes from the PR list response (fields `source.commit.hash` and `destination.commit.hash`) and construct the
 diff URL as shown above.
 
@@ -213,7 +213,7 @@ current local state — don't abort the scan.
 For each customer-facing PR, search the local doc path for the product (see registry above) to determine whether
 coverage already exists. Use grep and file reads — do not guess.
 
-Extract 2–4 key terms from the PR (feature name, CLI flag, config key, endpoint name, etc.) and search for them:
+Identify 2–4 key terms from the PR (feature name, CLI flag, config key, endpoint name, etc.) and search for them:
 
 ```bash
 grep -r "<term>" <local-doc-path> --include="*.md" --include="*.mdx" -l
@@ -232,7 +232,7 @@ Dismiss **covered** PRs from the flagged list entirely (move them to a "no actio
 
 ### 5. Output the report
 
-```
+```markdown
 ## doc-check: product-a (since 2026-03-18)
 
 Sources: your-org/repo-a (6 PRs), your-org/repo-b (4 PRs) — 10 total · 2 need doc work · 1 already covered · 7 skipped (internal)
@@ -268,36 +268,36 @@ After the report, prompt:
 
 When `--draft <owner/repo#PR>` is passed:
 
-1. Fetch the PR title, description, and full diff from the specified repo
-2. If the status was **stale**, read the existing doc file first — the draft should update it, not replace it
-3. If the status was **missing**, write a new file from scratch
-4. Identify what changed from a user perspective
-5. Determine the appropriate doc type (how-to, reference, concept explanation) using Diátaxis
-6. Write the draft following your organization's documentation style guide:
-   - Sentence-style headers; imperative verb phrases for how-to titles
-   - Active voice, second person ("you/your")
-   - Backticks for CLI flags, commands, config keys, code tokens
-   - 120-character line length limit
-7. **Only write what the diff and PR description directly support.** Do not infer, extrapolate, or invent behavior that
-   isn't shown. If the diff shows a flag exists but not what it does, say so — don't guess. If the PR description is
-   vague or the diff is too large to confidently summarize, stop and ask the user to clarify before drafting. It's
-   better to ask one question than to ship a plausible-sounding but wrong doc.
-8. Present the full draft inline in the terminal, followed by the suggested file path, then prompt the user with these
-   options:
+1.  Fetch the PR title, description, and full diff from the specified repo
+2.  If the status was **stale**, read the existing doc file first — the draft should update it, not replace it
+3.  If the status was **missing**, write a new file from scratch
+4.  Identify what changed from a user perspective
+5.  Determine the appropriate doc type (how-to, reference, concept explanation) using Diátaxis
+6.  Write the draft following your organization's documentation style guide:
+    - Sentence-style headers; imperative verb phrases for how-to titles
+    - Active voice, second person ("you/your")
+    - Backticks for CLI flags, commands, config keys, code tokens
+    - 120-character line length limit
+7.  **Only write what the diff and PR description directly support.** Do not infer, extrapolate, or invent behavior that
+    isn't shown. If the diff shows a flag exists but not what it does, say so — don't guess. If the PR description is
+    vague or the diff is too large to confidently summarize, stop and ask the user to clarify before drafting. It's
+    better to ask one question than to ship a plausible-sounding but wrong doc.
+8.  Present the full draft inline in the terminal, followed by the suggested file path, then prompt the user with these
+    options:
 
-   > **What would you like to do?**
-   > - **Execute** — write the draft directly to the suggested file path in the doc repo
-   > - **Edit** — describe changes and I'll update the draft before writing
-   > - **Save to drafts** — save to `output/<product>/drafts/<repo>-<PR>-<slug>.md` for later without touching the doc repo
+    > **What would you like to do?**
+    > - **Execute** — write the draft directly to the suggested file path in the doc repo
+    > - **Edit** — describe changes and I'll update the draft before writing
+    > - **Save to drafts** — save to `output/<product>/drafts/<repo>-<PR>-<slug>.md` for later without touching the doc repo
 
-   **Do not call Edit or Write on any doc repo file until the user selects "Execute".** Saving to drafts is always safe
-   and does not require confirmation.
+    **Do not call Edit or Write on any doc repo file until the user selects "Execute".** Saving to drafts is always safe
+    and does not require confirmation.
 
 #### Drafts folder
 
 Drafts are saved to `output/<product>/drafts/` under the doc-check skill folder:
 
-```
+```text
 <skills-dir>/doc-check/output/<product>/drafts/<repo>-<PR>-<slug>.md
 ```
 
@@ -328,7 +328,7 @@ Filename format: `YYYY-MM-DD.md` (use today's date). If a file with that name al
 
 Write the report in the same markdown format shown in step 5, with a one-line header added at the top:
 
-```
+```markdown
 # doc-check: <product> — YYYY-MM-DD
 ```
 
@@ -336,7 +336,7 @@ Write the report in the same markdown format shown in step 5, with a one-line he
 
 After saving the report, regenerate `STATUS.md` at the root of the doc-check skill folder:
 
-```
+```text
 <skills-dir>/doc-check/STATUS.md
 ```
 

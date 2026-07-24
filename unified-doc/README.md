@@ -8,7 +8,7 @@ This website is built using [Docusaurus](https://docusaurus.io/), a modern stati
 yarn
 ```
 
-## Local Development
+## Local development
 
 ```bash
 yarn start
@@ -59,12 +59,12 @@ Not using SSH:
 GIT_USER=<Your GitHub username> yarn deploy
 ```
 
-
-### Kinsta Hosting
+### Kinsta hosting
 
 As of Sep 2025 - the technical docs have been published to the public folder on kinsta. 
 A **CUSTOM** rule was added by tech support:
-```
+
+```nginx
 location /docs {
   try_files $uri /docs/index.html;
 }
@@ -74,7 +74,7 @@ This rule is **mandatory** for SPA deep linking. The tech support people had to 
 
 ---
 
-## Visual Regression Testing
+## Visual regression testing
 
 The unified-doc site includes BackstopJS for visual regression testing against production. This helps catch unintended visual changes when updating the theme, components, or content.
 
@@ -85,7 +85,7 @@ The unified-doc site includes BackstopJS for visual regression testing against p
 - 3 viewports: desktop (1920x1080), tablet (768x1024), mobile (375x812)
 - Generates HTML diff reports highlighting visual differences
 
-### Quick Start
+### Quick start
 
 ```bash
 # Install dependencies (includes backstopjs)
@@ -108,7 +108,7 @@ yarn vrt:test:zlan
 yarn vrt:report:zlan
 ```
 
-### Available Commands
+### Available commands
 
 Each product has its own set of commands:
 
@@ -125,11 +125,11 @@ Products: `home`, `openziti`, `frontdoor`, `selfhosted`, `zrok`, `zlan`
 
 ### Workflow
 
-1. **Generate scenarios** - Fetches sitemap from production and creates `backstop.<product>.json` configs
-2. **Capture reference** - Screenshots production site as the baseline
-3. **Run tests** - Screenshots local site and compares against reference
-4. **Review report** - HTML report shows side-by-side diffs with highlighted changes
-5. **Approve changes** - If changes are intentional, approve to update reference
+1.  **Generate scenarios** - Fetches sitemap from production and creates `backstop.<product>.json` configs
+2.  **Capture reference** - Screenshots production site as the baseline
+3.  **Run tests** - Screenshots local site and compares against reference
+4.  **Review report** - HTML report shows side-by-side diffs with highlighted changes
+5.  **Approve changes** - If changes are intentional, approve to update reference
 
 ### Configuration
 
@@ -140,6 +140,7 @@ Generated config files (`backstop.<product>.json`) include:
 - **delay: 2000ms** - Waits for page load before screenshot
 
 The `onReady.js` script automatically hides:
+
 - Cookie consent banners
 - Chat widgets
 - Hotjar feedback widgets
@@ -147,6 +148,7 @@ The `onReady.js` script automatically hides:
 ### Filtering
 
 The scenario generator excludes:
+
 - Blog posts (`/blog/`)
 - zrok versioned docs (only tests latest)
 - Tag pages
@@ -154,7 +156,7 @@ The scenario generator excludes:
 
 ### Files
 
-```
+```text
 unified-doc/
 ├── scripts/
 │   └── generate-vrt-scenarios.mjs   # Sitemap parser & config generator

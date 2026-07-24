@@ -6,8 +6,6 @@ import TabItem from '@theme/TabItem';
 Demonstrates the `<Tabs>` / `<TabItem>` MDX components and how the active tab
 group is styled by the various `tabs-v*.css` themes in `@netfoundry/docusaurus-theme/css/`.
 
-
-
 <Tabs
 defaultValue="Azure"
 values={[
@@ -23,18 +21,22 @@ values={[
 
 - Once the VM is created, we can get the IP address of the VM from the Virtual machine screen.
 - Login to the VM by using defined user "username" (default username is azureuser) and the private sshkey:
+
 ```text
 ssh -i <private_key> <username>@<ip>
 ```
+
 </TabItem>
 <TabItem value="AWS">
 
-- Once the VM is created, we can get the IP address of the VM from the Instance(s) screen.
+- Once the VM is created, we can get the IP address of the VM from the Instances screen.
 
 Login to the VM by using user name "ubuntu":
+
 ```text
 ssh -i <private_key> ubuntu@<ip>
 ```
+
 </TabItem>
 <TabItem value="GCP">
 
@@ -44,25 +46,31 @@ ssh -i <private_key> ubuntu@<ip>
 <TabItem value="DigitalOcean">
 
 - Once the VM is created, get the IP address of the droplet from the Resources screen. Login to the VM by using user "root" and IP address:
+
 ```text
 ssh root@<ip>
 ```
+
 </TabItem>
 <TabItem value="OCI">
 
 - Once the VM is created, we can get the IP address of the VM from the instance details screen.
 - Login to the VM by using user name "ubuntu" and the IP address:
+
 ```text
 ssh -i <private_key> ubuntu@<ip>
 ```
+
 </TabItem>
 <TabItem value="IBM">
 
 - Once the VM is created, we can get the IP address of the VM from the Devices screen.
 - Login to the VM by using user name "ubuntu" and the IP address:
+
 ```text
 ssh -i <private_key> ubuntu@<ip>
 ```
+
 </TabItem>
 </Tabs>
 

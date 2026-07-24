@@ -12,20 +12,14 @@ import {
 } from "@netfoundry/docusaurus-theme/plugins";
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import {pluginHotjar, pluginReo} from "@netfoundry/docusaurus-theme/node";
-import {
-    consoleLink,
-    frontdoorLink,
-    selfhostedLink,
-    zlanLink,
-    openzitiLink,
-    zrokLink,
-} from "@netfoundry/docusaurus-theme";
+import {unifiedPickerColumns} from "@netfoundry/docusaurus-theme";
 import {PublishConfig} from 'src/components/docusaurus'
 import {zrokDocsPluginConfig, zrokRedirects} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 import {onpremRedirects} from "./_remotes/selfhosted/docusaurus/docusaurus-plugin-onprem-docs.ts";
 import {platformDocsPluginConfig, platformRedirects} from "./_remotes/platform/docusaurus/docusaurus-plugin-platform-docs.ts";
 import {openzitiDocsPluginConfig, openzitiRedirects} from "./_remotes/openziti/docusaurus/docusaurus-plugin-openziti-docs.ts";
 import {dataconnectorDocsPluginConfig} from "./_remotes/data-connector/docusaurus/docusaurus-plugin-dataconnector-docs.ts";
+import {customerConnectDocsPluginConfig} from "./_remotes/customer-connect/docusaurus/docusaurus-plugin-customer-connect-docs.ts";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
@@ -35,6 +29,7 @@ const zrokRoot = `./_remotes/zrok/website`;
 const zlan = `./_remotes/zlan`;
 const platform = `./_remotes/platform`;
 const dataConnector = `./_remotes/data-connector`;
+const customerConnect = `./_remotes/customer-connect`;
 const llmGateway = `./docs/llm-gateway`;
 const mcpGateway = `./docs/mcp-gateway`;
 
@@ -48,7 +43,7 @@ function routeBase(name: string) {
     return isVercel ? `docs/${name}` : name;
 }
 
-const buildMask = parseInt(process.env.DOCUSAURUS_BUILD_MASK ?? "0x1FF", 16);
+const buildMask = parseInt(process.env.DOCUSAURUS_BUILD_MASK ?? "0x3FF", 16);
 
 const BUILD_FLAGS = {
     NONE:           0x0,
@@ -59,8 +54,9 @@ const BUILD_FLAGS = {
     ZLAN:           0x10,
     PLATFORM:       0x20,
     DATA_CONNECTOR: 0x40,
-    LLM_GATEWAY:    0x80,
-    MCP_GATEWAY:    0x100,
+    LLM_GATEWAY:        0x80,
+    MCP_GATEWAY:        0x100,
+    CUSTOMER_CONNECT:   0x200,
 };
 
 function build(flag: number) {
@@ -121,6 +117,7 @@ const REMARK_MAPPINGS = [
     { from: '@dataconnectordocs', to: `${docsBase}dataconnector`},
     { from: '@llmgatewaydocs', to: `${docsBase}llm-gateway`},
     { from: '@mcpgatewaydocs', to: `${docsBase}mcp-gateway`},
+    { from: '@customerconnectdocs', to: `${docsBase}customer-connect`},
     { from: '@static', to: docsBase},
     { from: '/openziti',   to: `${docsBase}${routeBase('openziti')}`   },
     { from: '/frontdoor',  to: `${docsBase}${routeBase('frontdoor')}`  },
@@ -295,6 +292,7 @@ const config: Config = {
         '_remotes/openziti/docusaurus/static/',
         '_remotes/zlan/docusaurus/static/',
         '_remotes/platform/docusaurus/static/',
+        '_remotes/customer-connect/docusaurus/static/',
         `${zrokRoot}/static/`,
         `${zrokRoot}/docs/images`
     ],
@@ -353,6 +351,7 @@ const config: Config = {
                                 '@staticdir': path.resolve(__dirname, `docusaurus/static`),
                                 '@platform': path.resolve(__dirname, `${platform}/docusaurus`),
                                 '@dataconnector': path.resolve(__dirname, `${dataConnector}/docusaurus`),
+                                '@customerconnectdocs': path.resolve(__dirname, `${customerConnect}/docusaurus`),
                             },
                         },
                         module: {
@@ -376,6 +375,7 @@ const config: Config = {
         build(BUILD_FLAGS.ZROK) && ['@docusaurus/plugin-content-pages',{id: `zrok-pages`, path: `${zrokRoot}/src/pages`, routeBasePath: `/${routeBase('zrok')}`}],
         build(BUILD_FLAGS.PLATFORM) && ['@docusaurus/plugin-content-pages',{id: `platform-pages`, path: `${platform}/docusaurus/src/pages`, routeBasePath: `/${routeBase('platform')}`}],
         build(BUILD_FLAGS.DATA_CONNECTOR) && ['@docusaurus/plugin-content-pages',{id: `dataconnector-pages`, path: `${dataConnector}/docusaurus/src/pages`, routeBasePath: `/${routeBase('dataconnector')}`}],
+        build(BUILD_FLAGS.CUSTOMER_CONNECT) && ['@docusaurus/plugin-content-pages',{id: `customer-connect-pages`, path: `${customerConnect}/docusaurus/src/pages`, routeBasePath: `/${routeBase('customer-connect')}`}],
         build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, routeBase('zrok'))),
         build(BUILD_FLAGS.SELFHOSTED) && [
             '@docusaurus/plugin-content-docs',
@@ -441,6 +441,11 @@ const config: Config = {
                 routeBase('dataconnector'),
             ),
         ),
+        build(BUILD_FLAGS.CUSTOMER_CONNECT) && customerConnectDocsPluginConfig(
+            `${customerConnect}/docusaurus`,
+            REMARK_MAPPINGS,
+            routeBase('customer-connect'),
+        ),
         build(BUILD_FLAGS.LLM_GATEWAY) && [
             '@docusaurus/plugin-content-docs',
             {
@@ -501,6 +506,13 @@ const config: Config = {
             route: `/${routeBase('platform')}/api-guides/openapi-reference`,
             showNavLink: false,
             configuration: {url: `${docsBase}console-api-spec.yaml`, hideClientButton: true, hideTestRequestButton: true, searchHotKey: 'i'},
+        } as ScalarOptions],
+        build(BUILD_FLAGS.CUSTOMER_CONNECT) && ['@scalar/docusaurus', {
+            id: 'customer-connect-api',
+            label: 'API reference',
+            route: `/${routeBase('customer-connect')}/api-guides/openapi-reference`,
+            showNavLink: false,
+            configuration: {url: `${docsBase}customer-connect-api-spec.yaml`, hideClientButton: true, hideTestRequestButton: true, searchHotKey: 'i'},
         } as ScalarOptions],
         build(BUILD_FLAGS.FRONTDOOR) && ['@scalar/docusaurus', {
             id: 'frontdoor-api',
@@ -597,9 +609,7 @@ const config: Config = {
                 { href: 'https://openziti.discourse.group/', title: 'Discourse', iconName: 'discourse' },
             ],
             productPickerColumns: [
-                { header: 'Cloud SaaS',              links: [consoleLink,    frontdoorLink] },
-                { header: 'Self-Hosted Licensed',    links: [selfhostedLink, zlanLink]      },
-                { header: 'Self-Hosted Open Source', links: [openzitiLink, zrokLink] },
+                ...unifiedPickerColumns,
                 { header: 'AI Gateways', links: [
                     {
                         label: 'LLM Gateway',

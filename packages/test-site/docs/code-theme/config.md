@@ -2,7 +2,7 @@
 sidebar_label: "Config (YAML / JSON / Docker)"
 ---
 
-# Theme test: config formats
+# Theme test: Config formats
 
 ## YAML
 

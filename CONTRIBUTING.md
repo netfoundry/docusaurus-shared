@@ -2,9 +2,9 @@
 
 This guide covers the development workflow for making changes to the NetFoundry Docusaurus theme and shared components.
 
-## Repository Structure
+## Repository structure
 
-```
+```text
 docusaurus-shared/
 ├── packages/
 │   └── docusaurus-theme/     # @netfoundry/docusaurus-theme
@@ -36,7 +36,7 @@ docusaurus-shared/
 └── CONTRIBUTING.md           # You are here
 ```
 
-## The Theme Package
+## The theme package
 
 | Package | npm | Purpose |
 |---------|-----|---------|
@@ -44,14 +44,14 @@ docusaurus-shared/
 
 ---
 
-## Development Workflow
+## Development workflow
 
 ### Prerequisites
 
 - Node.js 18+
 - Yarn package manager
 
-### Initial Setup
+### Initial setup
 
 ```bash
 git clone https://github.com/netfoundry/docusaurus-shared.git
@@ -59,7 +59,7 @@ cd docusaurus-shared
 yarn install
 ```
 
-### Quick Commands (from repo root)
+### Quick commands (from repo root)
 
 ```bash
 yarn dev      # Start test-site dev server
@@ -69,9 +69,9 @@ yarn test     # Run theme tests
 
 ---
 
-## Making Changes to the Theme
+## Making changes to the theme
 
-### 1. Configure Local Development
+### 1. Configure local development
 
 The test-site is pre-configured to use the local theme. Check `test-site/docusaurus.config.ts`:
 
@@ -89,7 +89,7 @@ export default {
 };
 ```
 
-### 2. Start Development Server
+### 2. Start development server
 
 ```bash
 yarn dev
@@ -99,7 +99,7 @@ cd test-site && yarn start
 
 Open http://localhost:3000. Changes to theme files hot-reload automatically.
 
-### 3. Make Your Changes
+### 3. Make your changes
 
 Common file locations:
 
@@ -115,7 +115,7 @@ Common file locations:
 | Remark plugins | `packages/docusaurus-theme/src/docusaurus-plugins/` |
 | Theme config types | `packages/docusaurus-theme/src/options.ts` |
 
-### 4. Test Your Changes
+### 4. Test your changes
 
 ```bash
 # Development server (hot reload)
@@ -126,7 +126,7 @@ yarn build
 cd test-site && yarn serve
 ```
 
-### 5. Run Tests
+### 5. Run tests
 
 ```bash
 yarn test
@@ -146,14 +146,16 @@ npm version patch   # 0.1.2 → 0.1.3
 npm publish
 ```
 
-### 7. Verify Published Package
+### 7. Verify published package
 
 Update `test-site/package.json`:
+
 ```json
 "@netfoundry/docusaurus-theme": "^0.1.3"
 ```
 
 Switch `test-site/docusaurus.config.ts` to use package name:
+
 ```typescript
 themes: [
     '@netfoundry/docusaurus-theme',
@@ -161,6 +163,7 @@ themes: [
 ```
 
 Then:
+
 ```bash
 cd test-site
 yarn install
@@ -169,22 +172,23 @@ yarn build
 
 ---
 
-## Example: Changing a CSS Variable
+## Example: Changing a CSS variable
 
 Here's a complete walkthrough of changing the light-mode tab color.
 
-### The Problem
+### The problem
 
 The tab highlight color (`--nf-tab-color`) is pink in light mode. We want grey instead.
 
-### Step 1: Find the Variable
+### Step 1: Find the variable
 
 ```bash
 grep -n "nf-tab-color" packages/docusaurus-theme/css/legacy.css
 ```
 
 Output:
-```
+
+```text
 89:    --nf-tab-color: 255, 182, 193;
 90:    --nf-tab-color-render: rgb(255, 182, 193);
 143:    --nf-tab-color: 67, 72, 98;
@@ -193,13 +197,13 @@ Output:
 - Line 89-90: Light mode (`:root`)
 - Line 143: Dark mode (`html[data-theme="dark"]`)
 
-### Step 2: Start Dev Server
+### Step 2: Start dev server
 
 ```bash
 yarn dev
 ```
 
-### Step 3: Make the Change
+### Step 3: Make the change
 
 Edit `packages/docusaurus-theme/css/legacy.css` around line 89:
 
@@ -219,11 +223,11 @@ Edit `packages/docusaurus-theme/css/legacy.css` around line 89:
 
 Save. Browser hot-reloads with new color.
 
-### Step 4: Test Dark Mode
+### Step 4: Test dark mode
 
 Toggle dark mode in browser. Dark mode uses a different value (line 143) - verify it still looks correct.
 
-### Step 5: Run Tests & Build
+### Step 5: Run tests & build
 
 ```bash
 yarn test
@@ -238,13 +242,13 @@ npm version patch
 npm publish
 ```
 
-### Step 7: Final Verification
+### Step 7: Final verification
 
 Update `test-site/package.json` to new version, switch config to package name, reinstall, rebuild.
 
 ---
 
-## CSS Variable Reference
+## CSS variable reference
 
 Key variables in `packages/docusaurus-theme/css/legacy.css`:
 
@@ -259,7 +263,7 @@ Key variables in `packages/docusaurus-theme/css/legacy.css`:
 
 ---
 
-## Testing Checklist
+## Testing checklist
 
 Before publishing:
 
@@ -288,15 +292,15 @@ Also verify `docusaurus.config.ts` uses local path, not package name.
 
 ### Module not found?
 
-1. Run `yarn install` from repo root
-2. Check the file exists at the path specified in `package.json` exports
-3. Restart dev server
+1.  Run `yarn install` from repo root
+2.  Check the file exists at the path specified in `package.json` exports
+3.  Restart dev server
 
 ### CSS not loading?
 
-1. Check `css/theme.css` imports the file you changed
-2. Verify `src/index.ts` `getClientModules()` includes `theme.css`
-3. Hard refresh browser (Ctrl+Shift+R)
+1.  Check `css/theme.css` imports the file you changed
+2.  Verify `src/index.ts` `getClientModules()` includes `theme.css`
+3.  Hard refresh browser (Ctrl+Shift+R)
 
 ### TypeScript errors in consuming project?
 
@@ -304,7 +308,7 @@ The theme ships source files. Fix errors in theme source, not consumers.
 
 ---
 
-## Package Entry Points
+## Package entry points
 
 The theme exposes multiple entry points:
 
