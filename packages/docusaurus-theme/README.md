@@ -57,16 +57,20 @@ export default {
 
 ## What's Included
 
-### Automatic Layout
+### Automatic layout
+
 The theme automatically provides:
+
 - **NetFoundry Layout** - Wraps all pages with consistent structure
 - **Footer** - Configurable footer with social links and site sections
 - **Star Banner** - Optional GitHub star call-to-action banner
 
-### CSS Variables & Styling
+### CSS variables & styling
+
 All CSS is automatically loaded. No need to add `@import` statements to your `custom.css`.
 
 Includes:
+
 - NetFoundry brand colors and typography
 - Light/dark mode support
 - Responsive design tokens
@@ -80,7 +84,7 @@ Import UI components directly:
 import { Alert, CodeBlock, OsTabs } from '@netfoundry/docusaurus-theme/ui';
 ```
 
-### Remark Plugins
+### Remark plugins
 
 Import remark plugins for your docs config:
 
@@ -98,7 +102,7 @@ export default {
 };
 ```
 
-### Node Utilities
+### Node utilities
 
 Import Node.js utilities:
 
@@ -106,7 +110,7 @@ Import Node.js utilities:
 import { pluginHotjar, cleanUrl, docUrl } from '@netfoundry/docusaurus-theme/node';
 ```
 
-## Package Exports
+## Package exports
 
 | Export | Description |
 |--------|-------------|
@@ -118,7 +122,7 @@ import { pluginHotjar, cleanUrl, docUrl } from '@netfoundry/docusaurus-theme/nod
 
 ## Customization
 
-### Swizzling Components
+### Swizzling components
 
 To customize the layout beyond configuration:
 
