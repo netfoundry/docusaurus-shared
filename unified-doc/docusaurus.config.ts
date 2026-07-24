@@ -12,16 +12,7 @@ import {
 } from "@netfoundry/docusaurus-theme/plugins";
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import {pluginHotjar, pluginReo} from "@netfoundry/docusaurus-theme/node";
-import {
-    consoleLink,
-    customerconnectLink,
-    frontdoorLink,
-    selfhostedLink,
-    dataconnectorLink,
-    zlanLink,
-    openzitiLink,
-    zrokLink,
-} from "@netfoundry/docusaurus-theme";
+import {unifiedPickerColumns} from "@netfoundry/docusaurus-theme";
 import {PublishConfig} from 'src/components/docusaurus'
 import {zrokDocsPluginConfig, zrokRedirects} from "./_remotes/zrok/website/docusaurus-plugin-zrok-docs.ts";
 import {onpremRedirects} from "./_remotes/selfhosted/docusaurus/docusaurus-plugin-onprem-docs.ts";
@@ -618,9 +609,7 @@ const config: Config = {
                 { href: 'https://openziti.discourse.group/', title: 'Discourse', iconName: 'discourse' },
             ],
             productPickerColumns: [
-                { header: 'Cloud SaaS',              links: [consoleLink,    customerconnectLink, dataconnectorLink, frontdoorLink] },
-                { header: 'Self-Hosted Licensed',    links: [selfhostedLink, zlanLink]                                              },
-                { header: 'Self-Hosted Open Source', links: [openzitiLink, zrokLink] },
+                ...unifiedPickerColumns,
                 { header: 'AI Gateways', links: [
                     {
                         label: 'LLM Gateway',
