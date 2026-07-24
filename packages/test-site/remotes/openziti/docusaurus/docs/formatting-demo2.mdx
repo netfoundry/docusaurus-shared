@@ -33,6 +33,7 @@ npm run build
 ## 🧱 Inside Admonition
 
 :::note YAML inside a note
+
 ```yaml
 site:
   name: MySite
@@ -41,6 +42,7 @@ site:
     - search
     - analytics
 ```
+
 :::
 
 ## 📋 Lists with Code
@@ -48,6 +50,7 @@ site:
 - Install with `yarn`
 - Build with `npm run build`
 - Run a local server:
+
   ```bash
   npx serve dist
   ```
@@ -87,7 +90,6 @@ function debounce<F extends (...args: any[]) => void>(fn: F, delay = 300): F {
   } as F;
 }
 ```
-
 
 Demonstrates every admonition, `<details>`, inline HTML, code blocks, and embedded buttons.
 
@@ -177,11 +179,13 @@ type Important = "Very";
 ```bash
 echo "Inside details"
 ```
+
 :::note
 
 ```bash
 echo "Inside admonition, inside details"
 ```
+
 :::
 
 <button onclick="alert('Details Button')">Details Button</button>
