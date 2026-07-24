@@ -11,15 +11,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install Tools
+        env:
+          # Keep in step with the version developers run locally -- older Vale
+          # reports Microsoft.Headings false positives this repo can't reproduce.
+          VALE_VERSION: 3.15.2
         run: |
           # Install Vale. Extract outside the repo: the tarball ships its own
           # README.md/LICENSE, which otherwise clobber ours and get linted.
           tmp="$(mktemp -d)"
-          wget -qO "$tmp/vale.tar.gz" https://github.com/errata-ai/vale/releases/download/v3.9.0/vale_3.9.0_Linux_64-bit.tar.gz
+          wget -qO "$tmp/vale.tar.gz" \
+            "https://github.com/errata-ai/vale/releases/download/v${VALE_VERSION}/vale_${VALE_VERSION}_Linux_64-bit.tar.gz"
           tar -xzf "$tmp/vale.tar.gz" -C "$tmp" vale
           sudo mv "$tmp/vale" /usr/local/bin/
+          vale -v
           # Install Markdownlint
           npm install -g markdownlint-cli
+          markdownlint --version
       - name: Run Quality Check
         run: |
           chmod +x docs-linter/lint.sh
