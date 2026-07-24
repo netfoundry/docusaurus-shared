@@ -41,7 +41,7 @@ backend connections — no shared state, no cross-talk between sessions.
 
 ## Quick example
 
-1. Share a local MCP server over the overlay:
+1.  Share a local MCP server over the overlay:
 
     ```bash
     mcp-bridge mcp-filesystem ~/Documents
@@ -51,7 +51,7 @@ backend connections — no shared state, no cross-talk between sessions.
     {"share_token":"a1b2c3d4e5f6"}
     ```
 
-2. Connect to it from anywhere with a zrok-enabled environment:
+2.  Connect to it from anywhere with a zrok-enabled environment:
 
     ```bash
     mcp-tools run a1b2c3d4e5f6

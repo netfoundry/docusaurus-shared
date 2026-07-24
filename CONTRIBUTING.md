@@ -292,15 +292,15 @@ Also verify `docusaurus.config.ts` uses local path, not package name.
 
 ### Module not found?
 
-1. Run `yarn install` from repo root
-2. Check the file exists at the path specified in `package.json` exports
-3. Restart dev server
+1.  Run `yarn install` from repo root
+2.  Check the file exists at the path specified in `package.json` exports
+3.  Restart dev server
 
 ### CSS not loading?
 
-1. Check `css/theme.css` imports the file you changed
-2. Verify `src/index.ts` `getClientModules()` includes `theme.css`
-3. Hard refresh browser (Ctrl+Shift+R)
+1.  Check `css/theme.css` imports the file you changed
+2.  Verify `src/index.ts` `getClientModules()` includes `theme.css`
+3.  Hard refresh browser (Ctrl+Shift+R)
 
 ### TypeScript errors in consuming project?
 

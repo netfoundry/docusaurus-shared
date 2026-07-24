@@ -11,9 +11,9 @@ then optionally generate a doc draft.
 
 Before using this skill, configure it for your organization:
 
-1. **Update the product registry** below with your products, source repos, auth method, and local doc paths.
-2. **Set auth environment variables** as needed (see Auth section below).
-3. **Update the style guide reference** in step 7 to point to your own documentation style guide.
+1.  **Update the product registry** below with your products, source repos, auth method, and local doc paths.
+2.  **Set auth environment variables** as needed (see Auth section below).
+3.  **Update the style guide reference** in step 7 to point to your own documentation style guide.
 
 ## Invocation
 
@@ -268,30 +268,30 @@ After the report, prompt:
 
 When `--draft <owner/repo#PR>` is passed:
 
-1. Fetch the PR title, description, and full diff from the specified repo
-2. If the status was **stale**, read the existing doc file first — the draft should update it, not replace it
-3. If the status was **missing**, write a new file from scratch
-4. Identify what changed from a user perspective
-5. Determine the appropriate doc type (how-to, reference, concept explanation) using Diátaxis
-6. Write the draft following your organization's documentation style guide:
-   - Sentence-style headers; imperative verb phrases for how-to titles
-   - Active voice, second person ("you/your")
-   - Backticks for CLI flags, commands, config keys, code tokens
-   - 120-character line length limit
-7. **Only write what the diff and PR description directly support.** Do not infer, extrapolate, or invent behavior that
-   isn't shown. If the diff shows a flag exists but not what it does, say so — don't guess. If the PR description is
-   vague or the diff is too large to confidently summarize, stop and ask the user to clarify before drafting. It's
-   better to ask one question than to ship a plausible-sounding but wrong doc.
-8. Present the full draft inline in the terminal, followed by the suggested file path, then prompt the user with these
-   options:
+1.  Fetch the PR title, description, and full diff from the specified repo
+2.  If the status was **stale**, read the existing doc file first — the draft should update it, not replace it
+3.  If the status was **missing**, write a new file from scratch
+4.  Identify what changed from a user perspective
+5.  Determine the appropriate doc type (how-to, reference, concept explanation) using Diátaxis
+6.  Write the draft following your organization's documentation style guide:
+    - Sentence-style headers; imperative verb phrases for how-to titles
+    - Active voice, second person ("you/your")
+    - Backticks for CLI flags, commands, config keys, code tokens
+    - 120-character line length limit
+7.  **Only write what the diff and PR description directly support.** Do not infer, extrapolate, or invent behavior that
+    isn't shown. If the diff shows a flag exists but not what it does, say so — don't guess. If the PR description is
+    vague or the diff is too large to confidently summarize, stop and ask the user to clarify before drafting. It's
+    better to ask one question than to ship a plausible-sounding but wrong doc.
+8.  Present the full draft inline in the terminal, followed by the suggested file path, then prompt the user with these
+    options:
 
-   > **What would you like to do?**
-   > - **Execute** — write the draft directly to the suggested file path in the doc repo
-   > - **Edit** — describe changes and I'll update the draft before writing
-   > - **Save to drafts** — save to `output/<product>/drafts/<repo>-<PR>-<slug>.md` for later without touching the doc repo
+    > **What would you like to do?**
+    > - **Execute** — write the draft directly to the suggested file path in the doc repo
+    > - **Edit** — describe changes and I'll update the draft before writing
+    > - **Save to drafts** — save to `output/<product>/drafts/<repo>-<PR>-<slug>.md` for later without touching the doc repo
 
-   **Do not call Edit or Write on any doc repo file until the user selects "Execute".** Saving to drafts is always safe
-   and does not require confirmation.
+    **Do not call Edit or Write on any doc repo file until the user selects "Execute".** Saving to drafts is always safe
+    and does not require confirmation.
 
 #### Drafts folder
 

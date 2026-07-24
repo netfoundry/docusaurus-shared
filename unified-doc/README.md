@@ -125,11 +125,11 @@ Products: `home`, `openziti`, `frontdoor`, `selfhosted`, `zrok`, `zlan`
 
 ### Workflow
 
-1. **Generate scenarios** - Fetches sitemap from production and creates `backstop.<product>.json` configs
-2. **Capture reference** - Screenshots production site as the baseline
-3. **Run tests** - Screenshots local site and compares against reference
-4. **Review report** - HTML report shows side-by-side diffs with highlighted changes
-5. **Approve changes** - If changes are intentional, approve to update reference
+1.  **Generate scenarios** - Fetches sitemap from production and creates `backstop.<product>.json` configs
+2.  **Capture reference** - Screenshots production site as the baseline
+3.  **Run tests** - Screenshots local site and compares against reference
+4.  **Review report** - HTML report shows side-by-side diffs with highlighted changes
+5.  **Approve changes** - If changes are intentional, approve to update reference
 
 ### Configuration
 

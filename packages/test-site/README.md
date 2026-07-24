@@ -111,10 +111,10 @@ category landing page **and** in the sidebar. No `sidebars.ts` edit needed.
 
 ## Adding a new sample page
 
-1. Pick the right folder (or add a new one with a fresh `_category_.json`).
-2. Drop in a `.mdx` file. Frontmatter is optional; use `sidebar_position` if
-   you want to influence ordering.
-3. Save. The dev server picks it up.
+1.  Pick the right folder (or add a new one with a fresh `_category_.json`).
+2.  Drop in a `.mdx` file. Frontmatter is optional; use `sidebar_position` if
+    you want to influence ordering.
+3.  Save. The dev server picks it up.
 
 For something that exists in the theme package but doesn't have a demo here,
 the test-site is the right place for it -- not in any downstream site.
@@ -135,14 +135,14 @@ inline backticks.
 
 Two things to check:
 
-1. You edited the right file. Shared rules belong in
-   `packages/docusaurus-theme/css/`, **not** in `packages/test-site/src/custom/custom.css`.
-   See [CSS conventions](../../CLAUDE.md#css-conventions) (or whichever file
-   you have in front of you).
-2. The dev server is actually watching it. The `getClientModules()` path
-   trick (`'../../css/theme.css'`) means edits to `css/*.css` propagate
-   without a theme rebuild. If they don't, restart the test-site server -- a
-   stale Webpack cache is the usual culprit.
+1.  You edited the right file. Shared rules belong in
+    `packages/docusaurus-theme/css/`, **not** in `packages/test-site/src/custom/custom.css`.
+    See [CSS conventions](../../CLAUDE.md#css-conventions) (or whichever file
+    you have in front of you).
+2.  The dev server is actually watching it. The `getClientModules()` path
+    trick (`'../../css/theme.css'`) means edits to `css/*.css` propagate
+    without a theme rebuild. If they don't, restart the test-site server -- a
+    stale Webpack cache is the usual culprit.
 
 ### "I edited a React component and nothing changed"
 

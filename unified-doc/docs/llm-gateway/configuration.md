@@ -181,14 +181,14 @@ CLI flags take precedence over the config file.
 
 When the gateway starts, it:
 
-1. Loads and parses the YAML config file.
-2. Applies any CLI flag overrides.
-3. Expands environment variables.
-4. Initializes providers (OpenAI, Anthropic, local/self-hosted) in order.
-5. Creates the model-to-provider router.
-6. Initializes OpenTelemetry metrics (if enabled).
-7. Initializes the semantic router (if configured).
-8. Starts the HTTP server (local or via zrok share).
+1.  Loads and parses the YAML config file.
+2.  Applies any CLI flag overrides.
+3.  Expands environment variables.
+4.  Initializes providers (OpenAI, Anthropic, local/self-hosted) in order.
+5.  Creates the model-to-provider router.
+6.  Initializes OpenTelemetry metrics (if enabled).
+7.  Initializes the semantic router (if configured).
+8.  Starts the HTTP server (local or via zrok share).
 
 On shutdown (SIGINT/SIGTERM), the gateway closes all providers, deletes ephemeral zrok shares, and
 releases zrok access objects before exiting.
