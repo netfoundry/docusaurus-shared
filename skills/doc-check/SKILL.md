@@ -3,7 +3,7 @@ name: doc-check
 description: Check merged PRs in a repo for customer-facing changes, cross-reference against existing docs, and flag what is missing, stale, or already covered
 ---
 
-Check merged PRs in a product's source repo(s) for customer-facing changes. For each flagged PR, search the local doc
+Check merged PRs in a product's source repos for customer-facing changes. For each flagged PR, search the local doc
 directory to assess whether coverage already exists, is stale, or is missing entirely. Produce an actionable report,
 then optionally generate a doc draft.
 
@@ -17,7 +17,7 @@ Before using this skill, configure it for your organization:
 
 ## Invocation
 
-```
+```text
 /doc-check status
 /doc-check <product>
 /doc-check <product> --since YYYY-MM-DD
@@ -126,12 +126,12 @@ combined total (most recent first across repos). In the report, prefix each PR w
 **Monorepos**: If a source repo hosts multiple products, read the PR title, description, and diff to determine which
 product it belongs to before assessing doc coverage. Mark PRs for other products as skipped with a note.
 
-### 3. Assess each PR: customer-facing or internal?
+### 3. Assess each PR: Customer-facing or internal?
 
 Fetch the diff for each PR in **two passes**. Never truncate or pipe through `head` — silently dropping later parts
 of a diff means you miss entire files and their changes, which leads to false coverage assessments.
 
-#### Pass 1: get the full file list
+#### Pass 1: Get the full file list
 
 ```bash
 # GitHub
@@ -151,7 +151,7 @@ This gives you the complete list of changed files before you read any content. U
   what's left uncovered
 - Scope the content pass to files that matter
 
-#### Pass 2: read the content of relevant files
+#### Pass 2: Read the content of relevant files
 
 For each file identified in pass 1 that could affect user-facing behavior, read its diff section in full.
 For large diffs, use targeted extraction rather than reading the whole diff linearly:
@@ -232,7 +232,7 @@ Dismiss **covered** PRs from the flagged list entirely (move them to a "no actio
 
 ### 5. Output the report
 
-```
+```markdown
 ## doc-check: product-a (since 2026-03-18)
 
 Sources: your-org/repo-a (6 PRs), your-org/repo-b (4 PRs) — 10 total · 2 need doc work · 1 already covered · 7 skipped (internal)
@@ -297,7 +297,7 @@ When `--draft <owner/repo#PR>` is passed:
 
 Drafts are saved to `output/<product>/drafts/` under the doc-check skill folder:
 
-```
+```text
 <skills-dir>/doc-check/output/<product>/drafts/<repo>-<PR>-<slug>.md
 ```
 
@@ -328,7 +328,7 @@ Filename format: `YYYY-MM-DD.md` (use today's date). If a file with that name al
 
 Write the report in the same markdown format shown in step 5, with a one-line header added at the top:
 
-```
+```markdown
 # doc-check: <product> — YYYY-MM-DD
 ```
 
@@ -336,7 +336,7 @@ Write the report in the same markdown format shown in step 5, with a one-line he
 
 After saving the report, regenerate `STATUS.md` at the root of the doc-check skill folder:
 
-```
+```text
 <skills-dir>/doc-check/STATUS.md
 ```
 

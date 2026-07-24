@@ -4,7 +4,7 @@ Shared documentation theme, components, and tooling for NetFoundry's Docusaurus-
 
 ## Repository Structure
 
-```
+```text
 docusaurus-shared/
 ├── packages/
 │   ├── docusaurus-theme/     # @netfoundry/docusaurus-theme npm package
@@ -115,7 +115,7 @@ Here [is a link](/docs/to/some/path.md)
 
 Add images to the static folder scoped to your site:
 
-```
+```text
 /your-doc-site/static/img/your-doc-site/
 ```
 
@@ -135,7 +135,7 @@ import SharedContent from '../_shared.content.md'
 
 The docusaurus site is hosted on Kinsta. Required nginx rule:
 
-```
+```nginx
 location /docs/ {
   try_files $uri $uri/ $uri/index.html /docs/index.html;
 }

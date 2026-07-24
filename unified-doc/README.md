@@ -59,12 +59,12 @@ Not using SSH:
 GIT_USER=<Your GitHub username> yarn deploy
 ```
 
-
 ### Kinsta Hosting
 
 As of Sep 2025 - the technical docs have been published to the public folder on kinsta. 
 A **CUSTOM** rule was added by tech support:
-```
+
+```nginx
 location /docs {
   try_files $uri /docs/index.html;
 }
@@ -140,6 +140,7 @@ Generated config files (`backstop.<product>.json`) include:
 - **delay: 2000ms** - Waits for page load before screenshot
 
 The `onReady.js` script automatically hides:
+
 - Cookie consent banners
 - Chat widgets
 - Hotjar feedback widgets
@@ -147,6 +148,7 @@ The `onReady.js` script automatically hides:
 ### Filtering
 
 The scenario generator excludes:
+
 - Blog posts (`/blog/`)
 - zrok versioned docs (only tests latest)
 - Tag pages
@@ -154,7 +156,7 @@ The scenario generator excludes:
 
 ### Files
 
-```
+```text
 unified-doc/
 ├── scripts/
 │   └── generate-vrt-scenarios.mjs   # Sitemap parser & config generator

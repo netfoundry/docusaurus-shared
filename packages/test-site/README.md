@@ -93,7 +93,7 @@ resolves correctly.
 
 ## Docs organization
 
-```
+```text
 docs/
 ├── index.mdx                    landing page with card grid (slug: /)
 ├── _partials/                   underscore-prefixed; ignored by sidebar
