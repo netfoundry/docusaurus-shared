@@ -9,8 +9,10 @@
 
 export type ProductId =
   | 'console'
+  | 'customerconnect'
   | 'frontdoor'
   | 'selfhosted'
+  | 'dataconnector'
   | 'zlan'
   | 'openziti'
   | 'zrok';
@@ -40,6 +42,13 @@ export const PRODUCTS: Record<ProductId, Product> = {
     logo: NF_LOGO,
     description: 'Cloud-managed orchestration and global fabric control.',
   },
+  customerconnect: {
+    id: 'customerconnect',
+    label: 'Customer Connect',
+    path: 'customer-connect/intro',
+    logo: NF_LOGO,
+    description: 'Multi-tenant zero trust access delivered to your customers.',
+  },
   frontdoor: {
     id: 'frontdoor',
     label: 'Frontdoor',
@@ -53,6 +62,13 @@ export const PRODUCTS: Record<ProductId, Product> = {
     path: 'selfhosted/intro',
     logo: `${IMG}/onprem-sm-logo.svg`,
     description: 'Deploy the full stack in your own environment.',
+  },
+  dataconnector: {
+    id: 'dataconnector',
+    label: 'Data Connector',
+    path: 'dataconnector/intro',
+    logo: NF_LOGO,
+    description: 'Stream network events to your data and analytics platforms.',
   },
   zlan: {
     id: 'zlan',
@@ -80,9 +96,9 @@ export const PRODUCTS: Record<ProductId, Product> = {
 
 /** Visual layout of the picker -- order here = order on screen. */
 const PICKER_LAYOUT: { header: string; items: ProductId[] }[] = [
-  { header: 'Cloud SaaS',              items: ['console',    'frontdoor'] },
-  { header: 'Self-Hosted Licensed',    items: ['selfhosted', 'zlan']      },
-  { header: 'Self-Hosted Open Source', items: ['openziti',   'zrok']      },
+  { header: 'Cloud SaaS',              items: ['console',    'customerconnect', 'dataconnector', 'frontdoor'] },
+  { header: 'Self-Hosted Licensed',    items: ['selfhosted', 'zlan']                                          },
+  { header: 'Self-Hosted Open Source', items: ['openziti',   'zrok']                                          },
 ];
 
 export interface PickerLink {
@@ -122,19 +138,23 @@ const linkFor = (id: ProductId, prefix: string): PickerLink => {
 /*   { ...openzitiLink, to: '/docs/openziti' }                        */
 /* ------------------------------------------------------------------ */
 
-export const consoleLink:    PickerLink = linkFor('console',    '/docs');
-export const frontdoorLink:  PickerLink = linkFor('frontdoor',  '/docs');
-export const selfhostedLink: PickerLink = linkFor('selfhosted', '/docs');
-export const zlanLink:       PickerLink = linkFor('zlan',       '/docs');
-export const openzitiLink:   PickerLink = linkFor('openziti',   '/docs');
-export const zrokLink:       PickerLink = linkFor('zrok',       '/docs');
+export const consoleLink:         PickerLink = linkFor('console',         '/docs');
+export const customerconnectLink: PickerLink = linkFor('customerconnect', '/docs');
+export const frontdoorLink:       PickerLink = linkFor('frontdoor',       '/docs');
+export const selfhostedLink:      PickerLink = linkFor('selfhosted',      '/docs');
+export const dataconnectorLink:   PickerLink = linkFor('dataconnector',   '/docs');
+export const zlanLink:            PickerLink = linkFor('zlan',            '/docs');
+export const openzitiLink:        PickerLink = linkFor('openziti',        '/docs');
+export const zrokLink:            PickerLink = linkFor('zrok',            '/docs');
 
-export const consoleLinkAbs:    PickerLink = linkFor('console',    DOCS_BASE);
-export const frontdoorLinkAbs:  PickerLink = linkFor('frontdoor',  DOCS_BASE);
-export const selfhostedLinkAbs: PickerLink = linkFor('selfhosted', DOCS_BASE);
-export const zlanLinkAbs:       PickerLink = linkFor('zlan',       DOCS_BASE);
-export const openzitiLinkAbs:   PickerLink = linkFor('openziti',   DOCS_BASE);
-export const zrokLinkAbs:       PickerLink = linkFor('zrok',       DOCS_BASE);
+export const consoleLinkAbs:         PickerLink = linkFor('console',         DOCS_BASE);
+export const customerconnectLinkAbs: PickerLink = linkFor('customerconnect', DOCS_BASE);
+export const frontdoorLinkAbs:       PickerLink = linkFor('frontdoor',       DOCS_BASE);
+export const selfhostedLinkAbs:      PickerLink = linkFor('selfhosted',      DOCS_BASE);
+export const dataconnectorLinkAbs:   PickerLink = linkFor('dataconnector',   DOCS_BASE);
+export const zlanLinkAbs:            PickerLink = linkFor('zlan',            DOCS_BASE);
+export const openzitiLinkAbs:        PickerLink = linkFor('openziti',        DOCS_BASE);
+export const zrokLinkAbs:            PickerLink = linkFor('zrok',            DOCS_BASE);
 
 /**
  * Picker columns for the unified docs site at netfoundry.io/docs.
@@ -144,9 +164,9 @@ export const zrokLinkAbs:       PickerLink = linkFor('zrok',       DOCS_BASE);
  * your own array using the per-product exports above to override fields.
  */
 export const unifiedPickerColumns: PickerColumn[] = [
-  { header: 'Cloud SaaS',              links: [consoleLink,    frontdoorLink] },
-  { header: 'Self-Hosted Licensed',    links: [selfhostedLink, zlanLink]      },
-  { header: 'Self-Hosted Open Source', links: [openzitiLink,   zrokLink]      },
+  { header: 'Cloud SaaS',              links: [consoleLink,    customerconnectLink, dataconnectorLink, frontdoorLink] },
+  { header: 'Self-Hosted Licensed',    links: [selfhostedLink, zlanLink]                                              },
+  { header: 'Self-Hosted Open Source', links: [openzitiLink,   zrokLink]                                              },
 ];
 
 /**
@@ -154,7 +174,7 @@ export const unifiedPickerColumns: PickerColumn[] = [
  * Every link points at the absolute prod URL on netfoundry.io/docs.
  */
 export const subsitePickerColumns: PickerColumn[] = [
-  { header: 'Cloud SaaS',              links: [consoleLinkAbs,    frontdoorLinkAbs] },
-  { header: 'Self-Hosted Licensed',    links: [selfhostedLinkAbs, zlanLinkAbs]      },
-  { header: 'Self-Hosted Open Source', links: [openzitiLinkAbs,   zrokLinkAbs]      },
+  { header: 'Cloud SaaS',              links: [consoleLinkAbs,    customerconnectLinkAbs, dataconnectorLinkAbs, frontdoorLinkAbs] },
+  { header: 'Self-Hosted Licensed',    links: [selfhostedLinkAbs, zlanLinkAbs]                                                    },
+  { header: 'Self-Hosted Open Source', links: [openzitiLinkAbs,   zrokLinkAbs]                                                    },
 ];
