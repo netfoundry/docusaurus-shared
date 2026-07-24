@@ -2,7 +2,7 @@
 
 Shared documentation theme, components, and tooling for NetFoundry's Docusaurus-based documentation sites.
 
-## Repository Structure
+## Repository structure
 
 ```text
 docusaurus-shared/
@@ -17,9 +17,9 @@ docusaurus-shared/
 See [`packages/test-site/README.md`](./packages/test-site/README.md) for the
 test-site dev loop, docs organization, and debug recipes.
 
-## Quick Start
+## Quick start
 
-### Using the Theme
+### Using the theme
 
 Install the theme in your Docusaurus project:
 
@@ -52,7 +52,7 @@ export default {
 
 See the [theme README](./packages/docusaurus-theme/README.md) for full documentation.
 
-### Creating a New Doc Site
+### Creating a new doc site
 
 ```bash
 ./bootstrap.sh /path/to/new-site [starLabel] [starRepoUrl]
@@ -88,7 +88,7 @@ See [packages/test-site/README.md](./packages/test-site/README.md) for the full
 dev-loop walkthrough, debug recipes, and what hot-reloads vs. what needs a
 rebuild.
 
-## Local Development
+## Local development
 
 See [packages/LOCAL-DEV.md](./packages/LOCAL-DEV.md) for the full local development guide, including how to use the test-site, test with remote sites via `file:` protocol, and publish.
 
@@ -96,9 +96,9 @@ See [packages/LOCAL-DEV.md](./packages/LOCAL-DEV.md) for the full local developm
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup, workflow, and a walkthrough example of making theme changes.
 
-## Best Practices
+## Best practices
 
-### Relative Linking
+### Relative linking
 
 Use relative paths for internal links:
 
@@ -131,7 +131,7 @@ import SharedContent from '../_shared.content.md'
 <SharedContent />
 ```
 
-## Kinsta Hosting
+## Kinsta hosting
 
 The docusaurus site is hosted on Kinsta. Required nginx rule:
 

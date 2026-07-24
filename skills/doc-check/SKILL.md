@@ -178,7 +178,7 @@ descriptions; the diff is the authoritative source. Look for:
 Also read any doc files the author changed in the PR — understand what they covered so your coverage assessment
 reflects what's actually missing, not what was already addressed.
 
-**Bitbucket note:** The simple `/pullrequests/<id>/diff` endpoint returns empty results. Batch-extract commit
+**Bitbucket note:** The simple `/pullrequests/<id>/diff` endpoint returns empty results. Batch-fetch commit
 hashes from the PR list response (fields `source.commit.hash` and `destination.commit.hash`) and construct the
 diff URL as shown above.
 
@@ -213,7 +213,7 @@ current local state — don't abort the scan.
 For each customer-facing PR, search the local doc path for the product (see registry above) to determine whether
 coverage already exists. Use grep and file reads — do not guess.
 
-Extract 2–4 key terms from the PR (feature name, CLI flag, config key, endpoint name, etc.) and search for them:
+Identify 2–4 key terms from the PR (feature name, CLI flag, config key, endpoint name, etc.) and search for them:
 
 ```bash
 grep -r "<term>" <local-doc-path> --include="*.md" --include="*.mdx" -l

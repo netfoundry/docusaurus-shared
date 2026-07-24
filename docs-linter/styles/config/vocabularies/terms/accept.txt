@@ -13,6 +13,8 @@
 (?i)h5
 (?i)h6
 (?i)test-site
+(?i)code
+(?i)vs
 
 # URLs and domains
 openziti.io

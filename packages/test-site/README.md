@@ -205,7 +205,7 @@ yarn workspace test-site serve   # serve the built output locally
 The static output lands in `packages/test-site/build/`. Useful for verifying
 that a change works in a real production bundle, not just dev mode.
 
-## When to put something HERE vs. somewhere else
+## When to put something here vs. somewhere else
 
 | Goal                                          | Goes in                                                |
 |-----------------------------------------------|--------------------------------------------------------|

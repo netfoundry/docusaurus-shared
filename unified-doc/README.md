@@ -8,7 +8,7 @@ This website is built using [Docusaurus](https://docusaurus.io/), a modern stati
 yarn
 ```
 
-## Local Development
+## Local development
 
 ```bash
 yarn start
@@ -59,7 +59,7 @@ Not using SSH:
 GIT_USER=<Your GitHub username> yarn deploy
 ```
 
-### Kinsta Hosting
+### Kinsta hosting
 
 As of Sep 2025 - the technical docs have been published to the public folder on kinsta. 
 A **CUSTOM** rule was added by tech support:
@@ -74,7 +74,7 @@ This rule is **mandatory** for SPA deep linking. The tech support people had to 
 
 ---
 
-## Visual Regression Testing
+## Visual regression testing
 
 The unified-doc site includes BackstopJS for visual regression testing against production. This helps catch unintended visual changes when updating the theme, components, or content.
 
@@ -85,7 +85,7 @@ The unified-doc site includes BackstopJS for visual regression testing against p
 - 3 viewports: desktop (1920x1080), tablet (768x1024), mobile (375x812)
 - Generates HTML diff reports highlighting visual differences
 
-### Quick Start
+### Quick start
 
 ```bash
 # Install dependencies (includes backstopjs)
@@ -108,7 +108,7 @@ yarn vrt:test:zlan
 yarn vrt:report:zlan
 ```
 
-### Available Commands
+### Available commands
 
 Each product has its own set of commands:
 
