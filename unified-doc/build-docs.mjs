@@ -139,7 +139,7 @@ const branches = {
   zlan           : "main",
   platform       : "main",
   dataConnector  : "main",
-  customerConnect: "add-docs",
+  customerConnect: "main",
 };
 const BRANCH_FLAG = {
   "--ziti-doc-branch": "zitiDoc",
