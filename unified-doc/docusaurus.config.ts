@@ -14,8 +14,10 @@ import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-di
 import {pluginHotjar, pluginReo} from "@netfoundry/docusaurus-theme/node";
 import {
     consoleLink,
+    customerconnectLink,
     frontdoorLink,
     selfhostedLink,
+    dataconnectorLink,
     zlanLink,
     openzitiLink,
     zrokLink,
@@ -616,8 +618,8 @@ const config: Config = {
                 { href: 'https://openziti.discourse.group/', title: 'Discourse', iconName: 'discourse' },
             ],
             productPickerColumns: [
-                { header: 'Cloud SaaS',              links: [consoleLink,    frontdoorLink] },
-                { header: 'Self-Hosted Licensed',    links: [selfhostedLink, zlanLink]      },
+                { header: 'Cloud SaaS',              links: [consoleLink,    customerconnectLink, dataconnectorLink, frontdoorLink] },
+                { header: 'Self-Hosted Licensed',    links: [selfhostedLink, zlanLink]                                              },
                 { header: 'Self-Hosted Open Source', links: [openzitiLink, zrokLink] },
                 { header: 'AI Gateways', links: [
                     {
