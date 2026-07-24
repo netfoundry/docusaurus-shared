@@ -2,7 +2,7 @@
 sidebar_label: "Java & C#"
 ---
 
-# Theme test: Java and C#
+# Theme test: Java and C\#
 
 ## Java
 
@@ -44,7 +44,7 @@ public final class OverlayClient {
 }
 ```
 
-## C#
+## C\#
 
 ```csharp
 using System;
