@@ -165,7 +165,7 @@ llm-gateway run config.yaml
 
 ## CLI flags
 
-```
+```text
 llm-gateway run <config-path> [flags]
 
 Flags:

@@ -18,7 +18,7 @@ Both use zrok's overlay network built on [OpenZiti](https://openziti.io).
 The gateway requires a zrok environment on the host machine. If `zrok enable` hasn't been run, the
 gateway fails at startup:
 
-```
+```text
 zrok environment is not enabled; run 'zrok enable' first
 ```
 
@@ -50,7 +50,7 @@ An ephemeral share is created at startup and deleted when the gateway shuts down
 
 2. Start the gateway. The share token is logged at startup:
 
-    ```
+    ```text
     serving via zrok share 'abc123def456'
     ```
 

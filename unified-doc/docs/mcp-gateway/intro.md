@@ -56,4 +56,3 @@ backend connections — no shared state, no cross-talk between sessions.
     ```bash
     mcp-tools run a1b2c3d4e5f6
     ```
-

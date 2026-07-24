@@ -58,7 +58,7 @@ for chunk in stream:
 
 The gateway returns a series of SSE events. Each chunk follows the OpenAI format:
 
-```
+```text
 data: {"id":"chatcmpl-abc","object":"chat.completion.chunk","choices":[{"delta":{"content":"Quantum"},"index":0}]}
 
 data: {"id":"chatcmpl-abc","object":"chat.completion.chunk","choices":[{"delta":{"content":" entanglement"},"index":0}]}

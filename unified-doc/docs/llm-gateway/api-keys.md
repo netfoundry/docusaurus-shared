@@ -65,7 +65,7 @@ Keys are stored as plaintext in the config file, consistent with how upstream AP
 
 Every incoming request passes through the auth middleware before reaching any handler:
 
-```
+```text
 Client request
     |
     v

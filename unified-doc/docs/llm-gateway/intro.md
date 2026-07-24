@@ -45,4 +45,3 @@ translated to and from OpenAI format, so existing tools that speak OpenAI work w
 
 Prometheus metrics track request volume, latency, token usage, routing decisions, and endpoint health.
 Per-request body logging is available for debugging routing behavior.
-
