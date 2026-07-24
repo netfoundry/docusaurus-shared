@@ -72,3 +72,10 @@ Semver
 linter
 performant
 repo
+
+# Customer Connect product & API terms
+Customer Connect
+Live Audit
+HAL
+GET
+POST
