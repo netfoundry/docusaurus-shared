@@ -7,6 +7,8 @@
   "MD009": false, // Trailing spaces. Flags every invisible space at the end of a line. Huge noise source.
   "MD010": { "code_blocks": false }, // Hard tabs. Allowed inside code blocks -- Go, Makefiles use real tabs.
   "MD025": { "front_matter_title": "" }, // Don't count frontmatter title as an H1; Docusaurus docs use frontmatter title + one body H1.
+  "MD028": false, // Blank line between consecutive blockquotes -- legit for stacked GitHub-style admonitions.
+  "MD030": { "ol_single": 2, "ol_multi": 2 }, // Ordered lists use 2 spaces after the marker (4-space content indent, per nf-style-guide).
   "MD060": false, // Table column style. Flags tables that aren't perfectly ASCII-aligned in the raw text file. Purely visual.
   "MD041": false  // First line heading. Fires on every Docusaurus category index page (MDX imports before any heading).
 }
