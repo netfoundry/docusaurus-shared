@@ -22,22 +22,17 @@ function Section({marker, id, title, children}: {marker: string; id: string; tit
   );
 }
 
-/** Whole-card link that does not navigate when the pointer was dragged to select text.
- *  A plain anchor fires click on mouseup regardless of how far the pointer travelled, so
- *  selecting a card's copy would activate the link the moment the mouse came up. */
+/** Whole-card link that does not navigate when the click ended a text selection.
+ *  A plain anchor fires click on mouseup regardless, so selecting a card's copy would activate
+ *  the link the moment the mouse came up. Pressing the mouse down collapses any earlier
+ *  selection, so anything still selected at click time was selected inside this card. */
 function CardLink({to, className, children}: {to: string; className: string; children: ReactNode}) {
-  const origin = React.useRef<{x: number; y: number} | null>(null);
   return (
     <Link
       to={to}
       className={className}
-      onMouseDown={e => {
-        origin.current = {x: e.clientX, y: e.clientY};
-      }}
       onClick={e => {
-        const from = origin.current;
-        const dragged = from !== null && Math.abs(e.clientX - from.x) + Math.abs(e.clientY - from.y) > 5;
-        if (dragged) {
+        if (!window.getSelection()?.isCollapsed) {
           e.preventDefault();
         }
       }}
@@ -105,9 +100,10 @@ const deploymentOptions = [
     title: 'NetFoundry Cloud',
     to: `${DOCS_BASE}platform/intro`,
     operator: 'Operated by NetFoundry',
-    body: 'NetFoundry provisions and runs the control and data planes across the cloud providers and regions you choose.',
+    body: 'A hybrid SaaS model: NetFoundry manages the infrastructure, you own the network configuration and policies. Nothing is multi-tenant — a neighbour’s incident is not yours.',
     points: [
       'Controllers and routers provisioned on demand, no infrastructure of your own',
+      'A dedicated controller, data plane, and PKI — never shared with another customer',
       'Managed version upgrades inside maintenance windows',
       'Automated configuration backups',
       'Infrastructure inventory, allocated IPs, and component health in the console',
@@ -288,8 +284,9 @@ export default function CloudPlatformOverview(): JSX.Element {
 
             <Section marker="02" id="deployment-options" title="Let us run it for you, or run it yourself">
               <p>
-                The overlay, the SDKs, and the security model are identical either way. The difference is who operates
-                the infrastructure.
+                The overlay, the SDKs, and the security model are identical either way. What differs is who operates
+                the infrastructure — and in both cases the network configuration and the policies that govern access
+                stay yours.
               </p>
               <div className={styles.optionRow}>
                 {deploymentOptions.map(o => (
