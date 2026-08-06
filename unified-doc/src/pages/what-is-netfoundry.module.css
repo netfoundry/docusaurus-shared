@@ -188,7 +188,28 @@
 /* Subheads inside a section need clear separation from the block above them. */
 .subhead { margin-top: 3rem; }
 
-.chipRow { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1rem; }
+/* Compliance grouped by what NetFoundry provides. The tiers are not interchangeable, so each one
+   is labeled and carries its own qualifier rather than being flattened into one chip row. */
+.complianceList { margin: 1.25rem 0 0; }
+.complianceGroup {
+    padding: 0.9rem 0 0.9rem 1rem;
+    border-left: 2px solid var(--ifm-color-emphasis-300);
+}
+.complianceGroup + .complianceGroup { margin-top: 0.5rem; }
+.complianceGroup dt { margin: 0; }
+.complianceGroup dd { margin: 0; }
+.complianceTier {
+    composes: mono;
+    display: block; margin-bottom: 0.2rem;
+    color: var(--ifm-color-primary);
+}
+.complianceNote {
+    display: block;
+    color: var(--ifm-color-emphasis-700);
+    font-size: 0.85rem; line-height: 1.5;
+}
+
+.chipRow { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.75rem; }
 .chip {
     padding: 0.32rem 0.75rem;
     border: 1px solid var(--ifm-color-emphasis-300);

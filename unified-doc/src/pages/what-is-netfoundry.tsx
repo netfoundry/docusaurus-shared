@@ -113,7 +113,7 @@ const sharedCapabilities = [
   'APIs for the network model, metrics, and reporting',
   'IPsec bridging for existing site-to-site VPNs',
   '24×7 support and production architecture guidance',
-  'Compliance attestations and FIPS deployment options',
+  'SOC 2 Type II audit reports and per-framework compliance guidance',
 ];
 
 const relatedProjects = [
@@ -155,14 +155,33 @@ const included = [
       {label: 'SCIM identity provisioning', to: `${DOCS_BASE}platform/access-management/integrations/scim`},
       {label: 'APIs for infrastructure, network, and metrics', to: `${DOCS_BASE}platform/api-guides/`},
       {label: 'IPsec bridging for existing VPNs', to: `${DOCS_BASE}platform/core-components/ipsec-tunnelers`},
-      {label: 'Compliance attestations, support, and SLA', to: '#assurance'},
+      {label: 'Audit reports, compliance guidance, support, and SLA', to: '#assurance'},
     ],
   },
 ];
 
-const frameworks = [
-  'SOC 2 Type II', 'FIPS', 'NIST 800-207', 'NIST 800-171', 'PCI-DSS',
-  'HIPAA', 'IEC 62443', 'NERC CIP', 'NIS2', 'DORA', 'CJIS',
+/** Compliance posture, grouped by what NetFoundry actually provides. These are not equivalent:
+ *  an audit report, an eligibility statement, and architectural guidance are three different
+ *  things, and procurement will ask which one applies. */
+const compliance = [
+  {
+    tier: 'Audited',
+    note: 'Independent audit reports NetFoundry can provide.',
+    items: ['SOC 2 Type II'],
+  },
+  {
+    tier: 'Contractual and eligible',
+    note: 'Supported through contract terms and platform configuration.',
+    items: ['HIPAA eligibility', 'GDPR', 'CCPA', 'Data processing agreements'],
+  },
+  {
+    tier: 'Guidance and alignment',
+    note: 'NetFoundry provides guidance and controls that map to these; the attestation is yours.',
+    items: [
+      'FIPS', 'PCI DSS', 'NIST 800-207', 'NIST 800-171',
+      'IEC 62443', 'NERC CIP', 'NIS2', 'DORA', 'CJIS',
+    ],
+  },
 ];
 
 /* ------------------------------------------------------------------ page */
@@ -269,12 +288,25 @@ export default function CloudPlatformOverview(): JSX.Element {
 
               <h3 id="assurance" className={styles.subhead}>Support and compliance</h3>
               <p>
-                Support is 24×7 and follows the globe, and managed networks carry an uptime SLA. Platform controls map
-                to the frameworks commonly assessed in regulated environments:
+                Support is 24×7 and follows the globe, and managed networks carry an uptime SLA with service credits.
+                On compliance, what NetFoundry provides differs by framework — an audit report, a contractual
+                commitment, and architectural guidance are not the same thing:
               </p>
-              <div className={styles.chipRow}>
-                {frameworks.map(f => <span key={f} className={styles.chip}>{f}</span>)}
-              </div>
+              <dl className={styles.complianceList}>
+                {compliance.map(group => (
+                  <div key={group.tier} className={styles.complianceGroup}>
+                    <dt>
+                      <span className={styles.complianceTier}>{group.tier}</span>
+                      <span className={styles.complianceNote}>{group.note}</span>
+                    </dt>
+                    <dd>
+                      <div className={styles.chipRow}>
+                        {group.items.map(f => <span key={f} className={styles.chip}>{f}</span>)}
+                      </div>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
             </Section>
 
             <Section marker="03" id="visibility" title="Visibility">
