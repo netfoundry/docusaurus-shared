@@ -130,6 +130,30 @@ const deploymentOptions = [
   },
 ];
 
+/** Decision guidance. Stated as conditions rather than benefits, so a reader can match their own
+ *  situation against it instead of being told which one to want. */
+const choosing = [
+  {
+    heading: 'Choose NetFoundry Cloud when',
+    conditions: [
+      'You want a production network in minutes rather than a build project',
+      'Your engineers should be building applications, not operating an overlay',
+      'You are scaling across regions and would rather not run distributed routers',
+      'You want to stay current without planning upgrade cycles',
+      'You need an uptime guarantee on the network itself, with financial remedies',
+    ],
+  },
+  {
+    heading: 'Choose NetFoundry Self-Hosted when',
+    conditions: [
+      'Regulation or internal policy rules out a cloud-hosted control plane',
+      'The environment is air-gapped, sovereign, or otherwise isolated',
+      'You need to control exactly where every component runs',
+      'You have staff to operate it and still want the vendor guarantees',
+    ],
+  },
+];
+
 /** Capabilities both options carry, so the cards above only have to state the differences. */
 const sharedCapabilities = [
   'A dedicated PKI, provisioned and maintained for you',
@@ -302,6 +326,17 @@ export default function CloudPlatformOverview(): JSX.Element {
                     </ul>
                     <span className={styles.optionMore}>Read the docs →</span>
                   </CardLink>
+                ))}
+              </div>
+
+              <div className={styles.choosing}>
+                {choosing.map(group => (
+                  <div key={group.heading} className={styles.choice}>
+                    <h4>{group.heading}</h4>
+                    <ul>
+                      {group.conditions.map(c => <li key={c}>{c}</li>)}
+                    </ul>
+                  </div>
                 ))}
               </div>
 

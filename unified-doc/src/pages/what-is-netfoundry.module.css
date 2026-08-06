@@ -163,6 +163,20 @@
 .item h4 { margin: 0 0 0.3rem; font-size: 0.98rem; font-weight: 700; letter-spacing: -0.01em; }
 .item p { margin: 0; color: var(--ifm-color-emphasis-700); font-size: 0.9rem; line-height: 1.6; }
 
+/* --------------------------------------------------------- decision guide */
+
+.choosing { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 1.75rem; }
+.choice + .choice { padding-left: 1.5rem; box-shadow: inset 1px 0 0 var(--ifm-color-emphasis-200); }
+.choice h4 {
+    margin: 0 0 0.6rem;
+    font-size: 0.95rem; font-weight: 700; letter-spacing: -0.01em;
+}
+.choice ul { margin: 0; padding-left: 1.1rem; }
+.choice li {
+    margin-bottom: 0.4rem;
+    color: var(--ifm-color-emphasis-700); font-size: 0.9rem; line-height: 1.55;
+}
+
 /* ------------------------------------------------- shared across options */
 
 /* What both deployment options carry, so the cards above only state differences. */
@@ -380,6 +394,11 @@
     .docSection > h2 { font-size: 1.3rem; }
     .includedGrid { grid-template-columns: 1fr; gap: 1rem; }
     .optionRow, .projectGrid { grid-template-columns: 1fr; }
+    .choosing { grid-template-columns: 1fr; gap: 1rem; }
+    .choice + .choice {
+        padding-left: 0; padding-top: 1rem;
+        box-shadow: none; border-top: 1px solid var(--ifm-color-emphasis-200);
+    }
     .bucket + .bucket {
         padding-left: 0; padding-top: 1rem;
         box-shadow: none; border-top: 1px solid var(--ifm-color-emphasis-200);
