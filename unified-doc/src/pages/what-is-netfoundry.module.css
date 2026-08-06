@@ -23,6 +23,13 @@
     letter-spacing: 0.1em; text-transform: uppercase;
 }
 
+/* Whole-card links are draggable by default, so dragging across the copy starts a link-drag
+   instead of selecting it. Opt back into text selection wherever a card wraps prose. */
+.selectable {
+    user-select: text; -webkit-user-select: text;
+    -webkit-user-drag: none;
+}
+
 /* ----------------------------------------------------------- page header */
 
 .pageHeader {
@@ -228,6 +235,7 @@
 }
 /* Depth rather than a colored edge: the accent bar read as decoration, and primary is purple here. */
 .projectCard {
+    composes: selectable;
     display: block; padding: 1.05rem 1.25rem 0.9rem;
     border: 1px solid var(--ifm-color-emphasis-200);
     border-radius: 10px;
@@ -267,6 +275,7 @@
     margin-top: 1.25rem;
 }
 .option {
+    composes: selectable;
     display: flex; flex-direction: column;
     padding: 1.05rem 1.2rem 0.9rem;
     border: 1px solid var(--ifm-color-emphasis-200);

@@ -22,6 +22,31 @@ function Section({marker, id, title, children}: {marker: string; id: string; tit
   );
 }
 
+/** Whole-card link that does not navigate when the pointer was dragged to select text.
+ *  A plain anchor fires click on mouseup regardless of how far the pointer travelled, so
+ *  selecting a card's copy would activate the link the moment the mouse came up. */
+function CardLink({to, className, children}: {to: string; className: string; children: ReactNode}) {
+  const origin = React.useRef<{x: number; y: number} | null>(null);
+  return (
+    <Link
+      to={to}
+      className={className}
+      onMouseDown={e => {
+        origin.current = {x: e.clientX, y: e.clientY};
+      }}
+      onClick={e => {
+        const from = origin.current;
+        const dragged = from !== null && Math.abs(e.clientX - from.x) + Math.abs(e.clientY - from.y) > 5;
+        if (dragged) {
+          e.preventDefault();
+        }
+      }}
+    >
+      {children}
+    </Link>
+  );
+}
+
 /** A titled feature block — the bullet list alternative that still reads as documentation. */
 function Item({label, children}: {label: string; children: ReactNode}) {
   return (
@@ -106,6 +131,7 @@ const deploymentOptions = [
 
 /** Capabilities both options carry, so the cards above only have to state the differences. */
 const sharedCapabilities = [
+  'A dedicated PKI, provisioned and maintained for you',
   'Identities, services, policies, and posture checks',
   'High availability controllers',
   'Metrics, latency, and audit logging',
@@ -234,14 +260,14 @@ export default function CloudPlatformOverview(): JSX.Element {
               <p>The NetFoundry Platform consists of several components and applications:</p>
               <div className={styles.projectGrid}>
                 {platformProjects.map(p => (
-                  <Link key={p.title} to={p.to} className={styles.projectCard}>
+                  <CardLink key={p.title} to={p.to} className={styles.projectCard}>
                     <span className={styles.projectRole}>{p.role}</span>
                     <div className={styles.projectHeader}>
                       <img src={p.logo} alt="" className={styles.projectLogo} />
                       <h3>{p.title}</h3>
                     </div>
                     <p>{p.summary}</p>
-                  </Link>
+                  </CardLink>
                 ))}
               </div>
 
@@ -267,7 +293,7 @@ export default function CloudPlatformOverview(): JSX.Element {
               </p>
               <div className={styles.optionRow}>
                 {deploymentOptions.map(o => (
-                  <Link key={o.title} to={o.to} className={styles.option}>
+                  <CardLink key={o.title} to={o.to} className={styles.option}>
                     <span className={styles.optionOperator}>{o.operator}</span>
                     <h4>{o.title}</h4>
                     <p>{o.body}</p>
@@ -275,7 +301,7 @@ export default function CloudPlatformOverview(): JSX.Element {
                       {o.points.map(pt => <li key={pt}>{pt}</li>)}
                     </ul>
                     <span className={styles.optionMore}>Read the docs →</span>
-                  </Link>
+                  </CardLink>
                 ))}
               </div>
 
