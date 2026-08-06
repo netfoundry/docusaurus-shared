@@ -9,6 +9,9 @@ import styles from './what-is-netfoundry.module.css';
 const IMG = 'https://netfoundry.io/docs/img';
 const NF_LOGO = 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg';
 
+const TRIAL = 'https://netfoundry.io/products/netfoundry-cloud-30-day-free-trial/';
+const DEMO = 'https://netfoundry.io/lets-talk/';
+
 /* ------------------------------------------------------------- primitives */
 
 /** Section heading with a monospace marker above it, so sections are scannable at a glance. */
@@ -90,7 +93,7 @@ const platformProjects = [
     logo: NF_LOGO,
     to: `${DOCS_BASE}customer-connect/intro`,
     role: 'Serve your own customers',
-    summary: 'Deliver zero trust access to the people who buy from you, each tenant isolated from every other.',
+    summary: 'Deliver zero trust access to the people who buy from you, each tenant isolated from every other. White-label and vanity domain options for solution providers.',
   },
 ];
 
@@ -102,9 +105,9 @@ const deploymentOptions = [
     operator: 'Operated by NetFoundry',
     body: 'A hybrid SaaS model: NetFoundry manages the infrastructure, you own the network configuration and policies. Nothing is multi-tenant — a neighbour’s incident is not yours.',
     points: [
-      'Controllers and routers provisioned on demand, no infrastructure of your own',
+      'One-click controllers and routers on AWS, Azure, GCP, and OCI',
       'A dedicated controller, data plane, and PKI — never shared with another customer',
-      'Managed version upgrades inside maintenance windows',
+      'Managed version upgrades, including for routers you host yourself',
       'Automated configuration backups',
       'Infrastructure inventory, allocated IPs, and component health in the console',
       'An uptime SLA on the network NetFoundry operates',
@@ -114,13 +117,15 @@ const deploymentOptions = [
     title: 'NetFoundry Self-Hosted',
     to: `${DOCS_BASE}selfhosted/intro`,
     operator: 'Operated by you, supported by us',
-    body: 'The same stack deployed into an environment you own — on-prem, air-gapped, or your own cloud accounts.',
+    body: 'The same stack and the same contractual guarantees, deployed into an environment you own — on-prem, air-gapped, or your own cloud accounts.',
     points: [
       'You deploy and run the controllers and routers on infrastructure you own',
+      'No dependency on a NetFoundry-operated control plane',
       'Fits sovereign, air-gapped, and otherwise restricted environments',
       'You choose the platform, the sizing, and the upgrade schedule',
-      'Backups and capacity planning stay under your control',
-      'No dependency on a NetFoundry-operated control plane',
+      'Production installers, bundled and packaged for supportability',
+      'Logs, OS metrics, Ziti metrics, and stream integration included',
+      'Optional revocable remote access, so we can troubleshoot or upgrade from inside',
     ],
   },
 ];
@@ -131,18 +136,16 @@ const sharedCapabilities = [
   'Identities, services, policies, and posture checks',
   'High availability controllers',
   'Metrics, latency, and audit logging',
-  'SCIM identity provisioning',
+  'SCIM identity provisioning, plus Active Directory and LDAP endpoint sync',
+  'Third-party certificate authorities and BYO DNS for public-facing services',
+  'Standard, FIPS-compliant, or pluggable cryptographic modes',
+  'Agentless reverse-proxy access where endpoint agents are not viable',
+  'Multiple networks from one console, with hierarchical RBAC',
   'APIs for the network model, metrics, and reporting',
   'IPsec bridging for existing site-to-site VPNs',
   '24×7 support and production architecture guidance',
+  'IP indemnification against third-party intellectual property claims',
   'SOC 2 Type II audit reports and per-framework compliance guidance',
-];
-
-const relatedProjects = [
-  {title: 'OpenZiti', to: `${DOCS_BASE}openziti/intro`, summary: 'The open source overlay this platform is built on.'},
-  {title: 'NetFoundry Self-Hosted', to: `${DOCS_BASE}selfhosted/intro`, summary: 'Run the same stack in your own environment.'},
-  {title: 'zLAN', to: `${DOCS_BASE}zlan/intro`, summary: 'Microsegmentation for OT networks.'},
-  {title: 'zrok', to: `${DOCS_BASE}zrok`, summary: 'Peer-to-peer sharing built on OpenZiti.'},
 ];
 
 /** Everything the managed platform includes, grouped into three buckets. Items link into the
@@ -177,7 +180,7 @@ const included = [
       {label: 'SCIM identity provisioning', to: `${DOCS_BASE}platform/access-management/integrations/scim`},
       {label: 'APIs for infrastructure, network, and metrics', to: `${DOCS_BASE}platform/api-guides/`},
       {label: 'IPsec bridging for existing VPNs', to: `${DOCS_BASE}platform/core-components/ipsec-tunnelers`},
-      {label: 'Audit reports, compliance guidance, support, and SLA', to: '#assurance'},
+      {label: 'SLA, support, indemnification, and audit reports', to: '#assurance'},
     ],
   },
 ];
@@ -311,7 +314,12 @@ export default function CloudPlatformOverview(): JSX.Element {
 
               <h3 id="assurance" className={styles.subhead}>Support and compliance</h3>
               <p>
-                Support is 24×7 and follows the globe, and managed networks carry an uptime SLA with service credits.
+                Apache 2.0 disclaims warranty and liability, which is the correct posture for a licence and an
+                insufficient one for a procurement process. A NetFoundry subscription adds the contractual surface
+                around the same software: 24×7 support from the engineers who write it, an uptime SLA with service
+                credits on networks NetFoundry operates, IP indemnification, and data processing agreements.
+              </p>
+              <p>
                 On compliance, what NetFoundry provides differs by framework — an audit report, a contractual
                 commitment, and architectural guidance are not the same thing:
               </p>
@@ -357,6 +365,10 @@ export default function CloudPlatformOverview(): JSX.Element {
                   Management events record who changed what and when, alongside network activity.{' '}
                   <Link to={`${DOCS_BASE}platform/visibility/events`}>Reference</Link>.
                 </Item>
+                <Item label="Metering and alarms">
+                  Usage metered by application and by team, with alarm and event configuration so a threshold reaches
+                  you rather than waiting to be noticed.
+                </Item>
                 <Item label="Export">
                   <Link to={`${DOCS_BASE}dataconnector/intro`}>Data Connector</Link> streams events and metrics into
                   your own warehouse, SIEM, or analytics platform.
@@ -364,31 +376,27 @@ export default function CloudPlatformOverview(): JSX.Element {
               </div>
             </Section>
 
-            <Section marker="04" id="projects" title="Documentation index">
-              <p>
-                Every product above has its own documentation project. <Link to="#products">Section 01</Link> says what
-                each one is for.
-              </p>
-              <ul className={styles.relatedList}>
-                {platformProjects.map(p => (
-                  <li key={p.title}>
-                    <Link to={p.to}>{p.title}</Link> — {p.role.toLowerCase()}.
-                  </li>
-                ))}
-              </ul>
-
-              <h3 id="related">Related projects</h3>
-              <ul className={styles.relatedList}>
-                {relatedProjects.map(p => (
-                  <li key={p.title}>
-                    <Link to={p.to}>{p.title}</Link> — {p.summary}
-                  </li>
-                ))}
-              </ul>
-            </Section>
-
           </article>
         </NetFoundryHorizontalSection>
+
+        <aside className={styles.ctaBand}>
+          <NetFoundryHorizontalSection className={styles.band}>
+            <div className={clsx('container', styles.ctaInner)}>
+              <div>
+                <h2>Start with a network, not a procurement cycle</h2>
+                <p>
+                  Provision a network on a trial and work through the{' '}
+                  <Link to={`${DOCS_BASE}platform/get-started/prereqs`}>get-started sequence</Link> — router, identity,
+                  service, policy, verify. If the questions are contractual rather than technical, talk to us instead.
+                </p>
+              </div>
+              <div className={styles.ctaActions}>
+                <a className={styles.ctaPrimary} href={TRIAL}>Start a free trial</a>
+                <a className={styles.ctaGhost} href={DEMO}>Talk to us</a>
+              </div>
+            </div>
+          </NetFoundryHorizontalSection>
+        </aside>
       </>
     </Layout>
   );
