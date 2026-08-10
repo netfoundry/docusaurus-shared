@@ -18,6 +18,7 @@ import {zrokDocsPluginConfig, zrokRedirects} from "./_remotes/zrok/website/docus
 import {onpremRedirects} from "./_remotes/selfhosted/docusaurus/docusaurus-plugin-onprem-docs.ts";
 import {platformDocsPluginConfig, platformRedirects} from "./_remotes/platform/docusaurus/docusaurus-plugin-platform-docs.ts";
 import {openzitiDocsPluginConfig, openzitiRedirects} from "./_remotes/openziti/docusaurus/docusaurus-plugin-openziti-docs.ts";
+import {redirects} from "./redirects.ts";
 import {dataconnectorDocsPluginConfig} from "./_remotes/data-connector/docusaurus/docusaurus-plugin-dataconnector-docs.ts";
 import {customerConnectDocsPluginConfig} from "./_remotes/customer-connect/docusaurus/docusaurus-plugin-customer-connect-docs.ts";
 
@@ -486,6 +487,7 @@ const config: Config = {
         build(BUILD_FLAGS.SELFHOSTED) && onpremRedirects(routeBase('selfhosted')),
         build(BUILD_FLAGS.ZROK) && zrokRedirects(routeBase('zrok')),
         build(BUILD_FLAGS.PLATFORM) && platformRedirects(routeBase('platform')),
+        redirects(routeBase),
         build(BUILD_FLAGS.OPENZITI) && ['@scalar/docusaurus', {
             id: 'edge-client',
             label: 'Edge Client API reference',
