@@ -118,6 +118,8 @@ const deploymentOptions = [
       'Managed version upgrades, including for routers you host yourself',
       'Automated configuration backups',
       'Infrastructure inventory, allocated IPs, and component health in the console',
+      'SCIM identity provisioning from Entra ID or Okta',
+      'IPsec bridging for existing site-to-site VPNs',
       'An uptime SLA on the network NetFoundry operates',
     ],
   },
@@ -169,15 +171,10 @@ const sharedCapabilities = [
   'Identities, services, policies, and posture checks',
   'High availability controllers',
   'Metrics, latency, and audit logging',
-  'SCIM identity provisioning, plus Active Directory and LDAP endpoint sync',
   'Third-party certificate authorities and BYO DNS for public-facing services',
   'Standard, FIPS-compliant, or pluggable cryptographic modes',
-  'Agentless reverse-proxy access where endpoint agents are not viable',
-  'Multiple networks from one console, with hierarchical RBAC',
   'APIs for the network model, metrics, and reporting',
-  'IPsec bridging for existing site-to-site VPNs',
   '24×7 support and production architecture guidance',
-  'IP indemnification against third-party intellectual property claims',
   'SOC 2 Type II audit reports and per-framework compliance guidance',
 ];
 
@@ -213,7 +210,7 @@ const included = [
       {label: 'SCIM identity provisioning', to: `${DOCS_BASE}platform/access-management/integrations/scim`},
       {label: 'APIs for infrastructure, network, and metrics', to: `${DOCS_BASE}platform/api-guides/`},
       {label: 'IPsec bridging for existing VPNs', to: `${DOCS_BASE}platform/core-components/ipsec-tunnelers`},
-      {label: 'SLA, support, indemnification, and audit reports', to: '#assurance'},
+      {label: 'SLA, support, and audit reports', to: '#assurance'},
     ],
   },
 ];
@@ -259,10 +256,11 @@ export default function CloudPlatformOverview(): JSX.Element {
               <span className={styles.eyebrow}>Overview</span>
               <h1>NetFoundry Platform</h1>
               <p className={styles.lede}>
-                NetFoundry provides a fully managed, production-ready <Link to={`${DOCS_BASE}openziti/intro`}>OpenZiti</Link>{' '}
-                network without requiring you to build or operate the underlying infrastructure. Your network is your
-                own: deploy controllers and routers dedicated to your organization, never shared with another customer,
-                across whichever cloud providers and regions you choose.
+                NetFoundry provides a fully managed, production-ready identity-first zero trust fabric based on{' '}
+                <Link to={`${DOCS_BASE}openziti/intro`}>OpenZiti</Link>, without requiring you to build or operate the
+                underlying infrastructure. Your network is your own: deploy controllers and routers dedicated to your
+                organization, never shared with another customer, across whichever cloud providers and regions you
+                choose.
               </p>
               <div className={styles.included}>
                 <span className={styles.includedTitle}>With the NetFoundry platform you get</span>
@@ -354,7 +352,7 @@ export default function CloudPlatformOverview(): JSX.Element {
                 Apache 2.0 disclaims warranty and liability, which is the correct posture for a licence and an
                 insufficient one for a procurement process. A NetFoundry subscription adds the contractual surface
                 around the same software: 24×7 support from the engineers who write it, an uptime SLA with service
-                credits on networks NetFoundry operates, IP indemnification, and data processing agreements.
+                credits on networks NetFoundry operates, and data processing agreements.
               </p>
               <p>
                 On compliance, what NetFoundry provides differs by framework — an audit report, a contractual
