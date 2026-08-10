@@ -112,24 +112,6 @@
 .body { padding: 2.5rem 0 4rem; }
 .article { width: 100%; }
 
-/* ------------------------------------------------------- openziti callout */
-
-.ozCallout {
-    display: flex; align-items: flex-start; gap: 1.1rem;
-    margin: 1.5rem 0 0; padding: 1.25rem 1.4rem;
-    border: 1px solid var(--ifm-color-success-lighter);
-    border-left: 4px solid var(--ifm-color-success);
-    border-radius: 8px;
-    background: var(--ifm-color-success-contrast-background);
-}
-.ozCalloutLogo { width: 46px; height: 46px; flex-shrink: 0; object-fit: contain; }
-.ozCalloutTag {
-    composes: mono;
-    display: block; margin-bottom: 0.35rem;
-    color: var(--ifm-color-success-darkest);
-}
-.ozCallout p { margin: 0; line-height: 1.7; }
-
 /* --------------------------------------------------------------- sections */
 
 .docSection { margin-top: 3rem; }

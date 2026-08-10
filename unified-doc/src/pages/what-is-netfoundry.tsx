@@ -95,6 +95,13 @@ const platformProjects = [
     role: 'Serve your own customers',
     summary: 'Deliver zero trust access to the people who buy from you, each tenant isolated from every other. White-label and vanity domain options for solution providers.',
   },
+  {
+    title: 'OpenZiti',
+    logo: `${IMG}/openziti-sm-logo.svg`,
+    to: `${DOCS_BASE}openziti/intro`,
+    role: 'The open source foundation',
+    summary: 'NetFoundry created and maintains OpenZiti, the Apache 2.0 project everything here is built on. Same overlay, same SDKs, same cryptography — the platform adds the operating.',
+  },
 ];
 
 /** Who operates the infrastructure. Both options are commercially supported NetFoundry products. */
@@ -238,8 +245,8 @@ const compliance = [
 export default function CloudPlatformOverview(): JSX.Element {
   return (
     <Layout
-      title="NetFoundry Cloud Platform"
-      description="Overview of the NetFoundry Cloud Platform: the management and orchestration layer for zero trust overlay networks built on OpenZiti, and an index of the documentation for each platform product."
+      title="NetFoundry Platform"
+      description="Overview of the NetFoundry Platform: the management and orchestration layer for zero trust overlay networks built on OpenZiti, and what each platform product is for."
     >
       <>
         {/* Full-bleed tint band; NetFoundryHorizontalSection inside aligns the content to the
@@ -248,7 +255,7 @@ export default function CloudPlatformOverview(): JSX.Element {
           <NetFoundryHorizontalSection className={styles.band}>
             <div className={clsx('container', styles.headerContent)}>
               <span className={styles.eyebrow}>Overview</span>
-              <h1>NetFoundry Cloud Platform</h1>
+              <h1>NetFoundry Platform</h1>
               <p className={styles.lede}>
                 NetFoundry provides a fully managed, production-ready <Link to={`${DOCS_BASE}openziti/intro`}>OpenZiti</Link>{' '}
                 network without requiring you to build or operate the underlying infrastructure. Your network is your
@@ -292,19 +299,6 @@ export default function CloudPlatformOverview(): JSX.Element {
                     <p>{p.summary}</p>
                   </CardLink>
                 ))}
-              </div>
-
-              <div className={styles.ozCallout}>
-                <img src={`${IMG}/openziti-sm-logo.svg`} alt="" className={styles.ozCalloutLogo} />
-                <div>
-                  <span className={styles.ozCalloutTag}>Open source foundation</span>
-                  <p>
-                    NetFoundry created and maintains <Link to={`${DOCS_BASE}openziti/intro`}>OpenZiti</Link>, the
-                    Apache 2.0 licensed project this platform is built on, and sponsors its development. The overlay,
-                    the SDKs, and the cryptography are the same in both. What the Cloud Platform adds is the operating:
-                    provisioning, upgrades, high availability, telemetry, support, and an SLA.
-                  </p>
-                </div>
               </div>
 
             </Section>
