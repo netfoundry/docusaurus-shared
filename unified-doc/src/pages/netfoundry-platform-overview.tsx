@@ -4,7 +4,7 @@ import Link from '@docusaurus/Link';
 import clsx from 'clsx';
 import {NetFoundryHorizontalSection} from '@netfoundry/docusaurus-theme/ui';
 import {DOCS_BASE} from '../generated/docsBase';
-import styles from './what-is-netfoundry.module.css';
+import styles from './netfoundry-platform-overview.module.css';
 
 const IMG = 'https://netfoundry.io/docs/img';
 const NF_LOGO = 'https://raw.githubusercontent.com/netfoundry/branding/refs/heads/main/images/svg/icon/netfoundry-icon-color.svg';
@@ -108,7 +108,8 @@ const platformProjects = [
 const deploymentOptions = [
   {
     title: 'NetFoundry Cloud',
-    to: `${DOCS_BASE}platform/intro`,
+    to: DEMO,
+    cta: 'Talk to us →',
     operator: 'Operated by NetFoundry',
     body: 'A hybrid SaaS model: NetFoundry manages the infrastructure, you own the network configuration and policies. Nothing is multi-tenant — a neighbour’s incident is not yours.',
     points: [
@@ -123,6 +124,7 @@ const deploymentOptions = [
   {
     title: 'NetFoundry Self-Hosted',
     to: `${DOCS_BASE}selfhosted/intro`,
+    cta: 'Read the docs →',
     operator: 'Operated by you, supported by us',
     body: 'The same stack and the same contractual guarantees, deployed into an environment you own — on-prem, air-gapped, or your own cloud accounts.',
     points: [
@@ -271,7 +273,13 @@ export default function CloudPlatformOverview(): JSX.Element {
                       <ul className={styles.includedList}>
                         {group.items.map(f => (
                           <li key={f.label}>
-                            <Link to={f.to}>{f.label}</Link>
+                            {/* Same-page jumps use a bare anchor. Docusaurus collects heading
+                                anchors from MDX metadata, which a .tsx page has none of, so
+                                onBrokenAnchors flags every <Link to="#..."> here even though the
+                                id renders. Raw anchors are not checked. */}
+                            {f.to.startsWith('#')
+                              ? <a href={f.to}>{f.label}</a>
+                              : <Link to={f.to}>{f.label}</Link>}
                           </li>
                         ))}
                       </ul>
@@ -318,7 +326,7 @@ export default function CloudPlatformOverview(): JSX.Element {
                     <ul className={styles.optionPoints}>
                       {o.points.map(pt => <li key={pt}>{pt}</li>)}
                     </ul>
-                    <span className={styles.optionMore}>Read the docs →</span>
+                    <span className={styles.optionMore}>{o.cta}</span>
                   </CardLink>
                 ))}
               </div>
@@ -412,7 +420,7 @@ export default function CloudPlatformOverview(): JSX.Element {
           <NetFoundryHorizontalSection className={styles.band}>
             <div className={clsx('container', styles.ctaInner)}>
               <div>
-                <h2>Start with a network, not a procurement cycle</h2>
+                <h2>Get started</h2>
                 <p>
                   Provision a network on a trial and work through the{' '}
                   <Link to={`${DOCS_BASE}platform/get-started/prereqs`}>get-started sequence</Link> — router, identity,
