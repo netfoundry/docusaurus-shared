@@ -5,6 +5,11 @@ on:
   push:
     branches: [main]
 
+# A burst of pushes to a branch would otherwise leave every superseded lint run to finish.
+concurrency:
+  group: lint-docs-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint:
     runs-on: ubuntu-latest
