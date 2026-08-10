@@ -1,0 +1,388 @@
+/* NetFoundry Cloud Platform overview.
+   Visual language is deliberately technical rather than promotional: monospace markers and labels,
+   spec strips, definition cards, and accented panels. Colors come from theme tokens so the page
+   follows light/dark without a second set of rules.
+
+   Content width comes from NetFoundryHorizontalSection, the theme's band primitive: it caps at
+   --ziti-max-width and centers, so this page lines up with the rest of the site. Two notes on
+   using it:
+
+   - It paints var(--nf-section-bg) itself, capped at --ziti-max-width. A full-bleed tint therefore
+     goes on the wrapping element, and the band sets --nf-section-bg: transparent so it does not
+     repaint a narrower rectangle on top.
+   - It centers its children (align-items: center), so a child needs width: 100% or it shrink-wraps
+     to its own content. Infima's .container supplies that, plus the site's content measure
+     (--ifm-container-width, widening to --ifm-container-width-xl above 1440px) and the horizontal
+     gutters — so the band's own inline padding is zeroed out and .container owns it. */
+
+.band { --nf-section-bg: transparent; padding-left: 0; padding-right: 0; }
+
+.mono {
+    font-family: var(--ifm-font-family-monospace);
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+}
+
+/* Whole-card links are draggable by default, so dragging across the copy starts a link-drag
+   instead of selecting it. Opt back into text selection wherever a card wraps prose. */
+.selectable {
+    user-select: text; -webkit-user-select: text;
+    -webkit-user-drag: none;
+}
+
+/* ----------------------------------------------------------- page header */
+
+.pageHeader {
+    position: relative;
+    width: 100%;
+    padding: 2.5rem 0 2rem;
+    background: var(--ifm-color-emphasis-100);
+    border-bottom: 1px solid var(--ifm-color-emphasis-200);
+    overflow: hidden;
+}
+/* Faint grid, clipped to the top-left, so the header has texture without becoming a hero. */
+.pageHeader::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(var(--ifm-color-emphasis-300) 1px, transparent 1px),
+        linear-gradient(90deg, var(--ifm-color-emphasis-300) 1px, transparent 1px);
+    background-size: 44px 44px;
+    opacity: 0.35;
+    mask-image: linear-gradient(105deg, #000 0%, transparent 55%);
+    -webkit-mask-image: linear-gradient(105deg, #000 0%, transparent 55%);
+    pointer-events: none;
+}
+.headerContent { position: relative; z-index: 1; width: 100%; }
+.eyebrow {
+    composes: mono;
+    display: inline-block;
+    margin-bottom: 0.55rem;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--ifm-color-emphasis-300);
+    border-radius: 4px;
+    color: var(--ifm-color-primary);
+}
+.pageHeader h1 {
+    margin: 0 0 0.85rem;
+    font-size: 2.6rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.025em;
+}
+.lede {
+    margin: 0 0 0.85rem;
+    color: var(--ifm-color-emphasis-800);
+    font-size: 1.1rem; line-height: 1.7;
+}
+/* What the managed platform includes. Each item jumps to the section that details it, so this
+   doubles as the page's table of contents. */
+.included {
+    margin-top: 1.5rem; padding: 1.15rem 1.35rem;
+    border: 1px solid var(--ifm-color-emphasis-300);
+    border-radius: 10px;
+    background: var(--ifm-background-color);
+}
+.includedTitle {
+    composes: mono;
+    display: block; margin-bottom: 0.85rem;
+    color: var(--ifm-color-emphasis-700);
+}
+.includedGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.bucket + .bucket { padding-left: 1.5rem; box-shadow: inset 1px 0 0 var(--ifm-color-emphasis-200); }
+.bucketTitle {
+    margin: 0 0 0.6rem;
+    color: var(--ifm-color-primary);
+    font-size: 0.95rem; font-weight: 700; letter-spacing: -0.01em;
+}
+.includedList { margin: 0; padding: 0; list-style: none; }
+.includedList li {
+    display: flex; align-items: baseline; gap: 0.5rem;
+    margin-bottom: 0.35rem;
+    font-size: 0.92rem; line-height: 1.5;
+}
+.includedList li::before {
+    content: '✓';
+    flex-shrink: 0;
+    color: var(--ifm-color-success);
+    font-weight: 800; font-size: 0.85rem;
+}
+.includedList a { color: var(--ifm-color-emphasis-800); text-decoration: none; }
+.includedList a:hover { color: var(--ifm-color-primary); text-decoration: underline; }
+
+/* ------------------------------------------------------------------ body */
+
+.body { padding: 2.5rem 0 4rem; }
+.article { width: 100%; }
+
+/* --------------------------------------------------------------- sections */
+
+.docSection { margin-top: 3rem; }
+.docSection:first-of-type { margin-top: 0; }
+.marker {
+    composes: mono;
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--ifm-color-emphasis-500);
+    letter-spacing: 0.16em;
+}
+.docSection > h2 {
+    margin: 0 0 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--ifm-color-emphasis-200);
+    font-size: 1.55rem;
+}
+
+/* ---------------------------------------------------------- feature items */
+
+.itemGrid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 0.25rem 1.75rem;
+    margin-top: 1.5rem;
+}
+.item {
+    padding: 0.9rem 0 0.9rem 1rem;
+    border-left: 2px solid var(--ifm-color-emphasis-200);
+    transition: border-color 0.2s ease;
+}
+.item:hover { border-left-color: var(--ifm-color-primary); }
+.item h4 { margin: 0 0 0.3rem; font-size: 0.98rem; font-weight: 700; letter-spacing: -0.01em; }
+.item p { margin: 0; color: var(--ifm-color-emphasis-700); font-size: 0.9rem; line-height: 1.6; }
+
+/* --------------------------------------------------------- decision guide */
+
+.choosing { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 1.75rem; }
+.choice + .choice { padding-left: 1.5rem; box-shadow: inset 1px 0 0 var(--ifm-color-emphasis-200); }
+.choice h4 {
+    margin: 0 0 0.6rem;
+    font-size: 0.95rem; font-weight: 700; letter-spacing: -0.01em;
+}
+.choice ul { margin: 0; padding-left: 1.1rem; }
+.choice li {
+    margin-bottom: 0.4rem;
+    color: var(--ifm-color-emphasis-700); font-size: 0.9rem; line-height: 1.55;
+}
+
+/* ------------------------------------------------- shared across options */
+
+/* What both deployment options carry, so the cards above only state differences. */
+.shared {
+    margin-top: 1.25rem; padding: 1.1rem 1.3rem;
+    border: 1px dashed var(--ifm-color-emphasis-300);
+    border-radius: 10px;
+}
+.sharedTitle {
+    composes: mono;
+    display: block; margin-bottom: 0.75rem;
+    color: var(--ifm-color-emphasis-700);
+}
+.sharedList {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: 0.35rem 1.75rem;
+    margin: 0; padding: 0; list-style: none;
+}
+.sharedList li {
+    display: flex; align-items: baseline; gap: 0.5rem;
+    color: var(--ifm-color-emphasis-800); font-size: 0.9rem; line-height: 1.5;
+}
+.sharedList li::before {
+    content: '✓';
+    flex-shrink: 0;
+    color: var(--ifm-color-success);
+    font-weight: 800; font-size: 0.8rem;
+}
+
+/* Subheads inside a section need clear separation from the block above them. */
+.subhead { margin-top: 3rem; }
+
+/* Compliance grouped by what NetFoundry provides. The tiers are not interchangeable, so each one
+   is labeled and carries its own qualifier rather than being flattened into one chip row. */
+.complianceList { margin: 1.25rem 0 0; }
+.complianceGroup {
+    padding: 0.9rem 0 0.9rem 1rem;
+    border-left: 2px solid var(--ifm-color-emphasis-300);
+}
+.complianceGroup + .complianceGroup { margin-top: 0.5rem; }
+.complianceGroup dt { margin: 0; }
+.complianceGroup dd { margin: 0; }
+.complianceTier {
+    composes: mono;
+    display: block; margin-bottom: 0.2rem;
+    color: var(--ifm-color-primary);
+}
+.complianceNote {
+    display: block;
+    color: var(--ifm-color-emphasis-700);
+    font-size: 0.85rem; line-height: 1.5;
+}
+
+.chipRow { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.75rem; }
+.chip {
+    padding: 0.32rem 0.75rem;
+    border: 1px solid var(--ifm-color-emphasis-300);
+    border-radius: 999px;
+    background: var(--ifm-background-surface-color);
+    color: var(--ifm-color-emphasis-800);
+    font-size: 0.8rem; font-weight: 600; white-space: nowrap;
+}
+
+/* ---------------------------------------------------------- project grid */
+
+/* Fixed at three so the card order controls which products share a row. */
+.projectGrid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem;
+    margin: 1.5rem 0 0;
+}
+/* Depth rather than a colored edge: the accent bar read as decoration, and primary is purple here. */
+.projectCard {
+    composes: selectable;
+    display: block; padding: 1.05rem 1.25rem 0.9rem;
+    border: 1px solid var(--ifm-color-emphasis-200);
+    border-radius: 10px;
+    background: var(--ifm-background-surface-color);
+    box-shadow: 0 1px 2px rgba(2, 6, 23, 0.06), 0 4px 12px rgba(2, 6, 23, 0.05);
+    text-decoration: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.projectCard:hover {
+    text-decoration: none; transform: translateY(-2px);
+    border-color: var(--ifm-color-emphasis-400);
+    box-shadow: 0 2px 4px rgba(2, 6, 23, 0.08), 0 10px 28px rgba(2, 6, 23, 0.12);
+}
+/* States the job the product does, above its name. */
+.projectRole {
+    composes: mono;
+    display: block; margin-bottom: 0.5rem;
+    color: var(--ifm-color-emphasis-600); font-size: 0.65rem;
+}
+.projectHeader { display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.45rem; }
+.projectLogo { width: 26px; height: 26px; flex-shrink: 0; object-fit: contain; }
+/* --ifm-color-primary, not --ifm-link-color: the latter is pink in light mode. */
+.projectHeader h3 {
+    margin: 0;
+    color: var(--ifm-color-primary);
+    font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em;
+}
+.projectCard p {
+    margin: 0;
+    color: var(--ifm-color-emphasis-700);
+    font-size: 0.9rem; line-height: 1.6;
+}
+
+/* Managed vs self-hosted. */
+.optionRow {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem;
+    margin-top: 1.25rem;
+}
+.option {
+    composes: selectable;
+    display: flex; flex-direction: column;
+    padding: 1.05rem 1.2rem 0.9rem;
+    border: 1px solid var(--ifm-color-emphasis-200);
+    border-radius: 10px;
+    background: var(--ifm-background-surface-color);
+    box-shadow: 0 1px 2px rgba(2, 6, 23, 0.06), 0 4px 12px rgba(2, 6, 23, 0.05);
+    text-decoration: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.option:hover {
+    text-decoration: none; transform: translateY(-2px);
+    border-color: var(--ifm-color-emphasis-400);
+    box-shadow: 0 2px 4px rgba(2, 6, 23, 0.08), 0 10px 28px rgba(2, 6, 23, 0.12);
+}
+.optionOperator {
+    composes: mono;
+    display: block; margin-bottom: 0.5rem;
+    color: var(--ifm-color-emphasis-600); font-size: 0.65rem;
+}
+.optionMore {
+    margin-top: 0.85rem;
+    color: var(--ifm-color-primary);
+    font-size: 0.8rem; font-weight: 700;
+    opacity: 0; transition: opacity 0.2s ease;
+}
+.option:hover .optionMore { opacity: 1; }
+.option h4 {
+    display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+    margin: 0 0 0.35rem;
+    color: var(--ifm-color-primary);
+    font-size: 1rem; font-weight: 700; letter-spacing: -0.01em;
+}
+.option p {
+    margin: 0;
+    color: var(--ifm-color-emphasis-700); font-size: 0.88rem; line-height: 1.55;
+}
+.optionPoints {
+    flex-grow: 1;
+    margin: 0.9rem 0 0; padding: 0; list-style: none;
+}
+.optionPoints li {
+    display: flex; align-items: baseline; gap: 0.5rem;
+    margin-bottom: 0.4rem;
+    color: var(--ifm-color-emphasis-800); font-size: 0.88rem; line-height: 1.5;
+}
+.optionPoints li::before {
+    content: '✓';
+    flex-shrink: 0;
+    color: var(--ifm-color-success);
+    font-weight: 800; font-size: 0.8rem;
+}
+
+/* --------------------------------------------------------- closing action */
+
+.ctaBand {
+    width: 100%;
+    padding: 2.5rem 0 3rem;
+    background: var(--ifm-color-emphasis-100);
+    border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+.ctaInner {
+    display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+    flex-wrap: wrap;
+}
+.ctaInner h2 {
+    margin: 0 0 0.4rem;
+    font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em;
+}
+.ctaInner p {
+    max-width: 42rem; margin: 0;
+    color: var(--ifm-color-emphasis-700); font-size: 0.95rem; line-height: 1.65;
+}
+.ctaActions { display: flex; gap: 0.65rem; flex-wrap: wrap; }
+.ctaPrimary {
+    display: inline-flex; align-items: center; padding: 0.6rem 1.4rem;
+    border: 2px solid var(--ifm-color-primary); border-radius: 8px;
+    background: var(--ifm-color-primary);
+    color: #fff; font-size: 0.9rem; font-weight: 700; text-decoration: none; white-space: nowrap;
+    transition: all 0.2s ease;
+}
+.ctaPrimary:hover {
+    background: var(--ifm-color-primary-dark); border-color: var(--ifm-color-primary-dark);
+    color: #fff; text-decoration: none; transform: translateY(-2px);
+}
+.ctaGhost {
+    display: inline-flex; align-items: center; padding: 0.6rem 1.4rem;
+    border: 2px solid var(--ifm-color-emphasis-400); border-radius: 8px;
+    background: transparent;
+    color: var(--ifm-color-primary); font-size: 0.9rem; font-weight: 700;
+    text-decoration: none; white-space: nowrap;
+    transition: all 0.2s ease;
+}
+.ctaGhost:hover {
+    border-color: var(--ifm-color-primary); text-decoration: none; transform: translateY(-2px);
+}
+
+/* ------------------------------------------------------------ responsive */
+
+@media (max-width: 996px) {
+    .pageHeader h1 { font-size: 1.9rem; }
+    .lede { font-size: 1rem; }
+    .docSection > h2 { font-size: 1.3rem; }
+    .includedGrid { grid-template-columns: 1fr; gap: 1rem; }
+    .optionRow, .projectGrid { grid-template-columns: 1fr; }
+    .choosing { grid-template-columns: 1fr; gap: 1rem; }
+    .choice + .choice {
+        padding-left: 0; padding-top: 1rem;
+        box-shadow: none; border-top: 1px solid var(--ifm-color-emphasis-200);
+    }
+    .bucket + .bucket {
+        padding-left: 0; padding-top: 1rem;
+        box-shadow: none; border-top: 1px solid var(--ifm-color-emphasis-200);
+    }
+}
