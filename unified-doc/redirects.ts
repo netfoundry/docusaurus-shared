@@ -11,6 +11,11 @@ import type {PluginConfig} from '@docusaurus/types';
  * `routeBase` is 'docs/<name>' on Vercel previews and '<name>' elsewhere, so callers pass the
  * prefix through the config's routeBase() helper to keep both builds consistent.
  */
+/** Pages that changed name, as [old, current]. Bare page names — routeBase supplies the prefix. */
+const RENAMED: [from: string, to: string][] = [
+    // ['what-is-netfoundry', 'netfoundry-platform-overview'],
+];
+
 export function redirects(routeBase: (name: string) => string): PluginConfig {
     const path = (name: string) => '/' + routeBase(name);
 
@@ -18,10 +23,7 @@ export function redirects(routeBase: (name: string) => string): PluginConfig {
         '@docusaurus/plugin-client-redirects',
         {
             id: 'unified-doc-redirects',
-            redirects: [
-                // Renamed 2026-08-10: the page covers the whole platform, not the company.
-                {from: path('what-is-netfoundry'), to: path('netfoundry-platform-overview')},
-            ],
+            redirects: RENAMED.map(([from, to]) => ({from: path(from), to: path(to)})),
         },
     ];
 }

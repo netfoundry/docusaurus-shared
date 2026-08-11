@@ -71,7 +71,7 @@ const platformProjects = [
     logo: NF_LOGO,
     to: `${DOCS_BASE}platform/api-guides/`,
     role: 'Automate the network',
-    summary: 'The same surface the console drives, for pipelines and tooling: provisioning, the network model, metrics, and reporting.',
+    summary: 'Use the same API that we do to automate provisioning, the network model, metrics, and reporting.',
   },
   {
     title: 'Data Connector',
@@ -100,7 +100,7 @@ const platformProjects = [
     logo: `${IMG}/openziti-sm-logo.svg`,
     to: `${DOCS_BASE}openziti/intro`,
     role: 'The open source foundation',
-    summary: 'NetFoundry created and maintains OpenZiti, the Apache 2.0 project everything here is built on. Same overlay, same SDKs, same cryptography — the platform adds the operating.',
+    summary: 'NetFoundry created and maintains OpenZiti, the Apache 2.0 project everything here is built on. You get the same overlay, the same SDKs, and the same cryptography, with NetFoundry running and supporting it.',
   },
 ];
 
@@ -111,13 +111,15 @@ const deploymentOptions = [
     to: DEMO,
     cta: 'Talk to us →',
     operator: 'Operated by NetFoundry',
-    body: 'A hybrid SaaS model: NetFoundry manages the infrastructure, you own the network configuration and policies. Nothing is multi-tenant — a neighbour’s incident is not yours.',
+    body: 'A hybrid SaaS model: NetFoundry manages the infrastructure, and you own the network configuration and policies. Your network is dedicated to you rather than shared with other customers.',
     points: [
       'One-click controllers and routers on AWS, Azure, GCP, and OCI',
-      'A dedicated controller, data plane, and PKI — never shared with another customer',
+      'Your own controller, data plane, and PKI',
       'Managed version upgrades, including for routers you host yourself',
       'Automated configuration backups',
       'Infrastructure inventory, allocated IPs, and component health in the console',
+      'SCIM identity provisioning from Entra ID or Okta',
+      'IPsec bridging for existing site-to-site VPNs',
       'An uptime SLA on the network NetFoundry operates',
     ],
   },
@@ -134,7 +136,7 @@ const deploymentOptions = [
       'You choose the platform, the sizing, and the upgrade schedule',
       'Production installers, bundled and packaged for supportability',
       'Logs, OS metrics, Ziti metrics, and stream integration included',
-      'Optional revocable remote access, so we can troubleshoot or upgrade from inside',
+      'Optional remote access that you grant and revoke, so NetFoundry can troubleshoot or run an upgrade from inside the isolated network',
     ],
   },
 ];
@@ -169,15 +171,10 @@ const sharedCapabilities = [
   'Identities, services, policies, and posture checks',
   'High availability controllers',
   'Metrics, latency, and audit logging',
-  'SCIM identity provisioning, plus Active Directory and LDAP endpoint sync',
   'Third-party certificate authorities and BYO DNS for public-facing services',
   'Standard, FIPS-compliant, or pluggable cryptographic modes',
-  'Agentless reverse-proxy access where endpoint agents are not viable',
-  'Multiple networks from one console, with hierarchical RBAC',
   'APIs for the network model, metrics, and reporting',
-  'IPsec bridging for existing site-to-site VPNs',
   '24×7 support and production architecture guidance',
-  'IP indemnification against third-party intellectual property claims',
   'SOC 2 Type II audit reports and per-framework compliance guidance',
 ];
 
@@ -213,7 +210,7 @@ const included = [
       {label: 'SCIM identity provisioning', to: `${DOCS_BASE}platform/access-management/integrations/scim`},
       {label: 'APIs for infrastructure, network, and metrics', to: `${DOCS_BASE}platform/api-guides/`},
       {label: 'IPsec bridging for existing VPNs', to: `${DOCS_BASE}platform/core-components/ipsec-tunnelers`},
-      {label: 'SLA, support, indemnification, and audit reports', to: '#assurance'},
+      {label: 'SLA, support, and audit reports', to: '#assurance'},
     ],
   },
 ];
@@ -259,10 +256,11 @@ export default function CloudPlatformOverview(): JSX.Element {
               <span className={styles.eyebrow}>Overview</span>
               <h1>NetFoundry Platform</h1>
               <p className={styles.lede}>
-                NetFoundry provides a fully managed, production-ready <Link to={`${DOCS_BASE}openziti/intro`}>OpenZiti</Link>{' '}
-                network without requiring you to build or operate the underlying infrastructure. Your network is your
-                own: deploy controllers and routers dedicated to your organization, never shared with another customer,
-                across whichever cloud providers and regions you choose.
+                NetFoundry provides a fully managed, production-ready identity-first zero trust fabric based on{' '}
+                <Link to={`${DOCS_BASE}openziti/intro`}>OpenZiti</Link>, without requiring you to build or operate the
+                underlying infrastructure. Your network is your own: deploy controllers and routers dedicated to your
+                organization, never shared with another customer, across whichever cloud providers and regions you
+                choose.
               </p>
               <div className={styles.included}>
                 <span className={styles.includedTitle}>With the NetFoundry platform you get</span>
@@ -354,7 +352,7 @@ export default function CloudPlatformOverview(): JSX.Element {
                 Apache 2.0 disclaims warranty and liability, which is the correct posture for a licence and an
                 insufficient one for a procurement process. A NetFoundry subscription adds the contractual surface
                 around the same software: 24×7 support from the engineers who write it, an uptime SLA with service
-                credits on networks NetFoundry operates, IP indemnification, and data processing agreements.
+                credits on networks NetFoundry operates, and data processing agreements.
               </p>
               <p>
                 On compliance, what NetFoundry provides differs by framework — an audit report, a contractual
