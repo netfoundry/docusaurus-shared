@@ -71,7 +71,7 @@ const platformProjects = [
     logo: NF_LOGO,
     to: `${DOCS_BASE}platform/api-guides/`,
     role: 'Automate the network',
-    summary: 'The same surface the console drives, for pipelines and tooling: provisioning, the network model, metrics, and reporting.',
+    summary: 'Use the same API that we do to automate provisioning, the network model, metrics, and reporting.',
   },
   {
     title: 'Data Connector',
@@ -100,7 +100,7 @@ const platformProjects = [
     logo: `${IMG}/openziti-sm-logo.svg`,
     to: `${DOCS_BASE}openziti/intro`,
     role: 'The open source foundation',
-    summary: 'NetFoundry created and maintains OpenZiti, the Apache 2.0 project everything here is built on. Same overlay, same SDKs, same cryptography — the platform adds the operating.',
+    summary: 'NetFoundry created and maintains OpenZiti, the Apache 2.0 project everything here is built on. You get the same overlay, the same SDKs, and the same cryptography, with NetFoundry running and supporting it.',
   },
 ];
 
@@ -111,10 +111,10 @@ const deploymentOptions = [
     to: DEMO,
     cta: 'Talk to us →',
     operator: 'Operated by NetFoundry',
-    body: 'A hybrid SaaS model: NetFoundry manages the infrastructure, you own the network configuration and policies. Nothing is multi-tenant — a neighbour’s incident is not yours.',
+    body: 'A hybrid SaaS model: NetFoundry manages the infrastructure, and you own the network configuration and policies. Your network is dedicated to you rather than shared with other customers.',
     points: [
       'One-click controllers and routers on AWS, Azure, GCP, and OCI',
-      'A dedicated controller, data plane, and PKI — never shared with another customer',
+      'Your own controller, data plane, and PKI',
       'Managed version upgrades, including for routers you host yourself',
       'Automated configuration backups',
       'Infrastructure inventory, allocated IPs, and component health in the console',
@@ -136,7 +136,7 @@ const deploymentOptions = [
       'You choose the platform, the sizing, and the upgrade schedule',
       'Production installers, bundled and packaged for supportability',
       'Logs, OS metrics, Ziti metrics, and stream integration included',
-      'Optional revocable remote access, so we can troubleshoot or upgrade from inside',
+      'Optional remote access that you grant and revoke, so NetFoundry can troubleshoot or run an upgrade from inside the isolated network',
     ],
   },
 ];
