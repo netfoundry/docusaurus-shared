@@ -16,9 +16,6 @@ NetFoundry docs are a direct reflection of the brand's intelligence and reliabil
 style make docs easier to read, faster to scan, and more trustworthy. This skill packages that style guide as a
 checklist to apply while **writing** new content and while **reviewing** existing content in this repo.
 
-Note: [.markdownlint.yaml](../../../.markdownlint.yaml) at the repo root already enforces some mechanical
-Markdown rules (heading increments, list style, and so on). This skill covers everything a linter can't check:
-tone, structure, word choice, and judgment calls.
 
 ## How to use this skill
 
