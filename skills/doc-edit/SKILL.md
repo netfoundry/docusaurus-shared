@@ -16,7 +16,6 @@ NetFoundry docs are a direct reflection of the brand's intelligence and reliabil
 style make docs easier to read, faster to scan, and more trustworthy. This skill packages that style guide as a
 checklist to apply while **writing** new content and while **reviewing** existing content in this repo.
 
-
 ## How to use this skill
 
 - **Writing a new page:** work through "Structure and organization" first to pick the right Diátaxis category,
