@@ -13,7 +13,7 @@ top-level key and option.
 A complete config file looks like this:
 
 ```yaml
-share_token: "my-gateway"    # optional — see Persistent shares
+share_token: "my-gateway"    # optional, see Persistent shares
 
 aggregator:
   name: "my-gateway"
