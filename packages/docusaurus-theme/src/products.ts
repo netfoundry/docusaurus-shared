@@ -15,7 +15,8 @@ export type ProductId =
   | 'dataconnector'
   | 'zlan'
   | 'openziti'
-  | 'zrok';
+  | 'zrok'
+  | 'ziticni';
 
 export interface Product {
   id: ProductId;
@@ -92,13 +93,23 @@ export const PRODUCTS: Record<ProductId, Product> = {
     logoDark: `${IMG}/zrok-1.0.0-rocket-green.svg`,
     description: 'Secure peer-to-peer sharing built on OpenZiti.',
   },
+  ziticni: {
+    id: 'ziticni',
+    label: 'ziti-cni',
+    // Draft only — ziti-cni's docs aren't cloned into unified-doc's build yet
+    // (see build-docs.mjs). Once that lands, drop the override below so this
+    // resolves through linkFor()/DOCS_BASE like every other product instead.
+    path: 'ziti-cni/intro',
+    logo: NF_LOGO,
+    description: 'Kubernetes CNI plugin for zero-trust pod networking on OpenZiti.',
+  },
 };
 
 /** Visual layout of the picker -- order here = order on screen. */
 const PICKER_LAYOUT: { header: string; items: ProductId[] }[] = [
   { header: 'Cloud SaaS',              items: ['console',    'customerconnect', 'dataconnector', 'frontdoor'] },
   { header: 'Self-Hosted Licensed',    items: ['selfhosted', 'zlan']                                          },
-  { header: 'Self-Hosted Open Source', items: ['openziti',   'zrok']                                          },
+  { header: 'Self-Hosted Open Source', items: ['openziti',   'zrok', 'ziticni']                                },
 ];
 
 export interface PickerLink {
@@ -157,6 +168,19 @@ export const openzitiLinkAbs:        PickerLink = linkFor('openziti',        DOC
 export const zrokLinkAbs:            PickerLink = linkFor('zrok',            DOCS_BASE);
 
 /**
+ * ziti-cni is not yet cloned into unified-doc's build (build-docs.mjs has no
+ * --ziti-cni-branch flag / _remotes entry for it), so `linkFor('ziticni', ...)`
+ * would point at a path that 404s. Until that follow-up lands, both flavours
+ * point at the draft docs branch directly:
+ * https://github.com/netfoundry/ziti-cni/tree/lipscomb-cni-docs-draft/docusaurus
+ * (PR: https://github.com/netfoundry/ziti-cni/pull/8).
+ */
+const ZITICNI_DRAFT_URL =
+  'https://github.com/netfoundry/ziti-cni/tree/lipscomb-cni-docs-draft/docusaurus';
+export const ziticniLink:    PickerLink = { ...linkFor('ziticni', '/docs'), to: ZITICNI_DRAFT_URL };
+export const ziticniLinkAbs: PickerLink = { ...linkFor('ziticni', DOCS_BASE), to: ZITICNI_DRAFT_URL };
+
+/**
  * Picker columns for the unified docs site at netfoundry.io/docs.
  * Every link is a relative `/docs/<path>` so navigation stays in-site.
  *
@@ -166,7 +190,7 @@ export const zrokLinkAbs:            PickerLink = linkFor('zrok',            DOC
 export const unifiedPickerColumns: PickerColumn[] = [
   { header: 'Cloud SaaS',              links: [consoleLink,    customerconnectLink, dataconnectorLink, frontdoorLink] },
   { header: 'Self-Hosted Licensed',    links: [selfhostedLink, zlanLink]                                              },
-  { header: 'Self-Hosted Open Source', links: [openzitiLink,   zrokLink]                                              },
+  { header: 'Self-Hosted Open Source', links: [openzitiLink,   zrokLink, ziticniLink]                                 },
 ];
 
 /**
@@ -176,5 +200,5 @@ export const unifiedPickerColumns: PickerColumn[] = [
 export const subsitePickerColumns: PickerColumn[] = [
   { header: 'Cloud SaaS',              links: [consoleLinkAbs,    customerconnectLinkAbs, dataconnectorLinkAbs, frontdoorLinkAbs] },
   { header: 'Self-Hosted Licensed',    links: [selfhostedLinkAbs, zlanLinkAbs]                                                    },
-  { header: 'Self-Hosted Open Source', links: [openzitiLinkAbs,   zrokLinkAbs]                                                    },
+  { header: 'Self-Hosted Open Source', links: [openzitiLinkAbs,   zrokLinkAbs, ziticniLinkAbs]                                    },
 ];
