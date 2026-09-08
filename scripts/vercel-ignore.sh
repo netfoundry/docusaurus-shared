@@ -23,11 +23,14 @@ fi
 
 git fetch origin main --depth=100
 
-if git diff --quiet origin/main...HEAD -- "$WATCH_PATH"; then
-  echo "No changes under $WATCH_PATH vs origin/main -- skipping build."
+# Every project's build also depends on @netfoundry/docusaurus-theme, so a
+# change there is relevant regardless of which single path a given project
+# was told to watch.
+if git diff --quiet origin/main...HEAD -- "$WATCH_PATH" packages/docusaurus-theme; then
+  echo "No changes under $WATCH_PATH or packages/docusaurus-theme vs origin/main -- skipping build."
   exit 0
 else
-  echo "Changes detected under $WATCH_PATH vs origin/main -- building."
+  echo "Changes detected under $WATCH_PATH or packages/docusaurus-theme vs origin/main -- building."
   exit 1
 fi
 
