@@ -21,6 +21,7 @@ import {openzitiDocsPluginConfig, openzitiRedirects} from "./_remotes/openziti/d
 import {redirects} from "./redirects.ts";
 import {dataconnectorDocsPluginConfig} from "./_remotes/data-connector/docusaurus/docusaurus-plugin-dataconnector-docs.ts";
 import {customerConnectDocsPluginConfig} from "./_remotes/customer-connect/docusaurus/docusaurus-plugin-customer-connect-docs.ts";
+import {zitiCniDocsPluginConfig} from "./_remotes/ziti-cni/docusaurus/docusaurus-plugin-ziti-cni-docs.ts";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const frontdoor = `./_remotes/frontdoor`;
@@ -31,6 +32,7 @@ const zlan = `./_remotes/zlan`;
 const platform = `./_remotes/platform`;
 const dataConnector = `./_remotes/data-connector`;
 const customerConnect = `./_remotes/customer-connect`;
+const ziticni = `./_remotes/ziti-cni`;
 const llmGateway = `./docs/llm-gateway`;
 const mcpGateway = `./docs/mcp-gateway`;
 
@@ -44,7 +46,7 @@ function routeBase(name: string) {
     return isVercel ? `docs/${name}` : name;
 }
 
-const buildMask = parseInt(process.env.DOCUSAURUS_BUILD_MASK ?? "0x3FF", 16);
+const buildMask = parseInt(process.env.DOCUSAURUS_BUILD_MASK ?? "0x7FF", 16);
 
 const BUILD_FLAGS = {
     NONE:           0x0,
@@ -58,6 +60,7 @@ const BUILD_FLAGS = {
     LLM_GATEWAY:        0x80,
     MCP_GATEWAY:        0x100,
     CUSTOMER_CONNECT:   0x200,
+    ZITICNI:            0x400,
 };
 
 function build(flag: number) {
@@ -119,6 +122,7 @@ const REMARK_MAPPINGS = [
     { from: '@llmgatewaydocs', to: `${docsBase}llm-gateway`},
     { from: '@mcpgatewaydocs', to: `${docsBase}mcp-gateway`},
     { from: '@customerconnectdocs', to: `${docsBase}customer-connect`},
+    { from: '@ziticnidocs', to: `${docsBase}ziti-cni`},
     { from: '@static', to: docsBase},
     { from: '/openziti',   to: `${docsBase}${routeBase('openziti')}`   },
     { from: '/frontdoor',  to: `${docsBase}${routeBase('frontdoor')}`  },
@@ -127,6 +131,7 @@ const REMARK_MAPPINGS = [
     { from: '/zlan',       to: `${docsBase}${routeBase('zlan')}`       },
     { from: '/platform',   to: `${docsBase}${routeBase('platform')}`   },
     { from: '/dataconnector', to: `${docsBase}${routeBase('dataconnector')}` },
+    { from: '/ziti-cni',   to: `${docsBase}${routeBase('ziti-cni')}`   },
 ];
 
 console.log("CANONICAL URL          : " + cfg.docusaurus.url);
@@ -294,6 +299,7 @@ const config: Config = {
         '_remotes/zlan/docusaurus/static/',
         '_remotes/platform/docusaurus/static/',
         '_remotes/customer-connect/docusaurus/static/',
+        '_remotes/ziti-cni/docusaurus/static/',
         `${zrokRoot}/static/`,
         `${zrokRoot}/docs/images`
     ],
@@ -353,6 +359,7 @@ const config: Config = {
                                 '@platform': path.resolve(__dirname, `${platform}/docusaurus`),
                                 '@dataconnector': path.resolve(__dirname, `${dataConnector}/docusaurus`),
                                 '@customerconnectdocs': path.resolve(__dirname, `${customerConnect}/docusaurus`),
+                                '@ziticni': path.resolve(__dirname, `${ziticni}/docusaurus`),
                             },
                         },
                         module: {
@@ -377,6 +384,7 @@ const config: Config = {
         build(BUILD_FLAGS.PLATFORM) && ['@docusaurus/plugin-content-pages',{id: `platform-pages`, path: `${platform}/docusaurus/src/pages`, routeBasePath: `/${routeBase('platform')}`}],
         build(BUILD_FLAGS.DATA_CONNECTOR) && ['@docusaurus/plugin-content-pages',{id: `dataconnector-pages`, path: `${dataConnector}/docusaurus/src/pages`, routeBasePath: `/${routeBase('dataconnector')}`}],
         build(BUILD_FLAGS.CUSTOMER_CONNECT) && ['@docusaurus/plugin-content-pages',{id: `customer-connect-pages`, path: `${customerConnect}/docusaurus/src/pages`, routeBasePath: `/${routeBase('customer-connect')}`}],
+        build(BUILD_FLAGS.ZITICNI) && ['@docusaurus/plugin-content-pages',{id: `ziticni-pages`, path: `${ziticni}/docusaurus/src/pages`, routeBasePath: `/${routeBase('ziti-cni')}`}],
         build(BUILD_FLAGS.ZROK) && extendDocsPlugins(zrokDocsPluginConfig(zrokRoot, REMARK_MAPPINGS, routeBase('zrok'))),
         build(BUILD_FLAGS.SELFHOSTED) && [
             '@docusaurus/plugin-content-docs',
@@ -446,6 +454,13 @@ const config: Config = {
             `${customerConnect}/docusaurus`,
             REMARK_MAPPINGS,
             routeBase('customer-connect'),
+        ),
+        build(BUILD_FLAGS.ZITICNI) && extendDocsPlugins(
+            zitiCniDocsPluginConfig(
+                `${ziticni}/docusaurus`,
+                REMARK_MAPPINGS,
+                routeBase('ziti-cni'),
+            ),
         ),
         build(BUILD_FLAGS.LLM_GATEWAY) && [
             '@docusaurus/plugin-content-docs',
