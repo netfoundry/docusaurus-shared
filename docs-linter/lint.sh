@@ -61,7 +61,7 @@ MD_CLEAN=$(mktemp)
 echo "🎯 Gathering files from '$TARGET_DIR'..."
 
 find "$TARGET_DIR" -type f \( -name "*.md" -o -name "*.mdx" \) \
-    | grep -vE "/(node_modules|versioned_docs)/" \
+    | grep -vE "/([^/]*_)?(node_modules|versioned_docs)/" \
     | grep -v "/_" \
     > "$LIST_FILE"
 
