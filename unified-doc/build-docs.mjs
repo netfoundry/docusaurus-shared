@@ -67,6 +67,7 @@ const GIT = "git";
 const YARN = isWin ? "yarn.cmd" : "yarn";
 const VALE = "vale";
 const MDLINT = isWin ? "markdownlint.cmd" : "markdownlint";
+const MDX2VAST = isWin ? "mdx2vast.cmd" : "mdx2vast";
 
 // On Windows, markdownlint runs through cmd.exe (~8191-char command-line cap),
 // so lint files in small batches there; larger batches elsewhere.
@@ -142,7 +143,7 @@ const branches = {
   platform       : "main",
   dataConnector  : "main",
   customerConnect: "main",
-  zitiCni        : "main",
+  zitiCni        : "lipscomb-cni-docs-draft",
 };
 const BRANCH_FLAG = {
   "--ziti-doc-branch": "zitiDoc",
@@ -414,8 +415,31 @@ function cleanLog(s) {
     .join("\n");
 }
 
+// Report the resolved version of each linting tool. Vale shells out to mdx2vast
+// for .mdx input; when that binary is missing Vale keeps going and emits one
+// "E100 [lintMDX] Runtime error" per file, so the .mdx corpus goes unlinted
+// without anything in the summary saying so.
+function toolcheck() {
+  console.log("🔧 Toolcheck...");
+  const tools = [
+    [VALE, "install from https://vale.sh"],
+    [MDLINT, "npm install -g markdownlint-cli"],
+    [MDX2VAST, "npm install -g mdx2vast -- without it every .mdx file is skipped"],
+  ];
+  for (const [cmd, note] of tools) {
+    const r = capture(cmd, ["--version"]);
+    if (r.error || r.status !== 0) {
+      console.log(`  ⚠️  ${cmd}: NOT FOUND -- ${note}`);
+      continue;
+    }
+    const version = (r.stdout || "").split(/\r?\n/)[0].trim();
+    console.log(`  ✅ ${cmd}: ${version || "unknown"}`);
+  }
+}
+
 function lintDocs() {
   console.log("🔍 Starting Quality Checks...");
+  toolcheck();
 
   const potentialTargets = [
     join(remotesDir, "zlan", "docusaurus", "docs"),

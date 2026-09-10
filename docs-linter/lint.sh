@@ -16,6 +16,40 @@ if [ ! -d "$TARGET_DIR" ]; then
     exit 1
 fi
 
+# --- TOOLCHECK ---
+# Vale shells out to mdx2vast for every .mdx file. When that binary is missing,
+# Vale does not fail the run -- it emits one "E100 [lintMDX] Runtime error" per
+# file and keeps going, so every .mdx goes unlinted while the summary still
+# looks healthy. Report what is actually installed before linting anything.
+echo "🔧 Toolcheck..."
+
+check_tool() {
+    local name="$1" required="$2" note="$3"
+    local path version
+    path=$(command -v "$name" 2>/dev/null)
+    if [ -z "$path" ]; then
+        if [ "$required" = "required" ]; then
+            echo "  ❌ $name: NOT FOUND -- $note"
+            MISSING_REQUIRED=1
+        else
+            echo "  ⚠️  $name: NOT FOUND -- $note"
+        fi
+        return
+    fi
+    version=$("$name" --version 2>&1 | head -n1 | tr -d '\r')
+    echo "  ✅ $name: ${version:-unknown} ($path)"
+}
+
+MISSING_REQUIRED=0
+check_tool vale       required "install from https://vale.sh (CI pins the version in .github/workflows/vale-check.yml)"
+check_tool markdownlint required "npm install -g markdownlint-cli"
+check_tool mdx2vast   required "npm install -g mdx2vast -- without it every .mdx file is skipped"
+
+if [ "$MISSING_REQUIRED" -ne 0 ]; then
+    echo "❌ Toolchain incomplete. Install the tools above and re-run."
+    exit 1
+fi
+
 # --- TEMP FILES ---
 LIST_FILE=$(mktemp)
 VALE_LOG=$(mktemp)
@@ -75,8 +109,11 @@ awk -F: '
 V_ERR=$(grep -c " error " "$VALE_CLEAN" || true)
 V_WARN=$(grep -c " warning " "$VALE_CLEAN" || true)
 V_SUG=$(grep -c " suggestion " "$VALE_CLEAN" || true)
+# E100 lines carry no severity token, so they slip past the three greps above.
+# Count them separately: each one is a file Vale gave up on, not a clean file.
+V_RUN=$(grep -c "^E100 " "$VALE_CLEAN" || true)
 MD_ERR=$(grep -c "^  " "$MD_CLEAN" || true)
-TOTAL=$((V_ERR + V_WARN + V_SUG + MD_ERR))
+TOTAL=$((V_ERR + V_WARN + V_SUG + V_RUN + MD_ERR))
 
 echo -e "\n========================================================"
 echo "📊  LINT SUMMARY"
@@ -85,6 +122,7 @@ echo "  📄 Files Scanned:       $FILE_COUNT"
 echo "  🛑 Vale Errors:         $V_ERR"
 echo "  ⚠️  Vale Warnings:       $V_WARN"
 echo "  💡 Vale Suggestions:    $V_SUG"
+echo "  💥 Vale Runtime Errors: $V_RUN"
 echo "  🧹 Markdownlint Issues: $MD_ERR"
 echo "--------------------------------------------------------"
 echo "  🚨 TOTAL ISSUES:        $TOTAL"
