@@ -143,7 +143,7 @@ const branches = {
   platform       : "main",
   dataConnector  : "main",
   customerConnect: "main",
-  zitiCni        : "lipscomb-cni-docs-draft",
+  zitiCni        : "lipscomb-cni-docs-draft-signed",
 };
 const BRANCH_FLAG = {
   "--ziti-doc-branch": "zitiDoc",
