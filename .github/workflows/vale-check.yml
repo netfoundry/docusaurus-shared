@@ -32,6 +32,11 @@ jobs:
           # Install Markdownlint
           npm install -g markdownlint-cli
           markdownlint --version
+          # Install mdx2vast. Vale shells out to it for every .mdx file; without
+          # it Vale emits "E100 [lintMDX] Runtime error" per file and moves on,
+          # so the whole .mdx corpus goes unlinted.
+          npm install -g mdx2vast
+          mdx2vast --version
       - name: Run Quality Check
         run: |
           chmod +x docs-linter/lint.sh
