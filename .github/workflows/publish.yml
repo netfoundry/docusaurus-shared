@@ -53,7 +53,7 @@ jobs:
       ZITI_HOTJAR_APPID: ${{ secrets.ZITI_HOTJAR_APPID }}
     environment: ${{ github.event.inputs.environment || (github.ref_name == 'main' && 'main' || 'stg') }}
     outputs:
-      drift_alert_sent: ${{ steps.drift-alert.outcome == 'success' }}
+      has_drift: ${{ steps.drift-ctx.outputs.has_drift }}
     steps:
       - name: Checkout Workspace
         uses: actions/checkout@v4
@@ -180,7 +180,6 @@ jobs:
       # The schedule guard is load-bearing: the action's push path
       # expects payload keys the drift JSON lacks, and crashes without it.
       - name: Send drift alert
-        id: drift-alert
         if: failure() && steps.drift-ctx.outputs.has_drift == 'true' && github.event_name == 'schedule'
         uses: openziti/ziti-mattermost-action-py@v1
         with:
@@ -195,7 +194,7 @@ jobs:
   notify-mattermost:
     name: Notify doc-alerts of nightly build failure
     needs: publish-docs-from-container
-    if: always() && github.event_name == 'schedule' && github.repository_owner == 'netfoundry' && needs.publish-docs-from-container.result != 'success' && needs.publish-docs-from-container.outputs.drift_alert_sent != 'true'
+    if: always() && github.event_name == 'schedule' && github.repository_owner == 'netfoundry' && needs.publish-docs-from-container.result != 'success' && needs.publish-docs-from-container.outputs.has_drift != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Build schedule event context
