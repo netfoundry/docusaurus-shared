@@ -139,6 +139,6 @@ repo
 Customer Connect
 Live Audit
 HAL
-GET
+(?i)get
 POST
 vs

@@ -31,6 +31,7 @@ param(
     [string]$PlatformBranch      = "main",
     [string]$DataConnectorBranch = "main",
     [string]$CustomerConnectBranch = "main",
+    [string]$ZitiCniBranch       = "main",
 
     # Remove all _remotes content and .docusaurus cache before building
     [switch]$Clean,
@@ -49,10 +50,11 @@ param(
 
     # Docusaurus build mask (hex). 0x1=openziti, 0x2=frontdoor, 0x4=selfhosted,
     # 0x8=zrok, 0x10=zlan, 0x20=platform, 0x40=data-connector,
-    # 0x80=llm-gateway, 0x100=mcp-gateway, 0x200=customer-connect, 0x3FF=all.
+    # 0x80=llm-gateway, 0x100=mcp-gateway, 0x200=customer-connect,
+    # 0x400=ziti-cni, 0x7FF=all.
     # Only forwarded (as $env:DOCUSAURUS_BUILD_MASK) when explicitly set;
-    # otherwise build-docs.mjs lets docusaurus.config.ts default it (0x3FF).
-    [string]$BuildMask = "0x3FF"
+    # otherwise build-docs.mjs lets docusaurus.config.ts default it (0x7FF).
+    [string]$BuildMask = "0x7FF"
 )
 
 Set-StrictMode -Version Latest
@@ -72,6 +74,7 @@ if ($PSBoundParameters.ContainsKey('ZlanBranch'))           { $mjsArgs += "--zla
 if ($PSBoundParameters.ContainsKey('PlatformBranch'))       { $mjsArgs += "--platform-branch=$PlatformBranch" }
 if ($PSBoundParameters.ContainsKey('DataConnectorBranch'))  { $mjsArgs += "--data-connector-branch=$DataConnectorBranch" }
 if ($PSBoundParameters.ContainsKey('CustomerConnectBranch')){ $mjsArgs += "--customer-connect-branch=$CustomerConnectBranch" }
+if ($PSBoundParameters.ContainsKey('ZitiCniBranch'))        { $mjsArgs += "--ziti-cni-branch=$ZitiCniBranch" }
 if ($Clean)         { $mjsArgs += "--clean" }
 if ($LintOnly)      { $mjsArgs += "--lint-only" }
 if ($SkipLinkedDoc) { $mjsArgs += "-l" }

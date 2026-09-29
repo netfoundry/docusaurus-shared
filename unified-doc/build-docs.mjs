@@ -22,6 +22,7 @@
 //   --platform-branch=BRANCH        Branch for netfoundry/platform-doc               (default: main)
 //   --data-connector-branch=BRANCH  Branch for netfoundry/nf-data-connector          (default: main)
 //   --customer-connect-branch=BRANCH Branch for netfoundry/customer-connect-docs     (default: main)
+//   --ziti-cni-branch=BRANCH        Branch for netfoundry/ziti-cni                   (default: main)
 //   --clean                         Wipe _remotes and .docusaurus cache before building
 //   --lint-only                     Run lint checks only; skip build
 //   --qualifier=VALUE               Append VALUE to output dir (e.g. --qualifier=-preview -> build-preview)
@@ -31,7 +32,7 @@
 //   -h, --help                      Show this help and exit
 //
 // ENVIRONMENT VARIABLES
-//   GH_ZITI_CI_REPO_ACCESS_PAT   GitHub PAT for ziti-doc and zlan (falls back to SSH)
+//   GH_ZITI_CI_REPO_ACCESS_PAT   GitHub PAT for ziti-doc, zlan, and ziti-cni (falls back to SSH)
 //   BB_REPO_TOKEN_FRONTDOOR      Bitbucket token for zrok-connector (falls back to SSH)
 //   BB_REPO_TOKEN_ONPREM         Bitbucket token for k8s-on-prem-installations (falls back to SSH)
 //   BB_REPO_TOKEN_PLATFORM_DOC       Bitbucket token for platform-doc (falls back to SSH)
@@ -41,7 +42,8 @@
 //   DOCUSAURUS_BUILD_MASK        Hex bitmask: 0x1=openziti 0x2=frontdoor 0x4=selfhosted
 //                                             0x8=zrok 0x10=zlan 0x20=platform
 //                                             0x40=data-connector 0x80=llm-gateway 0x100=mcp-gateway
-//                                             0x200=customer-connect 0x3FF=all (config default: 0x3FF)
+//                                             0x200=customer-connect 0x400=ziti-cni
+//                                             0x7FF=all (config default: 0x7FF)
 //   DOCUSAURUS_PUBLISH_ENV       Set to 'prod' to use production Algolia index
 //   NO_MINIFY                    Set to any value to pass --no-minify to Docusaurus
 //   IS_VERCEL                    Set to 'true' on Vercel preview deployments
@@ -65,6 +67,7 @@ const GIT = "git";
 const YARN = isWin ? "yarn.cmd" : "yarn";
 const VALE = "vale";
 const MDLINT = isWin ? "markdownlint.cmd" : "markdownlint";
+const MDX2VAST = isWin ? "mdx2vast.cmd" : "mdx2vast";
 
 // On Windows, markdownlint runs through cmd.exe (~8191-char command-line cap),
 // so lint files in small batches there; larger batches elsewhere.
@@ -140,6 +143,7 @@ const branches = {
   platform       : "main",
   dataConnector  : "main",
   customerConnect: "main",
+  zitiCni        : "lipscomb-cni-docs-draft-signed",
 };
 const BRANCH_FLAG = {
   "--ziti-doc-branch": "zitiDoc",
@@ -150,6 +154,7 @@ const BRANCH_FLAG = {
   "--platform-branch": "platform",
   "--data-connector-branch": "dataConnector",
   "--customer-connect-branch": "customerConnect",
+  "--ziti-cni-branch": "zitiCni",
 };
 
 let clean = false;
@@ -202,6 +207,7 @@ console.log(`  BRANCH_ZLAN='${branches.zlan}'`);
 console.log(`  BRANCH_PLATFORM='${branches.platform}'`);
 console.log(`  BRANCH_DATA_CONNECTOR='${branches.dataConnector}'`);
 console.log(`  BRANCH_CUSTOMER_CONNECT='${branches.customerConnect}'`);
+console.log(`  BRANCH_ZITI_CNI='${branches.zitiCni}'`);
 console.log(`  CLEAN=${clean ? 1 : 0}`);
 console.log(`  IS_VERCEL='${process.env.IS_VERCEL ?? ""}'`);
 console.log(`  node: ${process.version}`);
@@ -274,6 +280,14 @@ function authUrl(url) {
     }
     console.error("🔑 Using SSH for customer-connect-docs");
     return "git@bitbucket.org:netfoundry/customer-connect-docs.git";
+  }
+  if (url.includes("ziti-cni")) {
+    if (process.env.GH_ZITI_CI_REPO_ACCESS_PAT) {
+      console.error("🔑 Using GH_ZITI_CI_REPO_ACCESS_PAT token for ziti-cni");
+      return gh("netfoundry/ziti-cni.git", process.env.GH_ZITI_CI_REPO_ACCESS_PAT);
+    }
+    console.error("🔑 Using SSH for ziti-cni");
+    return "git@github.com:netfoundry/ziti-cni.git";
   }
   return url; // public (e.g. openziti/zrok) — no auth needed
 }
@@ -401,8 +415,31 @@ function cleanLog(s) {
     .join("\n");
 }
 
+// Report the resolved version of each linting tool. Vale shells out to mdx2vast
+// for .mdx input; when that binary is missing Vale keeps going and emits one
+// "E100 [lintMDX] Runtime error" per file, so the .mdx corpus goes unlinted
+// without anything in the summary saying so.
+function toolcheck() {
+  console.log("🔧 Toolcheck...");
+  const tools = [
+    [VALE, "install from https://vale.sh"],
+    [MDLINT, "npm install -g markdownlint-cli"],
+    [MDX2VAST, "npm install -g mdx2vast -- without it every .mdx file is skipped"],
+  ];
+  for (const [cmd, note] of tools) {
+    const r = capture(cmd, ["--version"]);
+    if (r.error || r.status !== 0) {
+      console.log(`  ⚠️  ${cmd}: NOT FOUND -- ${note}`);
+      continue;
+    }
+    const version = (r.stdout || "").split(/\r?\n/)[0].trim();
+    console.log(`  ✅ ${cmd}: ${version || "unknown"}`);
+  }
+}
+
 function lintDocs() {
   console.log("🔍 Starting Quality Checks...");
+  toolcheck();
 
   const potentialTargets = [
     join(remotesDir, "zlan", "docusaurus", "docs"),
@@ -413,6 +450,7 @@ function lintDocs() {
     join(remotesDir, "platform", "docusaurus", "docs"),
     join(remotesDir, "data-connector", "docusaurus", "docs"),
     join(remotesDir, "customer-connect", "docusaurus", "docs"),
+    join(remotesDir, "ziti-cni", "docusaurus", "docs"),
   ];
   const validTargets = potentialTargets.filter((t) => existsSync(t));
 
@@ -516,6 +554,7 @@ cloneOrUpdate("https://github.com/openziti/zrok.git", "zrok", branches.zrok);
 cloneOrUpdate("https://bitbucket.org/netfoundry/platform-doc.git", "platform", branches.platform);
 cloneOrUpdate("https://bitbucket.org/netfoundry/nf-data-connector.git", "data-connector", branches.dataConnector);
 cloneOrUpdate("https://bitbucket.org/netfoundry/customer-connect-docs.git", "customer-connect", branches.customerConnect);
+cloneOrUpdate("https://github.com/netfoundry/ziti-cni.git", "ziti-cni", branches.zitiCni);
 
 // Remove stale Docusaurus caches/outputs left inside cloned remotes.
 console.log("Cleaning stale build artifacts from remotes...");
@@ -578,7 +617,7 @@ console.log(line);
 console.log("DOCUSAURUS BUILD");
 console.log(line);
 console.log(`  Output dir: ${outDir}`);
-console.log(`  Build mask: ${process.env.DOCUSAURUS_BUILD_MASK ?? "0x3FF (config default)"}`);
+console.log(`  Build mask: ${process.env.DOCUSAURUS_BUILD_MASK ?? "0x7FF (config default)"}`);
 console.log(`  No-minify:  ${process.env.NO_MINIFY ? "true" : "false"}`);
 console.log(line);
 
