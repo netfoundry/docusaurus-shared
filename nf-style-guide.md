@@ -29,6 +29,9 @@ scan, and they build user trust.
   not in how-tos or reference.
 - Sidebar category/bucket labels use noun phrases, not verb phrases: "Deployments", "Identity providers",
   "Topologies". Reserve imperative phrases for leaf how-to pages that actually walk through a task.
+- Don't end headings with punctuation (`.`, `,`, `;`, `:`, `!`). Question marks are fine.
+- If a heading has a colon, capitalize the first word after it: "Step 1: Install the agent".
+- Don't skip heading levels. An H3 goes under an H2, not straight under the H1.
 
 ### Sentence-style casing
 
@@ -114,6 +117,9 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 - Lean towards no periods, but complete sentences (especially multiple sentences) should all have periods. Consistency
   is key.
 - Try not to mix full sentences with 1 or 2-word bullets.
+- In numbered lists, put two spaces after the number (`1.  Install the agent`). This lines the text up with the
+  4-space indent for nested items.
+- Use one bullet marker per file. Hyphens (`-`) are the norm.
 
 ## Code, text, and UI elements
 
@@ -134,6 +140,7 @@ The exact top-level buckets we use for the ToC can vary depending on the product
     window.
   - Use the dropdown menu at the top of the viewport to select a common mobile device (e.g., iPhone SE) or enter the
     target width manually (e.g., 414px). This simulates the mobile viewing environment.
+- Give every image alt text that describes what it shows.
 
 ## Word choices
 
@@ -145,10 +152,44 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 - Write "zero trust" with no hyphen, even as a compound adjective ("zero trust network access"). This is a NetFoundry
   branding preference that overrides the usual compound-adjective hyphenation rule. Don't change file paths, slugs, or
   code tokens that already contain the hyphenated form.
+- Don't use `he/she`, `s/he`, or `him/her`. Use "you", or "they" if you need a third person.
+- Cut wordy phrases: "to", not `in order to`; "use", not `utilize`; "because", not `due to the fact that`. The linter
+  suggests a long list of these. Take the suggestion unless the longer phrase is clearer.
+
+## Product and brand names
+
+Product names are proper nouns. Spell and capitalize them exactly as shown, including in headings and at the start of
+a sentence.
+
+| Use              | Not                                          |
+| ---------------- | -------------------------------------------- |
+| NetFoundry       | `Netfoundry`, `netfoundry`, `Net Foundry`    |
+| OpenZiti         | `Open Ziti`, `open ziti`, `Openziti`         |
+| zrok             | `Zrok`, `ZROK`                               |
+| zLAN             | `ZLAN`, `zlan`, `Zlan`                       |
+| Frontdoor        | `Front Door`, `front door`, `Front-door`     |
+| LLM Gateway      | `LLM gateway`, `llm gateway`                 |
+| MCP Gateway      | `MCP gateway`, `mcp gateway`                 |
+| Customer Connect | `customer connect`, `CustomerConnect`        |
+| Live Audit       | `live audit`, `LiveAudit`                    |
+| On-Prem          | `on-prem`, `On-prem`, `on prem`              |
+| VS Code          | `VSCode`, `vscode`                           |
+
+- Keep zrok lowercase, even at the start of a sentence or heading.
+- Use OpenZiti for the open-source project. Use Ziti only as part of a component name, such as Ziti Desktop Edge or
+  Ziti Edge Tunnel. Don't shorten OpenZiti to Ziti on its own.
+- CLI tools and binaries are lowercase and go in back ticks: `ziti`, `zrok`, `llm-gateway`, `mcp-gateway`,
+  `mcp-bridge`, `mcp-tools`. Write zrok when you mean the product and `zrok` when you mean the command.
+- For third-party products, match the vendor's casing: GitHub, Bitbucket, JavaScript, TypeScript, Kubernetes,
+  Keycloak, Okta, Claude Desktop.
+- Use standard casing for acronyms: API, CLI, IdP, JWT, FQDN, URL. Make them plural with a lowercase s and no
+  apostrophe: APIs, IdPs, JWTs.
 
 ## Punctuation
 
 - Use hyphens for compound adjectives.
+- Don't hyphenate after an -ly adverb: "a highly available cluster", not `a highly-available cluster`.
+- Don't use `(s)` to cover both singular and plural. Use the plural: "servers", not `server(s)`.
 - **Avoid em dashes.** Rewrite as a separate sentence, or use a colon to introduce or define and a comma for an aside.
   If an em dash is genuinely unavoidable, put spaces around it: `word — word`, never `word—word`.
 - Use colons to introduce or define items.
@@ -156,6 +197,15 @@ The exact top-level buckets we use for the ToC can vary depending on the product
 - **Slashes**: no spaces around a slash joining single words (`Debian/Ubuntu`, `TCP/UDP`, `on/off`). Use spaces when
   joining multi-word phrases (`New York / New Jersey`). Exception: when both sides are code phrases, spaces improve
   readability and allow wrapping in tables — use `` `FOO` / `BAR` `` rather than `` `FOO`/`BAR` ``.
+
+## Numbers and dates
+
+- Write dates as month, day, year with the month spelled out: "March 4, 2025". Don't use numeric dates (`3/4/2025`),
+  day-first dates (`4 March 2025`), or ordinals (`March 4th`, `March first`). Numeric dates read differently in
+  different countries.
+- Use numerals for percentages: "5%", not `five percent`.
+- In body text, write negative numbers with an en dash (–5), not a hyphen. In code, keep the hyphen.
+- Use "first" and "second", not `firstly` and `secondly`.
 
 ## Admonitions
 
@@ -166,6 +216,8 @@ Use them. Only use "Note:" if you have to include it somewhere an admonition can
 - Use *one* space after periods before the next word.
 - Use line spaces between headers and paragraphs, and when introducing elements like tables or lists.
 - Line spacing helps make Markdown more readable.
+- Don't use more than one blank line in a row, and end every file with a newline.
+- Don't use hard tabs outside code blocks.
 - Establish a hard line limit of 120 characters for all body text lines in Markdown topics to improve readability on
 large screens and adhere to code formatting standards. To set this, go to VS Code settings, search for `editor ruler`,
 then add `120` to the `settings.json`.
