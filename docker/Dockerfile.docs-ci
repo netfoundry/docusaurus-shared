@@ -1,5 +1,5 @@
 # run https://github.com/netfoundry/docusaurus-shared/actions/workflows/build-docs-container.yaml to republish
-FROM node:20-bullseye
+FROM node:24-bookworm
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
       doxygen wget curl jq git openssh-client \
