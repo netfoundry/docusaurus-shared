@@ -1,0 +1,73 @@
+name: test-site-visual-regression
+
+# Screenshots every test-site page and compares it with published baselines, so a theme or test-site change can't
+# alter how the test-site looks without someone seeing it. Baselines are NOT committed: they live as a tarball on a
+# GitHub release (tag "test-site-vrt-baselines"). PRs pull them and compare; pushes to main regenerate and republish
+# them. All logic lives in packages/test-site/visual-regression/run.sh so it runs locally too; this workflow only
+# checks out the code, provides gh auth, and invokes the script.
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Regenerate and publish baselines instead of verifying"
+        type: boolean
+        default: false
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+    paths:
+      - "packages/docusaurus-theme/**"
+      - "packages/test-site/**"
+      - "package.json"
+      - "yarn.lock"
+      - ".github/workflows/test-site-visual-regression.yml"
+  push:
+    branches: [main]
+    paths:
+      - "packages/docusaurus-theme/**"
+      - "packages/test-site/**"
+      - "package.json"
+      - "yarn.lock"
+
+jobs:
+  verify:
+    # PRs (and a plain manual run) compare the current test-site against the published baselines.
+    if: ${{ github.repository_owner == 'netfoundry' && !(github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.publish)) }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+      - name: Verify against published baselines
+        # The 'visual-baseline-update' PR label marks an intentional change: skip the comparison so the check passes;
+        # baselines update on merge to main.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACCEPT: ${{ contains(github.event.pull_request.labels.*.name, 'visual-baseline-update') }}
+        run: |
+          extra=()
+          [ "$ACCEPT" = "true" ] && extra+=(--accept-visual-changes)
+          bash packages/test-site/visual-regression/run.sh --docker --pull-baselines \
+            --run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --summary-file "$GITHUB_STEP_SUMMARY" "${extra[@]}"
+      - uses: actions/upload-artifact@v6
+        if: ${{ failure() }}
+        with:
+          name: test-site-visual-regression-report
+          path: |
+            packages/test-site/visual-regression/playwright-report/
+            packages/test-site/visual-regression/test-results/
+          retention-days: 14
+
+  publish:
+    # Pushes to main (and a manual run with publish=true) regenerate and republish the baselines.
+    if: ${{ github.repository_owner == 'netfoundry' && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.publish)) }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - name: Regenerate and publish baselines
+        run: bash packages/test-site/visual-regression/run.sh --docker --update --publish-baselines
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
