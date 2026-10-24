@@ -885,7 +885,8 @@ html[data-theme=dark] .wizardmodal a:hover {
     font-weight: bold;
 }
 
-input {
+/* Text-style fields only; checkboxes and radios keep their native size. */
+input:not([type="checkbox"]):not([type="radio"]) {
     width: 100%;
     display: block;
     border: 1px solid #ebebeb;

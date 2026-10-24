@@ -32,10 +32,10 @@
     width: 40px;
     margin-left: 10px;
 }
-.clean-btn svg {
+[class*='colorModeToggle'] .clean-btn svg {
     /*
     used to change the size of the light/dark toggle
-    needs to be this specific for docusaurus
+    scoped to the toggle: .clean-btn also matches the code-block copy button
     */
     height: 30px;
     width: 30px;

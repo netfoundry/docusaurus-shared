@@ -1,0 +1,42 @@
+---
+title: Task lists
+---
+
+GitHub-style task lists (`- [ ]` / `- [x]`). Docusaurus renders each item as a disabled `<input type="checkbox">`, so
+any global `input` rule in `legacy.css` lands on these too. Each box sits inline with its text, at text size.
+
+## Checked items
+
+- [x] Controller answers and you can log in
+- [x] At least one edge router shows online
+- [x] Default edge router policy and service edge router policy exist
+
+## Unchecked items
+
+- [ ] With only `192.168.1.5` as DNS and no hosts entries, a restarted tunneler fails to connect
+- [ ] With hosts entries for the controller and routers, a restarted tunneler connects
+- [ ] `nslookup doubleclick.net` returns `0.0.0.0` from `192.168.1.5`
+
+## Mixed, with long items that wrap
+
+- [x] Short item
+- [ ] A long item that runs past the width of the content column so the second line shows whether the text wraps
+  under the text or under the checkbox, with `inline code` and a [link to example.com](https://example.com) in the middle of it
+- [x] `sudo ziti-edge-tunnel tunnel_status | jq -r '.Data.Identities[].Name'` lists `dnslab-pihole`
+
+## Nested
+
+- [x] Parent item
+  - [x] Child item
+  - [ ] Another child item
+- [ ] Second parent item
+
+## Next to a code block
+
+Run the check, then tick the box:
+
+```bash
+ziti edge list edge-routers
+```
+
+- [ ] `ONLINE` is `true` for the router
