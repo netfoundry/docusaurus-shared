@@ -3,9 +3,11 @@ name: build-docs-container
 on:
   workflow_dispatch:
   push:
+    # Without a branches filter, tag pushes (e.g. gh release create) also trigger this; GitHub skips paths on tags.
+    branches: ['**']
     paths:
-      - '.github/workflows/build-container.yml'
-      - 'Dockerfile.docs-ci'
+      - '.github/workflows/build-docs-container.yaml'
+      - 'docker/Dockerfile.docs-ci'
 
 jobs:
   build:

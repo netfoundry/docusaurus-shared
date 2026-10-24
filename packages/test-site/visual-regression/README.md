@@ -29,6 +29,26 @@ Baseline images are never committed. They are tarred into `baselines.tgz` and at
 Both use the [`gh`](https://cli.github.com/) CLI: your `gh` auth locally, `GH_TOKEN` in CI. Until the first
 baselines are published, verify passes with a note. The first merge to `main` publishes them.
 
+### Publishing baselines by hand
+
+Every push to `main` republishes the baselines. To publish without a merge, either:
+
+- **Run the workflow:** Actions, `test-site-visual-regression`, Run workflow, check `publish`. Or:
+
+  ```bash
+  gh workflow run test-site-visual-regression.yml --repo netfoundry/docusaurus-shared -f publish=true
+  ```
+
+- **Run it locally**, from a clean checkout (see [Windows](#windows) for why). Your `gh` auth needs write access to
+  the repo's releases:
+
+  ```bash
+  packages/test-site/visual-regression/run.sh --docker --update --publish-baselines
+  ```
+
+Whatever the checkout renders becomes the baseline every PR compares against, so publish from `main`, or from a
+branch whose look you mean to keep.
+
 ## Baseline parity
 
 Screenshots differ across Linux, Windows, and macOS (fonts, anti-aliasing). The published baselines are Linux ones,
