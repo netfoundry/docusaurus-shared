@@ -15,7 +15,8 @@ export type ProductId =
   | 'dataconnector'
   | 'zlan'
   | 'openziti'
-  | 'zrok';
+  | 'zrok'
+  | 'ziticni';
 
 export interface Product {
   id: ProductId;
@@ -92,13 +93,20 @@ export const PRODUCTS: Record<ProductId, Product> = {
     logoDark: `${IMG}/zrok-1.0.0-rocket-green.svg`,
     description: 'Secure peer-to-peer sharing built on OpenZiti.',
   },
+  ziticni: {
+    id: 'ziticni',
+    label: 'ziti-cni',
+    path: 'ziti-cni/intro',
+    logo: NF_LOGO,
+    description: 'Kubernetes CNI plugin for zero-trust pod networking on OpenZiti.',
+  },
 };
 
 /** Visual layout of the picker -- order here = order on screen. */
 const PICKER_LAYOUT: { header: string; items: ProductId[] }[] = [
   { header: 'Cloud SaaS',              items: ['console',    'customerconnect', 'dataconnector', 'frontdoor'] },
   { header: 'Self-Hosted Licensed',    items: ['selfhosted', 'zlan']                                          },
-  { header: 'Self-Hosted Open Source', items: ['openziti',   'zrok']                                          },
+  { header: 'Self-Hosted Open Source', items: ['openziti',   'zrok', 'ziticni']                                },
 ];
 
 export interface PickerLink {
@@ -146,6 +154,7 @@ export const dataconnectorLink:   PickerLink = linkFor('dataconnector',   '/docs
 export const zlanLink:            PickerLink = linkFor('zlan',            '/docs');
 export const openzitiLink:        PickerLink = linkFor('openziti',        '/docs');
 export const zrokLink:            PickerLink = linkFor('zrok',            '/docs');
+export const ziticniLink:         PickerLink = linkFor('ziticni',         '/docs');
 
 export const consoleLinkAbs:         PickerLink = linkFor('console',         DOCS_BASE);
 export const customerconnectLinkAbs: PickerLink = linkFor('customerconnect', DOCS_BASE);
@@ -155,6 +164,7 @@ export const dataconnectorLinkAbs:   PickerLink = linkFor('dataconnector',   DOC
 export const zlanLinkAbs:            PickerLink = linkFor('zlan',            DOCS_BASE);
 export const openzitiLinkAbs:        PickerLink = linkFor('openziti',        DOCS_BASE);
 export const zrokLinkAbs:            PickerLink = linkFor('zrok',            DOCS_BASE);
+export const ziticniLinkAbs:         PickerLink = linkFor('ziticni',         DOCS_BASE);
 
 /**
  * Picker columns for the unified docs site at netfoundry.io/docs.
@@ -166,7 +176,7 @@ export const zrokLinkAbs:            PickerLink = linkFor('zrok',            DOC
 export const unifiedPickerColumns: PickerColumn[] = [
   { header: 'Cloud SaaS',              links: [consoleLink,    customerconnectLink, dataconnectorLink, frontdoorLink] },
   { header: 'Self-Hosted Licensed',    links: [selfhostedLink, zlanLink]                                              },
-  { header: 'Self-Hosted Open Source', links: [openzitiLink,   zrokLink]                                              },
+  { header: 'Self-Hosted Open Source', links: [openzitiLink,   zrokLink, ziticniLink]                                 },
 ];
 
 /**
@@ -176,5 +186,5 @@ export const unifiedPickerColumns: PickerColumn[] = [
 export const subsitePickerColumns: PickerColumn[] = [
   { header: 'Cloud SaaS',              links: [consoleLinkAbs,    customerconnectLinkAbs, dataconnectorLinkAbs, frontdoorLinkAbs] },
   { header: 'Self-Hosted Licensed',    links: [selfhostedLinkAbs, zlanLinkAbs]                                                    },
-  { header: 'Self-Hosted Open Source', links: [openzitiLinkAbs,   zrokLinkAbs]                                                    },
+  { header: 'Self-Hosted Open Source', links: [openzitiLinkAbs,   zrokLinkAbs, ziticniLinkAbs]                                    },
 ];
