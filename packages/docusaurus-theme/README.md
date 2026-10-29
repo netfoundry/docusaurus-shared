@@ -81,7 +81,13 @@ Includes:
 Import UI components directly:
 
 ```tsx
-import { Alert, CodeBlock, OsTabs, ToggleTabs } from '@netfoundry/docusaurus-theme/ui';
+import { Alert, CodeBlock, OsTabs, ThemedScreenshot, ToggleTabs } from '@netfoundry/docusaurus-theme/ui';
+```
+
+`ThemedScreenshot` shows an image in light mode and its `-dark` sibling in dark mode:
+
+```mdx
+<ThemedScreenshot src="/img/zac-carol.png" alt="The carol identity form in ZAC" width={500} />
 ```
 
 `ToggleTabs` frames a `<Tabs>` group and switches it with a labeled toggle instead of tab buttons:
