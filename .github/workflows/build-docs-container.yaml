@@ -3,9 +3,11 @@ name: build-docs-container
 on:
   workflow_dispatch:
   push:
+    # Without a branches filter, tag pushes (e.g. gh release create) also trigger this; GitHub skips paths on tags.
+    branches: ['**']
     paths:
-      - '.github/workflows/build-container.yml'
-      - 'Dockerfile.docs-ci'
+      - '.github/workflows/build-docs-container.yaml'
+      - 'docker/Dockerfile.docs-ci'
 
 jobs:
   build:
@@ -16,17 +18,17 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push container
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: docker/Dockerfile.docs-ci
