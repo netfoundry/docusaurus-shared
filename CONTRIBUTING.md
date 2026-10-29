@@ -115,7 +115,15 @@ Common file locations:
 | Remark plugins | `packages/docusaurus-theme/src/docusaurus-plugins/` |
 | Theme config types | `packages/docusaurus-theme/src/options.ts` |
 
-### 4. Test your changes
+### 4. Add a test-site demo
+
+Every new or changed component, CSS rule, or remark plugin needs a demo page (or a new section on an existing page) under
+`packages/test-site/docs/`. The demo is the test: it must show the behavior you changed, in both light and dark mode. If
+the change only shows up with a special asset (for example, a dark-mode image), add that asset to
+`packages/test-site/static/`. See `docs/media/images.mdx` (`ThemedScreenshot`) and `docs/components/toggle-tabs.mdx` for
+examples. A downstream site is not a substitute: if it isn't demoed in the test-site, it isn't tested.
+
+### 5. Test your changes
 
 ```bash
 # Development server (hot reload)
@@ -126,7 +134,7 @@ yarn build
 cd test-site && yarn serve
 ```
 
-### 5. Run tests
+### 6. Run tests
 
 ```bash
 yarn test
@@ -134,7 +142,7 @@ yarn test
 cd packages/docusaurus-theme && yarn test
 ```
 
-### 6. Publish
+### 7. Publish
 
 ```bash
 cd packages/docusaurus-theme
@@ -146,7 +154,7 @@ npm version patch   # 0.1.2 → 0.1.3
 npm publish
 ```
 
-### 7. Verify published package
+### 8. Verify published package
 
 Update `test-site/package.json`:
 
@@ -267,6 +275,7 @@ Key variables in `packages/docusaurus-theme/css/legacy.css`:
 
 Before publishing:
 
+- [ ] The change has a test-site demo (see step 4)
 - [ ] `yarn test` passes
 - [ ] `yarn build` succeeds
 - [ ] Light mode looks correct

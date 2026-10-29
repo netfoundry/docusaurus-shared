@@ -163,6 +163,9 @@ Add your own CSS after the theme styles by creating `src/css/custom.css`:
 
 See [CONTRIBUTING.md](../../CONTRIBUTING.md) at the repository root for development setup, workflow, and examples.
 
+Every new or changed component, CSS rule, or plugin needs a demo in [`packages/test-site`](../test-site/README.md) that
+shows it in light and dark mode.
+
 ## License
 
 Apache-2.0
