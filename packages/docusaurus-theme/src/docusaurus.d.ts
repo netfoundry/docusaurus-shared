@@ -112,6 +112,15 @@ declare module '@theme/Tabs' {
   export default Tabs;
 }
 
+declare module '@theme/ThemedImage' {
+  import type { ComponentProps } from 'react';
+  interface ThemedImageProps extends Omit<ComponentProps<'img'>, 'src'> {
+    sources: { light: string; dark: string };
+  }
+  const ThemedImage: React.ComponentType<ThemedImageProps>;
+  export default ThemedImage;
+}
+
 // react-github-btn has type compatibility issues with React 18/19
 declare module 'react-github-btn' {
   import type { ComponentType } from 'react';

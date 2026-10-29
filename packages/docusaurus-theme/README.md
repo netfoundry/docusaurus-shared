@@ -81,7 +81,13 @@ Includes:
 Import UI components directly:
 
 ```tsx
-import { Alert, CodeBlock, OsTabs, ToggleTabs } from '@netfoundry/docusaurus-theme/ui';
+import { Alert, CodeBlock, OsTabs, ThemedScreenshot, ToggleTabs } from '@netfoundry/docusaurus-theme/ui';
+```
+
+`ThemedScreenshot` shows an image in light mode and its `-dark` sibling in dark mode:
+
+```mdx
+<ThemedScreenshot src="/img/zac-carol.png" alt="The carol identity form in ZAC" width={500} />
 ```
 
 `ToggleTabs` frames a `<Tabs>` group and switches it with a labeled toggle instead of tab buttons:
@@ -156,6 +162,9 @@ Add your own CSS after the theme styles by creating `src/css/custom.css`:
 ## Contributing
 
 See [CONTRIBUTING.md](../../CONTRIBUTING.md) at the repository root for development setup, workflow, and examples.
+
+Every new or changed component, CSS rule, or plugin needs a demo in [`packages/test-site`](../test-site/README.md) that
+shows it in light and dark mode.
 
 ## License
 

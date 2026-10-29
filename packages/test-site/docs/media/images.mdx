@@ -59,6 +59,15 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 Both variants currently point at the same SVG -- swap one for a dark-mode-specific
 asset once it exists to verify the theme switch.
 
+## ThemedScreenshot
+
+import {ThemedScreenshot} from '@netfoundry/docusaurus-theme/ui';
+
+`ThemedScreenshot` takes the light-mode image and shows its `-dark` sibling in dark mode, so a page needs one tag per
+shot. This one swaps `/img/logo.svg` for `/img/logo-dark.svg`, which has a lighter blue.
+
+<ThemedScreenshot src="/img/logo.svg" alt="Logo that turns lighter blue in dark mode" width={200} />
+
 ## Image inside a link
 
 [<img src="/img/logo.svg" alt="Click me" width="120" />](https://netfoundry.io)

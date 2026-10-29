@@ -12,5 +12,6 @@ export * from './NetFoundryLayout';
 export * from './NetFoundryNavbarItems';
 export * from './OsTabs';
 export * from './StarUs'
+export * from './ThemedScreenshot';
 export * from './ToggleTabs';
 export * from './ProductSearch';

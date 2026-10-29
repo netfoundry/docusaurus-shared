@@ -116,8 +116,11 @@ category landing page **and** in the sidebar. No `sidebars.ts` edit needed.
     you want to influence ordering.
 3.  Save. The dev server picks it up.
 
-For something that exists in the theme package but doesn't have a demo here,
-the test-site is the right place for it -- not in any downstream site.
+Every new or changed theme component, CSS rule, or plugin must ship with a demo
+here in the same PR. The demo must show the changed behavior in light and dark
+mode. Put any asset it needs (for example, a `-dark` image) under `static/`.
+`docs/media/images.mdx` (`ThemedScreenshot`) is an example. A downstream site
+is not a substitute.
 
 ## Debug recipes
 
