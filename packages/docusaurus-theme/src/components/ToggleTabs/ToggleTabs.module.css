@@ -1,0 +1,96 @@
+/* The toggle sits flush in the frame's top-left corner, with a rule under it across the frame's full width. */
+.toggle {
+  --pill-h: 3rem;
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  height: var(--pill-h);
+  margin: 0 calc(-1 * var(--pad)) var(--space-xs);
+  border-bottom: var(--border) solid var(--line);
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  padding: 0 0.75rem;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.option {
+  padding: 0 1.2rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ifm-font-color-base);
+  font: inherit;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: var(--ifm-color-emphasis-200);
+}
+
+.active,
+.active:hover {
+  background: var(--ifm-color-primary);
+  color: var(--ifm-color-white);
+  font-weight: 600;
+}
+
+/* The wrapper takes over the panel frame from css/tabs-v*.css, and uses its colors when the site imports one.
+   legacy.css zeroes the tab content's margin-top--md, so the toggle's margin-bottom is the only gap under it. */
+.tabs {
+  --pad: 1.25rem;
+  --radius: 16px;
+  --border: 2px;
+  --line: var(--nf-card-border, var(--ifm-color-emphasis-300));
+  margin: 1.25rem 0 var(--ifm-leading);
+  padding: 0 var(--pad) var(--pad);
+  border: var(--border) solid var(--line);
+  border-radius: var(--radius);
+  background: var(--nf-panel-bg, var(--ifm-background-surface-color));
+  box-shadow: var(--nf-panel-shadow, none);
+}
+
+.tabs :global(.tabs-container) {
+  margin-bottom: 0;
+}
+
+.tabs [class*='tabItem_'][role='tabpanel'] {
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.tabs [role='tabpanel'] > :last-child {
+  margin-bottom: 0;
+}
+
+/* the toggle is the only switch */
+.tabs [role='tablist'] {
+  display: none;
+}
+
+@media (max-width: 576px) {
+  .tabs {
+    --pad: 0.75rem;
+  }
+
+  .toggle {
+    --pill-h: 2.5rem;
+    font-size: 0.9rem;
+  }
+
+  .option {
+    padding: 0 0.8rem;
+  }
+
+  .label {
+    padding: 0 0.4rem;
+  }
+}

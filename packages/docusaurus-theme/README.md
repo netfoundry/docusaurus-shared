@@ -81,7 +81,19 @@ Includes:
 Import UI components directly:
 
 ```tsx
-import { Alert, CodeBlock, OsTabs } from '@netfoundry/docusaurus-theme/ui';
+import { Alert, CodeBlock, OsTabs, ToggleTabs } from '@netfoundry/docusaurus-theme/ui';
+```
+
+`ToggleTabs` frames a `<Tabs>` group and switches it with a labeled toggle instead of tab buttons:
+
+```mdx
+<ToggleTabs
+  groupId="admin-tool"
+  label="Showing steps as:"
+  options={[{value: 'cli', label: <><code>ziti</code> CLI</>}, {value: 'zac', label: 'ZAC'}]}>
+  <TabItem value="cli">...</TabItem>
+  <TabItem value="zac">...</TabItem>
+</ToggleTabs>
 ```
 
 ### Remark plugins

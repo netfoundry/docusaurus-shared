@@ -1,0 +1,59 @@
+# ToggleTabs
+
+import {ToggleTabs} from '@netfoundry/docusaurus-theme/ui';
+import TabItem from '@theme/TabItem';
+
+`ToggleTabs` wraps Docusaurus `<Tabs>` in a framed panel. A labeled toggle across the top replaces the tab buttons.
+The choice is stored under `groupId`, so it switches every `ToggleTabs` and `<Tabs>` in that group, on this page and
+on later ones.
+
+## Two options
+
+<ToggleTabs
+  groupId="admin-tool"
+  label="Showing steps as:"
+  options={[
+    {value: 'cli', label: <><code>ziti</code> CLI</>},
+    {value: 'zac', label: 'ZAC'},
+  ]}>
+  <TabItem value="cli">
+
+```bash
+ziti edge create service-policy engineering-dial Dial \
+  --identity-roles '#engineering' \
+  --service-roles '@eng-wiki'
+```
+
+  </TabItem>
+  <TabItem value="zac">
+
+1. Under **Service Policies**, add a policy named `engineering-dial`.
+2. Set **Type** to `Dial`, the service to `@eng-wiki`, and the identity to `#engineering`.
+
+  </TabItem>
+</ToggleTabs>
+
+## Same group, second block
+
+This block shares `groupId="admin-tool"` with the one above. Switching either one switches both.
+
+<ToggleTabs
+  groupId="admin-tool"
+  label="Showing steps as:"
+  options={[
+    {value: 'cli', label: <><code>ziti</code> CLI</>},
+    {value: 'zac', label: 'ZAC'},
+  ]}>
+  <TabItem value="cli">
+
+```bash
+ziti edge list identities
+```
+
+  </TabItem>
+  <TabItem value="zac">
+
+Open **Identities**.
+
+  </TabItem>
+</ToggleTabs>
