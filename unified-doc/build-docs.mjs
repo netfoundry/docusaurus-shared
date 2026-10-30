@@ -558,6 +558,12 @@ if (isWin) {
   });
 }
 
+// --- INSTALL THE CONFIG BUILDER APP (skipped for ziti-doc branches that predate the loader) ---
+const configBuilderLoader = join(remotesDir, "openziti", "docusaurus", "scripts", "load-config-builder.mjs");
+if (existsSync(configBuilderLoader)) {
+  run("node", [configBuilderLoader], { cwd: scriptDir });
+}
+
 // --- DOCUSAURUS BUILD ---
 run(YARN, ["install"], { cwd: scriptDir });
 
