@@ -133,13 +133,8 @@ import SharedContent from '../_shared.content.md'
 
 ## Kinsta hosting
 
-The docusaurus site is hosted on Kinsta. Required nginx rule:
-
-```nginx
-location /docs/ {
-  try_files $uri $uri/ $uri/index.html /docs/index.html;
-}
-```
+The docusaurus site is hosted on Kinsta. For the nginx rules it needs, see
+[unified-doc/README.md](unified-doc/README.md#kinsta-hosting).
 
 ## License
 
