@@ -61,16 +61,39 @@ GIT_USER=<Your GitHub username> yarn deploy
 
 ### Kinsta hosting
 
-As of Sep 2025 - the technical docs have been published to the public folder on kinsta. 
-A **CUSTOM** rule was added by tech support:
+The unified docs are published to the public folder on Kinsta and served under `/docs/`. We can't edit the nginx
+config ourselves. Kinsta support adds custom rules on request. These are the rules that matter to the docs site:
 
 ```nginx
-location /docs {
-  try_files $uri /docs/index.html;
+location /docs/ {
+    error_page 404 /docs/404.html;
+    try_files $uri $uri/ =404;
+}
+
+location ~* ^/docs/.*\.(yaml|yml)$ {
+    allow all;
+    default_type application/yaml;
+}
+
+location ~* \.(yaml|yml)$ {
+    return 403;
 }
 ```
 
-This rule is **mandatory** for SPA deep linking. The tech support people had to add it.
+- **`/docs/`** serves the built file or directory (Docusaurus emits `<route>/index.html` for every page), and
+  sends missing paths to the Docusaurus 404 page.
+- **YAML under `/docs/`** is served as `application/yaml`, so YAML files in the built docs stay downloadable.
+- **YAML anywhere else** on the site returns 403.
+
+#### YAML gotcha
+
+nginx checks regex locations in the order they appear, and the first match wins. The `/docs/` YAML rule must come
+**before** the catch-all YAML 403 rule. If the order flips, or someone drops the `/docs/` rule, every YAML file
+under the docs returns 403 while the rest of the site keeps working. If YAML downloads start failing with 403, ask
+Kinsta support to check this order first.
+
+Regex locations also win over the `/docs/` prefix location, so YAML requests skip its `error_page`. A missing YAML
+file returns nginx's default 404, not `/docs/404.html`.
 
 ---
 
