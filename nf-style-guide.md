@@ -52,9 +52,10 @@ References:
 - [Writing readable content](https://www.mity.com.au/blog/writing-readable-content-and-why-all-caps-is-so-hard-to-read)
 - [Readability Guidelines: Capitals](https://readabilityguidelines.co.uk/grammar-points/capital-letters/#2-use-sentence-case-in-headlines-and-subheads)
 
-### Numbered steps
+#### Numbered steps in headers
 
-Show a step number once, and don't use the word "Step". The number alone tells the reader where they are.
+This covers how to style step numbers in headings: page titles (H1) and section headings in the page body. Show a
+step number once, and don't use the word "Step". The number alone tells the reader where they are.
 
 **Multi-page procedures** (a sidebar category where each page is one step):
 
@@ -69,9 +70,9 @@ Show a step number once, and don't use the word "Step". The number alone tells t
 | `title` (H1)    | `Register the DNS server identity on the overlay`   | `Step 2: Register the DNS server identity on the overlay`   |
 | `sidebar_label` | `2. Register DNS server`                            | `2. DNS server identity`, `Step 2: Register DNS server`     |
 
-**Multiple step sections on one page:**
+**Step headings in the page body** (multiple step sections on one page):
 
-- When a page uses headings as steps, number them with the number and a period. Don't add "Step":
+- When a page uses H2 or H3 headings as steps, number them with the number and a period. Don't add "Step":
   `## 1. Install the agent`, not `## Step 1: Install the agent`.
 - Only number headings when each step is substantial enough to need its own section. For short procedures, use a
   numbered list instead.
