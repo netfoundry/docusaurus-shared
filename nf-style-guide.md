@@ -30,7 +30,7 @@ scan, and they build user trust.
 - Sidebar category/bucket labels use noun phrases, not verb phrases: "Deployments", "Identity providers",
   "Topologies". Reserve imperative phrases for leaf how-to pages that actually walk through a task.
 - Don't end headings with punctuation (`.`, `,`, `;`, `:`, `!`). Question marks are fine.
-- If a heading has a colon, capitalize the first word after it: "Step 1: Install the agent".
+- If a heading has a colon, capitalize the first word after it: "Optional: Configure a custom domain".
 - Don't skip heading levels. An H3 goes under an H2, not straight under the H1.
 
 ### Sentence-style casing
@@ -51,6 +51,33 @@ References:
 - [Letter case and text legibility in normal and low vision](https://pmc.ncbi.nlm.nih.gov/articles/PMC2016788/)
 - [Writing readable content](https://www.mity.com.au/blog/writing-readable-content-and-why-all-caps-is-so-hard-to-read)
 - [Readability Guidelines: Capitals](https://readabilityguidelines.co.uk/grammar-points/capital-letters/#2-use-sentence-case-in-headlines-and-subheads)
+
+#### Numbered steps in headers
+
+This covers how to style step numbers in headings: page titles (H1) and section headings in the page body. Show a
+step number once, and don't use the word "Step". The number alone tells the reader where they are.
+
+**Multi-page procedures** (a sidebar category where each page is one step):
+
+- Put the number in the `sidebar_label`, not the H1. The sidebar already shows the sequence, and an H1 like
+  "Step 2: Register the DNS server identity" reads oddly in search results and browser tabs, where readers often land
+  without the surrounding context.
+- Write the H1 as an imperative verb phrase that makes sense on its own.
+- Keep the sidebar label a shortened version of the H1, prefixed with the number.
+
+| Field           | Use                                                 | Not                                                         |
+| --------------- | --------------------------------------------------- | ----------------------------------------------------------- |
+| `title` (H1)    | `Register the DNS server identity on the overlay`   | `Step 2: Register the DNS server identity on the overlay`   |
+| `sidebar_label` | `2. Register DNS server`                            | `2. DNS server identity`, `Step 2: Register DNS server`     |
+
+**Step headings in the page body** (multiple step sections on one page):
+
+- When a page uses H2 or H3 headings as steps, number them with the number and a period. Don't add "Step":
+  `## 1. Install the agent`, not `## Step 1: Install the agent`.
+- Only number headings when each step is substantial enough to need its own section. For short procedures, use a
+  numbered list instead.
+- Numbered headings change their anchor links (`#1-install-the-agent`). If you reorder or insert steps, check for
+  links to the old anchors.
 
 ## Structure and organization
 
